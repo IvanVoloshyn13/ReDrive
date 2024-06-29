@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="250dp"
-        android:src="@drawable/ic_finance">
+        android:layout_marginTop="240dp"
+        android:src="@drawable/ic_reminder">
 
     </ImageView>
 
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:text="@string/on_board1_title"
+        android:text="@string/on_board3_title"
         android:textAlignment="center" />
 
     <TextView
@@ -29,14 +29,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="@string/on_board1" />
+        android:text="@string/on_board3" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/btt_skip"
@@ -45,8 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="65dp"
             android:backgroundTint="#638FFF"
-            android:text="Skip"
             android:gravity="center"
+            android:text="Skip"
             android:textAppearance="@style/TextAppearance.ReDrive">
 
         </Button>
@@ -58,8 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="65dp"
             android:backgroundTint="#638FFF"
-            android:text="Next"
             android:gravity="center"
+            android:text="Next"
             android:textAppearance="@style/TextAppearance.ReDrive">
 
         </Button>

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="250dp"
-        android:src="@drawable/ic_finance">
+        android:src="@drawable/ic_automobile_repair">
 
     </ImageView>
 
@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:text="@string/on_board1_title"
-        android:textAlignment="center" />
+        android:text="@string/on_board2_title"
+   />
 
     <TextView
         style="@style/TextAppearance.ReDrive"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="@string/on_board1" />
+        android:text="@string/on_board2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="65dp"
             android:backgroundTint="#638FFF"
-            android:text="Skip"
+            android:text="@string/skip"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.ReDrive">
 
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="65dp"
             android:backgroundTint="#638FFF"
-            android:text="Next"
+            android:text="@string/next"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.ReDrive">
 
