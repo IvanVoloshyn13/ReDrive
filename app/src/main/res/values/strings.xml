@@ -1,13 +1,16 @@
 <resources>
     <string name="app_name">ReDrive</string>
+
     <string name="on_board1_title">Control Your Finances</string>
     <string name="on_board1">Take charge of your spending with detailed tracking of your fuel and maintenance expenses. Monitor every penny to ensure your budget stays on track and your savings grow.</string>
-    <string name="on_board2">Simplify your vehicle management by keeping all refuel logs and repair information together. No more searching for receipts or maintenance records—everything you need is right here.</string>
     <string name="on_board2_title">Vehicles Details In One Place</string>
+    <string name="on_board2">Simplify your vehicle management by keeping all refuel logs and repair information together. No more searching for receipts or maintenance records—everything you need is right here.</string>
     <string name="on_board3_title">Clear and Insightful Stats</string>
     <string name="on_board3">Gain valuable insights with clear statistics on your fuel consumption and maintenance costs. Make informed decisions with easy-to-read graphs and summaries, designed to help you optimize your vehicle\'s performance.</string>
+
     <string name="skip">Skip</string>
     <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
 
 
 </resources>
