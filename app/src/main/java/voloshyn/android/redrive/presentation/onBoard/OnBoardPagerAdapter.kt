@@ -1,4 +1,4 @@
-package voloshyn.android.redrive.onBoard
+package voloshyn.android.redrive.presentation.onBoard
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -13,9 +13,9 @@ class OnBoardPagerAdapter(act: FragmentActivity) : FragmentStateAdapter(act) {
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> OnBoardFragment1()
-            1 -> OnBoardFragment2()
-            else -> OnBoardFragment3()
+            0 -> OnBoardFragment()
+            1 -> OnBoardFragment1()
+            else -> OnBoardFragment2()
 
         }
     }

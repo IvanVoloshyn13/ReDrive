@@ -11,20 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReDrive"
+        android:name="voloshyn.android.redrive.ReDriveApp"
         tools:targetApi="31">
 
         <activity
-            android:name="voloshyn.android.redrive.onBoard.OnBoardActivity"
-            android:exported="true">
+            android:name="voloshyn.android.redrive.presentation.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.OnBoard">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name="voloshyn.android.redrive.presentation.onBoard.OnBoardActivity"
+            android:theme="@style/Theme.OnBoard">
+
         </activity>
 
-        <activity
-            android:name="voloshyn.android.redrive.main.MainActivity"
-           />
+        <activity android:name="voloshyn.android.redrive.presentation.main.MainActivity" />
     </application>
 
 </manifest>

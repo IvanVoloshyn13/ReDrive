@@ -1,4 +1,4 @@
-package voloshyn.android.redrive.onBoard
+package voloshyn.android.redrive.presentation.onBoard
 
 import androidx.fragment.app.Fragment
 import voloshyn.android.app.R

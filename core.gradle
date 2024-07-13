@@ -6,7 +6,6 @@ android {
         minSdk 26
         targetSdk 34
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -15,9 +14,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     java{
         toolchain {
-            languageVersion=JavaLanguageVersion.of(1_8)
+            languageVersion=JavaLanguageVersion.of(17)
         }
     }
 }

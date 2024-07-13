@@ -1,6 +1,9 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.application
+    alias libs.plugins.jetbrains.kotlin.android
+    alias libs.plugins.google.dagger.hilt
+    alias libs.plugins.google.devtools.ksp
+
 }
 
 apply from: "$rootDir/core.gradle"
@@ -13,10 +16,17 @@ android {
 
 
 dependencies {
-
+    implementation project(path:':domain')
+    implementation project(path:':data')
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
     implementation libs.material
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+
+    implementation libs.hilt.android
+    ksp libs.ksp.hilt.compiler
+
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

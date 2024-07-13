@@ -1,14 +1,11 @@
-package voloshyn.android.redrive.onBoard
+package voloshyn.android.redrive.presentation.onBoard
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
+import dagger.hilt.android.AndroidEntryPoint
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.ActivityOnBoardBinding
-
-
+@AndroidEntryPoint
 class OnBoardActivity : AppCompatActivity() {
 
 

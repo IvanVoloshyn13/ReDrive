@@ -1,4 +1,4 @@
-package voloshyn.android.redrive.main
+package voloshyn.android.redrive.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 
