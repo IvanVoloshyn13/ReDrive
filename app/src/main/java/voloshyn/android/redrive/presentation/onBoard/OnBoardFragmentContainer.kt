@@ -7,8 +7,9 @@ import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentOnBoardContainerBinding
+
 @AndroidEntryPoint
-class OnBoardFragmentContainer : Fragment(R.layout.fragment_on_board_container){
+class OnBoardFragmentContainer : Fragment(R.layout.fragment_on_board_container) {
     private lateinit var binding: FragmentOnBoardContainerBinding
     private lateinit var pager: ViewPager2
 
@@ -21,11 +22,14 @@ class OnBoardFragmentContainer : Fragment(R.layout.fragment_on_board_container){
         pager.adapter = pagerAdapter
     }
 
-    companion object{
-        object OnBoardScreens{
-            const val FIRST=0
-            const val SECOND=1
-            const val THIRD=2
+    companion object {
+        object OnBoardScreens {
+            const val FIRST = 0
+            const val SECOND = 1
+            const val THIRD = 2
         }
     }
+
+
+
 }

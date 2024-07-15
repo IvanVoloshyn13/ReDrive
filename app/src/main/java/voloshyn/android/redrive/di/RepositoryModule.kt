@@ -15,4 +15,5 @@ interface RepositoryModule {
     @Binds
     @ViewModelScoped
      fun bindOnBoardRepository(repository: OnBoardRepositoryImpl): OnBoardRepository
+
 }

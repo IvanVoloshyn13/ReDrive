@@ -12,5 +12,12 @@
     <string name="next">Next</string>
     <string name="get_started">Get Started</string>
 
+    <!-- LOCALE_ERROR-->
+    <string name="error_sql">Unable to load data from the database. Please try again later.</string>
+    <string name="data_not_found">No data found. Please check your search criteria and try again.</string>
+    <string name="storage_error">Error while accessing storage. Please ensure you have sufficient permissions and space.</string>
+    <string name="unknown_error">Sorry, an unknown error occurred. Please try again later.</string>
+
+
 
 </resources>

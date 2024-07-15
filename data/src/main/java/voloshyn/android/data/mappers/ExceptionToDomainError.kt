@@ -7,6 +7,6 @@ fun Exception.toDataError(): DataError.Locale {
     return when (this) {
         is IOException -> DataError.Locale.STORAGE_ERROR
         is NullPointerException -> DataError.Locale.DATA_NOT_FOUND
-        else -> TODO()
+        else -> DataError.Locale.UNKNOWN_ERROR
     }
 }
