@@ -43,8 +43,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     }
 
     private fun launchMainScreen(onBoardFinished: Boolean) {
-        if (onBoardFinished) TODO()
-        findNavController().navigate(R.id.action_splashFragment_to_onBoardFragmentContainer)
+        if (onBoardFinished) {
+            findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
+        } else {
+            findNavController().navigate(R.id.action_splashFragment_to_onBoardFragmentContainer)
+        }
 
     }
 

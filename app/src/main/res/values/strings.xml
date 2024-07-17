@@ -17,7 +17,18 @@
     <string name="data_not_found">No data found. Please check your search criteria and try again.</string>
     <string name="storage_error">Error while accessing storage. Please ensure you have sufficient permissions and space.</string>
     <string name="unknown_error">Sorry, an unknown error occurred. Please try again later.</string>
-
+    <string name="sign_in_to_redrive">Sign in to ReDrive</string>
+    <string name="full_name">Full name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up_to_redrive">Sign up to ReDrive</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="remember_me">Remember me?</string>
+    <string name="forgot_password">Forgot password?</string>
 
 
 </resources>

@@ -7,4 +7,42 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <!--    Theme colors-->
+
+    <color name="md_theme_primary">#fafafa</color>
+    <color name="md_theme_onPrimary">#000000</color>
+
+    <color name="md_theme_primaryContainer">#638FFF</color>
+    <color name="md_theme_onPrimaryContainer">#FFFFFF</color>
+
+    <color name="md_theme_onSurface">#FFFFFF</color>
+
+    <color name="md_theme_onSurfaceVariant">#638FFF</color>
+
+
+    <color name="md_theme_secondary">#006874</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#97F0FF</color>
+    <color name="md_theme_onSecondaryContainer">#001F24</color>
+    <color name="md_theme_tertiary">#00668A</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer">#C4E7FF</color>
+    <color name="md_theme_onTertiaryContainer">#001E2C</color>
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_errorContainer">#FFDAD6</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_onErrorContainer">#410002</color>
+
+
+
+    <color name="md_theme_surfaceVariant">#DEE3EA</color>
+
+    <color name="md_theme_outline">#72787E</color>
+
+
+    <color name="md_theme_surfaceTint">#006496</color>
+    <color name="md_theme_outlineVariant">#C2C7CE</color>
+
 </resources>

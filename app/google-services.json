@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "517057895773",
+    "project_id": "redrive-bceda",
+    "storage_bucket": "redrive-bceda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517057895773:android:2d6a0cf05886570b5fdcb4",
+        "android_client_info": {
+          "package_name": "voloshyn.android.redrive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXQeAlPia9vnU_cwKBF5diGQQKMZRvC-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

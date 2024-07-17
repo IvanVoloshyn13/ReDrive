@@ -3,6 +3,7 @@ plugins {
     alias libs.plugins.jetbrains.kotlin.android
     alias libs.plugins.google.dagger.hilt
     alias libs.plugins.google.devtools.ksp
+    alias libs.plugins.com.google.gms
 
 }
 
@@ -26,6 +27,9 @@ dependencies {
 
     implementation libs.hilt.android
     ksp libs.ksp.hilt.compiler
+
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.auth
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit

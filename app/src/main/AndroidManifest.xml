@@ -16,8 +16,7 @@
 
         <activity
             android:name="voloshyn.android.redrive.presentation.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.OnBoard">
+            android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.MAIN" />
