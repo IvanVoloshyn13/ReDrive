@@ -3,6 +3,7 @@
     <style name="Base.V26.Theme.ReDrive" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
+
         <item name="colorOnPrimaryContainer">@color/md_theme_onPrimaryContainer</item>
         <item name="colorOnSurface">@color/md_theme_onPrimaryContainer</item>
 

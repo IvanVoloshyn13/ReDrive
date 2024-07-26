@@ -28,7 +28,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             launch {
                 delay(2500)
                 viewModel.onBoardStatus.collectLatest {
-                    launchMainScreen(it)
+                    launchMainFragment(it)
                 }
             }
             launch {
@@ -42,9 +42,18 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     }
 
-    private fun launchMainScreen(onBoardFinished: Boolean) {
+    private fun launchMainFragment(onBoardFinished: Boolean) {
         if (onBoardFinished) {
-            findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.isSignedIn.collectLatest {
+                    if(it!=null){
+                        findNavController().navigate(R.id.action_splashFragment_to_tabsFragment)
+                    } else{
+                        findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
+                    }
+                }
+            }
+
         } else {
             findNavController().navigate(R.id.action_splashFragment_to_onBoardFragmentContainer)
         }

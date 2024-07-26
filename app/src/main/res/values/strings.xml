@@ -12,11 +12,17 @@
     <string name="next">Next</string>
     <string name="get_started">Get Started</string>
 
-    <!-- LOCALE_ERROR-->
-    <string name="error_sql">Unable to load data from the database. Please try again later.</string>
-    <string name="data_not_found">No data found. Please check your search criteria and try again.</string>
-    <string name="storage_error">Error while accessing storage. Please ensure you have sufficient permissions and space.</string>
-    <string name="unknown_error">Sorry, an unknown error occurred. Please try again later.</string>
+    <string name="please_enter_real_names">Please enter real names</string>
+    <string name="invalid_email">Invalid email</string>
+
+    <string name="password_error_digit">Password must contain at least one digit.</string>
+    <string name="password_error_lowercase">Password must contain at least one lowercase letter.</string>
+    <string name="password_error_uppercase">Password must contain at least one uppercase letter.</string>
+    <string name="password_error_length">Password must be at least 8 characters long.</string>
+    <string name="password_error_special">Password must contain at least one special character.</string>
+    <string name="password_confirmation_error">Passwords do not match.</string>
+    <string name="password_error_general">Password must contain at least one digit, one special character, one lowercase letter, one uppercase letter, and be at least 8 characters long.</string>
+
     <string name="sign_in_to_redrive">Sign in to ReDrive</string>
     <string name="full_name">Full name</string>
     <string name="email">Email</string>
@@ -26,9 +32,19 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up_to_redrive">Sign up to ReDrive</string>
-    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
     <string name="remember_me">Remember me?</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="empty_string"> </string>
+
+
+
+    <!-- LOCALE_ERROR-->
+    <string name="error_sql">Unable to load data from the database. Please try again later.</string>
+    <string name="data_not_found">No data found. Please check your search criteria and try again.</string>
+    <string name="storage_error">Error while accessing storage. Please ensure you have sufficient permissions and space.</string>
+    <string name="unknown_error">Sorry, an unknown error occurred. Please try again later.</string>
+
 
 
 </resources>

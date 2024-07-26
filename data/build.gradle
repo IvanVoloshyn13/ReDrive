@@ -3,6 +3,7 @@ plugins {
     alias libs.plugins.android.library
     alias libs.plugins.google.devtools.ksp
     alias libs.plugins.google.dagger.hilt
+    alias libs.plugins.com.google.gms
 
 }
 apply from: "$rootDir/core.gradle"
@@ -22,6 +23,9 @@ dependencies {
     //Dagger_Hilt
     implementation libs.hilt.android
     ksp libs.ksp.hilt.compiler
+
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.auth
 
     //DataStore
     implementation libs.datastore.preferences

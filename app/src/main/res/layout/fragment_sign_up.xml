@@ -49,9 +49,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_full_name"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="?attr/colorOnSurface"/>
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -69,9 +70,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textColor="?attr/colorOnSurface"/>
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -92,9 +94,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColor="?attr/colorOnSurface"/>
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -115,9 +118,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_confirm_password"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColor="?attr/colorOnSurface" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -126,12 +130,12 @@
         android:id="@+id/btt_sign_up"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:text="@string/sign_up"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_password_container"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/md_theme_primaryContainer">
+        android:backgroundTint="@color/btt_background_tint"
+        android:text="@string/sign_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password_container">
 
     </com.google.android.material.button.MaterialButton>
 
@@ -139,33 +143,47 @@
         android:id="@+id/tv_have_account"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btt_sign_in"
-        app:layout_constraintTop_toBottomOf="@+id/btt_sign_up"
-        android:textAppearance="@style/TextAppearance.ReDrive"
-        app:layout_constraintHorizontal_chainStyle="packed"
-      android:gravity="center"
-        android:fontFamily="@font/poppins_light"
         android:layout_marginTop="16dp"
-        android:text="@string/already_have_an_account">
+        android:fontFamily="@font/poppins_light"
+        android:gravity="center"
+        android:text="@string/already_have_an_account"
+        android:textAppearance="@style/TextAppearance.ReDrive"
+        app:layout_constraintEnd_toStartOf="@id/btt_sign_in"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btt_sign_up">
 
     </TextView>
+
     <TextView
         android:id="@+id/btt_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        app:layout_constraintStart_toEndOf="@+id/tv_have_account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btt_sign_up"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_light"
+        android:gravity="center"
+        android:text="@string/sign_in"
         android:textAppearance="@style/TextAppearance.ReDrive"
         android:textColor="@color/md_theme_onSurfaceVariant"
-        android:gravity="center"
-        android:fontFamily="@font/poppins_light"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/sign_in">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_have_account"
+        app:layout_constraintTop_toBottomOf="@+id/btt_sign_up">
 
     </TextView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:indeterminateTint="?attr/colorOnSurface"
+        android:visibility="gone">
+
+    </ProgressBar>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

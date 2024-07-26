@@ -15,11 +15,20 @@
 
     </style>
 
+
+
 <style name="BaseTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
     <item name="android:layout_marginStart">24dp</item>
     <item name="android:layout_marginEnd">24dp</item>
     <item name="android:layout_marginTop">16dp</item>
-    <item name="android:textColorHint">#DADADA</item>
+    <item name="hintTextColor">?attr/colorOnSurface</item>
+
+    <item name="boxStrokeColor">?attr/colorOnSurface</item>
+    <item name="helperText">Required</item>
+    <item name="helperTextEnabled">true</item>
+    <item name="helperTextTextColor">#00B8D4</item>
+
+
 </style>
 
 </resources>

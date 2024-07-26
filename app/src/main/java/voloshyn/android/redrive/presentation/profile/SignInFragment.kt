@@ -5,6 +5,7 @@ import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentSignInBinding
@@ -16,9 +17,13 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val spannableString = SpannableString(binding.bttSignIn.text)
+        val spannableString = SpannableString(binding.tvSignUp.text)
         spannableString.setSpan(UnderlineSpan(), 0, spannableString.length, 0)
-        binding.bttSignIn.text = spannableString
+        binding.tvSignUp.text = spannableString
+
+        binding.tvSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+        }
     }
 
 }
