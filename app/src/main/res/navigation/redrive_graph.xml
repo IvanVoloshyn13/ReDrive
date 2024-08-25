@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/redrive"
+    app:startDestination="@id/redriveFragment">
+
+    <fragment
+        android:id="@+id/redriveFragment"
+        android:name="voloshyn.android.redrive.presentation.tabs.redrive.RedriveFragment"
+        android:label="Redrive"
+        tools:layout="@layout/fragment_redrive"
+       />
+</navigation>

@@ -1,0 +1,23 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Bottom and Right shadow -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+            <corners android:radius="12dp" />
+            <gradient
+                android:startColor="#00000000"
+                android:endColor="#40000000"
+                android:angle="135"        />
+ <!-- Angle to target bottom-right -->
+        </shape>
+    </item>
+
+    <!-- Card background color -->
+    <item android:left="0dp" android:top="0dp" android:right="4dp" android:bottom="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#727272" /> <!-- Card background color -->
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+</layer-list>

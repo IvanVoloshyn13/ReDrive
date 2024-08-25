@@ -2,11 +2,17 @@
     <!-- Base application theme. -->
     <style name="Base.V26.Theme.ReDrive" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
-
-        <item name="colorOnPrimaryContainer">@color/md_theme_onPrimaryContainer</item>
-        <item name="colorOnSurface">@color/md_theme_onPrimaryContainer</item>
-
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="backgroundColor">@color/md_theme_light_background</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceContainer">@color/md_theme_light_surfaceContainer</item>
+        <item name="colorTertiary">@color/md_theme_tertiary</item>
 
         <!-- Customize your theme here. -->
     </style>
@@ -14,9 +20,8 @@
     <style name="Base.Theme.ReDrive" parent="Base.V26.Theme.ReDrive" />
 
     <style name="Theme.ReDrive" parent="Base.Theme.ReDrive">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:statusBarColor">?attr/backgroundColor</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
 </resources>

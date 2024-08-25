@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context="voloshyn.android.redrive.presentation.MainActivity">
 
+
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -15,5 +17,27 @@
         app:navGraph="@navigation/main_graph">
 
     </androidx.fragment.app.FragmentContainerView>
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#003700B3"
+        app:titleTextColor="@color/black"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:id="@+id/usernameTextView"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            android:layout_marginEnd="16dp"
+            tools:text=" &#64;username"/>
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
 </FrameLayout>

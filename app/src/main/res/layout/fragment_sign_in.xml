@@ -42,6 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/email"
+        app:hintTextColor="#D7D6D6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_in">
@@ -83,7 +84,7 @@
         android:id="@+id/remember_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="@color/md_theme_onSurface"
+        android:buttonTint="?attr/colorOnSecondaryContainer"
         app:layout_constraintStart_toStartOf="@id/password_container"
         app:layout_constraintTop_toBottomOf="@id/password_container">
 
@@ -107,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_light"
-        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:textColor="?attr/colorTertiary"
         android:text="@string/forgot_password"
         android:textAppearance="@style/TextAppearance.ReDrive"
         app:layout_constraintBottom_toBottomOf="@id/remember_me"
@@ -122,7 +123,8 @@
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/md_theme_primaryContainer"
+        android:textColor="?attr/colorOnSecondaryContainer"
+        android:backgroundTint="?attr/colorSecondaryContainer"
         android:text="@string/sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,12 +158,25 @@
         android:gravity="center"
         android:text="@string/sign_up"
         android:textAppearance="@style/TextAppearance.ReDrive"
-        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:textColor="?attr/colorTertiary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_have_account"
         app:layout_constraintTop_toBottomOf="@+id/btt_sign_in">
 
     </TextView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:indeterminateTint="?attr/colorOnSurface"
+        android:visibility="gone">
+
+    </ProgressBar>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

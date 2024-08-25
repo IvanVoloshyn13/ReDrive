@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/backgroundColor"
     tools:context="voloshyn.android.redrive.presentation.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -11,16 +12,21 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/tabs_graph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
     </androidx.fragment.app.FragmentContainerView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:menu="@menu/tabs_menu"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

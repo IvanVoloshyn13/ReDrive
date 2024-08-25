@@ -1,6 +1,5 @@
 package voloshyn.android.redrive.utils
 
-import android.util.Property
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
