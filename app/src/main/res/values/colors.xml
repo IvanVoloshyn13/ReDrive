@@ -8,36 +8,50 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!--    Refuel details colors-->
+    <color name="distance">#00D034</color>
+    <color name="fuel">#00E3FE</color>
+    <color name="fuel_payments">#FFC800</color>
+    <color name="pln_l">#6F6F6F</color>
+    <color name="repair_fab">#FF6200</color>
+
 
     <!--    Theme colors-->
 
-    <color name="md_theme_primary">#fafafa</color>
-    <color name="md_theme_onPrimary">#000000</color>
+    <color name="md_theme_light_primary">#fafafa</color>
+    <color name="md_theme_light_onPrimary">#000000</color>
+    <color name="md_theme_light_primaryContainer">#00E2FD</color>
+    <color name="md_theme_light_onPrimaryContainer">#FFFFFF</color>
+    <color name="md_theme_light_secondaryContainer">#638FFF</color>
+    <color name="md_theme_light_onSecondaryContainer">#FFFFFF</color>
+    <color name="md_theme_light_background">#FFFFFF</color>
+    <color name="md_theme_light_surface">#BFE8E8E8</color>
+    <color name="md_theme_light_onSurface">#000000</color>
 
-    <color name="md_theme_primaryContainer">#638FFF</color>
-    <color name="md_theme_onPrimaryContainer">#FFFFFF</color>
+    <color name="md_theme_tertiary">#638FFF</color>
 
-    <color name="md_theme_onSurface">#FFFFFF</color>
-
-    <color name="md_theme_onSurfaceVariant">#638FFF</color>
-
+    <color name="md_theme_light_surfaceContainer">#BFE8E8E8</color>
 
     <color name="md_theme_secondary">#006874</color>
     <color name="md_theme_onSecondary">#FFFFFF</color>
     <color name="md_theme_secondaryContainer">#97F0FF</color>
     <color name="md_theme_onSecondaryContainer">#001F24</color>
-    <color name="md_theme_tertiary">#00668A</color>
+
+
     <color name="md_theme_onTertiary">#304FFE</color>
     <color name="md_theme_tertiaryContainer">#C4E7FF</color>
     <color name="md_theme_onTertiaryContainer">#001E2C</color>
+
     <color name="md_theme_error">#BA1A1A</color>
     <color name="md_theme_errorContainer">#FFDAD6</color>
     <color name="md_theme_onError">#FFFFFF</color>
+
     <color name="md_theme_onErrorContainer">#410002</color>
 
 
 
     <color name="md_theme_surfaceVariant">#DEE3EA</color>
+
 
     <color name="md_theme_outline">#72787E</color>
 

@@ -9,7 +9,7 @@ import voloshyn.android.domain.appResult.DataError
 
 
 
-suspend fun safeCall(
+suspend fun safeLocalCall(
     maxAttempts: Int = 3,
     defaultDelay: Long = 250,
     call: suspend () -> Unit,
@@ -38,7 +38,7 @@ suspend fun safeCall(
 
 
 
-suspend fun <D> safeCallWithReturn(
+suspend fun <D> safeLocaleCallWithReturn(
     defaultValue: D? = null,
     maxAttempts: Int = 3,
     defaultDelay: Long = 250,

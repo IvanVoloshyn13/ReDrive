@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import voloshyn.android.data.dataSource.datastorePreferences.PreferencesKeys
-import voloshyn.android.data.safeCallWithReturn
+import voloshyn.android.data.safeLocaleCallWithReturn
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.AuthError
 import voloshyn.android.domain.appResult.DataError
@@ -34,7 +34,7 @@ class InitRepositoryImpl @Inject constructor(
     }
 
     override suspend fun isFinished(): AppResult<Flow<Boolean>, DataError.Locale> {
-        return safeCallWithReturn(defaultValue = flowOf(false)) {
+        return safeLocaleCallWithReturn(defaultValue = flowOf(false)) {
             dataStore.data.map { preferences ->
                 preferences[PreferencesKeys.ON_BOARD_IS_FINISHED] ?: false
             }

@@ -44,16 +44,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private fun launchMainFragment(onBoardFinished: Boolean) {
         if (onBoardFinished) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.isSignedIn.collectLatest {
-                    if(it!=null){
-                        findNavController().navigate(R.id.action_splashFragment_to_tabsFragment)
-                    } else{
-                        findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
-                    }
-                }
-            }
-
+            findNavController().navigate(R.id.action_splashFragment_to_tabsFragment)
         } else {
             findNavController().navigate(R.id.action_splashFragment_to_onBoardFragmentContainer)
         }

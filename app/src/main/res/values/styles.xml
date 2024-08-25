@@ -2,33 +2,74 @@
 <resources>
 
     <style name="TextAppearance.ReDrive.Medium" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?attr/colorOnPrimaryContainer</item>
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:textSize">18sp</item>
 
     </style>
 
     <style name="TextAppearance.ReDrive" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?attr/colorOnSecondaryContainer</item>
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:textSize">14sp</item>
 
     </style>
 
+    <style name="TextAppearance.ReDrive.Cards" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:textSize">20sp</item>
+
+    </style>
+
+    <style name="TextAppearance.ReDrive.Cards.Small" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="fontFamily">@font/inter_light</item>
+        <item name="android:textSize">12sp</item>
+
+    </style>
+
+    <style name="TextAppearance.ReDrive.Cards.Medium" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
+
+    <style name="TextAppearance.ReDrive.Cards.Regular" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
 
 
-<style name="BaseTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-    <item name="android:layout_marginStart">24dp</item>
-    <item name="android:layout_marginEnd">24dp</item>
-    <item name="android:layout_marginTop">16dp</item>
-    <item name="hintTextColor">?attr/colorOnSurface</item>
+    <style name="BaseTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="cursorColor">@color/black</item>
+        <item name="hintTextColor">#D7D6D6</item>
+        <item name="boxStrokeColor">#D7D6D6</item>
+        <item name="helperText">Required</item>
+        <item name="helperTextEnabled">true</item>
+        <item name="helperTextTextColor">#00B8D4</item>
 
-    <item name="boxStrokeColor">?attr/colorOnSurface</item>
-    <item name="helperText">Required</item>
-    <item name="helperTextEnabled">true</item>
-    <item name="helperTextTextColor">#00B8D4</item>
+
+    </style>
+
+    <style name="TextInputLayout.Refuel" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="android:layout_marginStart">@dimen/small_margin</item>
+        <item name="android:layout_marginEnd">@dimen/small_margin</item>
+        <item name="boxBackgroundColor">#00FFFFFF</item>
+        <item name="cursorColor">@color/black</item>
+        <item name="hintTextColor">?attr/colorOnSurface</item>
+        <item name="boxStrokeColor">?attr/colorOnSurface</item>
+        <item name="helperText">Required</item>
+        <item name="helperTextEnabled">true</item>
+        <item name="helperTextTextColor">#00B8D4</item>
 
 
-</style>
+    </style>
 
 </resources>

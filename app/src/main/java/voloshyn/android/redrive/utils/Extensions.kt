@@ -4,15 +4,22 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import voloshyn.android.app.R
-import voloshyn.android.domain.useCase.profile.ValidatePasswordState
+import voloshyn.android.domain.useCase.auth.ValidatePasswordState
 
-fun Fragment.navigateToSignInFragment() {
-   findNavController().navigate(R.id.action_onBoardFragmentContainer_to_signInFragment)
+fun Fragment.navigateToTabsFragment() {
+   findNavController().navigate(R.id.action_onBoardFragmentContainer_to_tabsFragment)
+}
+
+fun Fragment.findTopNavController(): NavController {
+    val topLevelHost = requireActivity().supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment?
+    return topLevelHost?.navController ?: findNavController()
 }
 
 fun Fragment.showToast(message: String) {

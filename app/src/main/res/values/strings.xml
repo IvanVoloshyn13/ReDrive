@@ -36,15 +36,41 @@
     <string name="remember_me">Remember me?</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="empty_string"> </string>
+    <string name="price_per_liter">%1$s\n%2$s/l</string>
 
 
 
-    <!-- LOCALE_ERROR-->
+    <!-- LOCALE_ERRORS-->
     <string name="error_sql">Unable to load data from the database. Please try again later.</string>
     <string name="data_not_found">No data found. Please check your search criteria and try again.</string>
     <string name="storage_error">Error while accessing storage. Please ensure you have sufficient permissions and space.</string>
-    <string name="unknown_error">Sorry, an unknown error occurred. Please try again later.</string>
+    <string name="unknown_error_datastore">Sorry, an unknown error occurred. Please try again later.</string>
 
+    <!-- FIREBASE_ERRORS-->
+    <string name="firebase_auth_error">An error occurred with Firebase Authentication. Please try again later.</string>
+    <string name="invalid_credentials">The credentials provided are invalid. Please check your email and password and try again.</string>
+    <string name="user_collision">An account with this email already exists. Please use a different email or log in to the existing account.</string>
+    <string name="no_user_detected">No user detected with the provided credentials. Please sign up or check your login information.</string>
+    <string name="unknown_error_firebase">An unknown error occurred. Please try again later or contact support.</string>
+
+
+    <string name="summary">Summary</string>
+    <string name="cost_per_km">Cost per km</string>
+    <string name="avg_consumption">Avg Consumption</string>
+    <string name="overview">Overview</string>
+    <string name="last_refuel">Last refuel</string>
+    <string name="refuel_date">Refuel Date</string>
+    <string name="odometer">Odometer</string>
+    <string name="fuel_volume">Fuel Volume</string>
+    <string name="unit_price">Unit price</string>
+    <string name="notes">Notes</string>
+    <string name="full_tank">Full Tank</string>
+    <string name="save">Save</string>
+    <string name="clear">Clear</string>
+    <string name="profile">profile</string>
+    <string name="redrive">redrive</string>
+    <string name="logs">logs</string>
+    <string name="missed_previous">Missed previous</string>
 
 
 </resources>

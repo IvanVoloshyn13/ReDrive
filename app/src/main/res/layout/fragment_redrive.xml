@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
+    tools:context="voloshyn.android.redrive.presentation.MainActivity">
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_current_vehicle"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:cardCornerRadius="@dimen/default_card_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:src="@drawable/ic_car"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/tv_current_vehicle_name"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/default_margin"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards"
+                android:textColor="@color/md_theme_light_onSurface"
+                app:layout_constraintBottom_toBottomOf="@id/iv_icon"
+                app:layout_constraintStart_toEndOf="@id/iv_icon"
+                app:layout_constraintTop_toTopOf="@id/iv_icon"
+                tools:text="Car name">
+
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/iv_drop_down_menu"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:src="@drawable/ic_arrow_drop_down"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription">
+
+            </ImageView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_overview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/overview"
+        android:textAppearance="@style/TextAppearance.ReDrive"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="@dimen/big_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_current_vehicle">
+
+    </TextView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_avg_consumption"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        app:cardCornerRadius="@dimen/default_card_corner_radius"
+        app:layout_constraintEnd_toStartOf="@id/cv_cost_per_km"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_overview">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_avg_consumption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@string/avg_consumption"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Medium"
+                android:textColor="?attr/colorOnSurface"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_avg_consumption_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:text="@string/price_per_liter"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards"
+                android:textColor="?attr/colorOnSurface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_avg_consumption">
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_cost_per_km"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:cardCornerRadius="@dimen/default_card_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cv_avg_consumption"
+        app:layout_constraintTop_toBottomOf="@id/tv_overview">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_cost_per_km"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@string/cost_per_km"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Medium"
+                android:textColor="?attr/colorOnSurface"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_cost_per_km_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:text="@string/price_per_liter"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards"
+                android:textColor="?attr/colorOnSurface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_cost_per_km">
+
+            </TextView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_summary"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:cardCornerRadius="@dimen/default_card_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_avg_consumption">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@string/summary"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Medium"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="@dimen/regular_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view_summary_distance"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@color/distance"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_summary"
+                app:layout_constraintTop_toBottomOf="@+id/tv_summary">
+
+            </View>
+
+            <TextView
+                android:id="@+id/tv_sum_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+                app:layout_constraintBottom_toBottomOf="@id/view_summary_distance"
+                app:layout_constraintStart_toEndOf="@id/view_summary_distance"
+                app:layout_constraintTop_toTopOf="@id/view_summary_distance"
+                tools:text="distance">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view_summary_fuel"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="@dimen/small_margin"
+                android:background="@color/fuel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/view_payments"
+                app:layout_constraintStart_toEndOf="@id/tv_sum_distance"
+                app:layout_constraintTop_toBottomOf="@+id/tv_summary">
+
+            </View>
+
+            <TextView
+                android:id="@+id/tv_sum_of_fuel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+                app:layout_constraintBottom_toBottomOf="@id/view_summary_distance"
+                app:layout_constraintStart_toEndOf="@id/view_summary_fuel"
+                app:layout_constraintTop_toTopOf="@id/view_summary_distance"
+                tools:text="fuel">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view_payments"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="6dp"
+                android:background="@color/fuel_payments"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_sum_of_fuel_payments"
+                app:layout_constraintTop_toBottomOf="@+id/tv_summary">
+
+            </View>
+
+            <TextView
+                android:id="@+id/tv_sum_of_fuel_payments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+                app:layout_constraintBottom_toBottomOf="@id/view_summary_distance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/view_summary_distance"
+                tools:text="fuel payments">
+
+            </TextView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_last_refuel"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:cardCornerRadius="@dimen/default_card_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_summary">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_last_refuel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@string/last_refuel"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Medium"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="@dimen/regular_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_last_refuel_distance"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+                app:layout_constraintBottom_toTopOf="@id/tv_last_refuel_fuel_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="fuel payments">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view_last_refuel_km"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:background="@color/distance"
+                app:layout_constraintBottom_toBottomOf="@id/tv_last_refuel_distance"
+                app:layout_constraintEnd_toStartOf="@id/tv_last_refuel_distance"
+                app:layout_constraintTop_toTopOf="@id/tv_last_refuel_distance">
+
+            </View>
+
+            <TextView
+                android:id="@+id/tv_last_refuel_fuel_amount"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+                app:layout_constraintBottom_toTopOf="@id/tv_last_refuel_payment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_last_refuel_distance"
+                tools:text="fuel amount l">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view_last_refuel_fuel_amount"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:background="@color/fuel"
+                app:layout_constraintBottom_toBottomOf="@id/tv_last_refuel_fuel_amount"
+                app:layout_constraintEnd_toStartOf="@id/tv_last_refuel_fuel_amount"
+                app:layout_constraintTop_toTopOf="@id/tv_last_refuel_fuel_amount">
+
+            </View>
+
+            <TextView
+                android:id="@+id/tv_last_refuel_payment"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+                app:layout_constraintBottom_toTopOf="@id/tv_last_refuel_fuel_price"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_last_refuel_fuel_amount"
+                tools:text="payments">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view_last_refuel_payment"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:background="@color/fuel_payments"
+                app:layout_constraintBottom_toBottomOf="@id/tv_last_refuel_payment"
+                app:layout_constraintEnd_toStartOf="@id/tv_last_refuel_payment"
+                app:layout_constraintTop_toTopOf="@id/tv_last_refuel_payment">
+
+            </View>
+
+            <TextView
+                android:id="@+id/tv_last_refuel_fuel_price"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_last_refuel_payment"
+                tools:text="Price">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view_last_refuel_fuel_price"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:background="@color/pln_l"
+                app:layout_constraintBottom_toBottomOf="@id/tv_last_refuel_fuel_price"
+                app:layout_constraintEnd_toStartOf="@id/tv_last_refuel_fuel_price"
+                app:layout_constraintTop_toTopOf="@id/tv_last_refuel_fuel_price">
+
+            </View>
+
+            <TextView
+                android:id="@+id/tv_last_avg_consumption_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:text="@string/price_per_liter"
+                android:textAppearance="@style/TextAppearance.ReDrive.Cards"
+                android:textColor="?attr/colorOnSurface"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btt_add_refuel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:backgroundTint="@color/fuel"
+        android:src="@drawable/ic_refuel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_last_refuel"
+        tools:ignore="ContentDescription">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btt_add_repair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:backgroundTint="@color/repair_fab"
+        android:src="@drawable/ic_repair"
+        app:layout_constraintEnd_toStartOf="@id/btt_add_refuel"
+        app:layout_constraintTop_toBottomOf="@id/cv_last_refuel"
+        tools:ignore="ContentDescription">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

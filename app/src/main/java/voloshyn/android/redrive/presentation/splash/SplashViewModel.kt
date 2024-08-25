@@ -22,7 +22,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val onBoard: OnBoardIsFinishedUseCase,
-    private val signIn: IsSignedInUseCase
 ) : ViewModel() {
     private val scope = viewModelScope()
 
@@ -33,13 +32,6 @@ class SplashViewModel @Inject constructor(
     )
     val onBoardStatus = _onBoardStatus.asSharedFlow()
 
-    private val _isSignedIn = MutableSharedFlow<UserTuple?>(
-        replay = 1,
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    val isSignedIn = _isSignedIn.asSharedFlow()
-
     private val _isError = MutableSharedFlow<PresentationError>()
     val isError = _isError.asSharedFlow()
 
@@ -48,23 +40,9 @@ class SplashViewModel @Inject constructor(
             val result = onBoard.invoke()
             _onBoardStatus.emit(onBoardStatus(result))
 
-            isSignedIn()
         }
     }
 
-    private fun isSignedIn() {
-        val result = signIn.invoke()
-        when (result) {
-            is AppResult.Success -> {
-                _isSignedIn.tryEmit(result.data!!)
-            }
-
-            is AppResult.Error -> {
-                _isSignedIn.tryEmit(null)
-            }
-        }
-
-    }
 
     private suspend fun onBoardStatus(result: AppResult<Flow<Boolean>, DataError.Locale>): Boolean {
         return when (result) {

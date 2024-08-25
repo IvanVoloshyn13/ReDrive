@@ -12,17 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReDrive"
         android:name="voloshyn.android.redrive.ReDriveApp"
-        tools:targetApi="31">
+     >
 
         <activity
             android:name="voloshyn.android.redrive.presentation.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
 
         </activity>
+
 
     </application>
 

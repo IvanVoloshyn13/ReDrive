@@ -131,7 +131,8 @@
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/btt_background_tint"
+        android:backgroundTint="?attr/colorSecondaryContainer"
+        android:textColor="?attr/colorOnSecondaryContainer"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -165,7 +166,7 @@
         android:gravity="center"
         android:text="@string/sign_in"
         android:textAppearance="@style/TextAppearance.ReDrive"
-        android:textColor="@color/md_theme_onSurfaceVariant"
+        android:textColor="?attr/colorTertiary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_have_account"
         app:layout_constraintTop_toBottomOf="@+id/btt_sign_up">
