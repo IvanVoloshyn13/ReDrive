@@ -56,7 +56,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun signUp(user: User): AppResult<UserTuple, AuthError.Auth> {
-        var currentUser = UserTuple()
+        var currentUser = UserTuple.EMPTY_USER
         return try {
             val result = auth.createUserWithEmailAndPassword(user.email, user.password).awaitOn()
             result.user?.updateProfile(

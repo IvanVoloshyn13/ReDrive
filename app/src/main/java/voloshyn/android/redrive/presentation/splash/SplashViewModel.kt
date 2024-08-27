@@ -11,9 +11,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.DataError
-import voloshyn.android.domain.models.UserTuple
-import voloshyn.android.domain.useCase.init.IsSignedInUseCase
-import voloshyn.android.domain.useCase.init.OnBoardIsFinishedUseCase
+import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
 import voloshyn.android.redrive.presentation.onBoard.model.PresentationError
 import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
