@@ -76,7 +76,7 @@ class SignInViewModel @Inject constructor(
 data class SignInState(
     val loading: Boolean = false,
     val isSignIn: Boolean = false,
-    val user: UserTuple = UserTuple(),
+    val user: UserTuple = UserTuple.EMPTY_USER,
     val isError: Boolean = false,
     @StringRes val errorMessage: Int? = null
 )

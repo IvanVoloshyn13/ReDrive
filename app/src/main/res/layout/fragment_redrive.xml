@@ -274,13 +274,13 @@
                 android:layout_marginEnd="6dp"
                 android:background="@color/fuel_payments"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_sum_of_fuel_payments"
+                app:layout_constraintEnd_toStartOf="@id/tv_total_fuel_payments"
                 app:layout_constraintTop_toBottomOf="@+id/tv_summary">
 
             </View>
 
             <TextView
-                android:id="@+id/tv_sum_of_fuel_payments"
+                android:id="@+id/tv_total_fuel_payments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"

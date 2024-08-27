@@ -7,6 +7,13 @@ data class User(
 )
 
 data class UserTuple(
-    val fullName: String = "",
-    val email: String = "",
-)
+    val fullName: String,
+    val email: String ,
+) {
+    companion object {
+        val EMPTY_USER = UserTuple(
+            fullName = "",
+            email = "",
+        )
+    }
+}
