@@ -11,7 +11,7 @@ import voloshyn.android.data.safeLocaleCallWithReturn
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.AuthError
 import voloshyn.android.domain.appResult.DataError
-import voloshyn.android.domain.models.UserTuple
+import voloshyn.android.domain.models.tabs.profile.UserTuple
 import voloshyn.android.domain.repository.InitRepository
 import javax.inject.Inject
 
@@ -20,11 +20,12 @@ class InitRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : InitRepository {
 
-    override  fun isSignedIn(): AppResult<UserTuple?, AuthError.Auth> {
+    override fun isSignedIn(): AppResult<UserTuple?, AuthError.Auth> {
         val firebaseUser = auth.currentUser
         return if (firebaseUser != null) {
             AppResult.Success(
                 data = UserTuple(
+                    id = firebaseUser.uid,
                     fullName = firebaseUser.displayName!!,
                     email = firebaseUser.email!!
                 )

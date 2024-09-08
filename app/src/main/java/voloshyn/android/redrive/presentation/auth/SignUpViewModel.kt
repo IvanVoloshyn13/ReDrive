@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.models.User
-import voloshyn.android.domain.models.UserTuple
+import voloshyn.android.domain.models.tabs.profile.User
+import voloshyn.android.domain.models.tabs.profile.UserTuple
 import voloshyn.android.domain.useCase.auth.SignUpUseCase
 import voloshyn.android.domain.useCase.auth.ValidateEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateFullNameUseCase
@@ -156,7 +156,7 @@ data class FragmentSignUpState(
     val validationState: Boolean = false,
     val isSignUp: Boolean = false,
     val loading: Boolean = false,
-    val currentUser: UserTuple = UserTuple(),
+    val currentUser: UserTuple = UserTuple.EMPTY_USER,
     val isError: Boolean = false,
     @StringRes val errorMessage: Int = 0
 )

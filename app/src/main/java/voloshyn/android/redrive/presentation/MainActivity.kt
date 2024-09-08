@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun prepareToolbar(destination: NavDestination) {
-        if (isStartDestination(destination) || destination.id == getNewRefuelDestination()) {
+        if (isStartDestination(destination) || destination.id == getNewRefuelDestination() || destination.id == getVehiclesDestination()) {
             binding.toolbar.setTitleTextColor(Color.BLACK)
             binding.toolbar.setNavigationIconTint(Color.BLACK)
         } else
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getSplashDestination(): Int = R.id.splashFragment
 
-    private fun getOnBoardDestination(): Int = R.id.onBoardFragmentContainer
+    private fun getVehiclesDestination(): Int = R.id.vehiclesFragment
 
     private fun getNewRefuelDestination(): Int = R.id.newRefuelFragment
 

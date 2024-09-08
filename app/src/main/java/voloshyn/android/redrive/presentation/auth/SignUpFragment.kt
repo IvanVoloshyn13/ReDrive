@@ -9,13 +9,12 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentSignUpBinding
-import voloshyn.android.domain.models.User
+import voloshyn.android.domain.models.tabs.profile.User
 import voloshyn.android.redrive.utils.viewBinding
 
 @AndroidEntryPoint

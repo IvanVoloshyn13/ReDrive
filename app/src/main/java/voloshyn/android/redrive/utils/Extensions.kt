@@ -54,7 +54,7 @@ fun ValidatePasswordState.message(): Int {
     }
 }
 
-fun ViewModel.viewModelScope(): CoroutineScope {
+fun viewModelScope(): CoroutineScope {
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e("EXCEPTION_HANDLER", "$throwable,  ${throwable.message}")
     }

@@ -1,10 +1,11 @@
 [versions]
-agp = "8.5.1"
-firebaseBom = "33.1.2"
+agp = "8.5.2"
+firebaseBom = "33.2.0"
 firebaseUiAuth = "23.0.0"
 googleServices = "4.4.2"
-kotlin = "1.9.21"
-ksp = "1.9.21-1.0.15"
+kotlin = "2.0.20"
+ksp = "2.0.20-1.0.24"
+roomVersion = "2.6.1"
 
 minSdk = "26"
 compileSdk = "34"
@@ -39,6 +40,11 @@ androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", ver
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 ksp-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 
+androidx-room = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomVersion" }
+ksp-room = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines-android" }
@@ -51,6 +57,10 @@ junit = { module = "junit:junit", version.ref = "junit" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+
+androidx-room = { id = "androidx.room", version.ref = "roomVersion" }
+
+parcelize={ id="org.jetbrains.kotlin.plugin.parcelize",version.ref="kotlin"}
 
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 google-dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

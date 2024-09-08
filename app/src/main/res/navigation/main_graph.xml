@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_tabsFragment_to_newRefuelFragment"
             app:destination="@id/newRefuelFragment" />
+        <action
+            android:id="@+id/action_tabsFragment_to_vehiclesFragment"
+            app:destination="@id/vehiclesFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -61,4 +64,9 @@
         android:name="voloshyn.android.redrive.presentation.tabs.newRefuel.NewRefuelFragment"
         android:label="New refuel"
         tools:layout="@layout/fragment_new_refuel"/>
+    <fragment
+        android:id="@+id/vehiclesFragment"
+        android:name="voloshyn.android.redrive.presentation.tabs.vehicles.VehiclesFragment"
+        android:label="Choose Vehicle"
+        tools:layout="@layout/fragment_vehicles"/>
 </navigation>
