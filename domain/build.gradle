@@ -3,12 +3,12 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
-java{
+java {
     toolchain {
-        languageVersion=JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 
 }
-dependencies{
+dependencies {
     implementation libs.kotlinx.coroutines
 }

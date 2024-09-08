@@ -35,15 +35,15 @@
     <string name="dont_have_an_account">Don\'t have an account?</string>
     <string name="remember_me">Remember me?</string>
     <string name="forgot_password">Forgot password?</string>
-    <string name="empty_string"> </string>
     <string name="price_per_liter">%1$s\n%2$s/l</string>
 
 
+    <string name="empty_string"> </string>
 
     <!-- LOCALE_ERRORS-->
     <string name="error_sql">Unable to load data from the database. Please try again later.</string>
     <string name="data_not_found">No data found. Please check your search criteria and try again.</string>
-    <string name="storage_error">Error while accessing storage. Please ensure you have sufficient permissions and space.</string>
+    <string name="storage_error">Error while accessing storage</string>
     <string name="unknown_error_datastore">Sorry, an unknown error occurred. Please try again later.</string>
 
     <!-- FIREBASE_ERRORS-->
@@ -71,6 +71,13 @@
     <string name="redrive">redrive</string>
     <string name="logs">logs</string>
     <string name="missed_previous">Missed previous</string>
+    <string name="ok">OK</string>
+    <string name="vehicle_name">Vehicle name</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="empty_field_error">This field can not be empty</string>
+    <string name="required">Required</string>
+    <string name="add_new_vehicle">Add new vehicle</string>
 
 
 </resources>

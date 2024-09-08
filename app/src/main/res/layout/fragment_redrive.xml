@@ -8,7 +8,6 @@
     tools:context="voloshyn.android.redrive.presentation.MainActivity">
 
 
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_current_vehicle"
         android:layout_width="0dp"
@@ -21,12 +20,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/iv_icon"
+                android:id="@+id/iv_vehicle"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_marginStart="@dimen/medium_margin"
@@ -38,6 +43,7 @@
 
             </ImageView>
 
+
             <TextView
                 android:id="@+id/tv_current_vehicle_name"
                 android:layout_width="wrap_content"
@@ -46,9 +52,9 @@
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.ReDrive.Cards"
                 android:textColor="@color/md_theme_light_onSurface"
-                app:layout_constraintBottom_toBottomOf="@id/iv_icon"
-                app:layout_constraintStart_toEndOf="@id/iv_icon"
-                app:layout_constraintTop_toTopOf="@id/iv_icon"
+                app:layout_constraintBottom_toBottomOf="@id/iv_vehicle"
+                app:layout_constraintStart_toEndOf="@id/iv_vehicle"
+                app:layout_constraintTop_toTopOf="@id/iv_vehicle"
                 tools:text="Car name">
 
 
@@ -56,8 +62,8 @@
 
             <ImageView
                 android:id="@+id/iv_drop_down_menu"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginEnd="@dimen/medium_margin"
                 android:src="@drawable/ic_arrow_drop_down"
                 app:layout_constraintBottom_toBottomOf="parent"

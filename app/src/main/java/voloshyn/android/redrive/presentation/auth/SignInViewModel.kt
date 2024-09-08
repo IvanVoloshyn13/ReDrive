@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.models.UserTuple
+import voloshyn.android.domain.models.tabs.profile.UserTuple
 import voloshyn.android.domain.useCase.auth.RememberMeUseCase
 import voloshyn.android.domain.useCase.auth.SignInUseCase
 import voloshyn.android.redrive.utils.toStringResource
@@ -50,6 +50,7 @@ class SignInViewModel @Inject constructor(
                             isSignIn = true,
                             user = (
                                     UserTuple(
+                                        id = result.data.id,
                                         fullName = result.data.fullName,
                                         email = result.data.email
                                     )

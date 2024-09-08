@@ -3,7 +3,7 @@ package voloshyn.android.redrive.presentation.tabs.redrive
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.models.UserTuple
+import voloshyn.android.domain.models.tabs.profile.UserTuple
 import voloshyn.android.domain.useCase.auth.IsSignedInUseCase
 import javax.inject.Inject
 

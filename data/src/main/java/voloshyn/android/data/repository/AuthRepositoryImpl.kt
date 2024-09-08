@@ -16,8 +16,8 @@ import voloshyn.android.data.dataSource.datastorePreferences.PreferencesKeys
 import voloshyn.android.data.safeLocalCall
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.AuthError
-import voloshyn.android.domain.models.User
-import voloshyn.android.domain.models.UserTuple
+import voloshyn.android.domain.models.tabs.profile.User
+import voloshyn.android.domain.models.tabs.profile.UserTuple
 import voloshyn.android.domain.repository.AuthRepository
 import javax.inject.Inject
 import kotlin.coroutines.resumeWithException
@@ -43,6 +43,7 @@ class AuthRepositoryImpl @Inject constructor(
             val firebaseUser = result.user
             firebaseUser?.let {
                 currentUser = UserTuple(
+                    id = it.uid,
                     fullName = it.displayName!!,
                     email = it.email!!
                 )
@@ -65,6 +66,7 @@ class AuthRepositoryImpl @Inject constructor(
             val firebaseUser = result.user
             firebaseUser?.let {
                 currentUser = UserTuple(
+                    id = it.uid,
                     fullName = it.displayName!!,
                     email = it.email!!
                 )
@@ -104,6 +106,7 @@ class AuthRepositoryImpl @Inject constructor(
         val firebaseUser = auth.currentUser
         if (firebaseUser != null) {
             currentUser = UserTuple(
+                id = firebaseUser.uid,
                 fullName = firebaseUser.displayName!!,
                 email = firebaseUser.email!!
             )

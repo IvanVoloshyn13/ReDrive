@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.AuthError
 import voloshyn.android.domain.appResult.DataError
-import voloshyn.android.domain.models.UserTuple
+import voloshyn.android.domain.models.tabs.profile.UserTuple
 
 interface InitRepository {
      fun isSignedIn(): AppResult<UserTuple?, AuthError.Auth>
