@@ -6,20 +6,19 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import voloshyn.android.data.dataSource.datastorePreferences.PreferencesKeys
 import voloshyn.android.data.dataSource.room.dao.VehiclesDao
 import voloshyn.android.data.dataSource.room.entities.VehicleEntity
 import voloshyn.android.data.di.DispatcherIo
-import voloshyn.android.data.safeLocalCall
-import voloshyn.android.data.safeLocaleCallWithReturn
+import voloshyn.android.data.safeDbCall
+import voloshyn.android.data.safeDbCallWithReturn
+import voloshyn.android.data.safeUpdateData
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.DataError
 import voloshyn.android.domain.models.tabs.redrive.Vehicle
+import voloshyn.android.domain.models.tabs.redrive.VehicleTuple
 import voloshyn.android.domain.repository.tabs.VehiclesRepository
 import javax.inject.Inject
 
@@ -28,12 +27,13 @@ class VehiclesRepositoryImpl @Inject constructor(
     private val vehiclesDao: VehiclesDao,
     private val dataStore: DataStore<Preferences>
 ) : VehiclesRepository {
+
     override suspend fun addVehicle(
         vehicle: Vehicle,
         accountId: String?
     ): AppResult<Boolean, DataError.Locale> {
         return safeDbCallWithReturn(dispatcherIo) {
-          val  vehicleId = vehiclesDao.add(
+            val vehicleId = vehiclesDao.add(
                 VehicleEntity(
                     id = 0,
                     accountId = accountId,
@@ -53,49 +53,71 @@ class VehiclesRepositoryImpl @Inject constructor(
 
 
     override suspend fun rememberVehicle(vehicleId: Long, name: String) {
-        safeLocalCall {
+        safeUpdateData {
             dataStore.edit {
                 it[PreferencesKeys.REMEMBER_VEHICLE] = setOf("$vehicleId", name)
             }
         }
     }
 
-    override suspend fun getRememberedVehicle(): AppResult<Set<String>, DataError.Locale> {
-        val defaultValue = setOf("0", "Please add vehicle")
-        return safeLocaleCallWithReturn(defaultValue = defaultValue) {
-            val data = dataStore.data.map {
-                it[PreferencesKeys.REMEMBER_VEHICLE] ?: defaultValue
-            }
-            data.first()
-        }
-    }
 
-    override fun vehicles(): Flow<AppResult<List<Vehicle>, DataError.Locale>> =
-        channelFlow<AppResult<List<Vehicle>, DataError.Locale>> {
-            try {
-                vehiclesDao.getAll().collectLatest {
-                    if (it.isNotEmpty()) {
-                        val vehicles = it.mapIndexed { index, vehicleEntity ->
-                            Vehicle(
-                                id = vehicleEntity.id,
-                                currentMileage = vehicleEntity.currentMileage,
-                                name = vehicleEntity.name
-                            )
-                        }
-                        send(AppResult.Success(data = vehicles))
-                    } else {
-                        send(AppResult.Success(data = Vehicle.NULL))
+    override fun currentVehicle(): Flow<AppResult<VehicleTuple, DataError.Locale>> {
+        val defaultValue = VehicleTuple(0L, "Please add vehicle")
+        var vehicle = defaultValue
+        return try {
+            dataStore.data.map {
+                val vehicleSet = it[PreferencesKeys.REMEMBER_VEHICLE]
+                if (vehicleSet != null) let {
+                    vehicleSet.toList().apply {
+                        vehicle = VehicleTuple(id = this[0].toLong(), name = this[1])
                     }
                 }
-            } catch (e: SQLiteException) {
-                e.printStackTrace()
-                send(AppResult.Error(error = DataError.Locale.STORAGE_ERROR))
-            } catch (e: NullPointerException) {
-                e.printStackTrace()
-                send(AppResult.Error(error = DataError.Locale.DATA_NOT_FOUND))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                send(AppResult.Error(error = DataError.Locale.UNKNOWN_ERROR))
+                AppResult.Success(data = vehicle)
             }
-        }.flowOn(dispatcherIo)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+            val appError = when (exception) {
+                is SQLiteException -> DataError.Locale.STORAGE_ERROR
+                is NullPointerException -> DataError.Locale.DATA_NOT_FOUND
+                else -> DataError.Locale.UNKNOWN_ERROR
+            }
+            flow { emit(AppResult.Error(error = appError)) }
+        }
+
+    }
+
+
+
+
+    override fun vehicles(): Flow<AppResult<List<Vehicle>, DataError.Locale>> {
+        return try {
+            vehiclesDao.getAll()
+                .map { vehicleEntities ->
+                    val vehicles = vehicleEntities.map { vehicleEntity ->
+                        Vehicle(
+                            id = vehicleEntity.id,
+                            name = vehicleEntity.name,
+                            currentMileage = vehicleEntity.currentMileage
+                        )
+                    }
+                    AppResult.Success(data = vehicles)
+                }
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+            val appError = when (exception) {
+                is SQLiteException -> DataError.Locale.STORAGE_ERROR
+                is NullPointerException -> DataError.Locale.DATA_NOT_FOUND
+                else -> DataError.Locale.UNKNOWN_ERROR
+            }
+            flow { emit(AppResult.Error(error = appError)) }
+        }
+
+    }
+
 }
+
+
+
+
+
+

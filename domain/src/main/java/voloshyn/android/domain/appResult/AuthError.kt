@@ -5,7 +5,7 @@ interface AuthError : AppError {
         NO_UPPER_CASE, NO_LOWER_CASE, NO_DIGIT, TO_SHORT
     }
 
-    enum class Auth : AuthError {
+    enum class FirebaseAuth : AuthError {
         FIREBASE_AUTH_ERROR,INVALID_CREDENTIALS,USER_COLLISION,NO_USER_DETECTED,UNKNOWN_ERROR
     }
 

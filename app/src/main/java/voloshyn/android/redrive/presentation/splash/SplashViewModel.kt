@@ -4,10 +4,8 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.DataError
@@ -37,21 +35,20 @@ class SplashViewModel @Inject constructor(
         scope.launch {
             val result = onBoard.invoke()
             _onBoardStatus.emit(onBoardStatus(result))
-
         }
     }
 
 
-    private suspend fun onBoardStatus(result: AppResult<Flow<Boolean>, DataError.Locale>): Boolean {
+    private  fun onBoardStatus(result: AppResult<Boolean, DataError.Locale>): Boolean {
         return when (result) {
             is AppResult.Error -> {
                 _isError.tryEmit(PresentationError(true, result.error.toStringResource()))
                 if (result.data != null) {
-                    result.data!!.first()
+                    result.data!!
                 } else false
             }
 
-            is AppResult.Success -> result.data.first()
+            is AppResult.Success -> result.data
         }
     }
 

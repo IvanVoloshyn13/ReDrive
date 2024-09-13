@@ -7,7 +7,6 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import voloshyn.android.domain.repository.AuthRepository
 import voloshyn.android.domain.repository.EmailValidatorRepository
-import voloshyn.android.domain.repository.InitRepository
 import voloshyn.android.domain.repository.OnBoardRepository
 import voloshyn.android.domain.useCase.auth.IsSignedInUseCase
 import voloshyn.android.domain.useCase.auth.RememberMeUseCase
@@ -23,13 +22,13 @@ object UseCaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideOnBoardIsFinishedUseCase(repository: InitRepository): OnBoardIsFinishedUseCase {
+    fun provideOnBoardIsFinishedUseCase(repository: OnBoardRepository): OnBoardIsFinishedUseCase {
         return OnBoardIsFinishedUseCase(repository)
     }
 
     @Provides
     @ViewModelScoped
-    fun provideIsSignedInUseCase(repository: InitRepository): IsSignedInUseCase {
+    fun provideIsSignedInUseCase(repository: AuthRepository): IsSignedInUseCase {
         return IsSignedInUseCase(repository)
     }
 

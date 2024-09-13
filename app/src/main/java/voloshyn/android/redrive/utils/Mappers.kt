@@ -13,12 +13,12 @@ fun DataError.Locale.toStringResource(): Int {
     }
 }
 
-fun AuthError.Auth.toStringResource():Int{
+fun AuthError.FirebaseAuth.toStringResource():Int{
     return when(this){
-        AuthError.Auth.FIREBASE_AUTH_ERROR -> R.string.firebase_auth_error
-        AuthError.Auth.INVALID_CREDENTIALS -> R.string.invalid_credentials
-        AuthError.Auth.USER_COLLISION -> R.string.user_collision
-        AuthError.Auth.NO_USER_DETECTED -> R.string.no_user_detected
-        AuthError.Auth.UNKNOWN_ERROR -> R.string.unknown_error_firebase
+        AuthError.FirebaseAuth.FIREBASE_AUTH_ERROR -> R.string.firebase_auth_error
+        AuthError.FirebaseAuth.INVALID_CREDENTIALS -> R.string.invalid_credentials
+        AuthError.FirebaseAuth.USER_COLLISION -> R.string.user_collision
+        AuthError.FirebaseAuth.NO_USER_DETECTED -> R.string.no_user_detected
+        AuthError.FirebaseAuth.UNKNOWN_ERROR -> R.string.unknown_error_firebase
     }
 }

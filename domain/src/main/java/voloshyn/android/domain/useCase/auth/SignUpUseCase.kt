@@ -7,7 +7,7 @@ import voloshyn.android.domain.models.tabs.profile.UserTuple
 import voloshyn.android.domain.repository.AuthRepository
 
 class SignUpUseCase(private val repository: AuthRepository) {
-    suspend fun invoke(user: User): AppResult<UserTuple, AuthError.Auth> {
+    suspend fun invoke(user: User): AppResult<UserTuple, AuthError.FirebaseAuth> {
         return repository.signUp(user)
     }
 }
