@@ -7,12 +7,10 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import voloshyn.android.data.repository.AndroidEmailValidatorImpl
 import voloshyn.android.data.repository.AuthRepositoryImpl
-import voloshyn.android.data.repository.InitRepositoryImpl
 import voloshyn.android.data.repository.OnBoardRepositoryImpl
 import voloshyn.android.data.repository.tabs.VehiclesRepositoryImpl
 import voloshyn.android.domain.repository.AuthRepository
 import voloshyn.android.domain.repository.EmailValidatorRepository
-import voloshyn.android.domain.repository.InitRepository
 import voloshyn.android.domain.repository.OnBoardRepository
 import voloshyn.android.domain.repository.tabs.VehiclesRepository
 
@@ -32,11 +30,10 @@ interface RepositoryModule {
     @ViewModelScoped
     fun bindEmailValidatorRepository(repository: AndroidEmailValidatorImpl): EmailValidatorRepository
 
-    @Binds
-    @ViewModelScoped
-    fun bindInitRepository(repository: InitRepositoryImpl): InitRepository
 
     @Binds
     @ViewModelScoped
     fun bindVehicleRepository(repository: VehiclesRepositoryImpl): VehiclesRepository
+
+
 }

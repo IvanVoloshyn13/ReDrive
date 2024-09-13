@@ -8,8 +8,7 @@ import voloshyn.android.domain.models.tabs.redrive.RefuelsTuple
 
 interface RedriveRepository {
     suspend fun currentUser(email: String): AppResult<UserTuple, DataError.Locale>
-
-    suspend fun totalAvgConsumption(): AppResult<List<Double>, DataError.Locale>
+    suspend fun allTimeAvgConsumption(): AppResult<List<Double>, DataError.Locale>
     suspend fun costPerKm(): AppResult<List<Double>, DataError.Locale>
     suspend fun costPerMiles(): AppResult<Double, DataError.Locale>
     suspend fun lastRefuel(): AppResult<LastRefuel, DataError.Locale>

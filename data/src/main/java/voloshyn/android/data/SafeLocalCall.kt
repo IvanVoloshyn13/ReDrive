@@ -1,64 +1,88 @@
 package voloshyn.android.data
 
+import android.database.sqlite.SQLiteException
 import android.util.Log
 import androidx.datastore.core.IOException
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.withContext
 import voloshyn.android.data.mappers.toDataError
+import voloshyn.android.domain.DataStoreException
+import voloshyn.android.domain.LocalStorageException
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.DataError
 
+private const val TAG="DATASTORE_EXCEPTIONS"
 
-
-suspend fun safeLocalCall(
-    maxAttempts: Int = 3,
-    defaultDelay: Long = 250,
-    call: suspend () -> Unit,
+suspend fun safeUpdateData(
+    block: suspend () -> Unit,
 ) {
-    var delayTime = defaultDelay
-    repeat(maxAttempts) {
-        try {
-            call()
-            return
-        } catch (e: IOException) {
-            Log.e("CALL", e.toString())
-            delay(it * delayTime)
-            delayTime *= 2
-            if (maxAttempts - 1 == it) throw e
-        }
-        catch (e: Exception) {
-            Log.e("CALL", e.toString())
-            delay(it * delayTime)
-            delayTime *= 2
-            if (maxAttempts - 1 == it) throw e
-        }
+    try {
+        block()
+    } catch (e: IOException) {
+        Log.e(TAG, e.toString())
+        val appException = DataStoreException()
+        throw appException
+    } catch (e: Exception) {
+        Log.e(TAG, e.toString())
+        val appException = DataStoreException()
+        throw appException
     }
-    throw IllegalStateException("Unknown exception from safeCallWithReturn.")
-    TODO("refactor this functions for using Room later ")
 }
 
 
-
-suspend fun <D> safeLocaleCallWithReturn(
+suspend fun <D> safeGetData(
     defaultValue: D? = null,
-    maxAttempts: Int = 3,
-    defaultDelay: Long = 250,
     call: suspend () -> D,
 ): AppResult<D, DataError.Locale> {
-    var delayTime = defaultDelay
-    repeat(maxAttempts) {
         try {
             return AppResult.Success(data = call())
         } catch (e: IOException) {
-            Log.e("CALL", e.toString())
-            delay(it * delayTime)
-            delayTime *= 2
-            if (maxAttempts - 1 == it) return AppResult.Error(defaultValue, error = e.toDataError())
+            Log.e(TAG, e.toString())
+            return AppResult.Error(defaultValue, error = e.toDataError())
         } catch (e: Exception) {
-            Log.e("CALL", e.toString())
-            delay(it * delayTime)
-            delayTime *= 2
-            if (maxAttempts - 1 == it) return AppResult.Error(defaultValue, error = e.toDataError())
+            Log.e(TAG, e.toString())
+            return AppResult.Error(defaultValue, error = e.toDataError())
         }
     }
-    throw IllegalStateException("Unknown exception from safeCallWithReturn.")
+
+suspend fun <T> safeDbCallWithReturn(
+    dispatcher: CoroutineDispatcher,
+    call: suspend CoroutineScope.() -> T
+): AppResult<T, DataError.Locale> {
+    return try {
+        withContext(dispatcher) {
+            AppResult.Success(data = call())
+        }
+    } catch (e: SQLiteException) {
+        e.printStackTrace()
+        AppResult.Error(error = DataError.Locale.STORAGE_ERROR)
+    } catch (e: NullPointerException) {
+        e.printStackTrace()
+        AppResult.Error(error = DataError.Locale.DATA_NOT_FOUND)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        AppResult.Error(error = DataError.Locale.UNKNOWN_ERROR)
+    }
 }
+
+suspend fun  safeDbCall(
+    dispatcher: CoroutineDispatcher,
+    call: suspend CoroutineScope.() -> Unit
+) {
+    try {
+        withContext(dispatcher) {
+            call()
+        }
+    } catch (e: SQLiteException) {
+        e.printStackTrace()
+        throw LocalStorageException()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        throw LocalStorageException()
+    }
+}
+
+
+
+
