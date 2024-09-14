@@ -1,7 +1,6 @@
 package voloshyn.android.redrive.presentation.tabs.redrive
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +13,7 @@ import voloshyn.android.domain.models.tabs.redrive.Vehicle
 import voloshyn.android.domain.models.tabs.redrive.VehicleTuple
 import voloshyn.android.domain.useCase.auth.IsSignedInUseCase
 import voloshyn.android.domain.useCase.tabs.redrive.GetCurrentVehicleUseCase
-import voloshyn.android.domain.useCase.tabs.redrive.StoreCurrentVehicleUseCase
+import voloshyn.android.domain.useCase.tabs.redrive.RememberCurrentVehicleUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
@@ -22,10 +21,12 @@ import javax.inject.Inject
 class RedriveViewModel @Inject constructor(
     isSignedInUseCase: IsSignedInUseCase,
     private val currentVehicleUseCase: GetCurrentVehicleUseCase,
-    private val storeCurrentVehicleUseCase: StoreCurrentVehicleUseCase
+    private val rememberCurrentVehicleUseCase: RememberCurrentVehicleUseCase
 ) : ViewModel() {
 
-    private val scope= viewModelScope()
+    private val scope= viewModelScope(){
+
+    }
 
     private val _state: MutableStateFlow<RedriveState> = MutableStateFlow(RedriveState())
     val state = _state.asStateFlow()
@@ -55,7 +56,7 @@ class RedriveViewModel @Inject constructor(
 
     fun onCurrentVehicleChange(vehicle: Vehicle) {
         scope.launch {
-            storeCurrentVehicleUseCase.invoke(
+            rememberCurrentVehicleUseCase.invoke(
                 VehicleTuple(
                     id = vehicle.id,
                     name = vehicle.name
@@ -65,28 +66,22 @@ class RedriveViewModel @Inject constructor(
 
     }
 
-    fun currentVehicle() {
+    private fun currentVehicle() {
         _state.update {
             it.copy(
                 isLoading = true
             )
         }
         scope.launch {
-            currentVehicleUseCase.invoke().collectLatest { appResult ->
-                when (appResult) {
-                    is AppResult.Error -> {}
-                    is AppResult.Success -> {
+            currentVehicleUseCase.invoke().collectLatest { vehicle ->
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                currentVehicle = appResult.data
+                                currentVehicle = vehicle
                             )
                         }
-                    }
                 }
             }
         }
-    }
-
 
 }

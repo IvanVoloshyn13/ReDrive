@@ -29,23 +29,23 @@ class RedriveRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun allTimeAvgConsumption(): AppResult<List<Double>, DataError.Locale> {
+    override suspend fun allTimeAvgConsumption(): List<Double> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun costPerKm(): AppResult<List<Double>, DataError.Locale> {
+    override suspend fun costPerKm(): List<Double> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun costPerMiles(): AppResult<Double, DataError.Locale> {
+    override suspend fun costPerMiles(): Double {
         TODO("Not yet implemented")
     }
 
-    override suspend fun lastRefuel(): AppResult<LastRefuel, DataError.Locale> {
+    override suspend fun lastRefuel(): LastRefuel {
         TODO("Not yet implemented")
     }
 
-    override suspend fun summary(): AppResult<RefuelsTuple, DataError.Locale> {
+    override suspend fun summary(): RefuelsTuple {
         TODO("Not yet implemented")
     }
 

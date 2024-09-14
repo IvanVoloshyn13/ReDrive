@@ -5,7 +5,7 @@ import voloshyn.android.domain.appResult.DataError
 import voloshyn.android.domain.repository.tabs.RedriveRepository
 
 class GetCostPerKmUseCase(private val repository: RedriveRepository) {
-    suspend fun invoke(): AppResult<Double, DataError.Locale> {
+    suspend fun invoke(): Double {
         TODO()
     }
 

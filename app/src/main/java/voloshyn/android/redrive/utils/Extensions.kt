@@ -3,7 +3,6 @@ package voloshyn.android.redrive.utils
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -14,11 +13,12 @@ import voloshyn.android.app.R
 import voloshyn.android.domain.useCase.auth.ValidatePasswordState
 
 fun Fragment.navigateToTabsFragment() {
-   findNavController().navigate(R.id.action_onBoardFragmentContainer_to_tabsFragment)
+    findNavController().navigate(R.id.action_onBoardFragmentContainer_to_tabsFragment)
 }
 
 fun Fragment.findTopNavController(): NavController {
-    val topLevelHost = requireActivity().supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment?
+    val topLevelHost =
+        requireActivity().supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment?
     return topLevelHost?.navController ?: findNavController()
 }
 
@@ -54,8 +54,9 @@ fun ValidatePasswordState.message(): Int {
     }
 }
 
-fun viewModelScope(): CoroutineScope {
+fun viewModelScope(errorHandler: (cause: Throwable) -> Unit): CoroutineScope {
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        errorHandler(throwable)
         Log.e("EXCEPTION_HANDLER", "$throwable,  ${throwable.message}")
     }
     return CoroutineScope(SupervisorJob() + exceptionHandler)

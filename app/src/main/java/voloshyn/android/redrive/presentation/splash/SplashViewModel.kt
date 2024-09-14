@@ -19,7 +19,7 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val onBoard: OnBoardIsFinishedUseCase,
 ) : ViewModel() {
-    private val scope = viewModelScope()
+    private val scope = viewModelScope(){}
 
     private val _onBoardStatus = MutableSharedFlow<Boolean>(
         replay = 1,
@@ -28,29 +28,15 @@ class SplashViewModel @Inject constructor(
     )
     val onBoardStatus = _onBoardStatus.asSharedFlow()
 
-    private val _isError = MutableSharedFlow<PresentationError>()
-    val isError = _isError.asSharedFlow()
+
 
     init {
         scope.launch {
             val result = onBoard.invoke()
-            _onBoardStatus.emit(onBoardStatus(result))
+            _onBoardStatus.emit(result)
         }
     }
 
-
-    private  fun onBoardStatus(result: AppResult<Boolean, DataError.Locale>): Boolean {
-        return when (result) {
-            is AppResult.Error -> {
-                _isError.tryEmit(PresentationError(true, result.error.toStringResource()))
-                if (result.data != null) {
-                    result.data!!
-                } else false
-            }
-
-            is AppResult.Success -> result.data
-        }
-    }
 
     override fun onCleared() {
         super.onCleared()

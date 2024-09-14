@@ -12,7 +12,7 @@ interface VehiclesRepository {
     suspend fun addVehicle(
         vehicle: Vehicle,
         accountId: String?
-    ): AppResult<Boolean, DataError.Locale>
+    )
 
     /** Delete vehicle from database*/
     suspend fun deleteVehicle(id: Long)
@@ -22,8 +22,8 @@ interface VehiclesRepository {
     suspend fun rememberVehicle(vehicleId: Long, name: String)
 
     /** Get saved vehicle from dataStore */
-     fun currentVehicle(): Flow<AppResult<VehicleTuple, DataError.Locale>>
+     fun currentVehicle(): Flow<VehicleTuple>
 
     /** Get all vehicles from database */
-    fun vehicles(): Flow<AppResult<List<Vehicle>, DataError.Locale>>
+    fun vehicles(): Flow<List<Vehicle>>
 }

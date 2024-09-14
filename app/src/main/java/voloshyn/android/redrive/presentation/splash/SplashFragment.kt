@@ -31,13 +31,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                     launchMainFragment(it)
                 }
             }
-            launch {
-                viewModel.isError.collect {
-                    if (it.isError) {
-                        showToast(getString(it.message))
-                    }
-                }
-            }
         }
 
     }

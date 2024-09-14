@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
-import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.models.tabs.redrive.Vehicle
 import voloshyn.android.domain.useCase.tabs.vehicles.AddVehicleUseCase
 import voloshyn.android.domain.useCase.tabs.vehicles.GetVehiclesUseCase
@@ -22,15 +21,23 @@ class VehiclesViewModel @Inject constructor(
     private val vehicles: GetVehiclesUseCase
 ) : ViewModel() {
 
-    private val scope = viewModelScope()
-    private val _state: MutableStateFlow<VehiclesState> = MutableStateFlow(VehiclesState())
+    private val scope = viewModelScope() { cause ->
+        _state.update {
+            it.copy(
+                isLoading = false,
+                error = true,
+                errorMessage = cause.toStringResource()
+            )
+        }
+    }
+
+    private val _state: MutableStateFlow<VehiclesFragmentState> = MutableStateFlow(VehiclesFragmentState())
     val state = _state.asStateFlow()
 
     init {
         scope.launch {
             vehicles()
         }
-
     }
 
 
@@ -50,28 +57,17 @@ class VehiclesViewModel @Inject constructor(
                 isLoading = true
             )
         }
-        val vehicles = vehicles.invoke()
-        vehicles.collectLatest { appResult ->
-            when (appResult) {
-                is AppResult.Error -> {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            error = true, errorMessage = appResult.error.toStringResource(),
-                            vehicles = emptyList()
-                        )
-                    }
-                }
-                is AppResult.Success -> {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            error = false, errorMessage = R.string.empty_string,
-                            vehicles = appResult.data
-                        )
-                    }
-                }
+        val vehiclesFlow = vehicles.invoke()
+
+        vehiclesFlow.collectLatest { vehicles ->
+            _state.update {
+                it.copy(
+                    isLoading = false,
+                    error = false, errorMessage = R.string.empty_string,
+                    vehicles = vehicles
+                )
             }
+
         }
     }
 
@@ -82,28 +78,7 @@ class VehiclesViewModel @Inject constructor(
                 isLoading = true
             )
         }
-        val appResult = addVehicleUseCase.invoke(vehicle, accountId)
-        when (appResult) {
-            is AppResult.Error -> {
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        error = true,
-                        errorMessage = appResult.error.toStringResource()
-                    )
-                }
-            }
-
-            is AppResult.Success -> {
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        error = false, errorMessage = R.string.empty_string
-                    )
-                }
-            }
-        }
+        addVehicleUseCase.invoke(vehicle, accountId)
     }
-
 
 }
