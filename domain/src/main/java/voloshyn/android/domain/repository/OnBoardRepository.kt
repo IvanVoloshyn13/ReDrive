@@ -5,5 +5,5 @@ import voloshyn.android.domain.appResult.DataError
 
 interface OnBoardRepository {
     suspend fun onFinish(isFinished: Boolean)
-    suspend fun isFinished(): AppResult<Boolean, DataError.Locale>
+    suspend fun isFinished(): Boolean
 }

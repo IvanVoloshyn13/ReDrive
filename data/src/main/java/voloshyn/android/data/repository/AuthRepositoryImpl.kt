@@ -13,7 +13,6 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import voloshyn.android.data.dataSource.datastorePreferences.PreferencesKeys
-import voloshyn.android.data.safeUpdateData
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.AuthError
 import voloshyn.android.domain.models.tabs.profile.User
@@ -89,10 +88,8 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun rememberMe(rememberMe: Boolean) {
-        safeUpdateData {
             dataStore.edit {
                 it[PreferencesKeys.REMEMBER_ME] = rememberMe
-            }
         }
     }
 

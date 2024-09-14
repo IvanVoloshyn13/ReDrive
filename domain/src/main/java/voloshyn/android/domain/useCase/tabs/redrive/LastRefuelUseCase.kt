@@ -7,7 +7,7 @@ import voloshyn.android.domain.repository.tabs.RedriveRepository
 
 class LastRefuelUseCase(private val repository: RedriveRepository) {
 
-    suspend fun invoke(): AppResult<LastRefuel, DataError.Locale> {
+    suspend fun invoke(): LastRefuel {
         return repository.lastRefuel()
     }
 }

@@ -26,7 +26,7 @@ class SignUpViewModel @Inject constructor(
     private val signUp: SignUpUseCase,
     private val emailValidator: ValidateEmailUseCase
 ) : ViewModel() {
-    private val viewModelScope = viewModelScope()
+    private val viewModelScope = viewModelScope(){}
     private val fullNameValidator = ValidateFullNameUseCase()
     private val passwordValidator = ValidatePasswordUseCase()
 
