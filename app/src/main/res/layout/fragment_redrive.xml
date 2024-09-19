@@ -16,17 +16,14 @@
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         app:cardCornerRadius="@dimen/default_card_corner_radius"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@drawable/vehicle_card_image_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -51,7 +48,7 @@
                 android:layout_marginStart="@dimen/default_margin"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.ReDrive.Cards"
-                android:textColor="@color/md_theme_light_onSurface"
+                android:textColor="?attr/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@id/iv_vehicle"
                 app:layout_constraintStart_toEndOf="@id/iv_vehicle"
                 app:layout_constraintTop_toTopOf="@id/iv_vehicle"
@@ -86,7 +83,7 @@
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
         android:text="@string/overview"
-        android:textAppearance="@style/TextAppearance.ReDrive"
+        android:textAppearance="@style/TextAppearance.OS.Default"
         android:textColor="?attr/colorOnBackground"
         android:textSize="@dimen/big_text_size"
         app:layout_constraintStart_toStartOf="parent"
@@ -464,7 +461,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        android:backgroundTint="@color/fuel"
+        android:backgroundTint="?attr/colorPrimaryContainer"
         android:src="@drawable/ic_refuel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_last_refuel"
@@ -477,7 +474,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        android:backgroundTint="@color/repair_fab"
+        android:backgroundTint="?attr/colorSecondaryContainer"
         android:src="@drawable/ic_repair"
         app:layout_constraintEnd_toStartOf="@id/btt_add_refuel"
         app:layout_constraintTop_toBottomOf="@id/cv_last_refuel"

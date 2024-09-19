@@ -1,6 +1,5 @@
 package voloshyn.android.data.di
 
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,8 +11,11 @@ import voloshyn.android.data.dataSource.room.AppDatabase
 class DaoModule {
 
     @Provides
-    fun bindVehiclesDao(db: AppDatabase) = db.getVehiclesDao()
+    fun providesVehiclesDao(db: AppDatabase) = db.getVehiclesDao()
 
     @Provides
-    fun bindAccountsDao(db: AppDatabase) = db.getAccountDao()
+    fun providesAccountsDao(db: AppDatabase) = db.getAccountDao()
+
+    @Provides
+    fun providesRefuelsDao(db: AppDatabase) = db.getRefuelsDao()
 }

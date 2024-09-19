@@ -31,7 +31,7 @@
 
     <TextView
         android:id="@+id/tv_title"
-        style="@style/TextAppearance.ReDrive.Medium"
+        style="@style/TextAppearance.OS.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -44,7 +44,7 @@
 
     <TextView
         android:id="@+id/tv_description"
-        style="@style/TextAppearance.ReDrive"
+        style="@style/TextAppearance.OS.Default"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -65,7 +65,7 @@
         android:backgroundTint="?attr/colorPrimaryContainer"
         android:gravity="center"
         android:text="@string/get_started"
-        android:textAppearance="@style/TextAppearance.ReDrive"
+        android:textAppearance="@style/TextAppearance.OS.Default"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
         app:layout_constraintEnd_toEndOf="parent"

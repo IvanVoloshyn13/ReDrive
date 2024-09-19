@@ -55,15 +55,20 @@ class RedriveFragment : Fragment(R.layout.fragment_redrive) {
         viewLifecycleOwner.lifecycleScope.launch {
             redriveViewModel.state.collectLatest {
                 if (!it.isLoading) {
-                    currentVehicle(it.currentVehicle.name)
+                    updateUi(it.currentVehicle.name)
+                    
                 }
             }
         }
 
     }
 
-    private fun currentVehicle(vehicleName: String) {
-        binding.tvCurrentVehicleName.text = vehicleName
+    private fun updateUi(vehicleName: String) {
+        binding.tvCurrentVehicleName.text =
+            vehicleName.ifEmpty {
+                binding.bttAddRefuel.isEnabled = false
+                getString(R.string.add_new_vehicle)
+            }
     }
 
 }

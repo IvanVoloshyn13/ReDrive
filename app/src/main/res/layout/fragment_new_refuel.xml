@@ -65,7 +65,7 @@
                     android:id="@+id/et_date"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="datetime"
+                    android:inputType="none"
                     android:textAppearance="@style/TextAppearance.ReDrive.Cards.Regular"
                     tools:text="11.08.2024" />
 
@@ -323,7 +323,7 @@
         android:id="@+id/btt_clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/purple_500"
+        android:backgroundTint="?attr/colorSecondaryContainer"
         app:layout_constraintTop_toBottomOf="@id/refuel_card"
         app:layout_constraintStart_toStartOf="@id/refuel_card"
         android:text="@string/clear"

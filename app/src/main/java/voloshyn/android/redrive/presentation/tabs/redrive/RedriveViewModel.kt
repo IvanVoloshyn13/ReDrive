@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import voloshyn.android.app.R
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.models.tabs.profile.UserTuple
 import voloshyn.android.domain.models.tabs.redrive.Vehicle
@@ -24,7 +25,7 @@ class RedriveViewModel @Inject constructor(
     private val rememberCurrentVehicleUseCase: RememberCurrentVehicleUseCase
 ) : ViewModel() {
 
-    private val scope= viewModelScope(){
+    private val scope = viewModelScope() {
 
     }
 
@@ -74,14 +75,14 @@ class RedriveViewModel @Inject constructor(
         }
         scope.launch {
             currentVehicleUseCase.invoke().collectLatest { vehicle ->
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                currentVehicle = vehicle
-                            )
-                        }
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        currentVehicle = vehicle
+                    )
                 }
             }
         }
+    }
 
 }
