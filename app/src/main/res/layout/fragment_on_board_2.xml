@@ -33,14 +33,13 @@
         android:src="@drawable/ic_reminder"
         app:layout_constraintBottom_toTopOf="@id/guideline_center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-     >
+        app:layout_constraintStart_toStartOf="parent">
 
     </ImageView>
 
     <TextView
         android:id="@+id/tv_title"
-        style="@style/TextAppearance.ReDrive.Medium"
+        style="@style/TextAppearance.OS.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -53,13 +52,13 @@
 
     <TextView
         android:id="@+id/tv_description"
-        style="@style/TextAppearance.ReDrive"
+        style="@style/TextAppearance.OS.Default"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/on_board3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,13 +66,12 @@
 
     <Button
         android:id="@+id/btt_get_started"
-        style="@style/Widget.Material3.Button"
+        style="@style/OS.MaterialButton"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorPrimaryContainer"
         android:gravity="center"
         android:text="@string/get_started"
-        android:textAppearance="@style/TextAppearance.ReDrive"
+        android:textAppearance="@style/TextAppearance.OS.Default"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
         app:layout_constraintEnd_toEndOf="parent"

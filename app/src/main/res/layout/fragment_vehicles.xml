@@ -26,6 +26,7 @@
             android:id="@+id/rv_vehicles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
             tools:itemCount="5"
             tools:listitem="@layout/vehicle_item">
 
@@ -42,7 +43,6 @@
         android:backgroundTint="?attr/colorPrimaryContainer"
         android:contentDescription="@string/add_new_vehicle"
         android:src="@drawable/ic_add"
-        android:textColor="?attr/colorOnPrimaryContainer"
         app:layout_constraintEnd_toEndOf="@id/refuel_card"
         app:layout_constraintTop_toBottomOf="@id/refuel_card">
 

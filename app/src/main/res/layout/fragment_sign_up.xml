@@ -27,7 +27,7 @@
         android:layout_marginTop="185dp"
         android:fontFamily="@font/poppins_semi_bold"
         android:text="@string/sign_up_to_redrive"
-        android:textAppearance="@style/TextAppearance.ReDrive.Medium"
+        android:textAppearance="@style/TextAppearance.OS.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_logo"
@@ -38,7 +38,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/full_name_container"
-        style="@style/BaseTextInputLayout"
+        style="@style/TextInputLayout.OS"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/full_name"
@@ -52,14 +52,14 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
             android:inputType="textPersonName"
-            android:textColor="?attr/colorOnSurface"/>
+            android:textColor="?attr/colorOnSurface" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_container"
-        style="@style/BaseTextInputLayout"
+        style="@style/TextInputLayout.OS"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/email"
@@ -73,14 +73,14 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
             android:inputType="textEmailAddress"
-            android:textColor="?attr/colorOnSurface"/>
+            android:textColor="?attr/colorOnSurface" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_container"
-        style="@style/BaseTextInputLayout"
+        style="@style/TextInputLayout.OS"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/password"
@@ -97,14 +97,14 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
             android:inputType="textPassword"
-            android:textColor="?attr/colorOnSurface"/>
+            android:textColor="?attr/colorOnSurface" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/confirm_password_container"
-        style="@style/BaseTextInputLayout"
+        style="@style/TextInputLayout.OS"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/confirm_password"
@@ -128,11 +128,10 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btt_sign_up"
+        style="@style/OS.MaterialButton"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="?attr/colorSecondaryContainer"
-        android:textColor="?attr/colorOnSecondaryContainer"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,7 +147,7 @@
         android:fontFamily="@font/poppins_light"
         android:gravity="center"
         android:text="@string/already_have_an_account"
-        android:textAppearance="@style/TextAppearance.ReDrive"
+        android:textAppearance="@style/TextAppearance.OS.Default"
         app:layout_constraintEnd_toStartOf="@id/btt_sign_in"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -165,8 +164,8 @@
         android:fontFamily="@font/poppins_light"
         android:gravity="center"
         android:text="@string/sign_in"
-        android:textAppearance="@style/TextAppearance.ReDrive"
-        android:textColor="?attr/colorTertiary"
+        android:textAppearance="@style/TextAppearance.OS.Default"
+        android:textColor="@color/os_secondary_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_have_account"
         app:layout_constraintTop_toBottomOf="@+id/btt_sign_up">
@@ -177,12 +176,12 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:indeterminateTint="?attr/colorOnSurface"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </ProgressBar>
 

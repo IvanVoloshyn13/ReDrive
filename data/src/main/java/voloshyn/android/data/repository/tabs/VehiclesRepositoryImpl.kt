@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import voloshyn.android.data.dataSource.datastorePreferences.PreferencesKeys
 import voloshyn.android.data.dataSource.room.dao.VehiclesDao
 import voloshyn.android.data.dataSource.room.entities.VehicleEntity
@@ -47,14 +48,14 @@ class VehiclesRepositoryImpl @Inject constructor(
 
 
     override suspend fun rememberVehicle(vehicleId: Long, name: String) {
-        dataStore.edit {
-            it[PreferencesKeys.REMEMBER_VEHICLE] = setOf("$vehicleId", name)
-        }
+            dataStore.edit {
+                it[PreferencesKeys.REMEMBER_VEHICLE] = setOf("$vehicleId", name)
+            }
     }
 
 
     override fun currentVehicle(): Flow<VehicleTuple> {
-        val defaultValue = VehicleTuple(0L, "Please add vehicle")
+        val defaultValue = VehicleTuple(0L, "")
         var vehicle = defaultValue
         return dataStore.data.map {
             val vehicleSet = it[PreferencesKeys.REMEMBER_VEHICLE]
@@ -77,7 +78,6 @@ class VehiclesRepositoryImpl @Inject constructor(
     override fun vehicles(): Flow<List<Vehicle>> {
         return vehiclesDao.getAll()
             .map { vehicleEntities ->
-
                 val vehicles = vehicleEntities.map { vehicleEntity ->
                     Vehicle(
                         id = vehicleEntity.id,
