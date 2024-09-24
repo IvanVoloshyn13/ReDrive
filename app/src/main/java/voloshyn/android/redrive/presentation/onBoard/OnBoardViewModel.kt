@@ -12,9 +12,7 @@ import javax.inject.Inject
 class OnBoardViewModel @Inject constructor(
     private val onBoard: OnBoardFinishUseCase
 ) : ViewModel() {
-    private val scope = viewModelScope(){
-
-    }
+    private val scope = viewModelScope()
 
     fun finishOnBoard() {
         scope.launch {

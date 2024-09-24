@@ -62,4 +62,11 @@ fun viewModelScope(errorHandler: (cause: Throwable) -> Unit): CoroutineScope {
     return CoroutineScope(SupervisorJob() + exceptionHandler)
 }
 
+fun viewModelScope(): CoroutineScope {
+    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e("EXCEPTION_HANDLER", "$throwable,  ${throwable.message}")
+    }
+    return CoroutineScope(SupervisorJob() + exceptionHandler)
+}
+
 

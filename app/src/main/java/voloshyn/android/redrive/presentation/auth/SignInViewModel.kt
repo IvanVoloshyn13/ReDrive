@@ -20,9 +20,8 @@ class SignInViewModel @Inject constructor(
     private val signIn: SignInUseCase,
     private val _rememberMe: RememberMeUseCase
 ) : ViewModel() {
-    private val viewModelScope = viewModelScope(){
+    private val viewModelScope = viewModelScope()
 
-    }
     private val _state: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
     val state = _state.asStateFlow()
 

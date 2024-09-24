@@ -34,7 +34,7 @@ data class RefuelEntity(
     fun toRefuel():Refuel{
         return Refuel(
             vehicleId = vehicleId,
-            date =  TODO(), //date ,
+            date = date,
             odometer = odometer,
             fuelVolume = fuelVolume,
             unitPrice = unitPrice,
@@ -50,7 +50,7 @@ data class RefuelEntity(
             with(refuel) {
                 return RefuelEntity(
                     vehicleId = vehicleId,
-                    date = TODO(), //date ,
+                    date =date, //date ,
                     odometer = odometer,
                     fuelVolume = fuelVolume,
                     unitPrice = unitPrice,

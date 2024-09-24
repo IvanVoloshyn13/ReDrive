@@ -9,6 +9,7 @@ import javax.inject.Inject
 class RefuelsRepositoryImpl @Inject constructor(
     private val refuelsDao: RefuelsDao
 ) : RefuelsRepository {
+
     override suspend fun addNew(refuel: Refuel) {
         refuelsDao.addRefuel(refuel = RefuelEntity.toEntity(refuel))
     }

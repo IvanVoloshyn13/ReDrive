@@ -25,9 +25,7 @@ class RedriveViewModel @Inject constructor(
     private val rememberCurrentVehicleUseCase: RememberCurrentVehicleUseCase
 ) : ViewModel() {
 
-    private val scope = viewModelScope() {
-
-    }
+    private val scope = viewModelScope()
 
     private val _state: MutableStateFlow<RedriveState> = MutableStateFlow(RedriveState())
     val state = _state.asStateFlow()
