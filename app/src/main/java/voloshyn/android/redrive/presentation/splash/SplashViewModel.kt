@@ -19,7 +19,7 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val onBoard: OnBoardIsFinishedUseCase,
 ) : ViewModel() {
-    private val scope = viewModelScope(){}
+    private val scope = viewModelScope()
 
     private val _onBoardStatus = MutableSharedFlow<Boolean>(
         replay = 1,

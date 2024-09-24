@@ -4,7 +4,7 @@ import java.util.Date
 
 data class Refuel(
     val vehicleId: Long,
-    val date: Date,
+    val date: Long,
     val odometer: Int,
     val fuelVolume: Double,
     val unitPrice: Double,
