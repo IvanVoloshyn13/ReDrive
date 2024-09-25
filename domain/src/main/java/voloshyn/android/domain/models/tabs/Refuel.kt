@@ -1,7 +1,5 @@
 package voloshyn.android.domain.models.tabs
 
-import java.util.Date
-
 data class Refuel(
     val vehicleId: Long,
     val date: Long,
