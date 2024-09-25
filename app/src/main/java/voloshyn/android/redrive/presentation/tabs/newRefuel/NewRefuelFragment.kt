@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import androidx.core.view.children
-import androidx.core.widget.doOnTextChanged
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +12,7 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
@@ -21,7 +22,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
-import kotlin.properties.Delegates
 
 private const val DATE_PICKER_TAG = "DATE_PICKER"
 
@@ -34,46 +34,12 @@ class NewRefuelFragment : Fragment(R.layout.fragment_new_refuel) {
     private val viewModel by viewModels<NewRefuelViewModel>()
     private val editable by lazy { Editable.Factory.getInstance() }
     private lateinit var state: NewRefuelState
-
-    private var _odometer: String by Delegates.observable("") { property, oldValue, newValue ->
-        if (oldValue != newValue) {
-            saveButtonStateRender(
-                fuelVolume = _fuelVolume,
-                odometer = _odometer,
-                unitPrice = _unitPrice
-            )
-            binding.odometerContainer.helperText =
-                if (_odometer.isNotEmpty()) "" else getString(R.string.required)
-        }
-    }
-    private var _fuelVolume: String by Delegates.observable("") { property, oldValue, newValue ->
-        if (oldValue != newValue) {
-            saveButtonStateRender(
-                fuelVolume = _fuelVolume,
-                odometer = _odometer,
-                unitPrice = _unitPrice
-            )
-            binding.fuelVolumeContainer.helperText =
-                if (_fuelVolume.isNotEmpty()) "" else getString(R.string.required)
-        }
-    }
-    private var _unitPrice: String by Delegates.observable("") { property, oldValue, newValue ->
-        if (oldValue != newValue) {
-            saveButtonStateRender(
-                fuelVolume = _fuelVolume,
-                odometer = _odometer,
-                unitPrice = _unitPrice
-            )
-            binding.unitPriceContainer.helperText =
-                if (_unitPrice.isNotEmpty()) "" else getString(R.string.required)
-        }
-    }
-
-    private var _notes: String = ""
+    private var updateTextFieldJob: Job? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.dateContainer.isHelperTextEnabled = false
         calendar = Calendar.getInstance(TimeZone.getDefault())
         datePicker =
@@ -94,8 +60,20 @@ class NewRefuelFragment : Fragment(R.layout.fragment_new_refuel) {
                     etNotes.text = editable.newEditable(it.notes)
                     fullTank.isChecked = it.fullTank
                     missedPrevious.isChecked = it.missedPrevious
-
                 }
+
+                binding.odometerContainer.helperText =
+                    if (it.odometer.isNotEmpty()) "" else getString(R.string.required)
+                binding.fuelVolumeContainer.helperText =
+                    if (it.fuelVolume.isNotEmpty()) "" else getString(R.string.required)
+                binding.unitPriceContainer.helperText =
+                    if (it.unitPrice.isNotEmpty()) "" else getString(R.string.required)
+
+                saveButtonStateRender(
+                    fuelVolume = it.fuelVolume,
+                    odometer = it.odometer,
+                    unitPrice = it.unitPrice
+                )
             }
         }
         binding.bttSave.setOnClickListener {
@@ -104,6 +82,20 @@ class NewRefuelFragment : Fragment(R.layout.fragment_new_refuel) {
             }
             viewModel.addNewRefuel()
         }
+        binding.bttClear.setOnClickListener {
+            clearTextFields()
+        }
+    }
+
+    private fun clearTextFields() {
+        viewModel.updateState(
+            state.copy(
+                odometer = "",
+                fuelVolume = "",
+                unitPrice = "",
+                notes = ""
+            )
+        )
     }
 
     private fun saveButtonStateRender(
@@ -140,45 +132,39 @@ class NewRefuelFragment : Fragment(R.layout.fragment_new_refuel) {
     }
 
     private fun onOdometerChange() {
-        binding.etOdometer.doOnTextChanged { text, start, before, count ->
-            _odometer = text.toString()
-        }
-        binding.etOdometer.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus && state.odometer != _odometer) {
-                viewModel.updateState(state.copy(odometer = _odometer))
+        binding.etOdometer.doAfterTextChanged { text ->
+            binding.etOdometer.setSelection(text?.length!!)
+            //TODO  Maybe in future find a better way to do it
+            // if statements is here to deal with unnecessary state updates and as result multiple collect block trigger
+            if (state.odometer != text.toString()) {
+                viewModel.updateState(state.copy(odometer = text.toString()))
             }
         }
     }
 
     private fun onFuelVolumeChange() {
-        binding.etFuelVol.doOnTextChanged { text, start, before, count ->
-            _fuelVolume = text.toString()
-        }
-        binding.etFuelVol.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus && state.fuelVolume != _fuelVolume) {
-                viewModel.updateState(state.copy(fuelVolume = _fuelVolume))
+        binding.etFuelVol.doAfterTextChanged { text ->
+            binding.etFuelVol.setSelection(text?.length!!)
+            if (state.fuelVolume != text.toString()) {
+                viewModel.updateState(state.copy(fuelVolume = text.toString()))
             }
         }
     }
 
     private fun onUnitPriceChange() {
-        binding.etUnitPrice.doOnTextChanged { text, start, before, count ->
-            _unitPrice = text.toString()
-        }
-        binding.etUnitPrice.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus && state.unitPrice != _unitPrice) {
-                viewModel.updateState(state.copy(unitPrice = _unitPrice))
+        binding.etUnitPrice.doAfterTextChanged { text ->
+            binding.etUnitPrice.setSelection(text?.length!!)
+            if (state.unitPrice != text.toString()) {
+                viewModel.updateState(state.copy(unitPrice = text.toString()))
             }
         }
     }
 
     private fun onNotesChange() {
-        binding.etNotes.doOnTextChanged { text, start, before, count ->
-            _notes = text.toString()
-        }
-        binding.etNotes.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus && state.notes != _notes) {
-                viewModel.updateState(state.copy(notes = _notes))
+        binding.etNotes.doAfterTextChanged { text ->
+            binding.etNotes.setSelection(text?.length!!)
+            if (state.notes != text.toString()) {
+                viewModel.updateState(state.copy(notes = text.toString()))
             }
         }
     }
@@ -227,5 +213,6 @@ class NewRefuelFragment : Fragment(R.layout.fragment_new_refuel) {
         binding.etDate.clearFocus()
         datePicker = null
     }
+
 
 }
