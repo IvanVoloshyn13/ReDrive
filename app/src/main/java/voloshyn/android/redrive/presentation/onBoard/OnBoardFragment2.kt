@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import voloshyn.android.app.R
-import voloshyn.android.redrive.utils.navigateToTabsFragment
+import voloshyn.android.redrive.utils.navigateToSignInFragment
 
 @AndroidEntryPoint
 class OnBoardFragment2:Fragment(R.layout.fragment_on_board_2) {
@@ -18,7 +18,7 @@ class OnBoardFragment2:Fragment(R.layout.fragment_on_board_2) {
 
         view.findViewById<Button>(R.id.btt_get_started).setOnClickListener {
             viewModel.finishOnBoard()
-            navigateToTabsFragment()
+            navigateToSignInFragment()
         }
     }
 

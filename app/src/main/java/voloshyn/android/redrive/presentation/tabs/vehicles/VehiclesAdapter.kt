@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import voloshyn.android.app.databinding.VehicleItemBinding
-import voloshyn.android.domain.models.tabs.redrive.Vehicle
+import voloshyn.android.domain.models.Vehicle
 
 class VehiclesAdapter(private val listener: OnVehicleItemClickListener) :
     ListAdapter<Vehicle, VehicleViewHolder>(VehicleDiffCallback()), View.OnClickListener {

@@ -2,7 +2,7 @@ package voloshyn.android.redrive.presentation.tabs.vehicles
 
 import androidx.annotation.StringRes
 import voloshyn.android.app.R
-import voloshyn.android.domain.models.tabs.redrive.Vehicle
+import voloshyn.android.domain.models.Vehicle
 
 data class VehiclesFragmentState(
     val isLoading: Boolean = false,

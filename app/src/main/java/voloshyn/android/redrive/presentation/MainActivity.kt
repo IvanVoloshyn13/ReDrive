@@ -23,14 +23,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val destinationListener =
-        NavController.OnDestinationChangedListener { _, destination, arguments ->
-            prepareToolbar(destination)
+        NavController.OnDestinationChangedListener { _, destination, _ ->
+            if (signGraphDestinations.contains(destination.id)) prepareCustomToolbar()
             supportActionBar?.title = destination.label
             supportActionBar?.setDisplayHomeAsUpEnabled(!isStartDestination(destination))
-
         }
 
-    private val topLevelDestinations = setOf(getTabsDestination(), getSplashDestination())
+    private val topLevelDestinations = setOf(getTabsDestination())
+
+    private val signGraphDestinations = setOf(getSignInDestination(), getSignUpDestination())
 
     private val fragmentListener = object : FragmentManager.FragmentLifecycleCallbacks() {
         override fun onFragmentViewCreated(
@@ -45,35 +46,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private val onBackInvokeListener = (
-//            OnBackInvokedCallback {
-//                Log.d("MainActivity", "Back invoked")
-//                if (isStartDestination(navController?.currentDestination)) {
-//                    Log.d("MainActivity", "exit  invoked")
-//                    finishAffinity()
-//                } else {
-//                    Log.d("MainActivity", "Back ")
-//                    navController?.popBackStack()
-//                }
-//            }
-//            )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
         setSupportActionBar(binding.toolbar)
 
-        onNavControllerActivated(getRootNavController())
+        onNavControllerActivated(getMainNavController())
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentListener, true)
-
-//        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
-//         onBackInvokedDispatcher.registerOnBackInvokedCallback(
-//                OnBackInvokedDispatcher.PRIORITY_DEFAULT,
-//                onBackInvokeListener
-//            )
-//        }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -92,9 +72,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentListener)
         super.onDestroy()
-
     }
-
 
     private fun onNavControllerActivated(navController: NavController) {
         if (this.navController == navController) return
@@ -110,30 +88,53 @@ class MainActivity : AppCompatActivity() {
         return startDestinations.contains(destination.id)
     }
 
-    private fun prepareToolbar(destination: NavDestination) {
-        if (isStartDestination(destination) || destination.id == getNewRefuelDestination() || destination.id == getVehiclesDestination()) {
-            binding.toolbar.setTitleTextColor(Color.BLACK)
-            binding.toolbar.setNavigationIconTint(Color.BLACK)
-        } else
-            binding.toolbar.setTitleTextColor(Color.WHITE).also {
-                binding.toolbar.setNavigationIconTint(Color.WHITE)
-            }
+    private fun prepareCustomToolbar() {
+        binding.toolbar.setTitleTextColor(Color.WHITE)
+        binding.toolbar.setNavigationIconTint(Color.WHITE)
     }
 
-
-    private fun getRootNavController(): NavController {
+    private fun getMainNavController(): NavController {
         val navHost =
-            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment
         return navHost.navController
     }
 
-
     private fun getTabsDestination(): Int = R.id.tabsFragment
 
-    private fun getSplashDestination(): Int = R.id.splashFragment
+    private fun getSignUpDestination(): Int = R.id.signUpFragment
 
-    private fun getVehiclesDestination(): Int = R.id.vehiclesFragment
+    private fun getSignInDestination(): Int = R.id.signInFragment
 
-    private fun getNewRefuelDestination(): Int = R.id.newRefuelFragment
+
+//    fun ifNeeded() {
+//        private fun showHomeBttDestination(destination: NavDestination?): Boolean {
+//            if (destination == null) return false
+//            return homeBttDestinations.contains(destination.id)
+//        }
+//
+//        private val homeBttDestinations =
+//            setOf(getVehiclesDestination(), getSignUpDestination(), getNewRefuelDestination())
+//    }
+
+    //    private val onBackInvokeListener = (
+//            OnBackInvokedCallback {
+//                Log.d("MainActivity", "Back invoked")
+//                if (isStartDestination(navController?.currentDestination)) {
+//                    Log.d("MainActivity", "exit  invoked")
+//                    finishAffinity()
+//                } else {
+//                    Log.d("MainActivity", "Back ")
+//                    navController?.popBackStack()
+//                }
+//            }
+//            )
+
+    //        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
+//         onBackInvokedDispatcher.registerOnBackInvokedCallback(
+//                OnBackInvokedDispatcher.PRIORITY_DEFAULT,
+//                onBackInvokeListener
+//            )
+//        }
+
 
 }

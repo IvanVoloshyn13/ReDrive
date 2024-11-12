@@ -10,20 +10,19 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.models.tabs.profile.User
-import voloshyn.android.domain.models.tabs.profile.UserTuple
-import voloshyn.android.domain.useCase.auth.SignUpUseCase
+import voloshyn.android.domain.models.auth.Credentials
+import voloshyn.android.domain.models.auth.User
+import voloshyn.android.domain.useCase.auth.SignUpWithEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateFullNameUseCase
 import voloshyn.android.domain.useCase.auth.ValidatePasswordUseCase
 import voloshyn.android.redrive.utils.message
-import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val signUp: SignUpUseCase,
+    private val signUp: SignUpWithEmailUseCase,
     private val emailValidator: ValidateEmailUseCase
 ) : ViewModel() {
     private val viewModelScope = viewModelScope()
@@ -52,14 +51,14 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    suspend fun signUp(user: User) {
+    suspend fun signUp(credentials: Credentials) {
         _state.update {
             it.copy(
                 loading = true
             )
         }
         viewModelScope.launch {
-            val result = signUp.invoke(user)
+            val result = signUp.invoke(credentials)
             when (result) {
                 is AppResult.Success -> _state.update {
                     it.copy(
@@ -73,7 +72,8 @@ class SignUpViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             loading = false,
-                            errorMessage = result.error.toStringResource(),
+                            errorMessage = TODO() //  result.error.toStringResource()
+                             ,
                             isError = true
                         )
                     }
@@ -156,7 +156,7 @@ data class FragmentSignUpState(
     val validationState: Boolean = false,
     val isSignUp: Boolean = false,
     val loading: Boolean = false,
-    val currentUser: UserTuple = UserTuple.EMPTY_USER,
+    val currentUser: User = User.EMPTY_USER,
     val isError: Boolean = false,
     @StringRes val errorMessage: Int = 0
 )

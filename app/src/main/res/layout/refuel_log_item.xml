@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_last_refuel"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:layout_marginStart="@dimen/default_margin"
+    android:layout_marginTop="@dimen/default_margin"
+    android:layout_marginEnd="@dimen/default_margin"
+
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+
+        <TextView
+            android:id="@+id/tv_last_refuel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:background="@drawable/refuel_log_text_background"
+            android:paddingStart="@dimen/medium_margin"
+            android:paddingEnd="@dimen/medium_margin"
+            android:text="@string/refuel"
+            android:textAppearance="@style/TextAppearance.ReDrive.Cards.Medium"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/regular_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+            app:layout_constraintBottom_toTopOf="@id/fuel_amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Distance">
+
+        </TextView>
+
+        <View
+            android:id="@+id/view_last_refuel_km"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:background="@color/distance"
+            app:layout_constraintBottom_toBottomOf="@id/distance"
+            app:layout_constraintEnd_toStartOf="@id/distance"
+            app:layout_constraintTop_toTopOf="@id/distance">
+
+        </View>
+
+        <TextView
+            android:id="@+id/fuel_amount"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+            app:layout_constraintBottom_toTopOf="@id/refuel_payment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/distance"
+            tools:text="fuel amount l">
+
+        </TextView>
+
+        <View
+            android:id="@+id/view_fuel_amount"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:background="@color/fuel"
+            app:layout_constraintBottom_toBottomOf="@id/fuel_amount"
+            app:layout_constraintEnd_toStartOf="@id/fuel_amount"
+            app:layout_constraintTop_toTopOf="@id/fuel_amount">
+
+        </View>
+
+        <TextView
+            android:id="@+id/refuel_payment"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+            app:layout_constraintBottom_toTopOf="@id/fuel_price_per_unit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fuel_amount"
+            tools:text="payments">
+
+        </TextView>
+
+        <View
+            android:id="@+id/view_last_refuel_payment"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:background="@color/fuel_payments"
+            app:layout_constraintBottom_toBottomOf="@id/refuel_payment"
+            app:layout_constraintEnd_toStartOf="@id/refuel_payment"
+            app:layout_constraintTop_toTopOf="@id/refuel_payment">
+
+        </View>
+
+        <TextView
+            android:id="@+id/fuel_price_per_unit"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:textAppearance="@style/TextAppearance.ReDrive.Cards.Small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/refuel_payment"
+            tools:text="Price">
+
+        </TextView>
+
+        <View
+            android:id="@+id/view_fuel_price"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:background="@color/pln_l"
+            app:layout_constraintBottom_toBottomOf="@id/fuel_price_per_unit"
+            app:layout_constraintEnd_toStartOf="@id/fuel_price_per_unit"
+            app:layout_constraintTop_toTopOf="@id/fuel_price_per_unit">
+
+        </View>
+
+        <TextView
+            android:id="@+id/tv_last_avg_consumption_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:textSize="28sp"
+            android:textAppearance="@style/TextAppearance.ReDrive.Cards"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/view_fuel_amount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="6.52">
+
+        </TextView>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
+
+
+
+
+

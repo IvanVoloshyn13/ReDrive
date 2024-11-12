@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/vehicle_card"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="@dimen/default_card_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/iv_vehicle_type"
+                style="@style/App.VehicleButton"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:backgroundTint="#8FD2B8"
+                app:icon="@drawable/ic_car"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </Button>
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/vehicle_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="@dimen/medium_margin"
+                app:checkedButton="@id/btt_car"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_vehicle_type"
+                app:materialThemeOverlay="@style/App.VehicleToggle"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <Button
+                    android:id="@+id/btt_car"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_car"
+                    app:iconGravity="textEnd">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btt_bike"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_bike"
+                    app:iconGravity="textStart">
+
+                </Button>
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+            <ImageView
+                android:id="@+id/iv_vehicle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:src="@drawable/ic_car_black"
+                app:iconTint="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/vehicle_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/vehicle_container"
+                tools:ignore="ContentDescription">
+
+            </ImageView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/vehicle_container"
+                style="@style/TextInputLayout.Refuel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_vehicle"
+                app:layout_constraintTop_toBottomOf="@id/vehicle_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_vehicle_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:textAppearance="@style/TextAppearance.ReDrive.Cards.Regular"
+                    tools:text="Vehicle name" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/iv_odometer"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:src="@drawable/ic_odometer"
+                app:layout_constraintBottom_toBottomOf="@id/odometer_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/odometer_container"
+                tools:ignore="ContentDescription">
+
+            </ImageView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/odometer_container"
+                style="@style/TextInputLayout.Refuel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_vehicle"
+                app:layout_constraintTop_toBottomOf="@id/vehicle_container">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_odometer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.ReDrive.Cards.Regular"
+                    tools:text="123 567" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/btt_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="@color/btt_background_tint_primary"
+        android:text="@string/save"
+        android:textColor="?attr/colorOnPrimaryContainer"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/vehicle_card"
+        app:layout_constraintTop_toBottomOf="@id/vehicle_card">
+
+    </Button>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

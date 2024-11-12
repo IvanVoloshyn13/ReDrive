@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ReDrive</string>
 
+    <!-- ON_BOARD-->
     <string name="on_board1_title">Control Your Finances</string>
     <string name="on_board1">Take charge of your spending with detailed tracking of your fuel and maintenance expenses. Monitor every penny to ensure your budget stays on track and your savings grow.</string>
     <string name="on_board2_title">Vehicles Details In One Place</string>
@@ -12,9 +13,8 @@
     <string name="next">Next</string>
     <string name="get_started">Get Started</string>
 
-    <string name="please_enter_real_names">Please enter real names</string>
-    <string name="invalid_email">Invalid email</string>
 
+    <!-- Password Errors-->
     <string name="password_error_digit">Password must contain at least one digit.</string>
     <string name="password_error_lowercase">Password must contain at least one lowercase letter.</string>
     <string name="password_error_uppercase">Password must contain at least one uppercase letter.</string>
@@ -22,7 +22,7 @@
     <string name="password_error_special">Password must contain at least one special character.</string>
     <string name="password_confirmation_error">Passwords do not match.</string>
     <string name="password_error_general">Password must contain at least one digit, one special character, one lowercase letter, one uppercase letter, and be at least 8 characters long.</string>
-
+    <!-- SIGN_IN SIGN_UP-->
     <string name="sign_in_to_redrive">Sign in to ReDrive</string>
     <string name="full_name">Full name</string>
     <string name="email">Email</string>
@@ -31,14 +31,17 @@
     <string name="sign_up">Sign Up</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="sign_in">Sign In</string>
+    <string name="google_sign_in">Sign In with Google</string>
     <string name="sign_up_to_redrive">Sign up to ReDrive</string>
     <string name="dont_have_an_account">Don\'t have an account?</string>
     <string name="remember_me">Remember me?</string>
     <string name="forgot_password">Forgot password?</string>
-    <string name="price_per_liter">%1$s\n%2$s/l</string>
-
+    <string name="please_enter_real_names">Please enter real names</string>
+    <string name="invalid_email">Invalid email</string>
 
     <string name="empty_string"> </string>
+    <string name="empty_field_error">This field can not be empty</string>
+    <string name="required">Required</string>
 
     <!-- LOCALE_ERRORS-->
     <string name="error_sql">Unable to load data from the database. Please try again later.</string>
@@ -53,6 +56,11 @@
     <string name="no_user_detected">No user detected with the provided credentials. Please sign up or check your login information.</string>
     <string name="unknown_error_firebase">An unknown error occurred. Please try again later or contact support.</string>
 
+    <!-- FRAGMENTS-->
+    <string name="profile">profile</string>
+    <string name="redrive">redrive</string>
+    <string name="logs">logs</string>
+    <string name="refuel">Refuel</string>
 
     <string name="summary">Summary</string>
     <string name="cost_per_km">Cost per km</string>
@@ -67,17 +75,23 @@
     <string name="full_tank">Full Tank</string>
     <string name="save">Save</string>
     <string name="clear">Clear</string>
-    <string name="profile">profile</string>
-    <string name="redrive">redrive</string>
-    <string name="logs">logs</string>
     <string name="missed_previous">Missed previous</string>
     <string name="ok">OK</string>
     <string name="vehicle_name">Vehicle name</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
-    <string name="empty_field_error">This field can not be empty</string>
-    <string name="required">Required</string>
     <string name="add_new_vehicle">Add new vehicle</string>
+    <string name="add_vehicle_first">Add vehicle first</string>
+
+
+    <!-- Values to format logs-->
+    <string name="format_price_per_liter">%1$s\n%2$s/l</string>
+    <string name="value_km">km</string>
+    <string name="value_miles">miles</string>
+    <string name="value_pln">PLN</string>
+    <string name="value_pln_per_liter">PLN/l</string>
+    <string name="value_liter_per_100_km">l/100km</string>
+    <string name="value_liter">l</string>
 
 
 </resources>

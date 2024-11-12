@@ -2,10 +2,8 @@ package voloshyn.android.redrive.presentation.tabs.vehicles
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -15,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentVehiclesBinding
-import voloshyn.android.domain.models.tabs.redrive.Vehicle
+import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.redrive.utils.findTopNavController
 import voloshyn.android.redrive.utils.viewBinding
 
@@ -50,8 +48,6 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
             addVehicle(vehicle)
         }
 
-
-
         lifecycleScope.launch {
             viewModel.state.collect {
                 if (!it.isLoading) {
@@ -73,11 +69,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
     }
 
     override fun onClick(vehicle: Vehicle) {
-
-        requireActivity().supportFragmentManager.setFragmentResult(
-            REQUEST_KEY,
-            bundleOf(VEHICLE_RESPONSE_KEY to vehicle)
-        )
+        viewModel.onIntent(VehicleIntent.OnVehicleChange(vehicle.id, null))
         findTopNavController().popBackStack()
     }
 

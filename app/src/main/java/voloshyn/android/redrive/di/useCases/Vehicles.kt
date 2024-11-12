@@ -6,10 +6,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import voloshyn.android.domain.repository.tabs.VehiclesRepository
-import voloshyn.android.domain.useCase.tabs.redrive.GetCurrentVehicleUseCase
-import voloshyn.android.domain.useCase.tabs.redrive.RememberCurrentVehicleUseCase
-import voloshyn.android.domain.useCase.tabs.vehicles.AddVehicleUseCase
-import voloshyn.android.domain.useCase.tabs.vehicles.GetVehiclesUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.RememberCurrentVehicleUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.AddVehicleUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.GetVehiclesUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)

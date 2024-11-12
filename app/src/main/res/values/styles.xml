@@ -30,7 +30,7 @@
         <item name="boxStrokeColor">#D7D6D6</item>
         <item name="helperText">Required</item>
         <item name="helperTextEnabled">true</item>
-        <item name="helperTextTextColor">#00B8D4</item>
+        <item name="helperTextTextColor">@color/md_theme_error</item>
 
 
     </style>
@@ -90,7 +90,7 @@
         <item name="boxStrokeColor">?attr/colorOnSurface</item>
         <item name="helperText">Required</item>
         <item name="helperTextEnabled">true</item>
-        <item name="helperTextTextColor">?attr/colorTertiary</item>
+        <item name="helperTextTextColor">@color/md_theme_error</item>
 
 
     </style>
@@ -137,6 +137,28 @@
         <item name="android:textColor">@color/md_theme_tertiary</item>
 
     </style>
+
+    <style name="App.VehicleToggle"  parent="ThemeOverlay.Material3.Button" >
+        <item name="colorSecondaryContainer">@color/md_theme_tertiary</item>
+    </style>
+
+    <style name="App.VehicleButton" parent="Widget.Material3.Button.IconButton.Filled">
+        <item name="iconGravity">textStart</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">0dp</item>
+        <item name="iconSize">32dp</item>
+        <item name="iconTint">@color/md_theme_light_primary</item>
+
+    </style>
+
+    <style name="App.ActivityToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="navigationIconTint">@color/black</item>
+
+    </style>
+
+
+
+
 
 
 

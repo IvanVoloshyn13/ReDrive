@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentSignInBinding
+import voloshyn.android.redrive.utils.findTopNavController
 import voloshyn.android.redrive.utils.viewBinding
 
 @AndroidEntryPoint

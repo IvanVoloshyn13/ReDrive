@@ -1,9 +1,8 @@
 package voloshyn.android.domain.repository
 
-import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.appResult.DataError
+import voloshyn.android.domain.models.OnBoardStatus
 
 interface OnBoardRepository {
-    suspend fun onFinish(isFinished: Boolean)
-    suspend fun isFinished(): Boolean
+    suspend fun onFinish(status: OnBoardStatus)
+    suspend fun isFinished(): OnBoardStatus
 }

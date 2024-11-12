@@ -8,9 +8,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
-import voloshyn.android.domain.models.tabs.redrive.Vehicle
-import voloshyn.android.domain.useCase.tabs.vehicles.AddVehicleUseCase
-import voloshyn.android.domain.useCase.tabs.vehicles.GetVehiclesUseCase
+import voloshyn.android.domain.models.Vehicle
+import voloshyn.android.domain.useCase.tabs.vehicle.RememberCurrentVehicleUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.AddVehicleUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.GetVehiclesUseCase
 import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class VehiclesViewModel @Inject constructor(
     private val addVehicleUseCase: AddVehicleUseCase,
-    private val vehicles: GetVehiclesUseCase
+    private val vehicles: GetVehiclesUseCase,
+    private val toggleVehicle: RememberCurrentVehicleUseCase
 ) : ViewModel() {
 
     private val scope = viewModelScope() { cause ->
@@ -48,6 +50,16 @@ class VehiclesViewModel @Inject constructor(
                     addVehicle(intent.vehicle, intent.accountId)
                 }
             }
+
+            is VehicleIntent.OnVehicleChange -> {
+                onCurrentVehicleChange(intent.vehicleId)
+            }
+        }
+    }
+
+    private fun onCurrentVehicleChange(vehicleId: Long) {
+        scope.launch {
+            toggleVehicle.invoke(vehicleId)
         }
     }
 
@@ -58,7 +70,6 @@ class VehiclesViewModel @Inject constructor(
             )
         }
         val vehiclesFlow = vehicles.invoke()
-
         vehiclesFlow.collectLatest { vehicles ->
             _state.update {
                 it.copy(
@@ -78,7 +89,8 @@ class VehiclesViewModel @Inject constructor(
                 isLoading = true
             )
         }
-        addVehicleUseCase.invoke(vehicle, accountId)
+       val vehicleId= addVehicleUseCase.invoke(vehicle, accountId)
+       onCurrentVehicleChange(vehicleId)
     }
 
 }

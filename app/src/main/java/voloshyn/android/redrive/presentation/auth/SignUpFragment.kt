@@ -1,5 +1,6 @@
 package voloshyn.android.redrive.presentation.auth
 
+import android.net.wifi.hotspot2.pps.Credential.UserCredential
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentSignUpBinding
-import voloshyn.android.domain.models.tabs.profile.User
+import voloshyn.android.domain.models.auth.Credentials
+import voloshyn.android.domain.models.auth.User
 import voloshyn.android.redrive.utils.viewBinding
 
 @AndroidEntryPoint
@@ -86,7 +88,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private fun signUp() {
         binding.bttSignUp.setOnClickListener {
-            val user = User(
+            val user = Credentials(
                 fullName = binding.etFullName.text.toString(),
                 email = binding.etEmail.text.toString(),
                 password = binding.etPassword.text.toString()

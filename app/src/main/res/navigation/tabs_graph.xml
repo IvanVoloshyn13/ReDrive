@@ -6,4 +6,5 @@
 
     <include app:graph="@navigation/redrive_graph" />
     <include app:graph="@navigation/profile_graph" />
+    <include app:graph="@navigation/logs_graph" />
 </navigation>

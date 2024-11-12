@@ -7,34 +7,65 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.appResult.DataError
+import voloshyn.android.domain.models.OnBoardStatus
+import voloshyn.android.domain.models.auth.SignInStatus
+import voloshyn.android.domain.useCase.auth.SignInStatusUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
-import voloshyn.android.redrive.presentation.onBoard.model.PresentationError
-import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val onBoard: OnBoardIsFinishedUseCase,
+    private val signInStatus: SignInStatusUseCase,
+    //  private val vehicles
 ) : ViewModel() {
     private val scope = viewModelScope()
 
-    private val _onBoardStatus = MutableSharedFlow<Boolean>(
-        replay = 1,
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_LATEST
-    )
-    val onBoardStatus = _onBoardStatus.asSharedFlow()
-
-
-
     init {
         scope.launch {
-            val result = onBoard.invoke()
-            _onBoardStatus.emit(result)
+            fromSplashToDestination()
         }
+    }
+
+    private val _observeDestination: MutableSharedFlow<FromSplashToDestination> =
+        MutableSharedFlow(
+            replay = 1,
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_LATEST
+        )
+     val destination = _observeDestination.asSharedFlow()
+
+    private suspend fun fromSplashToDestination() {
+        if (navigateToOnBoardDestination()) return
+        if (navigateToSignInDestination()) return
+        if (navigateToNewVehicleDestination()) return
+    }
+
+    private suspend fun navigateToOnBoardDestination(): Boolean {
+        val onBoardStatus = onBoard.invoke()
+        return when (onBoardStatus) {
+            OnBoardStatus.FINISHED -> false
+            OnBoardStatus.IN_PROGRESS -> {
+                _observeDestination.emit(FromSplashToDestination.ToOnBoard)
+                true
+            }
+        }
+    }
+
+    private suspend fun navigateToSignInDestination(): Boolean {
+        val signInStatus = signInStatus.invoke()
+        return when (signInStatus) {
+            SignInStatus.SignIn -> false
+            SignInStatus.SignOut -> {
+                _observeDestination.emit(FromSplashToDestination.ToSignIn)
+                true
+            }
+        }
+    }
+
+    private suspend fun navigateToNewVehicleDestination(): Boolean {
+        TODO()
     }
 
 

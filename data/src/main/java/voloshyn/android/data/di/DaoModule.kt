@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import voloshyn.android.data.dataSource.room.AppDatabase
+import voloshyn.android.data.localeStorage.room.AppDatabase
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -18,4 +18,5 @@ class DaoModule {
 
     @Provides
     fun providesRefuelsDao(db: AppDatabase) = db.getRefuelsDao()
+
 }
