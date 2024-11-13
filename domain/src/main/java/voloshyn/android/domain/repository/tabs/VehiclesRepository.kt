@@ -9,7 +9,7 @@ interface VehiclesRepository {
     suspend fun addVehicle(
         vehicle: Vehicle,
         accountId: String?
-    ):Long
+    ): Long
 
     /** Delete vehicle from database*/
     suspend fun deleteVehicle(id: Long)
@@ -19,8 +19,10 @@ interface VehiclesRepository {
     suspend fun rememberVehicle(vehicleId: Long)
 
     /** Get saved vehicle from dataStore */
-     fun currentVehicle(): Flow<Vehicle>
+    fun currentVehicle(): Flow<Vehicle>
 
     /** Get all vehicles from database */
     fun vehicles(): Flow<List<Vehicle>>
+
+    suspend fun isVehicle(userId: String): Boolean
 }

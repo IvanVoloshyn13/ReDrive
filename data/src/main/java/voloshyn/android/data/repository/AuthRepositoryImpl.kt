@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -132,7 +133,7 @@ class AuthRepositoryImpl @Inject constructor(
     override fun isUserSignedIn(): SignInStatus {
         val firebaseUser = auth.currentUser
         return if (firebaseUser != null) {
-            SignInStatus.SignIn
+            SignInStatus.SignIn(user = firebaseUser.toUser())
         } else
             SignInStatus.SignOut
     }
@@ -150,4 +151,8 @@ suspend fun <T> Task<T>.onTaskAwait(): T {
             }
         }
     }
+}
+
+fun FirebaseUser.toUser(): User {
+    return User(id = this.uid, email = this.email!!, fullName = this.displayName!!)
 }

@@ -6,10 +6,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import voloshyn.android.domain.repository.tabs.VehiclesRepository
-import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
-import voloshyn.android.domain.useCase.tabs.vehicle.RememberCurrentVehicleUseCase
 import voloshyn.android.domain.useCase.tabs.vehicle.AddVehicleUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
 import voloshyn.android.domain.useCase.tabs.vehicle.GetVehiclesUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.IsVehicleUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.RememberCurrentVehicleUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -37,6 +38,12 @@ object Vehicles {
     @ViewModelScoped
     fun provideGetCurrentVehicleUseCase(repository: VehiclesRepository): GetCurrentVehicleUseCase {
         return GetCurrentVehicleUseCase(repository)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideIsVehicleUseCase(repository: VehiclesRepository): IsVehicleUseCase {
+        return IsVehicleUseCase(repository)
     }
 
 }

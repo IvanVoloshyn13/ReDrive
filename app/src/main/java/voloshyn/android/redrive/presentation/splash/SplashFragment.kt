@@ -38,14 +38,13 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             FromSplashToDestination.ToOnBoard -> navigate(R.id.action_splashFragment_to_on_board_graph)
             FromSplashToDestination.ToSignIn -> navigate(R.id.action_splashFragment_to_sign_in_graph)
             FromSplashToDestination.ToAddNewVehicle -> navigate(R.id.action_splashFragment_to_newVehicleFragment)
-            FromSplashToDestination.ToTabs -> navigate(R.id.action_splashFragment_to_tabsFragment)
+            is FromSplashToDestination.ToTabs -> navigate(R.id.action_splashFragment_to_tabsFragment)
         }
 
     }
 
     private fun navigate(action: Int) {
         findNavController().navigate(action)
-
     }
 
 

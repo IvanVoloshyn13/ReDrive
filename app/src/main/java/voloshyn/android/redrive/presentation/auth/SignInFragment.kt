@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentSignInBinding
-import voloshyn.android.redrive.utils.findTopNavController
 import voloshyn.android.redrive.utils.viewBinding
 
 @AndroidEntryPoint
@@ -42,16 +41,14 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                     Toast.makeText(requireContext(), it.user.fullName, Toast.LENGTH_SHORT)
                         .show()
                 } else {
-                   it.errorMessage?.let {stringRes->
-                       Toast.makeText(
-                           requireContext(),
-                           getString(stringRes),
-                           Toast.LENGTH_SHORT
-                       )
-                           .show()
-                   }
-
-
+                    it.errorMessage?.let { stringRes ->
+                        Toast.makeText(
+                            requireContext(),
+                            getString(stringRes),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
                 }
             }
         }

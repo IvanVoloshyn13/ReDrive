@@ -99,6 +99,10 @@ class VehiclesRepositoryImpl @Inject constructor(
             }
     }
 
+    override suspend fun isVehicle(userId: String): Boolean {
+        return vehiclesDao.isVehicle(userId = userId)
+    }
+
 }
 
 
