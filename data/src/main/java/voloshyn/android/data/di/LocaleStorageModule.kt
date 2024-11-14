@@ -13,7 +13,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import voloshyn.android.data.dataSource.room.AppDatabase
+import voloshyn.android.data.localeStorage.room.AppDatabase
 import javax.inject.Singleton
 
 internal const val PREFERENCE_DATA_STORE_FILE_NAME = "datastore.preferences_pb"

@@ -8,10 +8,12 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import voloshyn.android.data.repository.AndroidEmailValidatorImpl
 import voloshyn.android.data.repository.AuthRepositoryImpl
 import voloshyn.android.data.repository.OnBoardRepositoryImpl
-import voloshyn.android.data.repository.tabs.VehiclesRepositoryImpl
+import voloshyn.android.data.repository.tabs.logs.RefuelLogsRepositoryImpl
+import voloshyn.android.data.repository.tabs.vehicles.VehiclesRepositoryImpl
 import voloshyn.android.domain.repository.AuthRepository
 import voloshyn.android.domain.repository.EmailValidatorRepository
 import voloshyn.android.domain.repository.OnBoardRepository
+import voloshyn.android.domain.repository.tabs.RefuelLogsRepository
 import voloshyn.android.domain.repository.tabs.VehiclesRepository
 
 @Module
@@ -34,6 +36,10 @@ interface RepositoryModule {
     @Binds
     @ViewModelScoped
     fun bindVehicleRepository(repository: VehiclesRepositoryImpl): VehiclesRepository
+
+    @Binds
+    @ViewModelScoped
+    fun bindRefuelLogsRepository(repository: RefuelLogsRepositoryImpl):RefuelLogsRepository
 
 
 }

@@ -14,21 +14,20 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"/>
         <action
-            android:id="@+id/action_splashFragment_to_onBoardFragmentContainer"
-            app:destination="@id/onBoardFragmentContainer"
+            android:id="@+id/action_splashFragment_to_sign_in_graph"
+            app:destination="@id/sign_in_graph"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/onBoardFragmentContainer"
-        android:name="voloshyn.android.redrive.presentation.onBoard.OnBoardFragmentContainer"
-        tools:layout="@layout/fragment_on_board" >
         <action
-            android:id="@+id/action_onBoardFragmentContainer_to_tabsFragment"
-            app:destination="@id/tabsFragment"
-            app:popUpTo="@id/onBoardFragmentContainer"
-            app:popUpToInclusive="true"/>
+            android:id="@+id/action_splashFragment_to_on_board_graph"
+            app:destination="@id/on_board_graph"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_newVehicleFragment"
+            app:destination="@id/newVehicleFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -36,37 +35,35 @@
         android:name="voloshyn.android.redrive.presentation.tabs.TabsFragment"
         tools:layout="@layout/fragment_tabs">
         <action
-            android:id="@+id/action_tabsFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-        <action
-            android:id="@+id/action_tabsFragment_to_newRefuelFragment"
-            app:destination="@id/newRefuelFragment" />
+            android:id="@+id/action_tabsFragment_to_refuelFragment"
+            app:destination="@id/refuelFragment" />
         <action
             android:id="@+id/action_tabsFragment_to_vehiclesFragment"
             app:destination="@id/vehiclesFragment" />
     </fragment>
     <fragment
-        android:id="@+id/signInFragment"
-        android:name="voloshyn.android.redrive.presentation.auth.SignInFragment"
-        android:label="Sign In"
-        tools:layout="@layout/fragment_sign_in">
-        <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="voloshyn.android.redrive.presentation.auth.SignUpFragment"
-        android:label="Sign Up"
-        tools:layout="@layout/fragment_sign_up"/>
-    <fragment
-        android:id="@+id/newRefuelFragment"
-        android:name="voloshyn.android.redrive.presentation.tabs.newRefuel.NewRefuelFragment"
-        android:label="New refuel"
-        tools:layout="@layout/fragment_new_refuel"/>
+        android:id="@+id/refuelFragment"
+        android:name="voloshyn.android.redrive.presentation.tabs.refuel.RefuelFragment"
+        android:label="Refuel"
+        tools:layout="@layout/fragment_refuel" />
     <fragment
         android:id="@+id/vehiclesFragment"
         android:name="voloshyn.android.redrive.presentation.tabs.vehicles.VehiclesFragment"
         android:label="Choose Vehicle"
         tools:layout="@layout/fragment_vehicles"/>
+
+    <include app:graph="@navigation/sign_in_graph" />
+    <include app:graph="@navigation/on_board_graph" />
+
+    <fragment
+        android:id="@+id/newVehicleFragment"
+        android:name="voloshyn.android.redrive.presentation.tabs.NewVehicleFragment"
+        android:label="NewVehicleFragment"
+        tools:layout="@layout/fragment_new_vehicle">
+        <action
+            android:id="@+id/action_newVehicleFragment_to_tabsFragment"
+            app:destination="@id/tabsFragment"
+            app:popUpTo="@id/newVehicleFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

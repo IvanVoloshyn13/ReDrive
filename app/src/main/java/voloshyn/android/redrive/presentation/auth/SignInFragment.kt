@@ -41,16 +41,14 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                     Toast.makeText(requireContext(), it.user.fullName, Toast.LENGTH_SHORT)
                         .show()
                 } else {
-                   it.errorMessage?.let {stringRes->
-                       Toast.makeText(
-                           requireContext(),
-                           getString(stringRes),
-                           Toast.LENGTH_SHORT
-                       )
-                           .show()
-                   }
-
-
+                    it.errorMessage?.let { stringRes ->
+                        Toast.makeText(
+                            requireContext(),
+                            getString(stringRes),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
                 }
             }
         }

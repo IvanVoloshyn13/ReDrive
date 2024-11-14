@@ -5,17 +5,19 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
-import voloshyn.android.data.repository.tabs.RefuelsRepositoryImpl
+import voloshyn.android.data.repository.tabs.refuel.RefuelRepositoryImpl
 import voloshyn.android.domain.repository.AuthRepository
 import voloshyn.android.domain.repository.EmailValidatorRepository
 import voloshyn.android.domain.repository.OnBoardRepository
-import voloshyn.android.domain.useCase.auth.IsSignedInUseCase
+import voloshyn.android.domain.repository.tabs.RefuelLogsRepository
+import voloshyn.android.domain.useCase.auth.SignInStatusUseCase
 import voloshyn.android.domain.useCase.auth.RememberMeUseCase
-import voloshyn.android.domain.useCase.auth.SignInUseCase
-import voloshyn.android.domain.useCase.auth.SignUpUseCase
+import voloshyn.android.domain.useCase.auth.SignInWithEmailUseCase
+import voloshyn.android.domain.useCase.auth.SignUpWithEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateEmailUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardFinishUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
+import voloshyn.android.domain.useCase.tabs.logs.GetLogsUseCase
 import voloshyn.android.domain.useCase.tabs.refuel.AddNewRefuelUseCase
 
 @Module
@@ -30,8 +32,8 @@ object UseCaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideIsSignedInUseCase(repository: AuthRepository): IsSignedInUseCase {
-        return IsSignedInUseCase(repository)
+    fun provideIsSignedInUseCase(repository: AuthRepository): SignInStatusUseCase {
+        return SignInStatusUseCase(repository)
     }
 
     @Provides
@@ -47,13 +49,13 @@ object UseCaseModule {
     }
 
     @Provides
-    fun provideSignUpUseCase(repository: AuthRepository): SignUpUseCase {
-        return SignUpUseCase(repository)
+    fun provideSignUpUseCase(repository: AuthRepository): SignUpWithEmailUseCase {
+        return SignUpWithEmailUseCase(repository)
     }
 
     @Provides
-    fun provideSignInUseCase(repository: AuthRepository): SignInUseCase {
-        return SignInUseCase(repository)
+    fun provideSignInUseCase(repository: AuthRepository): SignInWithEmailUseCase {
+        return SignInWithEmailUseCase(repository)
     }
 
     @Provides
@@ -62,8 +64,13 @@ object UseCaseModule {
     }
 
     @Provides
-    fun provideAddNewRefuelUseCase(repository: RefuelsRepositoryImpl): AddNewRefuelUseCase {
+    fun provideAddNewRefuelUseCase(repository: RefuelRepositoryImpl): AddNewRefuelUseCase {
         return AddNewRefuelUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetRefuelLogsUseCase(repository:RefuelLogsRepository):GetLogsUseCase{
+        return GetLogsUseCase(repository)
     }
 
 }

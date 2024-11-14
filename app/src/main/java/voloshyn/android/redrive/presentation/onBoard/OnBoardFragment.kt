@@ -8,7 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentOnBoardBinding
-import voloshyn.android.redrive.utils.navigateToTabsFragment
+import voloshyn.android.redrive.utils.navigateToSignInFragment
 import voloshyn.android.redrive.utils.viewBinding
 
 @AndroidEntryPoint
@@ -25,7 +25,7 @@ class OnBoardFragment : Fragment(R.layout.fragment_on_board) {
 
         binding.bttSkip.setOnClickListener {
             viewModel.finishOnBoard()
-            navigateToTabsFragment()
+            navigateToSignInFragment()
         }
     }
 

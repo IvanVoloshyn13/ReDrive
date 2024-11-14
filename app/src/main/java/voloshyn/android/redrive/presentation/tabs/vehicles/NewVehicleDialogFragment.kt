@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
@@ -14,7 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.DialogNewVehicleBinding
-import voloshyn.android.domain.models.tabs.redrive.Vehicle
+import voloshyn.android.domain.models.Vehicle
 
 interface DialogFragmentListener
 

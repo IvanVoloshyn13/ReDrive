@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentSplashBinding
-import voloshyn.android.redrive.utils.showToast
 import voloshyn.android.redrive.utils.viewBinding
 
 @AndroidEntryPoint
@@ -23,11 +22,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         renderAnimations()
-
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 delay(2500)
-                viewModel.onBoardStatus.collectLatest {
+                viewModel.destination.collectLatest {
                     launchMainFragment(it)
                 }
             }
@@ -35,13 +33,18 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     }
 
-    private fun launchMainFragment(onBoardFinished: Boolean) {
-        if (onBoardFinished) {
-            findNavController().navigate(R.id.action_splashFragment_to_tabsFragment)
-        } else {
-            findNavController().navigate(R.id.action_splashFragment_to_onBoardFragmentContainer)
+    private fun launchMainFragment(destination: FromSplashToDestination) {
+        when (destination) {
+            FromSplashToDestination.ToOnBoard -> navigate(R.id.action_splashFragment_to_on_board_graph)
+            FromSplashToDestination.ToSignIn -> navigate(R.id.action_splashFragment_to_sign_in_graph)
+            FromSplashToDestination.ToAddNewVehicle -> navigate(R.id.action_splashFragment_to_newVehicleFragment)
+            is FromSplashToDestination.ToTabs -> navigate(R.id.action_splashFragment_to_tabsFragment)
         }
 
+    }
+
+    private fun navigate(action: Int) {
+        findNavController().navigate(action)
     }
 
 

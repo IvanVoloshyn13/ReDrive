@@ -1,5 +1,6 @@
 package voloshyn.android.data.repository
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -9,14 +10,19 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
-import voloshyn.android.data.dataSource.datastorePreferences.PreferencesKeys
+import voloshyn.android.data.localeStorage.datastorePreferences.PreferencesKeys
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.appResult.AuthError
-import voloshyn.android.domain.models.tabs.profile.User
-import voloshyn.android.domain.models.tabs.profile.UserTuple
+import voloshyn.android.domain.appResult.AuthenticationError
+import voloshyn.android.domain.models.auth.Credentials
+import voloshyn.android.domain.models.auth.SignInStatus
+import voloshyn.android.domain.models.auth.User
 import voloshyn.android.domain.repository.AuthRepository
 import javax.inject.Inject
 import kotlin.coroutines.resumeWithException
@@ -25,23 +31,35 @@ class AuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val dataStore: DataStore<Preferences>
 ) : AuthRepository {
+    private var currentUser: User = User.EMPTY_USER
 
-    init {
-        currentFirebaseUser()
+    override fun observeCurrentUser(): Flow<User?> = callbackFlow {
+        val authStateListener = FirebaseAuth.AuthStateListener {
+            val currentUser = it.currentUser
+            val user = currentUser?.let {
+                User(
+                    id = currentUser.uid,
+                    email = currentUser.email!!,
+                    fullName = currentUser.displayName!!
+                )
+            }
+            trySend(user)
+        }
+        auth.addAuthStateListener(authStateListener)
+        awaitClose {
+            auth.removeAuthStateListener(authStateListener)
+        }
     }
 
-    override lateinit var currentUser: UserTuple
-
-
-    override suspend fun signIn(
+    override suspend fun signInWithEmail(
         email: String,
         password: String
-    ): AppResult<UserTuple, AuthError.FirebaseAuth> {
+    ): AppResult<User, AuthenticationError> {
         return try {
             val result = auth.signInWithEmailAndPassword(email, password).onTaskAwait()
             val firebaseUser = result.user
             firebaseUser?.let {
-                currentUser = UserTuple(
+                currentUser = User(
                     id = it.uid,
                     fullName = it.displayName!!,
                     email = it.email!!
@@ -49,22 +67,31 @@ class AuthRepositoryImpl @Inject constructor(
             }
             AppResult.Success(data = currentUser)
         } catch (e: FirebaseAuthInvalidCredentialsException) {
-            AppResult.Error(error = AuthError.FirebaseAuth.INVALID_CREDENTIALS)
+            AppResult.Error(error = AuthenticationError.AuthError.INVALID_CREDENTIALS)
+
         } catch (e: FirebaseAuthInvalidUserException) {
-            AppResult.Error(error = AuthError.FirebaseAuth.NO_USER_DETECTED)
+            AppResult.Error(error = AuthenticationError.AuthError.USER_NOT_FOUND)
+
         }
+
     }
 
-    override suspend fun signUp(user: User): AppResult<UserTuple, AuthError.FirebaseAuth> {
-        var currentUser = UserTuple.EMPTY_USER
+    override suspend fun signInWithGoogle(idToken: String): AppResult<User, AuthenticationError> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun signUpWithEmail(credentials: Credentials): AppResult<User, AuthenticationError.AuthError> {
+        var currentUser = User.EMPTY_USER
         return try {
-            val result = auth.createUserWithEmailAndPassword(user.email, user.password).onTaskAwait()
+            val result =
+                auth.createUserWithEmailAndPassword(credentials.email, credentials.password)
+                    .onTaskAwait()
             result.user?.updateProfile(
-                UserProfileChangeRequest.Builder().setDisplayName(user.fullName).build()
+                UserProfileChangeRequest.Builder().setDisplayName(credentials.fullName).build()
             )?.onTaskAwait()
             val firebaseUser = result.user
             firebaseUser?.let {
-                currentUser = UserTuple(
+                currentUser = User(
                     id = it.uid,
                     fullName = it.displayName!!,
                     email = it.email!!
@@ -72,56 +99,45 @@ class AuthRepositoryImpl @Inject constructor(
             }
             AppResult.Success(data = currentUser)
         } catch (e: FirebaseAuthInvalidCredentialsException) {
-            AppResult.Error(error = AuthError.FirebaseAuth.INVALID_CREDENTIALS)
+            AppResult.Error(error = AuthenticationError.AuthError.INVALID_CREDENTIALS)
+
         } catch (e: FirebaseAuthUserCollisionException) {
-            AppResult.Error(error = AuthError.FirebaseAuth.USER_COLLISION)
+            AppResult.Error(error = AuthenticationError.AuthError.USER_ALREADY_EXISTS)
+
         } catch (e: FirebaseAuthException) {
-            AppResult.Error(error = AuthError.FirebaseAuth.FIREBASE_AUTH_ERROR)
+            AppResult.Error(error = AuthenticationError.AuthError.AUTHENTICATION_FAILED)
+
         } catch (e: Exception) {
-            AppResult.Error(error = AuthError.FirebaseAuth.UNKNOWN_ERROR)
+            Log.d("ERRORHERE","justMessage")
+            AppResult.Error(error = AuthenticationError.AuthError.UNKNOWN_ERROR)
+
         }
 
     }
 
-    override suspend fun forgotPassword() {
+    override suspend fun sendPasswordReset(email: String): AppResult<Unit, Nothing> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun rememberMe(rememberMe: Boolean) {
-            dataStore.edit {
-                it[PreferencesKeys.REMEMBER_ME] = rememberMe
+    //TODO("Looks stupid for me)
+    override suspend fun setRememberMe(rememberMe: Boolean) {
+        dataStore.edit {
+            it[PreferencesKeys.REMEMBER_ME] = rememberMe
         }
     }
 
-    override suspend fun logout() {
+    override suspend fun signOut(): AppResult<Unit, Nothing> {
+        TODO("Not yet implemented")
         TODO("$currentUser must be null in this method")
         TODO("Not yet implemented")
-
     }
 
-    override fun isSignedIn(): AppResult<UserTuple?, AuthError.FirebaseAuth> {
+    override fun isUserSignedIn(): SignInStatus {
         val firebaseUser = auth.currentUser
         return if (firebaseUser != null) {
-            AppResult.Success(
-                data = UserTuple(
-                    id = firebaseUser.uid,
-                    fullName = firebaseUser.displayName!!,
-                    email = firebaseUser.email!!
-                )
-            )
-        } else AppResult.Error(null, AuthError.FirebaseAuth.NO_USER_DETECTED)
-
-    }
-
-    private fun currentFirebaseUser() {
-        val firebaseUser = auth.currentUser
-        if (firebaseUser != null) {
-            currentUser = UserTuple(
-                id = firebaseUser.uid,
-                fullName = firebaseUser.displayName!!,
-                email = firebaseUser.email!!
-            )
-        }
+            SignInStatus.SignIn(user = firebaseUser.toUser())
+        } else
+            SignInStatus.SignOut
     }
 
 }
@@ -137,4 +153,8 @@ suspend fun <T> Task<T>.onTaskAwait(): T {
             }
         }
     }
+}
+
+fun FirebaseUser.toUser(): User {
+    return User(id = this.uid, email = this.email!!, fullName = this.displayName!!)
 }

@@ -27,19 +27,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <ImageView
                 android:id="@+id/iv_vehicle"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginStart="16dp"
                 android:src="@drawable/ic_car"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.416"
                 tools:ignore="ContentDescription">
 
             </ImageView>
-
 
             <TextView
                 android:id="@+id/tv_current_vehicle_name"
@@ -127,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"
-                android:text="@string/price_per_liter"
+                android:text="@string/format_price_per_liter"
                 android:textAppearance="@style/TextAppearance.ReDrive.Cards"
                 android:textColor="?attr/colorOnSurface"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"
-                android:text="@string/price_per_liter"
+                android:text="@string/format_price_per_liter"
                 android:textAppearance="@style/TextAppearance.ReDrive.Cards"
                 android:textColor="?attr/colorOnSurface"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -441,7 +442,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_margin"
-                android:text="@string/price_per_liter"
+                android:text="@string/format_price_per_liter"
                 android:textAppearance="@style/TextAppearance.ReDrive.Cards"
                 android:textColor="?attr/colorOnSurface"
                 app:layout_constraintBottom_toBottomOf="parent"

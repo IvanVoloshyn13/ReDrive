@@ -1,12 +1,11 @@
 package voloshyn.android.redrive.utils
 
 import voloshyn.android.app.R
-import voloshyn.android.domain.AppException
 import voloshyn.android.domain.DataStoreException
 import voloshyn.android.domain.FileNotFoundException
 import voloshyn.android.domain.LocalStorageException
 import voloshyn.android.domain.UnknownException
-import voloshyn.android.domain.appResult.AuthError
+import voloshyn.android.domain.appResult.AuthenticationError
 import voloshyn.android.domain.appResult.DataError
 
 fun DataError.Locale.toStringResource(): Int {
@@ -42,12 +41,12 @@ fun Throwable.toStringResource(): Int {
     }
 }
 
-fun AuthError.FirebaseAuth.toStringResource(): Int {
+fun AuthenticationError.AuthError.toStringResource(): Int {
     return when (this) {
-        AuthError.FirebaseAuth.FIREBASE_AUTH_ERROR -> R.string.firebase_auth_error
-        AuthError.FirebaseAuth.INVALID_CREDENTIALS -> R.string.invalid_credentials
-        AuthError.FirebaseAuth.USER_COLLISION -> R.string.user_collision
-        AuthError.FirebaseAuth.NO_USER_DETECTED -> R.string.no_user_detected
-        AuthError.FirebaseAuth.UNKNOWN_ERROR -> R.string.unknown_error_firebase
+        AuthenticationError.AuthError.AUTHENTICATION_FAILED -> R.string.firebase_auth_error
+        AuthenticationError.AuthError.INVALID_CREDENTIALS -> R.string.invalid_credentials
+        AuthenticationError.AuthError.USER_ALREADY_EXISTS -> R.string.user_collision
+        AuthenticationError.AuthError.USER_NOT_FOUND -> R.string.no_user_detected
+        AuthenticationError.AuthError.UNKNOWN_ERROR -> R.string.unknown_error_firebase
     }
 }

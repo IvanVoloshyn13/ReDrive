@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import voloshyn.android.domain.models.OnBoardStatus
 import voloshyn.android.domain.useCase.onBoard.OnBoardFinishUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
@@ -16,7 +17,7 @@ class OnBoardViewModel @Inject constructor(
 
     fun finishOnBoard() {
         scope.launch {
-            onBoard.invoke(true)
+            onBoard.invoke(OnBoardStatus.FINISHED)
         }
     }
 

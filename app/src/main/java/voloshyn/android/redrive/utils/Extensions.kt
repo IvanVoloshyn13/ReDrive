@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -12,13 +13,13 @@ import kotlinx.coroutines.SupervisorJob
 import voloshyn.android.app.R
 import voloshyn.android.domain.useCase.auth.ValidatePasswordState
 
-fun Fragment.navigateToTabsFragment() {
-    findNavController().navigate(R.id.action_onBoardFragmentContainer_to_tabsFragment)
+fun Fragment.navigateToSignInFragment() {
+    requireActivity().findNavController(R.id.main_fragment_container).navigate(R.id.action_onBoardFragmentContainer_to_sign_in_graph)
 }
 
 fun Fragment.findTopNavController(): NavController {
     val topLevelHost =
-        requireActivity().supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment?
+        requireActivity().supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment?
     return topLevelHost?.navController ?: findNavController()
 }
 
@@ -61,6 +62,7 @@ fun viewModelScope(errorHandler: (cause: Throwable) -> Unit): CoroutineScope {
     }
     return CoroutineScope(SupervisorJob() + exceptionHandler)
 }
+
 
 fun viewModelScope(): CoroutineScope {
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->

@@ -35,6 +35,23 @@
 
     </TextView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btt_google_sign_in"
+        style="@style/OS.MaterialButton"
+        android:backgroundTint="@color/white"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/google_sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:icon="@drawable/ic_google"
+        app:iconTint="@null"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sign_in">
+
+    </com.google.android.material.button.MaterialButton>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_container"
@@ -45,7 +62,7 @@
         app:hintTextColor="#D7D6D6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_sign_in">
+        app:layout_constraintTop_toBottomOf="@id/btt_google_sign_in">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
@@ -110,7 +127,7 @@
         android:fontFamily="@font/poppins_light"
         android:text="@string/forgot_password"
         android:textAppearance="@style/TextAppearance.OS.Default"
-        android:textColor="@color/os_secondary_text_color"
+
         app:layout_constraintBottom_toBottomOf="@id/remember_me"
         app:layout_constraintEnd_toEndOf="@id/password_container"
         app:layout_constraintTop_toTopOf="@id/remember_me">
@@ -157,7 +174,7 @@
         android:gravity="center"
         android:text="@string/sign_up"
         android:textAppearance="@style/TextAppearance.OS.Default"
-        android:textColor="?attr/colorTertiary"
+        android:textColor="@color/os_secondary_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_have_account"
         app:layout_constraintTop_toBottomOf="@+id/btt_sign_in">

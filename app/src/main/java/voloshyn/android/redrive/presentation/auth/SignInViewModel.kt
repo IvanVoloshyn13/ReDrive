@@ -8,16 +8,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.models.tabs.profile.UserTuple
+import voloshyn.android.domain.models.auth.User
 import voloshyn.android.domain.useCase.auth.RememberMeUseCase
-import voloshyn.android.domain.useCase.auth.SignInUseCase
-import voloshyn.android.redrive.utils.toStringResource
+import voloshyn.android.domain.useCase.auth.SignInWithEmailUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signIn: SignInUseCase,
+    private val signIn: SignInWithEmailUseCase,
     private val _rememberMe: RememberMeUseCase
 ) : ViewModel() {
     private val viewModelScope = viewModelScope()
@@ -39,7 +38,7 @@ class SignInViewModel @Inject constructor(
                         it.copy(
                             loading = false,
                             isError = true,
-                            errorMessage = result.error.toStringResource()
+                            errorMessage = TODO()
                         )
                     }
                 }
@@ -50,7 +49,7 @@ class SignInViewModel @Inject constructor(
                             loading = false,
                             isSignIn = true,
                             user = (
-                                    UserTuple(
+                                    User(
                                         id = result.data.id,
                                         fullName = result.data.fullName,
                                         email = result.data.email
@@ -78,7 +77,7 @@ class SignInViewModel @Inject constructor(
 data class SignInState(
     val loading: Boolean = false,
     val isSignIn: Boolean = false,
-    val user: UserTuple = UserTuple.EMPTY_USER,
+    val user: User = User.EMPTY_USER,
     val isError: Boolean = false,
     @StringRes val errorMessage: Int? = null
 )
