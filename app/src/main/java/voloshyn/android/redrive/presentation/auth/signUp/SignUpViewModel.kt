@@ -1,6 +1,5 @@
-package voloshyn.android.redrive.presentation.auth
+package voloshyn.android.redrive.presentation.auth.signUp
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,12 +10,12 @@ import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.models.auth.Credentials
-import voloshyn.android.domain.models.auth.User
 import voloshyn.android.domain.useCase.auth.SignUpWithEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateFullNameUseCase
 import voloshyn.android.domain.useCase.auth.ValidatePasswordUseCase
 import voloshyn.android.redrive.utils.message
+import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
@@ -41,10 +40,10 @@ class SignUpViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            currentValidationState.collectLatest { valid ->
+            currentValidationState.collectLatest { validationState ->
                 _state.update {
                     it.copy(
-                        validationState = valid.isValid
+                        validationState = validationState.isValid
                     )
                 }
             }
@@ -54,7 +53,8 @@ class SignUpViewModel @Inject constructor(
     suspend fun signUp(credentials: Credentials) {
         _state.update {
             it.copy(
-                loading = true
+                loading = true,
+                signUpState = SignUpState.InProgress,
             )
         }
         viewModelScope.launch {
@@ -63,7 +63,7 @@ class SignUpViewModel @Inject constructor(
                 is AppResult.Success -> _state.update {
                     it.copy(
                         currentUser = result.data,
-                        isSignUp = true,
+                        signUpState = SignUpState.Success,
                         loading = false
                     )
                 }
@@ -72,9 +72,7 @@ class SignUpViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             loading = false,
-                            errorMessage = TODO() //  result.error.toStringResource()
-                             ,
-                            isError = true
+                            signUpState = SignUpState.Failure(errorMessage = result.error.toStringResource()),
                         )
                     }
                 }
@@ -141,25 +139,6 @@ class SignUpViewModel @Inject constructor(
 }
 
 
-data class ValidationState(
-    val isValidFullName: Boolean = false,
-    val isValidEmail: Boolean = false,
-    val isValidPassword: Boolean = false,
-    val isValidConfirmPassword: Boolean = false
-) {
-    val isValid
-        get() = isValidFullName && isValidEmail && isValidPassword && isValidConfirmPassword
-
-}
-
-data class FragmentSignUpState(
-    val validationState: Boolean = false,
-    val isSignUp: Boolean = false,
-    val loading: Boolean = false,
-    val currentUser: User = User.EMPTY_USER,
-    val isError: Boolean = false,
-    @StringRes val errorMessage: Int = 0
-)
 
 
 

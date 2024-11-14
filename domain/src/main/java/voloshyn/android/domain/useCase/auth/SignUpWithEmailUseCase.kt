@@ -7,7 +7,7 @@ import voloshyn.android.domain.models.auth.User
 import voloshyn.android.domain.repository.AuthRepository
 
 class SignUpWithEmailUseCase(private val repository: AuthRepository) {
-    suspend fun invoke(credentials: Credentials): AppResult<User,AuthenticationError> {
+    suspend fun invoke(credentials: Credentials): AppResult<User,AuthenticationError.AuthError> {
         return repository.signUpWithEmail(credentials)
     }
 }

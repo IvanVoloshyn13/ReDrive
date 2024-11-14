@@ -1,4 +1,4 @@
-package voloshyn.android.redrive.presentation.auth
+package voloshyn.android.redrive.presentation.auth.signUp
 
 import androidx.annotation.StringRes
 

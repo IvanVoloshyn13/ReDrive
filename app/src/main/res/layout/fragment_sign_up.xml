@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
             android:inputType="textPersonName"
-            android:textColor="?attr/colorOnSurface" />
+            android:textColor="@color/white" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
             android:inputType="textEmailAddress"
-            android:textColor="?attr/colorOnSurface" />
+            android:textColor="@color/white" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
             android:inputType="textPassword"
-            android:textColor="?attr/colorOnSurface" />
+            android:textColor="@color/white" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
             android:inputType="textPassword"
-            android:textColor="?attr/colorOnSurface" />
+            android:textColor="@color/white" />
 
 
     </com.google.android.material.textfield.TextInputLayout>

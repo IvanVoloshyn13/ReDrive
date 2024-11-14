@@ -19,7 +19,7 @@ interface AuthRepository {
     suspend fun signInWithGoogle(idToken: String): AppResult<User, AuthenticationError>
 
     // Registers a new user with email, password, and additional credentials like displayName
-    suspend fun signUpWithEmail(credentials: Credentials): AppResult<User, AuthenticationError>
+    suspend fun signUpWithEmail(credentials: Credentials): AppResult<User, AuthenticationError.AuthError>
 
     // Sends a password reset email to the provided address
     suspend fun sendPasswordReset(email: String): AppResult<Unit, Nothing>

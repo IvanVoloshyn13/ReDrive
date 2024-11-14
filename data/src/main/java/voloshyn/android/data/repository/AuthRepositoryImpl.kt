@@ -1,5 +1,6 @@
 package voloshyn.android.data.repository
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -79,7 +80,7 @@ class AuthRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun signUpWithEmail(credentials: Credentials): AppResult<User, AuthenticationError> {
+    override suspend fun signUpWithEmail(credentials: Credentials): AppResult<User, AuthenticationError.AuthError> {
         var currentUser = User.EMPTY_USER
         return try {
             val result =
@@ -107,6 +108,7 @@ class AuthRepositoryImpl @Inject constructor(
             AppResult.Error(error = AuthenticationError.AuthError.AUTHENTICATION_FAILED)
 
         } catch (e: Exception) {
+            Log.d("ERRORHERE","justMessage")
             AppResult.Error(error = AuthenticationError.AuthError.UNKNOWN_ERROR)
 
         }
