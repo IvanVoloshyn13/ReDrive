@@ -24,19 +24,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/iv_vehicle_type"
-                style="@style/App.VehicleButton"
+            <FrameLayout
+                android:id="@+id/vehicle_type_container"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:layout_marginTop="@dimen/medium_margin"
+                android:background="@drawable/rounded_background"
                 android:backgroundTint="#8FD2B8"
-                app:icon="@drawable/ic_car"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-            </Button>
+                <ImageView
+                    android:id="@+id/iv_vehicle_type"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_bike">
+
+                </ImageView>
+
+
+            </FrameLayout>
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/vehicle_toggle"
@@ -46,7 +55,7 @@
                 app:checkedButton="@id/btt_car"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_vehicle_type"
+                app:layout_constraintTop_toBottomOf="@+id/vehicle_type_container"
                 app:materialThemeOverlay="@style/App.VehicleToggle"
                 app:selectionRequired="true"
                 app:singleSelection="true">
@@ -79,7 +88,6 @@
                 android:layout_height="36dp"
                 android:layout_marginStart="@dimen/medium_margin"
                 android:src="@drawable/ic_car_black"
-                app:iconTint="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/vehicle_container"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/vehicle_container"

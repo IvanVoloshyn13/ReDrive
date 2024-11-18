@@ -54,7 +54,7 @@ class SignUpViewModel @Inject constructor(
         _state.update {
             it.copy(
                 loading = true,
-                signUpState = SignUpState.InProgress,
+                signUpStatus = SignUpStatus.InProgress,
             )
         }
         viewModelScope.launch {
@@ -63,7 +63,7 @@ class SignUpViewModel @Inject constructor(
                 is AppResult.Success -> _state.update {
                     it.copy(
                         currentUser = result.data,
-                        signUpState = SignUpState.Success,
+                        signUpStatus = SignUpStatus.Success,
                         loading = false
                     )
                 }
@@ -72,7 +72,7 @@ class SignUpViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             loading = false,
-                            signUpState = SignUpState.Failure(errorMessage = result.error.toStringResource()),
+                            signUpStatus = SignUpStatus.Failure(errorMessage = result.error.toStringResource()),
                         )
                     }
                 }

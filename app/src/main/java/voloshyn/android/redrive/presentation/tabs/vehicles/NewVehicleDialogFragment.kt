@@ -60,7 +60,7 @@ class NewVehicleDialogFragment : DialogFragment(), DialogFragmentListener {
         validateOdometer(odometer)
 
         return if (vehicleName.isNotEmpty() && odometer.isNotEmpty()) {
-            val vehicle = Vehicle(id = 0, name = vehicleName, currentMileage = odometer.toInt())
+            val vehicle = Vehicle(id = 0, name = vehicleName, currentMileage = odometer.toInt(), type = TODO())
             vehicle
         } else return null
     }

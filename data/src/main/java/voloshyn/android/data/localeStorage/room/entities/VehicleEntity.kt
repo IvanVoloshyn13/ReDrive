@@ -31,7 +31,8 @@ data class VehicleEntity(
         return Vehicle(
             id = id,
             name = name,
-            currentMileage = currentMileage
+            currentMileage = currentMileage,
+            type = TODO()
         )
     }
 }

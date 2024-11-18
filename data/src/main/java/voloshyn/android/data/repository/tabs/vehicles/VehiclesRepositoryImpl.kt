@@ -90,7 +90,8 @@ class VehiclesRepositoryImpl @Inject constructor(
                     Vehicle(
                         id = vehicleEntity.id,
                         name = vehicleEntity.name,
-                        currentMileage = vehicleEntity.currentMileage
+                        currentMileage = vehicleEntity.currentMileage,
+                        type = TODO()
                     )
                 }
                 vehicles

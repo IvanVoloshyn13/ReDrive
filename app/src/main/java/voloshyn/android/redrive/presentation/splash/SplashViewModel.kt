@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.OnBoardStatus
 import voloshyn.android.domain.models.auth.SignInStatus
 import voloshyn.android.domain.models.auth.User
-import voloshyn.android.domain.useCase.auth.SignInStatusUseCase
+import voloshyn.android.domain.useCase.auth.IsUserSignInUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
 import voloshyn.android.domain.useCase.tabs.vehicle.IsVehicleUseCase
 import voloshyn.android.redrive.utils.viewModelScope
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val onBoard: OnBoardIsFinishedUseCase,
-    private val signInStatus: SignInStatusUseCase,
+    private val signInStatus: IsUserSignInUseCase,
     private val isVehicle: IsVehicleUseCase
 ) : ViewModel() {
     private val scope = viewModelScope()
@@ -47,6 +47,9 @@ class SplashViewModel @Inject constructor(
             }
 
             SignInStatus.SignOut -> false
+            SignInStatus.Failure -> {
+                false
+            }
         }
     }
 

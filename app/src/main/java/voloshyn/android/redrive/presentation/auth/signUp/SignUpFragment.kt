@@ -39,19 +39,19 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         lifecycleScope.launch {
             viewModel.state.collectLatest {
                 binding.progressBar.visibility = if (it.loading) View.VISIBLE else View.GONE
-                when (it.signUpState) {
-                    is SignUpState.Failure -> {
+                when (it.signUpStatus) {
+                    is SignUpStatus.Failure -> {
                         Toast.makeText(
                             requireContext(),
-                            getString(it.signUpState.errorMessage),
+                            getString(it.signUpStatus.errorMessage),
                             Toast.LENGTH_SHORT
                         )
                             .show()
                     }
 
-                    SignUpState.InProgress -> {}
+                    SignUpStatus.InProgress -> {}
 
-                    SignUpState.Success -> {
+                    SignUpStatus.Success -> {
                         findNavController().navigate(R.id.action_signUpFragment_to_newVehicleFragment)
                     }
                 }
