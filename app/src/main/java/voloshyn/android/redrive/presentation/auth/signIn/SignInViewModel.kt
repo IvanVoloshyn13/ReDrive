@@ -1,6 +1,5 @@
-package voloshyn.android.redrive.presentation.auth
+package voloshyn.android.redrive.presentation.auth.signIn
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -8,27 +7,28 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.appResult.AppResult
+import voloshyn.android.domain.models.auth.SignInStatus
 import voloshyn.android.domain.models.auth.User
-import voloshyn.android.domain.useCase.auth.RememberMeUseCase
 import voloshyn.android.domain.useCase.auth.SignInWithEmailUseCase
+import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signIn: SignInWithEmailUseCase,
-    private val _rememberMe: RememberMeUseCase
+    private val signIn: SignInWithEmailUseCase
 ) : ViewModel() {
     private val viewModelScope = viewModelScope()
 
-    private val _state: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
+    private val _state: MutableStateFlow<FragmentSignInState> =
+        MutableStateFlow(FragmentSignInState())
     val state = _state.asStateFlow()
 
     suspend fun signIn(email: String, password: String) {
         viewModelScope.launch {
             _state.update {
                 it.copy(
-                    loading = true
+                    loading = true, signInStatus = SignInStatus.SignOut
                 )
             }
             val result = signIn.invoke(email, password)
@@ -38,7 +38,8 @@ class SignInViewModel @Inject constructor(
                         it.copy(
                             loading = false,
                             isError = true,
-                            errorMessage = TODO()
+                            errorMessage = result.error.toStringResource(),
+                            signInStatus = SignInStatus.Failure
                         )
                     }
                 }
@@ -47,14 +48,12 @@ class SignInViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             loading = false,
-                            isSignIn = true,
-                            user = (
-                                    User(
-                                        id = result.data.id,
-                                        fullName = result.data.fullName,
-                                        email = result.data.email
-                                    )
-                                    )
+                            signInStatus = SignInStatus.SignIn(user = result.data),
+                            user = (User(
+                                id = result.data.id,
+                                fullName = result.data.fullName,
+                                email = result.data.email
+                            ))
                         )
                     }
                 }
@@ -62,22 +61,5 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun signInWithRememberMe(email: String, password: String, rememberMe: Boolean) {
-        viewModelScope.launch {
-            signIn(email, password)
-            if (_state.value.isSignIn) {
-                _rememberMe.invoke(rememberMe)
-            }
-        }
-
-
-    }
 }
 
-data class SignInState(
-    val loading: Boolean = false,
-    val isSignIn: Boolean = false,
-    val user: User = User.EMPTY_USER,
-    val isError: Boolean = false,
-    @StringRes val errorMessage: Int? = null
-)

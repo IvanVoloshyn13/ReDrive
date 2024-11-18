@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.domain.models.auth.User
-import voloshyn.android.domain.useCase.auth.SignInStatusUseCase
+import voloshyn.android.domain.useCase.auth.IsUserSignInUseCase
 import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class RedriveViewModel @Inject constructor(
-    signInStatusUseCase: SignInStatusUseCase,
+    isUserSignInUseCase: IsUserSignInUseCase,
     private val currentVehicleUseCase: GetCurrentVehicleUseCase
 ) : ViewModel() {
 
@@ -34,14 +34,14 @@ class RedriveViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        currentUser(signInStatusUseCase)
+        currentUser(isUserSignInUseCase)
         currentVehicle()
     }
 
 
-    private fun currentUser(signInStatusUseCase: SignInStatusUseCase) {
+    private fun currentUser(isUserSignInUseCase: IsUserSignInUseCase) {
         val currentUser = User.EMPTY_USER
-        val result = signInStatusUseCase.invoke()
+        val result = isUserSignInUseCase.invoke()
 
         }
 

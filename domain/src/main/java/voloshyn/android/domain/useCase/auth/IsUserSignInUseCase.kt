@@ -1,9 +1,9 @@
 package voloshyn.android.domain.useCase.auth
 
 import voloshyn.android.domain.models.auth.SignInStatus
-import voloshyn.android.domain.repository.AuthRepository
+import voloshyn.android.domain.repository.account.UserSessionRepository
 
-class SignInStatusUseCase(private val repository: AuthRepository) {
+class IsUserSignInUseCase(private val repository: UserSessionRepository) {
     fun invoke(): SignInStatus {
         return repository.isUserSignedIn()
     }

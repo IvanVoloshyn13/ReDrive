@@ -1,4 +1,4 @@
-package voloshyn.android.redrive.di.useCases
+package voloshyn.android.redrive.di
 
 import dagger.Module
 import dagger.Provides

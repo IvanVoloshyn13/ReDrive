@@ -2,10 +2,10 @@ package voloshyn.android.domain.useCase.tabs.profile
 
 import kotlinx.coroutines.flow.Flow
 import voloshyn.android.domain.models.auth.User
-import voloshyn.android.domain.repository.AuthRepository
+import voloshyn.android.domain.repository.account.UserSessionRepository
 
-class CurrentUserUseCase(private val repository: AuthRepository) {
-    suspend fun invoke(email: String): Flow<User?> {
+class CurrentUserUseCase(private val repository: UserSessionRepository) {
+    fun invoke(): Flow<User?> {
         val user = repository.observeCurrentUser()
         return user
     }
