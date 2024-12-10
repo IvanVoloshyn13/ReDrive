@@ -2,14 +2,14 @@ package voloshyn.android.domain.useCase.auth
 
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.AuthenticationError
-import voloshyn.android.domain.models.auth.User
-import voloshyn.android.domain.repository.account.EmailAuthRepository
+import voloshyn.android.domain.models.auth.SignInStatus
+import voloshyn.android.domain.repository.userAuth.EmailAuthRepository
 
 class SignInWithEmailUseCase(private val authRepository: EmailAuthRepository) {
     suspend fun invoke(
         email: String,
         password: String
-    ): AppResult<User, AuthenticationError.AuthError> {
-        return authRepository.signInWithEmailPassword(email, password)
+    ): AppResult<SignInStatus, AuthenticationError.AuthError> {
+        return authRepository.signInWithEmailAndPassword(email, password)
     }
 }

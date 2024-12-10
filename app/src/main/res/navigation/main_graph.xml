@@ -12,20 +12,10 @@
             android:id="@+id/action_splashFragment_to_tabsFragment"
             app:destination="@id/tabsFragment"
             app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_splashFragment_to_sign_in_graph"
-            app:destination="@id/sign_in_graph"
-            app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashFragment_to_on_board_graph"
-            app:destination="@id/on_board_graph"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_splashFragment_to_newVehicleFragment"
-            app:destination="@id/newVehicleFragment"
+            android:id="@+id/action_splashFragment_to_initial"
+            app:destination="@id/initial"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -40,6 +30,9 @@
         <action
             android:id="@+id/action_tabsFragment_to_vehiclesFragment"
             app:destination="@id/vehiclesFragment" />
+        <action
+            android:id="@+id/action_tabsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/refuelFragment"
@@ -52,18 +45,16 @@
         android:label="Choose Vehicle"
         tools:layout="@layout/fragment_vehicles"/>
 
-    <include app:graph="@navigation/sign_in_graph" />
-    <include app:graph="@navigation/on_board_graph" />
-
     <fragment
-        android:id="@+id/newVehicleFragment"
-        android:name="voloshyn.android.redrive.presentation.tabs.NewVehicleFragment"
-        android:label="NewVehicleFragment"
-        tools:layout="@layout/fragment_new_vehicle">
-        <action
-            android:id="@+id/action_newVehicleFragment_to_tabsFragment"
-            app:destination="@id/tabsFragment"
-            app:popUpTo="@id/newVehicleFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:id="@+id/settingsFragment"
+        android:name="voloshyn.android.redrive.presentation.tabs.settings.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings"/>
+    <include app:graph="@navigation/initial" />
+    <action
+        android:id="@+id/action_global_tabsFragment"
+        app:destination="@id/tabsFragment"
+        app:popUpTo="@id/splashFragment"
+        app:popUpToInclusive="true" />
+
 </navigation>

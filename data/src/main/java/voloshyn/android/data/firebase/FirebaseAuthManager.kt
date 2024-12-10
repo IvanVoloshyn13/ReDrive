@@ -2,7 +2,7 @@ package voloshyn.android.data.firebase
 
 import com.google.firebase.auth.FirebaseUser
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.models.auth.Credentials
+import voloshyn.android.domain.models.auth.UserCredentials
 
 interface FirebaseAuthManager {
 
@@ -10,7 +10,7 @@ interface FirebaseAuthManager {
     suspend fun signInWithEmail(email: String, password: String): FirebaseUser?
 
     // Registers a new user with email, password, and additional credentials like displayName
-    suspend fun signUpWithEmail(credentials: Credentials):FirebaseUser?
+    suspend fun signUpWithEmail(credentials: UserCredentials):FirebaseUser?
 
     // Sends a password reset email to the provided address
     suspend fun sendPasswordReset(email: String): AppResult<Unit, Nothing>

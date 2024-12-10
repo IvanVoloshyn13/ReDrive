@@ -5,20 +5,27 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import voloshyn.android.data.repository.UserSessionRepositoryImpl
 import voloshyn.android.data.repository.tabs.refuel.RefuelRepositoryImpl
 import voloshyn.android.domain.repository.EmailValidatorRepository
 import voloshyn.android.domain.repository.OnBoardRepository
-import voloshyn.android.domain.repository.account.EmailAuthRepository
-import voloshyn.android.domain.repository.account.UserSessionRepository
+import voloshyn.android.domain.repository.AppSettingsRepository
 import voloshyn.android.domain.repository.tabs.RefuelLogsRepository
-import voloshyn.android.domain.useCase.auth.IsUserSignInUseCase
+import voloshyn.android.domain.repository.userAuth.EmailAuthRepository
+import voloshyn.android.domain.repository.userAuth.UserSessionRepository
 import voloshyn.android.domain.useCase.auth.SignInWithEmailUseCase
 import voloshyn.android.domain.useCase.auth.SignUpWithEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateEmailUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardFinishUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
+import voloshyn.android.domain.useCase.settings.ObserveSettingsUseCase
+import voloshyn.android.domain.useCase.settings.GetUnitsUseCase
+import voloshyn.android.domain.useCase.settings.SaveSettingsUseCase
 import voloshyn.android.domain.useCase.tabs.logs.GetLogsUseCase
 import voloshyn.android.domain.useCase.tabs.refuel.AddNewRefuelUseCase
+import voloshyn.android.domain.useCase.user.GetCurrentUserUseCase
+import voloshyn.android.domain.useCase.user.IsUserSignInUseCase
+import voloshyn.android.domain.useCase.user.ObserveCurrentUserUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -73,6 +80,31 @@ object UseCaseModule {
     fun provideGetRefuelLogsUseCase(repository: RefuelLogsRepository): GetLogsUseCase {
         return GetLogsUseCase(repository)
     }
-    
+
+    @Provides
+    fun provideObserveCurrentUserUseCase(repository: UserSessionRepositoryImpl): ObserveCurrentUserUseCase {
+        return ObserveCurrentUserUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetCurrentUserUseCase(repository: UserSessionRepositoryImpl): GetCurrentUserUseCase {
+        return GetCurrentUserUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetSettingsUseCase(repository: AppSettingsRepository): ObserveSettingsUseCase {
+        return ObserveSettingsUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetUnitsUseCase(repository: AppSettingsRepository): GetUnitsUseCase {
+        return GetUnitsUseCase(repository)
+    }
+
+    @Provides
+    fun provideSaveSettingsUseCase(repository: AppSettingsRepository): SaveSettingsUseCase {
+        return SaveSettingsUseCase(repository)
+    }
+
 
 }

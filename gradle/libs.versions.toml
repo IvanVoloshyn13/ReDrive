@@ -1,9 +1,10 @@
 [versions]
 agp = "8.5.2"
-firebaseBom = "33.2.0"
-firebaseUiAuth = "23.0.0"
+firebaseBom = "33.6.0"
+firebaseUiAuth = "23.1.0"
 googleServices = "4.4.2"
 kotlin = "2.0.10"
+kotlinReflect = "2.0.10"
 ksp = "2.0.10-1.0.24"
 roomVersion = "2.6.1"
 
@@ -16,7 +17,7 @@ appcompatVersion = "1.7.0"
 materialVersion = "1.12.0"
 kotlinx-coroutines-android = "1.7.3"
 
-navVersion = "2.8.0"
+navVersion = "2.8.4"
 hilt = "2.50"
 datastorePreferences = "1.1.1"
 
@@ -29,6 +30,7 @@ junitVersion = "1.2.1"
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "ktx" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinReflect" }
 material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -36,6 +38,7 @@ firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "f
 
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navVersion" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navVersion" }
+androidx-navigation-safeArgs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navVersion" }
 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 ksp-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
@@ -57,6 +60,7 @@ junit = { module = "junit:junit", version.ref = "junit" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+androidx-safeArgs = { id = 'androidx.navigation.safeargs.kotlin', version.ref = "navVersion" }
 
 androidx-room = { id = "androidx.room", version.ref = "roomVersion" }
 

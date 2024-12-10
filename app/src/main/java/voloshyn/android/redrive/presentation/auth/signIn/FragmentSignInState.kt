@@ -8,7 +8,6 @@ import voloshyn.android.domain.models.auth.User
 data class FragmentSignInState(
     val loading: Boolean = false,
     val signInStatus: SignInStatus = SignInStatus.SignOut,
-    val user: User = User.EMPTY_USER,
     val isError: Boolean = false,
     @StringRes val errorMessage: Int? = null
 )

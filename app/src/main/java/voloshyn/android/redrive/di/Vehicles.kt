@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import voloshyn.android.domain.repository.userAuth.UserSessionRepository
 import voloshyn.android.domain.repository.tabs.VehiclesRepository
 import voloshyn.android.domain.useCase.tabs.vehicle.AddVehicleUseCase
 import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
@@ -18,8 +19,11 @@ object Vehicles {
 
     @Provides
     @ViewModelScoped
-    fun provideAddVehicleUseCase(repository: VehiclesRepository): AddVehicleUseCase {
-        return AddVehicleUseCase(repository)
+    fun provideAddVehicleUseCase(
+        repository: VehiclesRepository,
+        userRepository: UserSessionRepository
+    ): AddVehicleUseCase {
+        return AddVehicleUseCase(repository, userRepository)
     }
 
     @Provides

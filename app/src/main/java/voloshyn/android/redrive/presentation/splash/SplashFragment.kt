@@ -24,8 +24,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         renderAnimations()
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
-                delay(2500)
-                viewModel.destination.collectLatest {
+                delay(1500)
+                viewModel.navigation.collectLatest {
                     launchMainFragment(it)
                 }
             }
@@ -33,18 +33,25 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     }
 
-    private fun launchMainFragment(destination: FromSplashToDestination) {
+    private fun launchMainFragment(destination: NavigationPath) {
         when (destination) {
-            FromSplashToDestination.ToOnBoard -> navigate(R.id.action_splashFragment_to_on_board_graph)
-            FromSplashToDestination.ToSignIn -> navigate(R.id.action_splashFragment_to_sign_in_graph)
-            FromSplashToDestination.ToAddNewVehicle -> navigate(R.id.action_splashFragment_to_newVehicleFragment)
-            is FromSplashToDestination.ToTabs -> navigate(R.id.action_splashFragment_to_tabsFragment)
+            is NavigationPath.ToTabs -> findNavController().navigate(R.id.action_splashFragment_to_tabsFragment)
+            else -> navigateToInitialGraph(R.id.action_splashFragment_to_initial, destination)
         }
-
     }
 
-    private fun navigate(action: Int) {
-        findNavController().navigate(action)
+
+    private fun navigateToInitialGraph(action: Int, destination: NavigationPath) {
+        val navController = findNavController()
+        val navGraph = navController.navInflater.inflate(R.navigation.initial)
+        when (destination) {
+            NavigationPath.ToAddNewVehicle -> navGraph.setStartDestination(R.id.newVehicleFragment)
+            NavigationPath.ToOnBoard -> navGraph.setStartDestination(R.id.onBoardFragmentContainer)
+            NavigationPath.ToSignIn -> navGraph.setStartDestination(R.id.signInFragment)
+            NavigationPath.ToTabs -> findNavController().navigate(action)
+        }
+        navController.graph = navGraph
+
     }
 
 

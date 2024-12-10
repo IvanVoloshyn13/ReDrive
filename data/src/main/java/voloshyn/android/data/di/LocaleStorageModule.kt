@@ -36,7 +36,8 @@ class LocaleStorageModule {
     @Provides
     @Singleton
     fun provideRoomDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, APP_DATABASE).build()
+        return Room.databaseBuilder(context, AppDatabase::class.java, APP_DATABASE)
+            .build()
     }
 
 

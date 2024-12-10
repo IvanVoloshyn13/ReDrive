@@ -9,4 +9,62 @@
     <string name="value_liter_per_100_km">l/100km</string>
     <string name="value_liter">l</string>
 
+    <string name="currency">Currency</string>
+    <string name="unit_of_distance">Unit of distance</string>
+    <string name="unit_of_capacity">Unit of capacity</string>
+    <string name="avg_consumption">Average consumption</string>
+    <string name="date_format">Date format</string>
+
+<!--   Always add new items to the end of the current arrays, ensuring they have consecutive IDs-->
+    <string-array name="currencies">
+        <item>1|USD - United States Dollar</item>
+        <item>2|EUR - Euro</item>
+        <item>3|JPY - Japanese Yen</item>
+        <item>4|GBP - British Pound Sterling</item>
+        <item>5|AUD - Australian Dollar</item>
+        <item>6|CAD - Canadian Dollar</item>
+        <item>7|CHF - Swiss Franc</item>
+        <item>8|CNY - Chinese Yuan</item>
+        <item>9|HKD - Hong Kong Dollar</item>
+        <item>10|NOK - Norwegian Krone</item>
+        <item>11|SEK - Swedish Krona</item>
+        <item>12|NZD - New Zealand Dollar</item>
+        <item>13|PLN - Polish Zloty</item>
+        <item>14|INR - Indian Rupee</item>
+    </string-array>
+
+    <string-array name="distances">
+        <item>1|Kilometers</item>
+        <item>2|Miles</item>
+    </string-array>
+
+    <string-array name="capacities">
+        <item>1|Liters</item>
+        <item>2|Gallons (US)</item>
+        <item>3|Gallons (imp)</item>
+    </string-array>
+
+    <string-array name="avg_consumption">
+        <item>1|l/100km</item>
+        <item>2|km/l</item>
+        <item>3|l/mi</item>
+        <item>4|mpg (US)</item>
+        <item>5|mpg (imp)</item>
+        <item>6|mi/gal (US)</item>
+        <item>7|mi/gal (imp)</item>
+    </string-array>
+
+    <string-array name="date_formats">
+        <item>1|DD.MM.YYYY</item>
+        <item>2|MM.DD.YYYY</item>
+        <item>3|YYYY.MM.DD</item>
+        <item>4|DD/MM/YYYY</item>
+        <item>5|MM/DD/YYYY</item>
+        <item>6|YYYY/MM/DD</item>
+        <item>7|DD-MM-YYYY</item>
+        <item>8|MM-DD-YYYY</item>
+        <item>9|YYYY-MM-DD</item>
+    </string-array>
+
+
 </resources>

@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.models.auth.Credentials
+import voloshyn.android.domain.models.auth.UserCredentials
+import voloshyn.android.domain.models.auth.SignUpStatus
 import voloshyn.android.domain.useCase.auth.SignUpWithEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateFullNameUseCase
 import voloshyn.android.domain.useCase.auth.ValidatePasswordUseCase
 import voloshyn.android.redrive.utils.message
-import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
@@ -50,7 +50,7 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    suspend fun signUp(credentials: Credentials) {
+    suspend fun signUp(credentials: UserCredentials) {
         _state.update {
             it.copy(
                 loading = true,
@@ -62,8 +62,7 @@ class SignUpViewModel @Inject constructor(
             when (result) {
                 is AppResult.Success -> _state.update {
                     it.copy(
-                        currentUser = result.data,
-                        signUpStatus = SignUpStatus.Success,
+                        signUpStatus = SignUpStatus.SignUp,
                         loading = false
                     )
                 }
@@ -72,7 +71,8 @@ class SignUpViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             loading = false,
-                            signUpStatus = SignUpStatus.Failure(errorMessage = result.error.toStringResource()),
+                            signUpStatus = SignUpStatus.Failure,
+                            errorMessage = it.errorMessage
                         )
                     }
                 }

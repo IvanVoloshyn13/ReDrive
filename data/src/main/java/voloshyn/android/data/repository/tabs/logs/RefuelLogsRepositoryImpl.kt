@@ -7,8 +7,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import voloshyn.android.data.di.DispatcherIo
+import voloshyn.android.data.repository.CurrentVehicleProvider
+import voloshyn.android.data.repository.RefuelsProvider
 import voloshyn.android.domain.models.logs.RefuelLog
-import voloshyn.android.domain.models.logs.RefuelUnits
 import voloshyn.android.domain.models.logs.VehicleWithRefuels
 import voloshyn.android.domain.repository.tabs.RefuelLogsRepository
 import javax.inject.Inject

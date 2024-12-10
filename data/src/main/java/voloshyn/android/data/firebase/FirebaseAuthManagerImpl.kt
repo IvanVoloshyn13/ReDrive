@@ -11,7 +11,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.models.auth.Credentials
+import voloshyn.android.domain.models.auth.UserCredentials
 import javax.inject.Inject
 import kotlin.coroutines.resumeWithException
 
@@ -34,7 +34,7 @@ class FirebaseAuthManagerImpl @Inject constructor(
         }
     }
 
-    override suspend fun signUpWithEmail(credentials: Credentials): FirebaseUser? {
+    override suspend fun signUpWithEmail(credentials: UserCredentials): FirebaseUser? {
         var currentUser: FirebaseUser? = null
         return try {
             val result =

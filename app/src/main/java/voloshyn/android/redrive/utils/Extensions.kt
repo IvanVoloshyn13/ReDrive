@@ -14,7 +14,7 @@ import voloshyn.android.app.R
 import voloshyn.android.domain.useCase.auth.ValidatePasswordState
 
 fun Fragment.navigateToSignInFragment() {
-    requireActivity().findNavController(R.id.main_fragment_container).navigate(R.id.action_onBoardFragmentContainer_to_sign_in_graph)
+    requireActivity().findNavController(R.id.main_fragment_container).navigate(R.id.action_onBoardFragmentContainer_to_signInFragment)
 }
 
 fun Fragment.findTopNavController(): NavController {

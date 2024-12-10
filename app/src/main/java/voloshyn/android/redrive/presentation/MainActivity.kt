@@ -2,16 +2,23 @@ package voloshyn.android.redrive.presentation
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.ActivityMainBinding
 import voloshyn.android.redrive.presentation.tabs.TabsFragment
@@ -21,12 +28,17 @@ class MainActivity : AppCompatActivity() {
 
     private var navController: NavController? = null
     private lateinit var binding: ActivityMainBinding
+    private val viewModel by viewModels<MainViewModel>()
 
     private val destinationListener =
-        NavController.OnDestinationChangedListener { _, destination, _ ->
-            if (signGraphDestinations.contains(destination.id)) prepareCustomToolbar()
+        NavController.OnDestinationChangedListener { navController, destination, _ ->
+
+            val previousDestination = navController.previousBackStackEntry?.destination
             supportActionBar?.title = destination.label
-            supportActionBar?.setDisplayHomeAsUpEnabled(!isStartDestination(destination))
+            supportActionBar?.setDisplayHomeAsUpEnabled(!isStartDestination(destination) && previousDestination != null)
+
+            configureToolbarForDestination(destination)
+
         }
 
     private val topLevelDestinations = setOf(getTabsDestination())
@@ -50,6 +62,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
         setSupportActionBar(binding.toolbar)
+
+        lifecycleScope.launch {
+            viewModel.observeUser().collect()
+        }
 
         onNavControllerActivated(getMainNavController())
 
@@ -88,10 +104,16 @@ class MainActivity : AppCompatActivity() {
         return startDestinations.contains(destination.id)
     }
 
-    private fun prepareCustomToolbar() {
-        binding.toolbar.setTitleTextColor(Color.WHITE)
-        binding.toolbar.setNavigationIconTint(Color.WHITE)
+    private fun configureToolbarForDestination(destination: NavDestination) {
+        if (signGraphDestinations.contains(destination.id)) {
+            binding.toolbar.setTitleTextColor(Color.WHITE)
+            binding.toolbar.setNavigationIconTint(Color.WHITE)
+        } else {
+            binding.toolbar.setTitleTextColor(Color.BLACK)
+            binding.toolbar.setNavigationIconTint(Color.BLACK)
+        }
     }
+
 
     private fun getMainNavController(): NavController {
         val navHost =
@@ -100,6 +122,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getTabsDestination(): Int = R.id.tabsFragment
+
+    private fun getNewVehicleDestination(): Int = R.id.newVehicleFragment
+
+    private fun getSplashDestination(): Int = R.id.splashFragment
 
     private fun getSignUpDestination(): Int = R.id.signUpFragment
 

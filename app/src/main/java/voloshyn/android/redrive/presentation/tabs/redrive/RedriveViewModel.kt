@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.domain.models.auth.User
-import voloshyn.android.domain.useCase.auth.IsUserSignInUseCase
+import voloshyn.android.domain.useCase.user.IsUserSignInUseCase
 import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject

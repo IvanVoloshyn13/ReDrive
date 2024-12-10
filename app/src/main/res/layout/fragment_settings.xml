@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/refuel_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="@dimen/default_card_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layout_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/settings_item">
+
+            </include>
+
+            <include
+                layout="@layout/settings_item">
+
+            </include>
+
+            <include
+                layout="@layout/settings_item">
+
+            </include>
+
+            <include
+                layout="@layout/settings_item">
+
+            </include>
+
+            <include
+                layout="@layout/settings_item">
+
+            </include>
+
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/btt_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="?attr/colorPrimaryContainer"
+        android:contentDescription="@string/add_new_vehicle"
+        android:text="@string/save_uppercase"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/refuel_card"
+        app:layout_constraintTop_toBottomOf="@id/refuel_card">
+
+    </Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

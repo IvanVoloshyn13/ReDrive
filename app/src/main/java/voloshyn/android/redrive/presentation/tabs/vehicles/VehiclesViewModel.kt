@@ -83,13 +83,13 @@ class VehiclesViewModel @Inject constructor(
     }
 
 
-    private suspend fun addVehicle(vehicle: Vehicle, accountId: String?) {
+    private suspend fun addVehicle(vehicle: Vehicle, accountId: String) {
         _state.update {
             it.copy(
                 isLoading = true
             )
         }
-       val vehicleId= addVehicleUseCase.invoke(vehicle, accountId)
+       val vehicleId= addVehicleUseCase.invoke(vehicle)
        onCurrentVehicleChange(vehicleId)
     }
 

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 import voloshyn.android.data.di.DispatcherIo
 import voloshyn.android.data.localeStorage.room.dao.RefuelsDao
 import voloshyn.android.data.localeStorage.room.entities.RefuelEntity
-import voloshyn.android.data.repository.tabs.logs.RefuelsProvider
+import voloshyn.android.data.repository.RefuelsProvider
 import voloshyn.android.domain.models.logs.RefuelLog
 import voloshyn.android.domain.models.refuel.Refuel
 import voloshyn.android.domain.models.refuel.RefuelTuple

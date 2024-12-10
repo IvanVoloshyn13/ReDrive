@@ -22,7 +22,6 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private val binding by viewBinding<FragmentSignInBinding>()
     private val viewmodel by viewModels<SignInViewModel>()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val spannableString = SpannableString(binding.tvSignUp.text)

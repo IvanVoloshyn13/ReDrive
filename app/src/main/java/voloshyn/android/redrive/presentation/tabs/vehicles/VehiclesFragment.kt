@@ -58,7 +58,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
     }
 
     private fun addVehicle(vehicle: Vehicle) {
-        viewModel.onIntent(VehicleIntent.AddVehicle(vehicle, null))
+        viewModel.onIntent(VehicleIntent.AddVehicle(vehicle,TODO() ))
     }
 
     private fun initVehicleRecyclerView() {

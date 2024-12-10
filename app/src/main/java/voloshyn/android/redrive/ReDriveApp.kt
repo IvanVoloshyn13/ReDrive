@@ -9,4 +9,5 @@ import javax.inject.Inject
 class ReDriveApp : Application() {
     @Inject
     lateinit var firebaseApp: FirebaseApp
+
 }
