@@ -5,7 +5,7 @@ plugins {
     alias libs.plugins.google.dagger.hilt
     alias libs.plugins.google.devtools.ksp
     alias libs.plugins.com.google.gms
-
+    alias libs.plugins.androidx.safeArgs
 
 }
 
@@ -37,4 +37,5 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
+    implementation libs.kotlin.reflect
 }

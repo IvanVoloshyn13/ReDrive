@@ -48,12 +48,7 @@ class SignInViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             loading = false,
-                            signInStatus = SignInStatus.SignIn(user = result.data),
-                            user = (User(
-                                id = result.data.id,
-                                fullName = result.data.fullName,
-                                email = result.data.email
-                            ))
+                            signInStatus = SignInStatus.SignIn,
                         )
                     }
                 }

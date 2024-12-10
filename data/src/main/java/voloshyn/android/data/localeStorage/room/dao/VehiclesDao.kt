@@ -22,6 +22,6 @@ interface VehiclesDao {
     @Query("SELECT * FROM vehicles WHERE id=:vehicleId ")
     fun currentVehicle(vehicleId: Long): Flow<VehicleEntity>
 
-    @Query("SELECT COUNT(*)>0 from vehicles where account_id =:userId  ")
+    @Query("SELECT COUNT(*)>0 from vehicles where user_id =:userId  ")
     suspend fun isVehicle(userId: String): Boolean
 }

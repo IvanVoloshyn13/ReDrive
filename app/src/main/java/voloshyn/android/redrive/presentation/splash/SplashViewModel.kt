@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.OnBoardStatus
 import voloshyn.android.domain.models.auth.SignInStatus
-import voloshyn.android.domain.models.auth.User
-import voloshyn.android.domain.useCase.auth.IsUserSignInUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
 import voloshyn.android.domain.useCase.tabs.vehicle.IsVehicleUseCase
+import voloshyn.android.domain.useCase.user.GetCurrentUserUseCase
+import voloshyn.android.domain.useCase.user.IsUserSignInUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
@@ -20,10 +20,11 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val onBoard: OnBoardIsFinishedUseCase,
     private val signInStatus: IsUserSignInUseCase,
-    private val isVehicle: IsVehicleUseCase
+    private val isVehicle: IsVehicleUseCase,
+    private val currentUserUseCase: GetCurrentUserUseCase
 ) : ViewModel() {
     private val scope = viewModelScope()
-    private var currentUser: User? = null
+    private var userUuid: String? = null
 
     init {
         scope.launch {
@@ -31,31 +32,29 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private val _observeDestination: MutableSharedFlow<FromSplashToDestination> =
+    private val _navigation: MutableSharedFlow<NavigationPath> =
         MutableSharedFlow(
             replay = 1,
             extraBufferCapacity = 1,
             onBufferOverflow = BufferOverflow.DROP_LATEST
         )
-    val destination = _observeDestination.asSharedFlow()
+    val navigation = _navigation.asSharedFlow()
 
-    private fun checkSignInStatus(): Boolean {
-        return when (val signInStatus = signInStatus.invoke()) {
+    private  fun checkSignInStatus(): Boolean {
+        return when (signInStatus.invoke()) {
             is SignInStatus.SignIn -> {
-                currentUser = signInStatus.user
+                userUuid = currentUserUseCase.invoke().id
                 true
             }
 
             SignInStatus.SignOut -> false
-            SignInStatus.Failure -> {
-                false
-            }
+            SignInStatus.Failure -> false
         }
     }
 
     private suspend fun isVehicle(): Boolean {
-        return if (currentUser != null) {
-            isVehicle.invoke(currentUser!!.id)
+        return if (userUuid != null) {
+            isVehicle.invoke(userUuid!!)
         } else false
     }
 
@@ -72,7 +71,7 @@ class SplashViewModel @Inject constructor(
 
     private suspend fun navigateToTabsDestination(isSignedIn: Boolean): Boolean {
         return if (isSignedIn && isVehicle()) {
-            _observeDestination.emit(FromSplashToDestination.ToTabs(user = currentUser!!))
+            _navigation.tryEmit(NavigationPath.ToTabs)
             true
         } else {
             false
@@ -80,10 +79,9 @@ class SplashViewModel @Inject constructor(
     }
 
     private suspend fun navigateToNewVehicleDestination(): Boolean {
-        if (currentUser == null) return false
-
+        if (userUuid == null) return false
         return if (!isVehicle()) {
-            _observeDestination.emit(FromSplashToDestination.ToAddNewVehicle)
+            _navigation.tryEmit(NavigationPath.ToAddNewVehicle)
             true
         } else false
     }
@@ -93,16 +91,16 @@ class SplashViewModel @Inject constructor(
         return when (onBoardStatus) {
             OnBoardStatus.FINISHED -> false
             OnBoardStatus.IN_PROGRESS -> {
-                _observeDestination.emit(FromSplashToDestination.ToOnBoard)
+                _navigation.emit(NavigationPath.ToOnBoard)
                 true
             }
         }
     }
 
 
-    private suspend fun navigateToSignInDestination(isSignedIn: Boolean) {
+    private fun navigateToSignInDestination(isSignedIn: Boolean) {
         if (!isSignedIn) {
-            _observeDestination.emit(FromSplashToDestination.ToSignIn)
+            _navigation.tryEmit(NavigationPath.ToSignIn)
         } else Unit
     }
 

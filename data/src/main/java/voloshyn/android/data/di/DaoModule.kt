@@ -19,4 +19,7 @@ class DaoModule {
     @Provides
     fun providesRefuelsDao(db: AppDatabase) = db.getRefuelsDao()
 
+    @Provides
+    fun providesSettingsDao(db: AppDatabase) = db.getSettingsDao()
+
 }

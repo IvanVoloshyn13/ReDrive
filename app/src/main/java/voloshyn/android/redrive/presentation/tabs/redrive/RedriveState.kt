@@ -8,8 +8,6 @@ import voloshyn.android.domain.models.refuel.AllTimeCostPerUnit
 import voloshyn.android.domain.models.refuel.Summary
 import voloshyn.android.domain.models.Vehicle
 
-
-
 data class RedriveState(
     val isLoading: Boolean = false,
     val currentVehicle: Vehicle = Vehicle.DEFAULT_VEHICLE,

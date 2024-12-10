@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "52e93a8296c2640f6a4a23f3e3656ec6",
+    "identityHash": "22867439b7edf20e18608051d5ec379e",
     "entities": [
       {
-        "tableName": "accounts",
+        "tableName": "users",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `email` TEXT NOT NULL COLLATE NOCASE, `full_name` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -35,20 +35,20 @@
         },
         "indices": [
           {
-            "name": "index_accounts_email",
+            "name": "index_users_email",
             "unique": true,
             "columnNames": [
               "email"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_accounts_email` ON `${TABLE_NAME}` (`email`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_users_email` ON `${TABLE_NAME}` (`email`)"
           }
         ],
         "foreignKeys": []
       },
       {
         "tableName": "vehicles",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `account_id` TEXT, `name` TEXT NOT NULL, `current_mileage` INTEGER NOT NULL, FOREIGN KEY(`account_id`) REFERENCES `accounts`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT NOT NULL, `name` TEXT NOT NULL, `current_mileage` INTEGER NOT NULL, `vehicle_type` TEXT NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -57,10 +57,10 @@
             "notNull": true
           },
           {
-            "fieldPath": "accountId",
-            "columnName": "account_id",
+            "fieldPath": "userId",
+            "columnName": "user_id",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "name",
@@ -73,6 +73,12 @@
             "columnName": "current_mileage",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "vehicleType",
+            "columnName": "vehicle_type",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -83,22 +89,22 @@
         },
         "indices": [
           {
-            "name": "index_vehicles_account_id",
+            "name": "index_vehicles_user_id",
             "unique": false,
             "columnNames": [
-              "account_id"
+              "user_id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_vehicles_account_id` ON `${TABLE_NAME}` (`account_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_vehicles_user_id` ON `${TABLE_NAME}` (`user_id`)"
           }
         ],
         "foreignKeys": [
           {
-            "table": "accounts",
+            "table": "users",
             "onDelete": "CASCADE",
             "onUpdate": "CASCADE",
             "columns": [
-              "account_id"
+              "user_id"
             ],
             "referencedColumns": [
               "id"
@@ -196,12 +202,90 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "settings",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `user_id` TEXT NOT NULL, `currency` TEXT NOT NULL, `distance` TEXT NOT NULL, `capacity` TEXT NOT NULL, `avg_consumption` TEXT NOT NULL, `format_of_date` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currency",
+            "columnName": "currency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "distance",
+            "columnName": "distance",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capacity",
+            "columnName": "capacity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "avgConsumption",
+            "columnName": "avg_consumption",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "formatOfDate",
+            "columnName": "format_of_date",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_settings_user_id",
+            "unique": true,
+            "columnNames": [
+              "user_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_settings_user_id` ON `${TABLE_NAME}` (`user_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "users",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '52e93a8296c2640f6a4a23f3e3656ec6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '22867439b7edf20e18608051d5ec379e')"
     ]
   }
 }

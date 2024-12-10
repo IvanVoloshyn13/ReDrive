@@ -6,33 +6,46 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import voloshyn.android.domain.models.Vehicle
+import voloshyn.android.domain.models.VehicleType
 
 @Entity(
     tableName = "vehicles",
     foreignKeys = [
         ForeignKey(
-            entity = AccountEntity::class,
+            entity = UserEntity::class,
             parentColumns = ["id"],
-            childColumns = ["account_id"],
+            childColumns = ["user_id"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
     ],
-    indices = [Index(value = ["account_id"])]
+    indices = [Index(value = ["user_id"])]
 )
 data class VehicleEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
-    @ColumnInfo(name = "account_id") val accountId: String? = null,
-    val name: String = "",
-    @ColumnInfo(name = "current_mileage") val currentMileage: Int = 0
+    val id: Long,
+    @ColumnInfo(name = "user_id") val userId: String,
+    val name: String,
+    @ColumnInfo(name = "current_mileage") val currentMileage: Int,
+    @ColumnInfo(name = "vehicle_type") val vehicleType: String
 ) {
     fun toVehicle(): Vehicle {
         return Vehicle(
             id = id,
             name = name,
             currentMileage = currentMileage,
-            type = TODO()
+            type = VehicleType.valueOf(vehicleType)
+        )
+    }
+
+
+    companion object {
+        val emptyVehicle = VehicleEntity(
+            id = 0,
+            userId = "",
+            name = "",
+            currentMileage = 0,
+            vehicleType = VehicleType.Car.name
         )
     }
 }

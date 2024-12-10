@@ -6,9 +6,9 @@ import voloshyn.android.domain.models.Vehicle
 
 interface VehiclesRepository {
     /** Add new vehicle to local database and return Boolean value true if success and false if failure */
-    suspend fun addVehicle(
+    suspend fun saveNewVehicle(
         vehicle: Vehicle,
-        accountId: String?
+        accountId: String
     ): Long
 
     /** Delete vehicle from database*/

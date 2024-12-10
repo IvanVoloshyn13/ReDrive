@@ -47,28 +47,28 @@ class LogsViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         currentVehicle = TODO(),
-                        refuelLogs = formatedLogs(vehicleWithRefuelLogs.refuelLogs)
+                    //    refuelLogs = formatedLogs(vehicleWithRefuelLogs.refuelLogs)
                     )
                 }
             }
         }
     }
 
-    private fun formatedLogs(logs:List<RefuelLog>):List<RefuelLog>{
-       return logs.map {
-            RefuelLog(
-                id=it.id,
-                vehicleId = it.vehicleId,
-                odometer = stringResourceProvider.fromResToText(it.odometer, R.string.value_km),
-                avgFuelConsumption = stringResourceProvider.avgFuelConsumptionFormatting(it.avgFuelConsumption, R.string.value_liter_per_100_km),
-                travelledDistance = stringResourceProvider.fromResToText(it.travelledDistance, R.string.value_km),
-                fuelVolume = stringResourceProvider.fromResToText(it.fuelVolume, R.string.value_liter),
-                payments = it.payments,
-                unitPrice = stringResourceProvider.fromResToText(it.unitPrice, R.string.value_pln_per_liter),
-                notes = it.notes
-            )
-        }
-    }
+//    private fun formatedLogs(logs:List<RefuelLog>):List<RefuelLog>{
+//       return logs.map {
+//            RefuelLog(
+//                id=it.id,
+//                vehicleId = it.vehicleId,
+//                odometer = stringResourceProvider.fromResToText(it.odometer, R.string.value_km),
+//                avgFuelConsumption = stringResourceProvider.avgFuelConsumptionFormatting(it.avgFuelConsumption, R.string.value_liter_per_100_km),
+//                travelledDistance = stringResourceProvider.fromResToText(it.travelledDistance, R.string.value_km),
+//                fuelVolume = stringResourceProvider.fromResToText(it.fuelVolume, R.string.value_liter),
+//                payments = it.payments,
+//                unitPrice = stringResourceProvider.fromResToText(it.unitPrice, R.string.value_pln_per_liter),
+//                notes = it.notes
+//            )
+//        }
+//    }
 
     override fun onCleared() {
         super.onCleared()

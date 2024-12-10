@@ -15,7 +15,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.FragmentSignUpBinding
-import voloshyn.android.domain.models.auth.Credentials
+import voloshyn.android.domain.models.auth.UserCredentials
+import voloshyn.android.domain.models.auth.SignUpStatus
 import voloshyn.android.redrive.utils.viewBinding
 
 @AndroidEntryPoint
@@ -43,7 +44,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                     is SignUpStatus.Failure -> {
                         Toast.makeText(
                             requireContext(),
-                            getString(it.signUpStatus.errorMessage),
+                            getString(it.errorMessage),
                             Toast.LENGTH_SHORT
                         )
                             .show()
@@ -51,9 +52,11 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
                     SignUpStatus.InProgress -> {}
 
-                    SignUpStatus.Success -> {
+                    SignUpStatus.SignUp -> {
                         findNavController().navigate(R.id.action_signUpFragment_to_newVehicleFragment)
                     }
+
+                    SignUpStatus.SignOut -> {}
                 }
             }
         }
@@ -141,7 +144,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private fun signUp() {
         binding.bttSignUp.setOnClickListener {
-            val user = Credentials(
+            val user = UserCredentials(
                 fullName = binding.etFullName.text.toString(),
                 email = binding.etEmail.text.toString(),
                 password = binding.etPassword.text.toString()

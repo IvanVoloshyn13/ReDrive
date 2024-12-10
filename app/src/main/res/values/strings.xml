@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReDrive</string>
+    <string name="app_name" translatable="false">ReDrive</string>
 
     <!-- ON_BOARD-->
     <string name="on_board1_title">Control Your Finances</string>
@@ -39,7 +39,7 @@
     <string name="please_enter_real_names">Please enter real names</string>
     <string name="invalid_email">Invalid email</string>
 
-    <string name="empty_string"> </string>
+    <string name="empty_string" translatable="false"> </string>
     <string name="empty_field_error">This field can not be empty</string>
     <string name="required">Required</string>
 
@@ -82,16 +82,13 @@
     <string name="confirm">Confirm</string>
     <string name="add_new_vehicle">Add new vehicle</string>
     <string name="add_vehicle_first">Add vehicle first</string>
-
-
-    <!-- Values to format logs-->
-    <string name="format_price_per_liter">%1$s\n%2$s/l</string>
-    <string name="value_km">km</string>
-    <string name="value_miles">miles</string>
-    <string name="value_pln">PLN</string>
-    <string name="value_pln_per_liter">PLN/l</string>
-    <string name="value_liter_per_100_km">l/100km</string>
-    <string name="value_liter">l</string>
+    <string name="settings">Settings</string>
+    <string name="edit_vehicles">Edit vehicles</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="logout">LogOut</string>
+    <string name="currency">Currency</string>
+    <string name="distance_unit">Distance unit</string>
+    <string name="save_uppercase">SAVE</string>
 
 
 </resources>

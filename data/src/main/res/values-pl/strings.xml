@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Values to format logs -->
+    <string name="format_price_per_liter">%1$s\n%2$s/l</string>
+    <string name="value_km">km</string>
+    <string name="value_miles">mile</string>
+    <string name="value_pln">PLN</string>
+    <string name="value_pln_per_liter">PLN/l</string>
+    <string name="value_liter_per_100_km">l/100km</string>
+    <string name="value_liter">l</string>
+
+    <string name="currency">Waluta</string>
+    <string name="unit_of_distance">Jednostka odległosci</string>
+    <string name="unit_of_capacity">Jednostka pojemności</string>
+    <string name="avg_consumption">Średnie spalanie</string>
+    <string name="date_format">Format daty</string>
+
+    <string-array name="currencies">
+        <item>1|USD - Dolar Amerykański</item>
+        <item>2|EUR - Euro</item>
+        <item>3|JPY - Jen Japoński</item>
+        <item>4|GBP - Funt Brytyjski</item>
+        <item>5|AUD - Dolar Australijski</item>
+        <item>6|CAD - Dolar Kanadyjski</item>
+        <item>7|CHF - Frank Szwajcarski</item>
+        <item>8|CNY - Juan Chiński</item>
+        <item>9|HKD - Dolar Hongkoński</item>
+        <item>10|NOK - Korona Norweska</item>
+        <item>11|SEK - Korona Szwedzka</item>
+        <item>12|NZD - Dolar Nowozelandzki</item>
+        <item>13|PLN - Polski Złoty</item>
+        <item>14|INR - Rupia Indyjska</item>
+    </string-array>
+
+    <string-array name="distances">
+        <item>1|Kilometry</item>
+        <item>2|Mile</item>
+    </string-array>
+
+    <string-array name="capacities">
+        <item>1|Litry</item>
+        <item>2|Galony (US)</item>
+        <item>3|Galony (imp)</item>
+    </string-array>
+
+    <string-array name="avg_consumption">
+        <item>1|l/100km</item>
+        <item>2|km/l</item>
+        <item>3|l/mi</item>
+        <item>4|mpg (US)</item>
+        <item>5|mpg (imp)</item>
+        <item>6|mi/gal (US)</item>
+        <item>7|mi/gal (imp)</item>
+    </string-array>
+
+    <string-array name="date_formats">
+        <item>1|DD.MM.RRRR</item>
+        <item>2|MM.DD.RRRR</item>
+        <item>3|RRRR.MM.DD</item>
+        <item>4|DD/MM/RRRR</item>
+        <item>5|MM/DD/RRRR</item>
+        <item>6|RRRR/MM/DD</item>
+        <item>7|DD-MM-RRRR</item>
+        <item>8|MM-DD-RRRR</item>
+        <item>9|RRRR-MM-DD</item>
+    </string-array>
+
+
+</resources>
