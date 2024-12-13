@@ -35,23 +35,15 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private fun launchMainFragment(destination: NavigationPath) {
         when (destination) {
-            is NavigationPath.ToTabs -> findNavController().navigate(R.id.action_splashFragment_to_tabsFragment)
-            else -> navigateToInitialGraph(R.id.action_splashFragment_to_initial, destination)
+            NavigationPath.ToAuthentication -> findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
+            NavigationPath.ToNewVehicle -> {
+                findNavController().popBackStack(R.id.main_graph, true)
+                findNavController().navigate(R.id.action_global_newVehicleFragment)
+            }
+
+            NavigationPath.ToOnBoard -> findNavController().navigate(R.id.action_splashFragment_to_onBoardFragmentContainer)
+            NavigationPath.ToTabs -> findNavController().navigate(R.id.action_splashFragment_to_tabsFragment)
         }
-    }
-
-
-    private fun navigateToInitialGraph(action: Int, destination: NavigationPath) {
-        val navController = findNavController()
-        val navGraph = navController.navInflater.inflate(R.navigation.initial)
-        when (destination) {
-            NavigationPath.ToAddNewVehicle -> navGraph.setStartDestination(R.id.newVehicleFragment)
-            NavigationPath.ToOnBoard -> navGraph.setStartDestination(R.id.onBoardFragmentContainer)
-            NavigationPath.ToSignIn -> navGraph.setStartDestination(R.id.signInFragment)
-            NavigationPath.ToTabs -> findNavController().navigate(action)
-        }
-        navController.graph = navGraph
-
     }
 
 

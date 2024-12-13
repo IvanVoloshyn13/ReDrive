@@ -28,7 +28,7 @@ class LogsFragment : Fragment(R.layout.fragment_logs) {
         adapter= RefuelLogsAdapter()
         initLogsAdapter()
         binding.ivDropDownMenu.setOnClickListener {
-            findTopNavController().navigate(R.id.action_tabsFragment_to_vehiclesFragment)
+          //  findTopNavController().navigate(R.id.action_tabsFragment_to_vehiclesFragment)
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest {

@@ -53,7 +53,8 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                     SignUpStatus.InProgress -> {}
 
                     SignUpStatus.SignUp -> {
-                        findNavController().navigate(R.id.action_signUpFragment_to_newVehicleFragment)
+                        findNavController().popBackStack(R.id.signUpFragment, true)
+                        findNavController().navigate(R.id.action_global_newVehicleFragment)
                     }
 
                     SignUpStatus.SignOut -> {}

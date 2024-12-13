@@ -1,5 +1,6 @@
 package voloshyn.android.data.repository.tabs.vehicles
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -106,8 +107,8 @@ class VehiclesRepositoryImplCurrent @Inject constructor(
             }
     }
 
-    override suspend fun isVehicle(userId: String): Boolean {
-        return vehiclesDao.isVehicle(userId = userId)
+    override suspend fun isVehicle(uuid: String): Boolean {
+        return vehiclesDao.isVehicle(userId = uuid)
     }
 
 }

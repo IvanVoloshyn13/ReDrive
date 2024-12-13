@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import voloshyn.android.data.di.DispatcherIo
@@ -40,7 +41,7 @@ class EmailAuthRepositoryImpl @Inject constructor(
                 val firebaseUser = result.user
 
                 firebaseUser?.let { fbUser ->
-                    val userEntity = usersDao.currentUser(fbUser.email!!).firstOrNull()
+                    val userEntity = usersDao.currentUser(fbUser.uid).first()
                     if (userEntity == null) {
                         createAndSaveUser(fbUser)
                     } else {

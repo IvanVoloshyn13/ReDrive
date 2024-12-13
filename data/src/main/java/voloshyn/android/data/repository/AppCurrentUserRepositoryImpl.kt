@@ -27,24 +27,27 @@ class AppCurrentUserRepositoryImpl @Inject constructor(
 ) : AppCurrentUserRepository {
     private var _user: User = User.EMPTY_USER
     override val user: User
-        get() = _user
+        get() {
+            return _user
+        }
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeCurrentUser(): Flow<User> {
         return dataStore.data.map { value: Preferences ->
             value[PreferencesKeys.CURRENT_USER]
         }.flatMapLatest { currentUserId ->
-                if (currentUserId != null) {
-                    usersDao.currentUser(currentUserId)
-                        .map {
-                            _user = it?.toUser() ?: User.EMPTY_USER
-                            _user
-                        }
-                } else {
-                    _user = User.EMPTY_USER
-                    flowOf(_user)
-                }
-            }.flowOn(dispatcherIo)
+            if (currentUserId != null) {
+                usersDao.currentUser(currentUserId)
+                    .map {
+                        _user = it?.toUser() ?: User.EMPTY_USER
+                        _user
+                    }
+            } else {
+                _user = User.EMPTY_USER
+                flowOf(_user)
+            }
+        }.flowOn(dispatcherIo)
 
     }
 

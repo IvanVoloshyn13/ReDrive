@@ -1,11 +1,12 @@
 package voloshyn.android.redrive.presentation.tabs.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,10 +29,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         binding.tvEditVehicles.setOnClickListener {
-            findTopNavController().navigate(R.id.action_tabsFragment_to_vehiclesFragment)
+           // findTopNavController().navigate(R.id.action_tabsFragment_to_vehiclesFragment)
         }
         binding.tvSettings.setOnClickListener {
-            findTopNavController().navigate(R.id.action_tabsFragment_to_settingsFragment)
+           findTopNavController().navigate(R.id.action_tabsFragment_to_settingsFragment)
+        }
+
+        binding.tvSignOut.setOnClickListener {
+            viewModel.signOut()
+           findTopNavController().navigate(R.id.action_tabsFragment_to_auth_flow)
         }
     }
 

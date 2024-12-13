@@ -21,7 +21,6 @@ import voloshyn.android.redrive.utils.viewBinding
 @AndroidEntryPoint
 class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
     private val binding by viewBinding<FragmentNewVehicleBinding>()
-    private val defaultVehicleType = R.drawable.ic_car
     private val viewModel by viewModels<NewVehicleViewModel>()
     private val editable by lazy {
         Editable.Factory.getInstance()
@@ -29,12 +28,11 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.bttSave.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.saveNewVehicle()
-                val graph = findNavController().navInflater.inflate(R.navigation.main_graph)
-                findNavController().graph = graph
-                findNavController().navigate(R.id.action_global_tabsFragment)
+                findNavController().navigate(R.id.action_newVehicleFragment_to_tabsFragment)
             }
         }
 

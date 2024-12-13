@@ -2,7 +2,6 @@ package voloshyn.android.redrive.presentation
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -16,8 +15,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.app.databinding.ActivityMainBinding
@@ -43,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     private val topLevelDestinations = setOf(getTabsDestination())
 
-    private val signGraphDestinations = setOf(getSignInDestination(), getSignUpDestination())
+    private val authNavigationFlow = setOf(getSignInDestination(), getSignUpDestination())
 
     private val fragmentListener = object : FragmentManager.FragmentLifecycleCallbacks() {
         override fun onFragmentViewCreated(
@@ -105,7 +102,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configureToolbarForDestination(destination: NavDestination) {
-        if (signGraphDestinations.contains(destination.id)) {
+        if (authNavigationFlow.contains(destination.id)) {
             binding.toolbar.setTitleTextColor(Color.WHITE)
             binding.toolbar.setNavigationIconTint(Color.WHITE)
         } else {
@@ -122,10 +119,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getTabsDestination(): Int = R.id.tabsFragment
-
-    private fun getNewVehicleDestination(): Int = R.id.newVehicleFragment
-
-    private fun getSplashDestination(): Int = R.id.splashFragment
 
     private fun getSignUpDestination(): Int = R.id.signUpFragment
 

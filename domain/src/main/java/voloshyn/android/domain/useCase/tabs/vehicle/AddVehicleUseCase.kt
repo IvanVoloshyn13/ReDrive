@@ -1,5 +1,6 @@
 package voloshyn.android.domain.useCase.tabs.vehicle
 
+import kotlinx.coroutines.flow.first
 import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.domain.repository.tabs.VehiclesRepository
 import voloshyn.android.domain.repository.userAuth.UserSessionRepository
@@ -12,11 +13,9 @@ class AddVehicleUseCase(
         vehicle: Vehicle,
     ): Long {
         val userId = userRepository.user.id
-        println(userId + "TUTAJ")
         return if (userId.isNotEmpty()) {
             repository.saveNewVehicle(vehicle = vehicle, accountId = userId)
         } else {
-            println(userId + "TUTAJ1")
             0L
         }
     }

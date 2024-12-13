@@ -26,12 +26,12 @@ class RedriveFragment : Fragment(R.layout.fragment_redrive) {
 
         binding.bttAddRefuel.setOnClickListener {
             if(viewModel.state.value.currentVehicle.name.isNotEmpty()) {
-                findTopNavController().navigate(R.id.action_tabsFragment_to_refuelFragment)
+             //   findTopNavController().navigate(R.id.action_tabsFragment_to_refuelFragment)
             } else showToast( getString(R.string.add_vehicle_first))
         }
 
         binding.ivDropDownMenu.setOnClickListener {
-            findTopNavController().navigate(R.id.action_tabsFragment_to_vehiclesFragment)
+       //     findTopNavController().navigate(R.id.action_tabsFragment_to_vehiclesFragment)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

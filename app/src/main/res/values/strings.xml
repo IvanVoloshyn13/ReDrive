@@ -85,7 +85,7 @@
     <string name="settings">Settings</string>
     <string name="edit_vehicles">Edit vehicles</string>
     <string name="privacy_policy">Privacy policy</string>
-    <string name="logout">LogOut</string>
+    <string name="signout">Sign Out</string>
     <string name="currency">Currency</string>
     <string name="distance_unit">Distance unit</string>
     <string name="save_uppercase">SAVE</string>
