@@ -4,7 +4,5 @@
     android:id="@+id/tabs_graph"
     app:startDestination="@id/profile">
 
-    <include app:graph="@navigation/redrive" />
-    <include app:graph="@navigation/profile" />
-    <include app:graph="@navigation/logs" />
+    <include app:graph="@navigation/profile_flow" />
 </navigation>

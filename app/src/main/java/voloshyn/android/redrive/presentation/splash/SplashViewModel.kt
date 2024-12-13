@@ -6,6 +6,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.OnBoardStatus
 import voloshyn.android.domain.models.auth.SignInStatus
@@ -24,7 +25,7 @@ class SplashViewModel @Inject constructor(
     private val currentUserUseCase: GetCurrentUserUseCase
 ) : ViewModel() {
     private val scope = viewModelScope()
-    private var userUuid: String? = null
+    private var userUuid: String = ""
 
     init {
         scope.launch {
@@ -40,24 +41,6 @@ class SplashViewModel @Inject constructor(
         )
     val navigation = _navigation.asSharedFlow()
 
-    private  fun checkSignInStatus(): Boolean {
-        return when (signInStatus.invoke()) {
-            is SignInStatus.SignIn -> {
-                userUuid = currentUserUseCase.invoke().id
-                true
-            }
-
-            SignInStatus.SignOut -> false
-            SignInStatus.Failure -> false
-        }
-    }
-
-    private suspend fun isVehicle(): Boolean {
-        return if (userUuid != null) {
-            isVehicle.invoke(userUuid!!)
-        } else false
-    }
-
     private suspend fun fromSplashToDestination() {
         val isSignedIn = checkSignInStatus()
         when {
@@ -66,7 +49,31 @@ class SplashViewModel @Inject constructor(
             (navigateToOnBoardDestination()) -> return
             else -> navigateToSignInDestination(isSignedIn)
         }
+    }
 
+    private  fun checkSignInStatus(): Boolean {
+        return when (signInStatus.invoke()) {
+            is SignInStatus.SignIn -> {
+                userUuid = currentUserUseCase.invoke().id
+                true
+            }
+
+            SignInStatus.SignOut -> {
+                userUuid = ""
+                false
+            }
+
+            SignInStatus.Failure -> {
+                userUuid = ""
+                false
+            }
+        }
+    }
+
+    private suspend fun isVehicle(): Boolean {
+        return if (userUuid.isNotEmpty()) {
+            isVehicle.invoke(userUuid)
+        } else false
     }
 
     private suspend fun navigateToTabsDestination(isSignedIn: Boolean): Boolean {
@@ -79,11 +86,14 @@ class SplashViewModel @Inject constructor(
     }
 
     private suspend fun navigateToNewVehicleDestination(): Boolean {
-        if (userUuid == null) return false
-        return if (!isVehicle()) {
-            _navigation.tryEmit(NavigationPath.ToAddNewVehicle)
+        if (userUuid.isEmpty()) return false
+        return if (isVehicle()) {
+            navigateToTabsDestination(isSignedIn = true)
+            false
+        } else {
+            _navigation.tryEmit(NavigationPath.ToNewVehicle)
             true
-        } else false
+        }
     }
 
     private suspend fun navigateToOnBoardDestination(): Boolean {
@@ -100,7 +110,7 @@ class SplashViewModel @Inject constructor(
 
     private fun navigateToSignInDestination(isSignedIn: Boolean) {
         if (!isSignedIn) {
-            _navigation.tryEmit(NavigationPath.ToSignIn)
+            _navigation.tryEmit(NavigationPath.ToAuthentication)
         } else Unit
     }
 

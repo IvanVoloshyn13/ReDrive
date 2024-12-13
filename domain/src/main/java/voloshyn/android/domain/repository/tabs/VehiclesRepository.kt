@@ -24,5 +24,5 @@ interface VehiclesRepository {
     /** Get all vehicles from database */
     fun vehicles(): Flow<List<Vehicle>>
 
-    suspend fun isVehicle(userId: String): Boolean
+    suspend fun isVehicle(uuid:String): Boolean
 }

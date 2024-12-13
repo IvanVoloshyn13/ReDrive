@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile"
-    android:label="Profile"
     app:startDestination="@id/profileFragment">
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="voloshyn.android.redrive.presentation.tabs.profile.ProfileFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile"/>
 </navigation>

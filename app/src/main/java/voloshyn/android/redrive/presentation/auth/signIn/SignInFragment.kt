@@ -48,7 +48,13 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                     }
 
                     is SignInStatus.SignIn -> {
-                        findNavController().navigate(R.id.action_signInFragment_to_newVehicleFragment)
+                        findNavController().navigate(
+                            if (!it.isVehicle) {
+                                R.id.action_global_newVehicleFragment
+                            } else {
+                                R.id.action_signInFragment_to_tabsFragment
+                            }
+                        )
                     }
 
                     SignInStatus.SignOut -> {}

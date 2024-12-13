@@ -2,7 +2,6 @@ package voloshyn.android.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
-import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.models.auth.SignInStatus
 import voloshyn.android.domain.models.auth.User
 import voloshyn.android.domain.repository.userAuth.UserSessionRepository
@@ -15,12 +14,14 @@ class UserSessionRepositoryImpl @Inject constructor(
     override val user: User
         get() = currentUserRepository.user
 
+
     override fun observeCurrentUser(): Flow<User?> {
         return currentUserRepository.observeCurrentUser()
     }
 
-    override suspend fun signOut(): AppResult<Unit, Nothing> {
-        TODO("Not yet implemented")
+    override suspend fun signOut() {
+        auth.signOut()
+        currentUserRepository.clearUserUid()
     }
 
     override fun isSignedIn(): SignInStatus {
