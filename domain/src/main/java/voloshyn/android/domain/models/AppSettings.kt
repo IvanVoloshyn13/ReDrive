@@ -1,15 +1,15 @@
 package voloshyn.android.domain.models
 
+
 data class AppSettings(
-    val currency: SettingItem,
-    val distance: SettingItem,
-    val capacity: SettingItem,
-    val avgConsumption: SettingItem,
-    val dateFormat: SettingItem,
+    val currency: ItemSetting,
+    val distance: ItemSetting,
+    val capacity: ItemSetting,
+    val avgConsumption: ItemSetting,
+    val dateFormat: ItemSetting,
+)
 
-    )
-
-data class SettingItem(
+data class ItemSetting(
     val id: String = "",
     val name: String = "",
     val valueUnit: String = "",

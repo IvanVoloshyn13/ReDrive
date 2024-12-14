@@ -5,19 +5,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.OnBoardStatus
-import voloshyn.android.domain.useCase.onBoard.OnBoardFinishUseCase
+import voloshyn.android.domain.useCase.onBoard.FinishOnBoardUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardViewModel @Inject constructor(
-    private val onBoard: OnBoardFinishUseCase
+    private val finishOnBoard: FinishOnBoardUseCase
 ) : ViewModel() {
     private val scope = viewModelScope()
 
     fun finishOnBoard() {
         scope.launch {
-            onBoard.invoke(OnBoardStatus.FINISHED)
+            finishOnBoard.invoke(OnBoardStatus.FINISHED)
         }
     }
 

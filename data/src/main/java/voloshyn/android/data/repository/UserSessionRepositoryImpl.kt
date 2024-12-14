@@ -14,7 +14,6 @@ class UserSessionRepositoryImpl @Inject constructor(
     override val user: User
         get() = currentUserRepository.user
 
-
     override fun observeCurrentUser(): Flow<User?> {
         return currentUserRepository.observeCurrentUser()
     }

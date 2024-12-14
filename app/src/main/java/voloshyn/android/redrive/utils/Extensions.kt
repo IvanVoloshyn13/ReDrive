@@ -17,11 +17,6 @@ fun Fragment.navigateToSignInFragment() {
     requireActivity().findNavController(R.id.main_fragment_container).navigate(R.id.action_onBoardFragmentContainer_to_signInFragment)
 }
 
-fun Fragment.NavigateToNewVehicleWithPopBackStack(){
-    findNavController().popBackStack(R.id.signInFragment, true)
-    findNavController().navigate(R.id.action_global_newVehicleFragment)
-}
-
 fun Fragment.findTopNavController(): NavController {
     val topLevelHost =
         requireActivity().supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment?

@@ -29,7 +29,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         binding.tvEditVehicles.setOnClickListener {
-           // findTopNavController().navigate(R.id.action_tabsFragment_to_vehiclesFragment)
+           // findTopNavController().navigate(R.id.)
         }
         binding.tvSettings.setOnClickListener {
            findTopNavController().navigate(R.id.action_tabsFragment_to_settingsFragment)

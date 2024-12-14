@@ -30,10 +30,8 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.bttSave.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.saveNewVehicle()
                 findNavController().navigate(R.id.action_newVehicleFragment_to_tabsFragment)
-            }
         }
 
         initView()

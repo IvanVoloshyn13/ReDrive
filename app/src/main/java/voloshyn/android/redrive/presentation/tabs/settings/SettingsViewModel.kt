@@ -10,18 +10,18 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.domain.models.AppUnit
-import voloshyn.android.domain.models.SettingItem
+import voloshyn.android.domain.models.ItemSetting
 import voloshyn.android.domain.models.AppSettings
 import voloshyn.android.domain.models.SettingType
 import voloshyn.android.domain.useCase.settings.ObserveSettingsUseCase
-import voloshyn.android.domain.useCase.settings.GetUnitsUseCase
+import voloshyn.android.domain.useCase.settings.GetSettingItemUnitsUseCase
 import voloshyn.android.domain.useCase.settings.SaveSettingsUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val getSettings: ObserveSettingsUseCase,
-    private val getUnits: GetUnitsUseCase,
+    private val getUnits: GetSettingItemUnitsUseCase,
     private val saveSettings: SaveSettingsUseCase
 ) : ViewModel() {
 
@@ -57,7 +57,7 @@ class SettingsViewModel @Inject constructor(
 
     }
 
-    private fun createSettingsItem(item: SettingItem): SettingsStateItem {
+    private fun createSettingsItem(item: ItemSetting): SettingsStateItem {
         return SettingsStateItem(
             id = item.id,
             field = item.type,
@@ -135,8 +135,8 @@ class SettingsViewModel @Inject constructor(
         )
     }
 
-    private fun createGlobalSettings(item: SettingsStateItem): SettingItem {
-        return SettingItem(
+    private fun createGlobalSettings(item: SettingsStateItem): ItemSetting {
+        return ItemSetting(
             id = item.id,
             name = item.settingsName,
             valueUnit = item.settingsUnitValue,

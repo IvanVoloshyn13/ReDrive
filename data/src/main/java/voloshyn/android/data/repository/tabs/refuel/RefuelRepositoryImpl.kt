@@ -2,11 +2,13 @@ package voloshyn.android.data.repository.tabs.refuel
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import voloshyn.android.data.di.DispatcherIo
 import voloshyn.android.data.localeStorage.room.dao.RefuelsDao
 import voloshyn.android.data.localeStorage.room.entities.RefuelEntity
+import voloshyn.android.data.repository.CurrentVehicleProvider
 import voloshyn.android.data.repository.RefuelsProvider
 import voloshyn.android.domain.models.logs.RefuelLog
 import voloshyn.android.domain.models.refuel.Refuel
@@ -17,6 +19,7 @@ import javax.inject.Inject
 class RefuelRepositoryImpl @Inject constructor(
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher,
     private val refuelsDao: RefuelsDao,
+    private val currentVehicleProvider: CurrentVehicleProvider
 ) : RefuelRepository, RefuelsProvider {
 
     override fun refuelsForVehicle(vehicleId: Long): Flow<List<Refuel>> {
@@ -28,7 +31,7 @@ class RefuelRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addNew(refuel: Refuel) {
-        refuelsDao.addRefuel(refuel = RefuelEntity.toEntity(refuel))
+        refuelsDao.addRefuel(refuel = RefuelEntity.toEntity(refuel, TODO()))
     }
 
     override suspend fun edit(refuel: Refuel) {

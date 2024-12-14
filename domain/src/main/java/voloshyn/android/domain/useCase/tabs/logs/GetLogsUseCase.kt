@@ -25,7 +25,7 @@ class GetLogsUseCase(
     private fun toRefuelLogs(vehicle: Vehicle, refuels: List<Refuel>): List<RefuelLog> {
         val refuelLogs = ArrayList<RefuelLog>()
         //Initial odometer value which will be change for each iteration
-        var previousOdometerVal = vehicle.currentMileage
+        var previousOdometerVal = vehicle.initialOdometerValue
 
         refuels.forEach { refuel ->
             val travelledDistance = refuel.odometer - previousOdometerVal
@@ -37,7 +37,6 @@ class GetLogsUseCase(
             // Create a new RefuelLog object
             val refuelLog = RefuelLog(
                 id = refuel.id,
-                vehicleId = refuel.vehicleId,
                 odometer = refuel.odometer.toString(),
                 avgFuelConsumption = avgFuelConsumption.formatToScale(),
                 travelledDistance = travelledDistance.toString(),

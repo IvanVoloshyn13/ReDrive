@@ -13,6 +13,6 @@ interface RefuelsDao {
     suspend fun addRefuel(refuel: RefuelEntity):Long
 
 
-    @Query("SELECT * FROM refuels_inputs WHERE vehicle_id=:currentVehicleId order by odometer ASC  ")
+    @Query("SELECT * FROM refuels WHERE vehicle_id=:currentVehicleId order by odometer ASC  ")
      fun getRefuels(currentVehicleId:Long): Flow<List<RefuelEntity>>
 }

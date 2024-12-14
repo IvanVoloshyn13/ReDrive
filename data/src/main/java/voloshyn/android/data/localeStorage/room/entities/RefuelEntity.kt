@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 import voloshyn.android.domain.models.refuel.Refuel
 
 @Entity(
-    tableName = "refuels_inputs",
+    tableName = "refuels",
     foreignKeys = [ForeignKey(
         entity = VehicleEntity::class,
         parentColumns = ["id"],
@@ -34,7 +34,6 @@ data class RefuelEntity(
     fun toRefuel(): Refuel {
         return Refuel(
             id=id,
-            vehicleId = vehicleId,
             date = date,
             odometer = odometer,
             fuelVolume = fuelVolume,
@@ -47,7 +46,7 @@ data class RefuelEntity(
 
 
     companion object {
-        fun toEntity(refuel: Refuel): RefuelEntity {
+        fun toEntity(refuel: Refuel,vehicleId: Long): RefuelEntity {
             with(refuel) {
                 return RefuelEntity(
                     vehicleId = vehicleId,

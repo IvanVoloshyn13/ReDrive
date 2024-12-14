@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="voloshyn.android.redrive.presentation.tabs.profile.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

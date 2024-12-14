@@ -20,7 +20,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppCurrentUserRepositoryImpl @Inject constructor(
+ class AppCurrentUserRepositoryImpl @Inject constructor(
     private val usersDao: UsersDao,
     private val dataStore: DataStore<Preferences>,
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher

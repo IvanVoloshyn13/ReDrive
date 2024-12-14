@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "22867439b7edf20e18608051d5ec379e",
+    "identityHash": "0267941131f201d24f34d3138273d479",
     "entities": [
       {
         "tableName": "users",
@@ -48,7 +48,7 @@
       },
       {
         "tableName": "vehicles",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT NOT NULL, `name` TEXT NOT NULL, `current_mileage` INTEGER NOT NULL, `vehicle_type` TEXT NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT NOT NULL, `name` TEXT NOT NULL, `initial_odometer_value` INTEGER NOT NULL, `vehicle_type` TEXT NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -69,8 +69,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "currentMileage",
-            "columnName": "current_mileage",
+            "fieldPath": "initialOdometerValue",
+            "columnName": "initial_odometer_value",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -113,7 +113,7 @@
         ]
       },
       {
-        "tableName": "refuels_inputs",
+        "tableName": "refuels",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `vehicle_id` INTEGER NOT NULL, `date` INTEGER NOT NULL, `odometer` INTEGER NOT NULL, `fuel_volume` REAL NOT NULL, `unit_price` REAL NOT NULL, `notes` TEXT NOT NULL DEFAULT '', `full_tank` INTEGER NOT NULL, `missed_previous` INTEGER NOT NULL, FOREIGN KEY(`vehicle_id`) REFERENCES `vehicles`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
@@ -180,13 +180,13 @@
         },
         "indices": [
           {
-            "name": "index_refuels_inputs_vehicle_id",
+            "name": "index_refuels_vehicle_id",
             "unique": false,
             "columnNames": [
               "vehicle_id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_refuels_inputs_vehicle_id` ON `${TABLE_NAME}` (`vehicle_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_refuels_vehicle_id` ON `${TABLE_NAME}` (`vehicle_id`)"
           }
         ],
         "foreignKeys": [
@@ -204,7 +204,7 @@
         ]
       },
       {
-        "tableName": "settings",
+        "tableName": "app_settings",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `user_id` TEXT NOT NULL, `currency` TEXT NOT NULL, `distance` TEXT NOT NULL, `capacity` TEXT NOT NULL, `avg_consumption` TEXT NOT NULL, `format_of_date` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
@@ -258,13 +258,13 @@
         },
         "indices": [
           {
-            "name": "index_settings_user_id",
+            "name": "index_app_settings_user_id",
             "unique": true,
             "columnNames": [
               "user_id"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_settings_user_id` ON `${TABLE_NAME}` (`user_id`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_app_settings_user_id` ON `${TABLE_NAME}` (`user_id`)"
           }
         ],
         "foreignKeys": [
@@ -285,7 +285,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '22867439b7edf20e18608051d5ec379e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0267941131f201d24f34d3138273d479')"
     ]
   }
 }

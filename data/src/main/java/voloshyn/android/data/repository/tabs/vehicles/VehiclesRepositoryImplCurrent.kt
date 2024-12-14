@@ -1,6 +1,5 @@
 package voloshyn.android.data.repository.tabs.vehicles
 
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -48,7 +47,7 @@ class VehiclesRepositoryImplCurrent @Inject constructor(
                 id = 0,
                 userId = userId,
                 name = vehicle.name,
-                currentMileage = vehicle.currentMileage,
+                initialOdometerValue = vehicle.initialOdometerValue,
                 vehicleType = vehicle.type.name
             )
         )
@@ -97,7 +96,7 @@ class VehiclesRepositoryImplCurrent @Inject constructor(
                     Vehicle(
                         id = vehicleEntity.id,
                         name = vehicleEntity.name,
-                        currentMileage = vehicleEntity.currentMileage,
+                        initialOdometerValue = vehicleEntity.initialOdometerValue,
                         type = VehicleType.valueOf(vehicleEntity.vehicleType)
                     )
                 }

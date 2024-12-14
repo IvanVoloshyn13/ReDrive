@@ -6,10 +6,10 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import voloshyn.android.domain.models.AppSettings
-import voloshyn.android.domain.models.SettingItem
+import voloshyn.android.domain.models.ItemSetting
 
 @Entity(
-    tableName = "settings",
+    tableName = "app_settings",
     foreignKeys = [ForeignKey(
         entity = UserEntity::class,
         parentColumns = ["id"],
@@ -42,7 +42,7 @@ data class SettingsEntity(
     companion object {
         fun toEntity(appSettings: AppSettings, userId: String): SettingsEntity {
             return SettingsEntity(
-                id = 0,
+                id = 1L,
                 userId = userId,
                 avgConsumption = concatenateString(appSettings.avgConsumption),
                 currency = concatenateString(appSettings.currency),
@@ -52,7 +52,7 @@ data class SettingsEntity(
             )
         }
 
-        private fun concatenateString(value:SettingItem): String {
+        private fun concatenateString(value:ItemSetting): String {
             return "${value.id}|${value.valueUnit}"
         }
     }

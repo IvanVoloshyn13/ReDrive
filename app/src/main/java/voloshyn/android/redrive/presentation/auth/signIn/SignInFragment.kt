@@ -50,6 +50,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                     is SignInStatus.SignIn -> {
                         findNavController().navigate(
                             if (!it.isVehicle) {
+                                findNavController().popBackStack(R.id.auth_flow, true)
                                 R.id.action_global_newVehicleFragment
                             } else {
                                 R.id.action_signInFragment_to_tabsFragment

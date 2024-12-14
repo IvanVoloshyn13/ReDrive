@@ -2,6 +2,9 @@ package voloshyn.android.redrive.presentation.auth.signIn
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,14 +26,14 @@ class SignInViewModel @Inject constructor(
     private val isVehicleUseCase: IsVehicleUseCase,
     private val observeUser: ObserveCurrentUserUseCase
 ) : ViewModel() {
-    private val viewModelScope = viewModelScope()
+    private val scope = viewModelScope()
 
     private val _state: MutableStateFlow<FragmentSignInState> =
         MutableStateFlow(FragmentSignInState())
     val state = _state.asStateFlow()
 
-    suspend fun signIn(email: String, password: String) {
-        viewModelScope.launch {
+    fun signIn(email: String, password: String) {
+        scope.launch {
             _state.update {
                 it.copy(
                     loading = true, signInStatus = SignInStatus.SignOut
@@ -50,7 +53,7 @@ class SignInViewModel @Inject constructor(
                 }
 
                 is AppResult.Success -> {
-                    val isVehicle = isVehicle()
+                    val isVehicle = isVehicle().await()
                     _state.update {
                         it.copy(
                             loading = false,
@@ -63,19 +66,26 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    private suspend fun isVehicle(retry: Boolean = true): Boolean {
-        val uuid = observeUser.invoke().firstOrNull()?.id
-        return if (uuid != null) {
-            val isVehicle = isVehicleUseCase.invoke(uuid)
-            isVehicle
-        } else {
-            if (retry) {
-                delay(250)
-                isVehicle(retry = false)
-            } else false
-
+    private fun isVehicle(retry: Boolean = true): Deferred<Boolean> {
+        return scope.async {
+            val uuid = observeUser.invoke().firstOrNull()?.id
+            if (uuid != null) {
+                val isVehicle = isVehicleUseCase.invoke(uuid)
+                isVehicle
+            } else {
+                if (retry) {
+                    delay(250)
+                    isVehicle(retry = false).await()
+                } else false
+            }
         }
 
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        scope.cancel()
     }
 
 }

@@ -4,7 +4,7 @@ import voloshyn.android.domain.models.AppUnit
 import voloshyn.android.domain.models.SettingType
 import voloshyn.android.domain.repository.AppSettingsRepository
 
-class GetUnitsUseCase(private val repository: AppSettingsRepository) {
+class GetSettingItemUnitsUseCase(private val repository: AppSettingsRepository) {
     fun invoke(field: SettingType): Array<AppUnit> {
         val units = repository.getItemUnits(field)
         val appUnits = units.map {
