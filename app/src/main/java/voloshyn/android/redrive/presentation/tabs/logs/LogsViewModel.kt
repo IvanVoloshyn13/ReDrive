@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import voloshyn.android.app.R
-import voloshyn.android.domain.models.logs.RefuelLog
 import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.domain.useCase.tabs.logs.GetLogsUseCase
 import voloshyn.android.redrive.utils.toStringResource
@@ -19,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class LogsViewModel @Inject constructor(
     private val refuelLogs: GetLogsUseCase,
-    private val stringResourceProvider: StringResourceProvider
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<LogsState> = MutableStateFlow(LogsState())

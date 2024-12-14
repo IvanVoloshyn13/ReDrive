@@ -8,7 +8,7 @@ import voloshyn.android.data.R
 import voloshyn.android.data.localeStorage.room.dao.SettingsDao
 import voloshyn.android.data.localeStorage.room.entities.SettingsEntity
 import voloshyn.android.data.valueId
-import voloshyn.android.domain.models.SettingItem
+import voloshyn.android.domain.models.ItemSetting
 import voloshyn.android.domain.models.AppSettings
 import voloshyn.android.domain.models.SettingType
 import voloshyn.android.domain.repository.AppSettingsRepository
@@ -59,16 +59,16 @@ class AppSettingsRepositoryImpl @Inject constructor(
             getLocalizedSettingsFromArray(R.array.date_formats, this.formatOfDate.valueId())
 
         return AppSettings(
-            currency = SettingItem(id = currency.id, valueUnit = currency.valueUnit, name = currency.name, type = SettingType.Currency),
-            capacity = SettingItem(id = capacity.id, valueUnit = capacity.valueUnit, name = capacity.name, type = SettingType.Capacity),
-            distance = SettingItem(id = distance.id, valueUnit = distance.valueUnit, name = distance.name, type = SettingType.Distance),
-            avgConsumption = SettingItem(
+            currency = ItemSetting(id = currency.id, valueUnit = currency.valueUnit, name = currency.name, type = SettingType.Currency),
+            capacity = ItemSetting(id = capacity.id, valueUnit = capacity.valueUnit, name = capacity.name, type = SettingType.Capacity),
+            distance = ItemSetting(id = distance.id, valueUnit = distance.valueUnit, name = distance.name, type = SettingType.Distance),
+            avgConsumption = ItemSetting(
                 id = avgConsumption.id,
                 valueUnit = avgConsumption.valueUnit,
                 name = avgConsumption.name,
                 type = SettingType.AvgConsumption
             ),
-            dateFormat = SettingItem(
+            dateFormat = ItemSetting(
                 id = formatOfDate.id,
                 valueUnit = formatOfDate.valueUnit,
                 name = formatOfDate.name,
@@ -77,14 +77,14 @@ class AppSettingsRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun getLocalizedSettingsFromArray(arrayId: Int, valueId: String): SettingItem {
+    private fun getLocalizedSettingsFromArray(arrayId: Int, valueId: String): ItemSetting {
         val localizedArray = getLocalizedStringArray(arrayId)
         val localizedValue = localizedArray.firstOrNull { it.valueId() == valueId } ?: ""
         val parts = localizedValue.split("|")
         val id = parts[0]
         val unit = parts[1]
         val name = getLocalizedName(arrayId)
-        return SettingItem(id = id, valueUnit = unit, name = name)
+        return ItemSetting(id = id, valueUnit = unit, name = name)
     }
 
     private fun getLocalizedStringArray(arrayResId: Int): Array<out String> {

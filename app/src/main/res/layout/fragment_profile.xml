@@ -85,7 +85,6 @@
                 android:text="@string/edit_vehicles"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.ReDrive.Cards.Medium"
-
                 app:layout_constraintBottom_toBottomOf="@id/iv_vehicle"
                 app:layout_constraintStart_toEndOf="@id/iv_vehicle"
                 app:layout_constraintTop_toTopOf="@id/iv_vehicle">

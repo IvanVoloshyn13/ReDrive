@@ -2,7 +2,6 @@ package voloshyn.android.domain.models.logs
 
 data class RefuelLog(
     val id:Long,
-    val vehicleId: Long,
     val odometer: String,
     val avgFuelConsumption: CharSequence,
     val travelledDistance: String,
@@ -14,7 +13,6 @@ data class RefuelLog(
     companion object {
         val EMPTY_LOG = RefuelLog(
             id = 0L,
-            vehicleId = 0L,
             odometer = "",
             avgFuelConsumption = "",
             travelledDistance = "",

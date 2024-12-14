@@ -57,9 +57,9 @@
     <string name="unknown_error_firebase">An unknown error occurred. Please try again later or contact support.</string>
 
     <!-- FRAGMENTS-->
-    <string name="profile">profile</string>
-    <string name="redrive">redrive</string>
-    <string name="logs">logs</string>
+    <string name="profile">Profile</string>
+    <string name="redrive">Redrive</string>
+    <string name="logs">Logs</string>
     <string name="refuel">Refuel</string>
 
     <string name="summary">Summary</string>

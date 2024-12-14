@@ -16,9 +16,9 @@ import voloshyn.android.domain.repository.userAuth.UserSessionRepository
 import voloshyn.android.domain.useCase.auth.SignInWithEmailUseCase
 import voloshyn.android.domain.useCase.auth.SignUpWithEmailUseCase
 import voloshyn.android.domain.useCase.auth.ValidateEmailUseCase
-import voloshyn.android.domain.useCase.onBoard.OnBoardFinishUseCase
+import voloshyn.android.domain.useCase.onBoard.FinishOnBoardUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
-import voloshyn.android.domain.useCase.settings.GetUnitsUseCase
+import voloshyn.android.domain.useCase.settings.GetSettingItemUnitsUseCase
 import voloshyn.android.domain.useCase.settings.ObserveSettingsUseCase
 import voloshyn.android.domain.useCase.settings.SaveSettingsUseCase
 import voloshyn.android.domain.useCase.tabs.logs.GetLogsUseCase
@@ -71,8 +71,8 @@ object UseCaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideOnBoardFinishUseCase(repository: OnBoardRepository): OnBoardFinishUseCase {
-        return OnBoardFinishUseCase(repository)
+    fun provideOnBoardFinishUseCase(repository: OnBoardRepository): FinishOnBoardUseCase {
+        return FinishOnBoardUseCase(repository)
     }
     // ON_BOARD
 
@@ -103,8 +103,8 @@ object UseCaseModule {
     }
 
     @Provides
-    fun provideGetUnitsUseCase(repository: AppSettingsRepository): GetUnitsUseCase {
-        return GetUnitsUseCase(repository)
+    fun provideGetUnitsUseCase(repository: AppSettingsRepository): GetSettingItemUnitsUseCase {
+        return GetSettingItemUnitsUseCase(repository)
     }
 
     @Provides

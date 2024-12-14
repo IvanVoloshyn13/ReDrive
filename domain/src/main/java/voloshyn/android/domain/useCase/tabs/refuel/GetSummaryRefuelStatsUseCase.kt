@@ -3,8 +3,8 @@ package voloshyn.android.domain.useCase.tabs.refuel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import voloshyn.android.domain.models.logs.RefuelLog
-import voloshyn.android.domain.models.refuel.AllTimeAvgConsumption
-import voloshyn.android.domain.models.refuel.AllTimeCostPerUnit
+import voloshyn.android.domain.models.refuel.TotalAvgConsumption
+import voloshyn.android.domain.models.refuel.TotalCostPerUnit
 import voloshyn.android.domain.models.refuel.RefuelTuple
 import voloshyn.android.domain.models.refuel.Summary
 import voloshyn.android.domain.repository.tabs.RefuelLogsRepository
@@ -67,8 +67,8 @@ class GetSummaryRefuelStatsUseCase(
             totalFuelVolume = totalFuelVolume,
             totalPayments = totalPayments,
             lastRefuel = lastRefuel,
-            avgConsumption = AllTimeAvgConsumption(avgConsumption),
-            costPerUnit = AllTimeCostPerUnit(costPerDistance)
+            totalAvgConsumption = TotalAvgConsumption(avgConsumption),
+            totalCostPerUnit = TotalCostPerUnit(costPerDistance)
         )
     }
 

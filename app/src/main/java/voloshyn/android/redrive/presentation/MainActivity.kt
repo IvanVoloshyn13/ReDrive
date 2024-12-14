@@ -124,36 +124,4 @@ class MainActivity : AppCompatActivity() {
 
     private fun getSignInDestination(): Int = R.id.signInFragment
 
-
-//    fun ifNeeded() {
-//        private fun showHomeBttDestination(destination: NavDestination?): Boolean {
-//            if (destination == null) return false
-//            return homeBttDestinations.contains(destination.id)
-//        }
-//
-//        private val homeBttDestinations =
-//            setOf(getVehiclesDestination(), getSignUpDestination(), getNewRefuelDestination())
-//    }
-
-    //    private val onBackInvokeListener = (
-//            OnBackInvokedCallback {
-//                Log.d("MainActivity", "Back invoked")
-//                if (isStartDestination(navController?.currentDestination)) {
-//                    Log.d("MainActivity", "exit  invoked")
-//                    finishAffinity()
-//                } else {
-//                    Log.d("MainActivity", "Back ")
-//                    navController?.popBackStack()
-//                }
-//            }
-//            )
-
-    //        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
-//         onBackInvokedDispatcher.registerOnBackInvokedCallback(
-//                OnBackInvokedDispatcher.PRIORITY_DEFAULT,
-//                onBackInvokeListener
-//            )
-//        }
-
-
 }

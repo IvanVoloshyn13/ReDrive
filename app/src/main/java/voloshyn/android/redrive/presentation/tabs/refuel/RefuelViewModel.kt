@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.refuel.Refuel
-import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
 import voloshyn.android.domain.useCase.tabs.refuel.AddNewRefuelUseCase
+import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
@@ -58,8 +58,7 @@ class RefuelViewModel @Inject constructor(
 
     private fun RefuelState.toDomain(): Refuel {
         return Refuel(
-            id=0,
-            vehicleId = currentVehicleId,
+            id = 0,
             date = date,
             fuelVolume = fuelVolume.toDouble(),
             odometer = odometer.toInt(),

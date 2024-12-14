@@ -9,7 +9,7 @@ import voloshyn.android.data.localeStorage.room.entities.SettingsEntity
 
 @Dao
 interface SettingsDao {
-    @Query("SELECT * FROM settings WHERE user_id=:userId LIMIT 1")
+    @Query("SELECT * FROM app_settings WHERE user_id=:userId LIMIT 1")
     fun getSettingsByUserId(userId: String): Flow<SettingsEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

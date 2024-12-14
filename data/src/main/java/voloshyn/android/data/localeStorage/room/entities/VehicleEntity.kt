@@ -26,14 +26,14 @@ data class VehicleEntity(
     val id: Long,
     @ColumnInfo(name = "user_id") val userId: String,
     val name: String,
-    @ColumnInfo(name = "current_mileage") val currentMileage: Int,
+    @ColumnInfo(name = "initial_odometer_value") val initialOdometerValue: Int,
     @ColumnInfo(name = "vehicle_type") val vehicleType: String
 ) {
     fun toVehicle(): Vehicle {
         return Vehicle(
             id = id,
             name = name,
-            currentMileage = currentMileage,
+            initialOdometerValue = initialOdometerValue,
             type = VehicleType.valueOf(vehicleType)
         )
     }
@@ -44,7 +44,7 @@ data class VehicleEntity(
             id = 0,
             userId = "",
             name = "",
-            currentMileage = 0,
+            initialOdometerValue = 0,
             vehicleType = VehicleType.Car.name
         )
     }

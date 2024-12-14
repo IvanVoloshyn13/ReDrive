@@ -51,7 +51,7 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private  fun checkSignInStatus(): Boolean {
+    private fun checkSignInStatus(): Boolean {
         return when (signInStatus.invoke()) {
             is SignInStatus.SignIn -> {
                 userUuid = currentUserUseCase.invoke().id
