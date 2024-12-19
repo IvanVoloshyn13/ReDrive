@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.domain.models.VehicleType
-import voloshyn.android.domain.useCase.tabs.vehicle.AddVehicleUseCase
+import voloshyn.android.domain.useCase.vehicle.AddVehicleUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class NewVehicleViewModel @Inject constructor(
-    private val saveVehicle: AddVehicleUseCase
+    private val addNewVehicle: AddVehicleUseCase
 ) : ViewModel() {
 
     private val scope = viewModelScope()
@@ -57,7 +57,7 @@ class NewVehicleViewModel @Inject constructor(
             type = _state.value.vehicleType
         )
         scope.launch {
-            saveVehicle.invoke(vehicle)
+            addNewVehicle.invoke(vehicle)
         }
 
     }

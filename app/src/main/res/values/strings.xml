@@ -39,6 +39,8 @@
     <string name="please_enter_real_names">Please enter real names</string>
     <string name="invalid_email">Invalid email</string>
 
+    <string name="is_current_vehicle_error">You can not delete this vehicle because it is set as default</string>
+
     <string name="empty_string" translatable="false"> </string>
     <string name="empty_field_error">This field can not be empty</string>
     <string name="required">Required</string>
@@ -89,6 +91,8 @@
     <string name="currency">Currency</string>
     <string name="distance_unit">Distance unit</string>
     <string name="save_uppercase">SAVE</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

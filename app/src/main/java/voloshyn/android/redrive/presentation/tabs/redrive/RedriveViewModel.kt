@@ -11,14 +11,14 @@ import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.domain.models.auth.User
 import voloshyn.android.domain.useCase.user.IsUserSignInUseCase
-import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
+import voloshyn.android.domain.useCase.vehicle.ObserveCurrentVehicleUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class RedriveViewModel @Inject constructor(
     isUserSignInUseCase: IsUserSignInUseCase,
-    private val currentVehicleUseCase: GetCurrentVehicleUseCase
+    private val currentVehicleUseCase: ObserveCurrentVehicleUseCase
 ) : ViewModel() {
 
     private val scope = viewModelScope() { throwable ->

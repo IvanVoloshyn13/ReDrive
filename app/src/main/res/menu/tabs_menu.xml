@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_main"
         />
 
-    <item android:id="@+id/redrive_logs"
+    <item android:id="@+id/logs"
         android:title="@string/logs"
         android:icon="@drawable/ic_logs"
         />

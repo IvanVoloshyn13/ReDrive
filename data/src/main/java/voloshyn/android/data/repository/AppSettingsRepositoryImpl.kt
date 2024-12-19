@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.map
 import voloshyn.android.data.R
 import voloshyn.android.data.localeStorage.room.dao.SettingsDao
 import voloshyn.android.data.localeStorage.room.entities.SettingsEntity
+import voloshyn.android.data.repository.user.AppCurrentUserRepository
 import voloshyn.android.data.valueId
 import voloshyn.android.domain.models.ItemSetting
 import voloshyn.android.domain.models.AppSettings

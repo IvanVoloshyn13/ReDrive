@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.Vehicle
-import voloshyn.android.domain.useCase.tabs.logs.GetLogsUseCase
+import voloshyn.android.domain.useCase.logs.GetLogsUseCase
 import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
@@ -33,8 +33,14 @@ class LogsViewModel @Inject constructor(
         }
     }
 
+    fun setCurrentVehicle(vehicle: Vehicle) {
+        _state.update {
+            it.copy(currentVehicle = vehicle)
+        }
+    }
+
     init {
-        refuelLogs()
+        //    refuelLogs()
     }
 
     fun refuelLogs() {
@@ -44,7 +50,7 @@ class LogsViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         currentVehicle = TODO(),
-                    //    refuelLogs = formatedLogs(vehicleWithRefuelLogs.refuelLogs)
+                        //    refuelLogs = formatedLogs(vehicleWithRefuelLogs.refuelLogs)
                     )
                 }
             }

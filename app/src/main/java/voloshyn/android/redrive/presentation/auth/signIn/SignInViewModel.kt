@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.models.auth.SignInStatus
 import voloshyn.android.domain.useCase.auth.SignInWithEmailUseCase
-import voloshyn.android.domain.useCase.tabs.vehicle.IsVehicleUseCase
+import voloshyn.android.domain.useCase.vehicle.IsVehicleUseCase
 import voloshyn.android.domain.useCase.user.ObserveCurrentUserUseCase
 import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope

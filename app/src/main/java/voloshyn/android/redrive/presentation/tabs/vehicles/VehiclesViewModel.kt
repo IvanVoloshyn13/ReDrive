@@ -8,10 +8,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
+import voloshyn.android.domain.IsDefaultVehicleException
 import voloshyn.android.domain.models.Vehicle
-import voloshyn.android.domain.useCase.tabs.vehicle.RememberCurrentVehicleUseCase
-import voloshyn.android.domain.useCase.tabs.vehicle.AddVehicleUseCase
-import voloshyn.android.domain.useCase.tabs.vehicle.GetVehiclesUseCase
+import voloshyn.android.domain.useCase.vehicle.AddVehicleUseCase
+import voloshyn.android.domain.useCase.vehicle.DeleteVehicleUseCase
+import voloshyn.android.domain.useCase.vehicle.ObserveVehiclesUseCase
+import voloshyn.android.domain.useCase.vehicle.SwitchCurrentVehicleUseCase
 import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
@@ -19,8 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class VehiclesViewModel @Inject constructor(
     private val addVehicleUseCase: AddVehicleUseCase,
-    private val vehicles: GetVehiclesUseCase,
-    private val toggleVehicle: RememberCurrentVehicleUseCase
+    private val deleteVehicleUseCase: DeleteVehicleUseCase,
+    private val vehicles: ObserveVehiclesUseCase,
+    private val toggleVehicle: SwitchCurrentVehicleUseCase
 ) : ViewModel() {
 
     private val scope = viewModelScope() { cause ->
@@ -33,7 +36,8 @@ class VehiclesViewModel @Inject constructor(
         }
     }
 
-    private val _state: MutableStateFlow<VehiclesFragmentState> = MutableStateFlow(VehiclesFragmentState())
+    private val _state: MutableStateFlow<VehiclesFragmentState> =
+        MutableStateFlow(VehiclesFragmentState())
     val state = _state.asStateFlow()
 
     init {
@@ -47,12 +51,19 @@ class VehiclesViewModel @Inject constructor(
         when (intent) {
             is VehicleIntent.AddVehicle -> {
                 scope.launch {
-                    addVehicle(intent.vehicle, intent.accountId)
+                    addVehicle(intent.vehicle)
                 }
             }
 
             is VehicleIntent.OnVehicleChange -> {
                 onCurrentVehicleChange(intent.vehicleId)
+            }
+
+            is VehicleIntent.OnDeleteVehicle -> {
+                scope.launch {
+                    deleteVehicle(intent.vehicleId)
+                }
+
             }
         }
     }
@@ -83,14 +94,44 @@ class VehiclesViewModel @Inject constructor(
     }
 
 
-    private suspend fun addVehicle(vehicle: Vehicle, accountId: String) {
+    private suspend fun addVehicle(vehicle: Vehicle) {
         _state.update {
             it.copy(
                 isLoading = true
             )
         }
-       val vehicleId= addVehicleUseCase.invoke(vehicle)
-       onCurrentVehicleChange(vehicleId)
+        addVehicleUseCase.invoke(vehicle)
+
     }
+
+    private suspend fun deleteVehicle(vehicleId: Long) {
+        _state.update {
+            it.copy(
+                isLoading = true
+            )
+        }
+        try {
+            deleteVehicleUseCase.invoke(vehicleId)
+        } catch (e: IsDefaultVehicleException) {
+            _state.update {
+                it.copy(
+                    isLoading = false,
+                    error = true,
+                    errorMessage = R.string.is_current_vehicle_error
+                )
+            }
+        }
+
+    }
+
+    fun resetError() {
+        _state.update {
+            it.copy(
+                error = false,
+                errorMessage = -1
+            )
+        }
+    }
+
 
 }
