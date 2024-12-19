@@ -21,7 +21,9 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_tabsFragment"
-            app:destination="@id/tabsFragment" />
+            app:destination="@id/tabsFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/onBoardFragmentContainer"
@@ -43,6 +45,12 @@
         <action
             android:id="@+id/action_tabsFragment_to_auth_flow"
             app:destination="@id/auth_flow" />
+        <action
+            android:id="@+id/action_tabsFragment_to_refuelFragment"
+            app:destination="@id/refuelFragment" />
+        <action
+            android:id="@+id/action_tabsFragment_to_vehiclesFragment"
+            app:destination="@id/vehiclesFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -89,4 +97,27 @@
         android:id="@+id/action_global_newVehicleFragment"
         app:destination="@id/newVehicleFragment"
         app:popUpToInclusive="false" />
+    <fragment
+        android:id="@+id/refuelFragment"
+        android:name="voloshyn.android.redrive.presentation.tabs.refuel.RefuelFragment"
+        android:label="@string/refuel"
+        tools:layout="@layout/fragment_refuel"/>
+    <fragment
+        android:id="@+id/vehiclesFragment"
+        android:name="voloshyn.android.redrive.presentation.tabs.vehicles.VehiclesFragment"
+        android:label="VehiclesFragment"
+        tools:layout="@layout/fragment_vehicles">
+        <action
+            android:id="@+id/action_vehiclesFragment_to_fragmentEditVehicle"
+            app:destination="@id/fragmentEditVehicle" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentEditVehicle"
+        android:name="voloshyn.android.redrive.presentation.tabs.editVehicle.FragmentEditVehicle"
+        android:label="@string/edit"
+        tools:layout="@layout/fragment_edit_vehicle">
+        <argument
+            android:name="vehicle"
+            app:argType="voloshyn.android.domain.models.Vehicle" />
+    </fragment>
 </navigation>

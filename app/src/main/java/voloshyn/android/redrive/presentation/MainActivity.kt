@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         lifecycleScope.launch {
-            viewModel.observeUser().collect()
+            launch { viewModel.observeUser().collect() }
+
         }
 
         onNavControllerActivated(getMainNavController())

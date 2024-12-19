@@ -30,8 +30,12 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.bttSave.setOnClickListener {
-                viewModel.saveNewVehicle()
+            viewModel.saveNewVehicle()
+            if (findNavController().currentBackStackEntry?.destination == null) {
                 findNavController().navigate(R.id.action_newVehicleFragment_to_tabsFragment)
+            } else {
+                findNavController().popBackStack()
+            }
         }
 
         initView()

@@ -5,4 +5,5 @@
     app:startDestination="@id/profile">
 
     <include app:graph="@navigation/profile_flow" />
+    <include app:graph="@navigation/logs_flow" />
 </navigation>

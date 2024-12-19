@@ -9,10 +9,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val userProvider: ObserveCurrentUserUseCase
+    private val userProvider: ObserveCurrentUserUseCase,
 ) : ViewModel() {
 
     fun observeUser(): Flow<User?> {
         return userProvider.invoke()
     }
+
 }

@@ -8,15 +8,15 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.refuel.Refuel
-import voloshyn.android.domain.useCase.tabs.refuel.AddNewRefuelUseCase
-import voloshyn.android.domain.useCase.tabs.vehicle.GetCurrentVehicleUseCase
+import voloshyn.android.domain.useCase.refuel.AddNewRefuelUseCase
+import voloshyn.android.domain.useCase.vehicle.ObserveCurrentVehicleUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class RefuelViewModel @Inject constructor(
     private val addNewRefuel: AddNewRefuelUseCase,
-    private val currentVehicle: GetCurrentVehicleUseCase
+    private val currentVehicle: ObserveCurrentVehicleUseCase
 ) : ViewModel() {
     private val scope = viewModelScope()
     private val _state: MutableStateFlow<RefuelState> = MutableStateFlow(RefuelState())

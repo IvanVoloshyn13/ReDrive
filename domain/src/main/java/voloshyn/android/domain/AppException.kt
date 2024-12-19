@@ -9,3 +9,5 @@ class LocalStorageException():AppException()
 class FileNotFoundException():AppException()
 
 class UnknownException():AppException()
+
+class IsDefaultVehicleException():AppException()

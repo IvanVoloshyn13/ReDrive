@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.OnBoardStatus
 import voloshyn.android.domain.models.auth.SignInStatus
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
-import voloshyn.android.domain.useCase.tabs.vehicle.IsVehicleUseCase
+import voloshyn.android.domain.useCase.vehicle.IsVehicleUseCase
 import voloshyn.android.domain.useCase.user.GetCurrentUserUseCase
 import voloshyn.android.domain.useCase.user.IsUserSignInUseCase
 import voloshyn.android.redrive.utils.viewModelScope
