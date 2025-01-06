@@ -11,7 +11,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import voloshyn.android.app.R
-import voloshyn.android.domain.useCase.auth.ValidatePasswordState
+import voloshyn.android.redrive.presentation.auth.signUp.PasswordInputState
+
 
 fun Fragment.navigateToSignInFragment() {
     requireActivity().findNavController(R.id.main_fragment_container).navigate(R.id.action_onBoardFragmentContainer_to_signInFragment)
@@ -27,7 +28,7 @@ fun Fragment.showToast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 }
 
-fun ValidatePasswordState.message(): Int {
+fun PasswordInputState.message(): Int {
     return when {
         !hasUpperCase -> {
             R.string.password_error_uppercase

@@ -2,6 +2,8 @@
 buildscript {
     dependencies {
         classpath libs.androidx.navigation.safeArgs
+
+        classpath libs.google.services
     }
 }
 
