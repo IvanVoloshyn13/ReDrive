@@ -3,6 +3,7 @@ package voloshyn.android.redrive.presentation.newVehicle
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.core.widget.doAfterTextChanged
@@ -31,12 +32,9 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
 
         binding.bttSave.setOnClickListener {
             viewModel.saveNewVehicle()
-            if (findNavController().currentBackStackEntry?.destination == null) {
-                findNavController().navigate(R.id.action_newVehicleFragment_to_tabsFragment)
-            } else {
-                findNavController().popBackStack()
-            }
+            findNavController().navigate(R.id.action_newVehicleFragment_to_tabsFragment)
         }
+
 
         initView()
         odometerInput()

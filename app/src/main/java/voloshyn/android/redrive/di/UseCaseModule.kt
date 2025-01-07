@@ -7,14 +7,12 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import voloshyn.android.data.repository.refuel.RefuelRepositoryImpl
 import voloshyn.android.domain.repository.AppSettingsRepository
-import voloshyn.android.domain.repository.EmailValidatorRepository
 import voloshyn.android.domain.repository.OnBoardRepository
 import voloshyn.android.domain.repository.RefuelLogsRepository
 import voloshyn.android.domain.repository.userAuth.EmailAuthRepository
 import voloshyn.android.domain.repository.userAuth.UserSessionRepository
 import voloshyn.android.domain.useCase.auth.SignInWithEmailUseCase
 import voloshyn.android.domain.useCase.auth.SignUpWithEmailUseCase
-import voloshyn.android.domain.useCase.auth.ValidateEmailUseCase
 import voloshyn.android.domain.useCase.onBoard.FinishOnBoardUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
 import voloshyn.android.domain.useCase.settings.SaveSettingsUseCase
@@ -44,12 +42,6 @@ object UseCaseModule {
     @ViewModelScoped
     fun provideEmailPasswordSignInUseCase(repository: EmailAuthRepository): SignInWithEmailUseCase {
         return SignInWithEmailUseCase(repository)
-    }
-
-    @Provides
-    @ViewModelScoped
-    fun provideEmailValidatorUseCase(repository: EmailValidatorRepository): ValidateEmailUseCase {
-        return ValidateEmailUseCase(repository)
     }
 
     @Provides

@@ -44,6 +44,8 @@
     <string name="empty_string" translatable="false"> </string>
     <string name="empty_field_error">This field can not be empty</string>
     <string name="required">Required</string>
+    <string name="fields_arent_valid">Please check your data </string>
+    <string name="password_error">Your password doesn\'t meet the required criteria </string>
 
     <!-- LOCALE_ERRORS-->
     <string name="error_sql">Unable to load data from the database. Please try again later.</string>
@@ -93,6 +95,10 @@
     <string name="save_uppercase">SAVE</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="one_symbol">✓ One special symbol</string>
+    <string name="uppercase_and_lowercase_letter">✓ Uppercase and lowercase letter</string>
+    <string name="at_least_one_number">✓ At least one number</string>
+    <string name="password_length">✓ 8 or more characters</string>
 
 
 </resources>
