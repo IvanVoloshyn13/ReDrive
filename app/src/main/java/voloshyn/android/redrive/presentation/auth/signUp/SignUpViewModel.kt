@@ -1,5 +1,6 @@
 package voloshyn.android.redrive.presentation.auth.signUp
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -59,6 +60,7 @@ class SignUpViewModel @Inject constructor(
     private val confirmPasswordInput: MutableSharedFlow<String> = MutableSharedFlow()
 
     fun signUp() {
+        if (!areFieldsValid()) return
         viewModelScope.launch {
             with(_state.value) {
                 if (fullNameInput.value.isEmpty() || emailInput.value.isEmpty()
@@ -103,6 +105,23 @@ class SignUpViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun areFieldsValid(): Boolean {
+        var fieldsAreValid: Boolean
+        with(_state.value) {
+            fieldsAreValid =
+                fullNameInput.isValid == true && passwordInput.isValid && emailInput.isValid == true && confirmPasswordInput.isValid == true
+            if (!fieldsAreValid) {
+                _state.update {
+                    it.copy(
+                        signUpStatus = SignUpStatus.Failure,
+                        signUpErrorMessage = R.string.fields_arent_valid
+                    )
+                }
+            } else return true
+        }
+        return false
     }
 
 

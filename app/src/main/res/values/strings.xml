@@ -44,6 +44,7 @@
     <string name="empty_string" translatable="false"> </string>
     <string name="empty_field_error">This field can not be empty</string>
     <string name="required">Required</string>
+    <string name="fields_arent_valid">Please check your data </string>
     <string name="password_error">Your password doesn\'t meet the required criteria </string>
 
     <!-- LOCALE_ERRORS-->

@@ -76,7 +76,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             findNavController().popBackStack()
         }
         binding.bttSignUp.setOnClickListener {
-            viewModel.signUp()
+                viewModel.signUp()
         }
     }
 
