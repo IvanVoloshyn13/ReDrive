@@ -10,4 +10,4 @@ class FileNotFoundException():AppException()
 
 class UnknownException():AppException()
 
-class IsDefaultVehicleException():AppException()
+class IsCurrentVehicleException():AppException()

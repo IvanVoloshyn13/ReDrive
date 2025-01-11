@@ -7,27 +7,27 @@ import kotlinx.coroutines.flow.map
 import voloshyn.android.data.R
 import voloshyn.android.data.localeStorage.room.dao.SettingsDao
 import voloshyn.android.data.localeStorage.room.entities.SettingsEntity
-import voloshyn.android.data.repository.user.AppCurrentUserRepository
 import voloshyn.android.data.valueId
 import voloshyn.android.domain.models.ItemSetting
 import voloshyn.android.domain.models.AppSettings
 import voloshyn.android.domain.models.SettingType
 import voloshyn.android.domain.repository.AppSettingsRepository
+import voloshyn.android.domain.repository.userAuth.UserSessionRepository
 import javax.inject.Inject
 
 class AppSettingsRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val settingsDao: SettingsDao,
-    private val user: AppCurrentUserRepository
-) : AppSettingsRepository {
+    private val userSessionRepository: UserSessionRepository
+) : AppSettingsRepository, UserSessionRepository by userSessionRepository {
 
     override suspend fun saveAppSettings(appSettings: AppSettings) {
-        val userId = user.user.id
+        val userId = userSessionRepository.user.id
         settingsDao.insertOrUpdate(SettingsEntity.toEntity(appSettings, userId))
     }
 
     override fun observeAppSettings(): Flow<AppSettings> {
-        val userId = user.user.id
+        val userId = userSessionRepository.user.id
         return settingsDao.getSettingsByUserId(userId).map { settingsEntity ->
             return@map if (settingsEntity == null) {
                 settingsDao.insertOrUpdate(defaultSettingsEntity(userId))
@@ -60,9 +60,24 @@ class AppSettingsRepositoryImpl @Inject constructor(
             getLocalizedSettingsFromArray(R.array.date_formats, this.formatOfDate.valueId())
 
         return AppSettings(
-            currency = ItemSetting(id = currency.id, valueUnit = currency.valueUnit, name = currency.name, type = SettingType.Currency),
-            capacity = ItemSetting(id = capacity.id, valueUnit = capacity.valueUnit, name = capacity.name, type = SettingType.Capacity),
-            distance = ItemSetting(id = distance.id, valueUnit = distance.valueUnit, name = distance.name, type = SettingType.Distance),
+            currency = ItemSetting(
+                id = currency.id,
+                valueUnit = currency.valueUnit,
+                name = currency.name,
+                type = SettingType.Currency
+            ),
+            capacity = ItemSetting(
+                id = capacity.id,
+                valueUnit = capacity.valueUnit,
+                name = capacity.name,
+                type = SettingType.Capacity
+            ),
+            distance = ItemSetting(
+                id = distance.id,
+                valueUnit = distance.valueUnit,
+                name = distance.name,
+                type = SettingType.Distance
+            ),
             avgConsumption = ItemSetting(
                 id = avgConsumption.id,
                 valueUnit = avgConsumption.valueUnit,

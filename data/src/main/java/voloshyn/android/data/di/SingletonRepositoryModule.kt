@@ -9,11 +9,7 @@ import voloshyn.android.data.firebase.FirebaseAuthManagerImpl
 import voloshyn.android.data.repository.AppSettingsRepositoryImpl
 import voloshyn.android.data.repository.logs.DataStringResProviderImpl
 import voloshyn.android.data.repository.logs.DataStringResourceProvider
-import voloshyn.android.data.repository.user.AppCurrentUserRepository
-import voloshyn.android.data.repository.user.AppCurrentUserRepositoryImpl
 import voloshyn.android.data.repository.user.UserSessionRepositoryImpl
-import voloshyn.android.data.repository.vehicles.DefaultVehicleRepository
-import voloshyn.android.data.repository.vehicles.DefaultVehicleRepositoryImpl
 import voloshyn.android.data.repository.vehicles.VehiclesRepositoryImpl
 import voloshyn.android.domain.repository.AppSettingsRepository
 import voloshyn.android.domain.repository.VehiclesRepository
@@ -32,9 +28,6 @@ interface SingletonRepositoryModule {
     @Singleton
     fun bindUserSessionRepository(repository: UserSessionRepositoryImpl): UserSessionRepository
 
-    @Binds
-    @Singleton
-    fun bindCurrentUserProvider(repository: AppCurrentUserRepositoryImpl): AppCurrentUserRepository
 
     @Binds
     @Singleton
@@ -44,9 +37,6 @@ interface SingletonRepositoryModule {
     @Singleton
     fun bindVehicleRepository(repository: VehiclesRepositoryImpl): VehiclesRepository
 
-    @Binds
-    @Singleton
-    fun bindDefaultVehicleRepository(repository: DefaultVehicleRepositoryImpl): DefaultVehicleRepository
 
     @Binds
     @Singleton

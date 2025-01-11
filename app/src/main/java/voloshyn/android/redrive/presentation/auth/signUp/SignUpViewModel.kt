@@ -1,6 +1,5 @@
 package voloshyn.android.redrive.presentation.auth.signUp
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,10 +13,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
 import voloshyn.android.domain.appResult.AppResult
-import voloshyn.android.domain.appResult.Password
 import voloshyn.android.domain.models.auth.SignUpStatus
 import voloshyn.android.domain.models.auth.UserCredentials
-import voloshyn.android.domain.useCase.auth.SignUpWithEmailUseCase
+import voloshyn.android.domain.useCase.sign_up.SignUpWithEmailUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 

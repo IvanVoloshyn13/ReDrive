@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     private var navController: NavController? = null
     private lateinit var binding: ActivityMainBinding
-    private val viewModel by viewModels<MainViewModel>()
 
     private val destinationListener =
         NavController.OnDestinationChangedListener { navController, destination, _ ->
@@ -59,11 +58,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
         setSupportActionBar(binding.toolbar)
-
-        lifecycleScope.launch {
-            launch { viewModel.observeUser().collect() }
-
-        }
 
         onNavControllerActivated(getMainNavController())
 

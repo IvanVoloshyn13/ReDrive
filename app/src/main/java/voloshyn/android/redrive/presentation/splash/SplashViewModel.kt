@@ -1,36 +1,34 @@
 package voloshyn.android.redrive.presentation.splash
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.models.OnBoardStatus
 import voloshyn.android.domain.models.auth.SignInStatus
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
 import voloshyn.android.domain.useCase.vehicle.IsVehicleUseCase
 import voloshyn.android.domain.useCase.user.GetCurrentUserUseCase
-import voloshyn.android.domain.useCase.user.IsUserSignInUseCase
+import voloshyn.android.domain.useCase.sign_in.IsSignedInUseCase
+import voloshyn.android.redrive.utils.NavigationPath
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val onBoard: OnBoardIsFinishedUseCase,
-    private val signInStatus: IsUserSignInUseCase,
-    private val isVehicle: IsVehicleUseCase,
+    private val isOnBoardFinishedUseCase: OnBoardIsFinishedUseCase,
+    private val isSignedInUseCase: IsSignedInUseCase,
+    private val isVehicleUseCase: IsVehicleUseCase,
     private val currentUserUseCase: GetCurrentUserUseCase
 ) : ViewModel() {
     private val scope = viewModelScope()
-    private var userUuid: String = ""
 
     init {
-        scope.launch {
-            fromSplashToDestination()
-        }
+        resolveNavigation()
     }
 
     private val _navigation: MutableSharedFlow<NavigationPath> =
@@ -41,83 +39,68 @@ class SplashViewModel @Inject constructor(
         )
     val navigation = _navigation.asSharedFlow()
 
-    private suspend fun fromSplashToDestination() {
-        val isSignedIn = checkSignInStatus()
-        when {
-            (navigateToTabsDestination(isSignedIn)) -> return
-            (navigateToNewVehicleDestination()) -> return
-            (navigateToOnBoardDestination()) -> return
-            else -> navigateToSignInDestination(isSignedIn)
+
+    private fun resolveNavigation() {
+        scope.launch {
+            when {
+                (!isOnBoardFinished()) -> return@launch
+                (!isSignedIn()) -> return@launch
+                (!isVehicle()) -> return@launch
+                else -> _navigation.emit(Navigation.ToTabs)
+            }
         }
     }
 
-    private fun checkSignInStatus(): Boolean {
-        return when (signInStatus.invoke()) {
+    private suspend fun isOnBoardFinished(): Boolean {
+        val onBoardStatus = isOnBoardFinishedUseCase.invoke()
+        return when (onBoardStatus) {
+            OnBoardStatus.FINISHED -> true
+            OnBoardStatus.IN_PROGRESS -> {
+                _navigation.emit(Navigation.ToOnBoard)
+                false
+            }
+        }
+    }
+
+    private suspend fun isSignedIn(): Boolean {
+        return when (isSignedInUseCase.invoke()) {
             is SignInStatus.SignIn -> {
-                userUuid = currentUserUseCase.invoke().id
                 true
             }
 
             SignInStatus.SignOut -> {
-                userUuid = ""
+                _navigation.emit(Navigation.ToAuthentication)
                 false
             }
 
             SignInStatus.Failure -> {
-                userUuid = ""
+                _navigation.emit(Navigation.ToAuthentication)
                 false
             }
         }
     }
 
     private suspend fun isVehicle(): Boolean {
-        return if (userUuid.isNotEmpty()) {
-            isVehicle.invoke(userUuid)
-        } else false
-    }
-
-    private suspend fun navigateToTabsDestination(isSignedIn: Boolean): Boolean {
-        return if (isSignedIn && isVehicle()) {
-            _navigation.tryEmit(NavigationPath.ToTabs)
+        val isVehicle = isVehicleUseCase.invoke()
+        return if (isVehicle) {
             true
         } else {
+            _navigation.emit(Navigation.ToNewVehicle)
             false
         }
-    }
-
-    private suspend fun navigateToNewVehicleDestination(): Boolean {
-        if (userUuid.isEmpty()) return false
-        return if (isVehicle()) {
-            navigateToTabsDestination(isSignedIn = true)
-            false
-        } else {
-            _navigation.tryEmit(NavigationPath.ToNewVehicle)
-            true
-        }
-    }
-
-    private suspend fun navigateToOnBoardDestination(): Boolean {
-        val onBoardStatus = onBoard.invoke()
-        return when (onBoardStatus) {
-            OnBoardStatus.FINISHED -> false
-            OnBoardStatus.IN_PROGRESS -> {
-                _navigation.emit(NavigationPath.ToOnBoard)
-                true
-            }
-        }
-    }
-
-
-    private fun navigateToSignInDestination(isSignedIn: Boolean) {
-        if (!isSignedIn) {
-            _navigation.tryEmit(NavigationPath.ToAuthentication)
-        } else Unit
     }
 
 
     override fun onCleared() {
         super.onCleared()
         scope.cancel()
+    }
+
+    sealed class Navigation : NavigationPath {
+        data object ToOnBoard : Navigation()
+        data object ToAuthentication : Navigation()
+        data object ToNewVehicle : Navigation()
+        data object ToTabs : Navigation()
     }
 }
 
