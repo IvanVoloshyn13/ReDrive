@@ -1,28 +1,33 @@
 package voloshyn.android.redrive.presentation.auth.signIn
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.models.auth.SignInStatus
-import voloshyn.android.domain.useCase.auth.SignInWithEmailUseCase
+import voloshyn.android.domain.useCase.sign_in.SignInWithEmailUseCase
 import voloshyn.android.domain.useCase.vehicle.IsVehicleUseCase
 import voloshyn.android.domain.useCase.user.ObserveCurrentUserUseCase
+import voloshyn.android.redrive.utils.NavigationPath
 import voloshyn.android.redrive.utils.toStringResource
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signIn: SignInWithEmailUseCase,
+    private val signInUseCase: SignInWithEmailUseCase,
     private val isVehicleUseCase: IsVehicleUseCase,
     private val observeUser: ObserveCurrentUserUseCase
 ) : ViewModel() {
@@ -32,6 +37,13 @@ class SignInViewModel @Inject constructor(
         MutableStateFlow(FragmentSignInState())
     val state = _state.asStateFlow()
 
+    private val _navigation: MutableSharedFlow<NavigationPath> = MutableSharedFlow(
+        replay = 1,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_LATEST
+    )
+    val navigation = _navigation.asSharedFlow()
+
     fun signIn(email: String, password: String) {
         scope.launch {
             _state.update {
@@ -39,7 +51,7 @@ class SignInViewModel @Inject constructor(
                     loading = true, signInStatus = SignInStatus.SignOut
                 )
             }
-            val result = signIn.invoke(email, password)
+            val result = signInUseCase.invoke(email, password)
             when (result) {
                 is AppResult.Error -> {
                     _state.update {
@@ -53,7 +65,7 @@ class SignInViewModel @Inject constructor(
                 }
 
                 is AppResult.Success -> {
-                    val isVehicle = isVehicle().await()
+                    val isVehicle = isVehicleUseCase.invoke()
                     _state.update {
                         it.copy(
                             loading = false,
@@ -61,31 +73,23 @@ class SignInViewModel @Inject constructor(
                             isVehicle = isVehicle
                         )
                     }
+                    _navigation.tryEmit(
+                        if (isVehicle) Navigation.ToTabs else Navigation.ToNewVehicle
+                    )
                 }
             }
         }
     }
 
-    private fun isVehicle(retry: Boolean = true): Deferred<Boolean> {
-        return scope.async {
-            val uuid = observeUser.invoke().firstOrNull()?.id
-            if (uuid != null) {
-                val isVehicle = isVehicleUseCase.invoke(uuid)
-                isVehicle
-            } else {
-                if (retry) {
-                    delay(250)
-                    isVehicle(retry = false).await()
-                } else false
-            }
-        }
-
-
-    }
 
     override fun onCleared() {
         super.onCleared()
         scope.cancel()
+    }
+
+    sealed class Navigation : NavigationPath {
+        data object ToNewVehicle : Navigation()
+        data object ToTabs : Navigation()
     }
 
 }

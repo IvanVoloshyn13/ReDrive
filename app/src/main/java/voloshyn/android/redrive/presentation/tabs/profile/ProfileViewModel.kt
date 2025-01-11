@@ -6,14 +6,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import voloshyn.android.domain.useCase.user.GetCurrentUserUseCase
-import voloshyn.android.domain.useCase.user.UserSignOutUseCase
+import voloshyn.android.domain.useCase.user.SignOutUseCase
 import voloshyn.android.redrive.utils.viewModelScope
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val user: GetCurrentUserUseCase,
-    private val userSignOut: UserSignOutUseCase
+    private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
     private val scope = viewModelScope()
@@ -38,9 +38,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun signOut() {
+    fun logOut() {
         scope.launch {
-            userSignOut.invoke()
+            signOutUseCase.invoke()
         }
     }
 

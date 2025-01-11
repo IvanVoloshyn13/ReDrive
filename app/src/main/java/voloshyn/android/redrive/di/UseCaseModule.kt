@@ -11,15 +11,15 @@ import voloshyn.android.domain.repository.OnBoardRepository
 import voloshyn.android.domain.repository.RefuelLogsRepository
 import voloshyn.android.domain.repository.userAuth.EmailAuthRepository
 import voloshyn.android.domain.repository.userAuth.UserSessionRepository
-import voloshyn.android.domain.useCase.auth.SignInWithEmailUseCase
-import voloshyn.android.domain.useCase.auth.SignUpWithEmailUseCase
+import voloshyn.android.domain.useCase.sign_in.SignInWithEmailUseCase
+import voloshyn.android.domain.useCase.sign_up.SignUpWithEmailUseCase
 import voloshyn.android.domain.useCase.onBoard.FinishOnBoardUseCase
 import voloshyn.android.domain.useCase.onBoard.OnBoardIsFinishedUseCase
 import voloshyn.android.domain.useCase.settings.SaveSettingsUseCase
 import voloshyn.android.domain.useCase.logs.GetLogsUseCase
 import voloshyn.android.domain.useCase.refuel.AddNewRefuelUseCase
-import voloshyn.android.domain.useCase.user.IsUserSignInUseCase
-import voloshyn.android.domain.useCase.user.UserSignOutUseCase
+import voloshyn.android.domain.useCase.sign_in.IsSignedInUseCase
+import voloshyn.android.domain.useCase.user.SignOutUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -28,8 +28,8 @@ object UseCaseModule {
     // USER_SESSION_AUTH
     @Provides
     @ViewModelScoped
-    fun provideIsSignedInUseCase(repository: UserSessionRepository): IsUserSignInUseCase {
-        return IsUserSignInUseCase(repository)
+    fun provideIsSignedInUseCase(repository: UserSessionRepository): IsSignedInUseCase {
+        return IsSignedInUseCase(repository)
     }
 
     @Provides
@@ -46,8 +46,8 @@ object UseCaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideUserSignOutUseCase(repository: UserSessionRepository): UserSignOutUseCase {
-        return UserSignOutUseCase(repository)
+    fun provideUserSignOutUseCase(repository: UserSessionRepository): SignOutUseCase {
+        return SignOutUseCase(repository)
     }
     // USER_SESSION_AUTH
 

@@ -1,4 +1,4 @@
-package voloshyn.android.domain.useCase.auth
+package voloshyn.android.domain.useCase.sign_up
 
 import voloshyn.android.domain.appResult.AppResult
 import voloshyn.android.domain.appResult.AuthenticationError

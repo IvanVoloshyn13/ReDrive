@@ -3,6 +3,7 @@ package voloshyn.android.redrive.presentation.auth.signIn
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,7 +37,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             emailPasswordSignIn()
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewmodel.state.collectLatest {
+            viewmodel.state.collectLatest { it ->
                 binding.progressBar.visibility = if (it.loading) View.VISIBLE else View.GONE
                 when (it.signInStatus) {
                     SignInStatus.Failure -> {
@@ -48,14 +49,18 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                     }
 
                     is SignInStatus.SignIn -> {
-                        findNavController().navigate(
-                            if (!it.isVehicle) {
-                                findNavController().popBackStack(R.id.main_graph, true)
-                                R.id.action_global_newVehicleFragment
-                            } else {
-                                R.id.action_signInFragment_to_tabsFragment
+                            viewmodel.navigation.collectLatest { navigation ->
+                                when (navigation) {
+                                    SignInViewModel.Navigation.ToTabs -> {
+                                    findNavController().navigate( R.id.action_signInFragment_to_tabsFragment)
+                                    }
+
+                                    SignInViewModel.Navigation.ToNewVehicle -> {
+                                        findNavController().popBackStack(R.id.main_graph, true)
+                                       findNavController().navigate( R.id.action_global_newVehicleFragment)
+                                    }
+                                }
                             }
-                        )
                     }
 
                     SignInStatus.SignOut -> {}

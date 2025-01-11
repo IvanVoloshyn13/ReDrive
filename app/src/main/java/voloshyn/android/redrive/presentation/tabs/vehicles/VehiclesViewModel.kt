@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import voloshyn.android.app.R
-import voloshyn.android.domain.IsDefaultVehicleException
+import voloshyn.android.domain.IsCurrentVehicleException
 import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.domain.useCase.vehicle.AddVehicleUseCase
 import voloshyn.android.domain.useCase.vehicle.DeleteVehicleUseCase
@@ -112,7 +112,7 @@ class VehiclesViewModel @Inject constructor(
         }
         try {
             deleteVehicleUseCase.invoke(vehicleId)
-        } catch (e: IsDefaultVehicleException) {
+        } catch (e: IsCurrentVehicleException) {
             _state.update {
                 it.copy(
                     isLoading = false,

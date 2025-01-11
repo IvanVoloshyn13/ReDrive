@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.map
 import voloshyn.android.data.di.DispatcherIo
 import voloshyn.android.data.localeStorage.room.dao.RefuelsDao
 import voloshyn.android.data.localeStorage.room.entities.RefuelEntity
-import voloshyn.android.data.repository.user.AppCurrentUserRepository
 import voloshyn.android.data.repository.RefuelsProvider
 import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.domain.models.logs.RefuelLog
@@ -18,8 +17,7 @@ import javax.inject.Inject
 
 class RefuelRepositoryImpl @Inject constructor(
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher,
-    private val refuelsDao: RefuelsDao,
-    appCurrentUser: AppCurrentUserRepository
+    private val refuelsDao: RefuelsDao
 ) : RefuelRepository, RefuelsProvider {
 
     private var currentVehicle: Vehicle = Vehicle.DEFAULT_VEHICLE

@@ -2,17 +2,22 @@ package voloshyn.android.data.repository.vehicles
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import voloshyn.android.data.di.DispatcherIo
+import voloshyn.android.data.localeStorage.datastorePreferences.PreferencesKeys
 import voloshyn.android.data.localeStorage.room.dao.VehiclesDao
 import voloshyn.android.data.localeStorage.room.entities.VehicleEntity
 import voloshyn.android.data.mappers.throwAppException
-import voloshyn.android.data.repository.user.AppCurrentUserRepository
-import voloshyn.android.domain.IsDefaultVehicleException
+import voloshyn.android.domain.IsCurrentVehicleException
 import voloshyn.android.domain.models.Vehicle
 import voloshyn.android.domain.models.VehicleType
 import voloshyn.android.domain.repository.VehiclesRepository
@@ -24,20 +29,22 @@ const val NON_VEHICLE_KEY_VALUE = -1L
 class VehiclesRepositoryImpl @Inject constructor(
     @DispatcherIo private val ioDispatcher: CoroutineDispatcher,
     private val vehiclesDao: VehiclesDao,
-    private val appCurrentUserRepository: AppCurrentUserRepository,
-    private val defaultVehicleRepository: DefaultVehicleRepository
-) : VehiclesRepository, AppCurrentUserRepository by appCurrentUserRepository,
-    DefaultVehicleRepository by defaultVehicleRepository {
+    private val dataStore: DataStore<Preferences>
+) : VehiclesRepository {
+
+    private var _currentVehicle = Vehicle.DEFAULT_VEHICLE
+    override val currentVehicle: Vehicle
+        get() = _currentVehicle
 
     override suspend fun addNewVehicle(
-        vehicle: Vehicle
+        uUid: String, vehicle: Vehicle
     ): Long {
         return withContext(ioDispatcher) {
-            val userId = appCurrentUserRepository.user.id
+
             val vehicleId = vehiclesDao.add(
                 VehicleEntity(
                     id = 0,
-                    userId = userId,
+                    userId = uUid,
                     name = vehicle.name,
                     initialOdometerValue = vehicle.initialOdometerValue,
                     vehicleType = vehicle.type.name
@@ -47,12 +54,11 @@ class VehiclesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateVehicle(vehicle: Vehicle) {
-        val userId = appCurrentUserRepository.user.id
+    override suspend fun updateVehicle(uUid: String, vehicle: Vehicle) {
         vehiclesDao.update(
             VehicleEntity(
                 id = vehicle.id,
-                userId = userId,
+                userId = uUid,
                 name = vehicle.name,
                 initialOdometerValue = vehicle.initialOdometerValue,
                 vehicleType = vehicle.type.name
@@ -60,18 +66,34 @@ class VehiclesRepositoryImpl @Inject constructor(
         )
     }
 
-
-    override suspend fun deleteVehicle(vehicleId: Long) {
-        if (isDefault(vehicleId)) throw IsDefaultVehicleException()
+    override suspend fun deleteVehicle(uUid: String, vehicleId: Long) {
         vehiclesDao.delete(vehicleId)
     }
 
-    override suspend fun setVehicleAsDefault(vehicleId: Long) {
-        setDefaultVehicle(vehicleId)
+    override suspend fun setVehicleAsCurrent(vehicleId: Long) {
+        dataStore.edit {
+            it[PreferencesKeys.REMEMBER_VEHICLE] = vehicleId
+        }
     }
 
-    override fun observeDefaultVehicle(): Flow<Vehicle> {
-        return defaultVehicleRepository.observeDefaultVehicle()
+    override fun observeCurrentVehicle(): Flow<Vehicle> {
+        return dataStore.data.map {
+            val vehicleId = it[PreferencesKeys.REMEMBER_VEHICLE] ?: NON_VEHICLE_KEY_VALUE
+
+//        Here is multiple invoke because of lifecycle i think TODO()
+            vehicleId
+
+        }.distinctUntilChanged()
+            .flatMapLatest {
+                if (it != NON_VEHICLE_KEY_VALUE) {
+                    vehiclesDao.currentVehicle(it)
+                } else flowOf(VehicleEntity.emptyVehicle)
+            }.map { vehicleEntity ->
+                _currentVehicle = vehicleEntity.toVehicle()
+                _currentVehicle
+            }.catch { exception ->
+                exception.throwAppException()
+            }.flowOn(ioDispatcher)
     }
 
     override fun observeVehicles(): Flow<List<Vehicle>> {
@@ -94,7 +116,6 @@ class VehiclesRepositoryImpl @Inject constructor(
     override suspend fun isVehicle(uuid: String): Boolean {
         return vehiclesDao.isVehicle(uUid = uuid)
     }
-
 
 }
 

@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import voloshyn.android.domain.repository.VehiclesRepository
+import voloshyn.android.domain.repository.userAuth.UserSessionRepository
 import voloshyn.android.domain.useCase.vehicle.AddVehicleUseCase
 import voloshyn.android.domain.useCase.vehicle.DeleteVehicleUseCase
 import voloshyn.android.domain.useCase.vehicle.IsVehicleUseCase
@@ -21,9 +22,10 @@ object Vehicles {
     @Provides
     @ViewModelScoped
     fun provideAddVehicleUseCase(
-        repository: VehiclesRepository
+        repository: VehiclesRepository,
+        userRepository: UserSessionRepository
     ): AddVehicleUseCase {
-        return AddVehicleUseCase(repository)
+        return AddVehicleUseCase(repository, userRepository)
     }
 
     @Provides
@@ -46,20 +48,29 @@ object Vehicles {
 
     @Provides
     @ViewModelScoped
-    fun provideIsVehicleUseCase(repository: VehiclesRepository): IsVehicleUseCase {
-        return IsVehicleUseCase(repository)
+    fun provideIsVehicleUseCase(
+        repository: VehiclesRepository,
+        userSessionRepository: UserSessionRepository
+    ): IsVehicleUseCase {
+        return IsVehicleUseCase(repository, userSessionRepository)
     }
 
     @Provides
     @ViewModelScoped
-    fun provideUpdateVehicleUseCase(repository: VehiclesRepository): UpdateVehicleUseCase {
-        return UpdateVehicleUseCase(repository)
+    fun provideUpdateVehicleUseCase(
+        repository: VehiclesRepository,
+        userRepository: UserSessionRepository
+    ): UpdateVehicleUseCase {
+        return UpdateVehicleUseCase(repository, userRepository)
     }
 
     @Provides
     @ViewModelScoped
-    fun provideDeleteVehicleUseCase(repository: VehiclesRepository): DeleteVehicleUseCase {
-        return DeleteVehicleUseCase(repository)
+    fun provideDeleteVehicleUseCase(
+        repository: VehiclesRepository,
+        userRepository: UserSessionRepository
+    ): DeleteVehicleUseCase {
+        return DeleteVehicleUseCase(repository, userRepository)
     }
 
 }

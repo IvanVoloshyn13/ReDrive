@@ -1,5 +1,9 @@
 package voloshyn.android.data.repository.user
 
+import android.util.Log
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineDispatcher
@@ -7,6 +11,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import voloshyn.android.data.di.DispatcherIo
 import voloshyn.android.data.firebase.FirebaseAuthManager
+import voloshyn.android.data.localeStorage.datastorePreferences.PreferencesKeys
 import voloshyn.android.data.localeStorage.room.dao.UsersDao
 import voloshyn.android.data.localeStorage.room.entities.UserEntity
 import voloshyn.android.domain.appResult.AppResult
@@ -20,9 +25,9 @@ import javax.inject.Inject
 class EmailAuthRepositoryImpl @Inject constructor(
     private val firebaseAuthManager: FirebaseAuthManager,
     private val usersDao: UsersDao,
-    private val currentUserRepository: AppCurrentUserRepository,
+    private val dataStore: DataStore<Preferences>,
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher
-) : EmailAuthRepository, AppCurrentUserRepository by currentUserRepository {
+) : EmailAuthRepository {
 
     override suspend fun signInWithEmailAndPassword(
         email: String,
@@ -37,7 +42,7 @@ class EmailAuthRepositoryImpl @Inject constructor(
                     if (userEntity == null) {
                         createAndSaveUser(fbUser)
                     } else {
-                        currentUserRepository.setUserUid(fbUser.uid)
+                        setUserUid(fbUser.uid)
                     }
                 }
                 AppResult.Success(data = SignInStatus.SignIn)
@@ -70,10 +75,16 @@ class EmailAuthRepositoryImpl @Inject constructor(
 
     private suspend fun createAndSaveUser(firebaseUser: FirebaseUser) {
         usersDao.addUser(UserEntity.toEntity(firebaseUser))
-        currentUserRepository.setUserUid(firebaseUser.uid)
+        setUserUid(firebaseUser.uid)
     }
 
     override suspend fun sendPasswordReset(email: String): AppResult<Unit, Nothing> {
         TODO("Not yet implemented")
+    }
+
+    private suspend fun setUserUid(uuid: String) {
+        dataStore.edit {
+            it[PreferencesKeys.CURRENT_USER] = uuid
+        }
     }
 }
