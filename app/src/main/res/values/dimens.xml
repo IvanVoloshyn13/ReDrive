@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Card-->
+    <dimen name="default_card_corner_radius">12dp</dimen>
+    <dimen name="small_card_corner_radius">8dp</dimen>
+
+    <!--    Margins-->
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_medium">18dp</dimen>
+    <dimen name="margin_regular">12dp</dimen>
+    <dimen name="margin_small">6dp</dimen>d
+
+    <!--    Text-->
+    <dimen name="text_size_large">24sp</dimen>
+    <dimen name="text_size_medium">20sp</dimen>
+    <dimen name="text_size_input">16sp</dimen>
+    <dimen name="text_size_regular">14sp</dimen>
+    <dimen name="text_size_small">11sp</dimen>
+</resources>

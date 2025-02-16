@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Redrive.App.Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="titleTextAppearance">@style/Redrive.App.TextAppearance.Toolbar</item>
+    </style>
+
+    <style name="Redrive.App.TextAppearance.Toolbar" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+    <style name="Redrive.App.BottomNavView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/Redrive.ThemeOverlay.BottomNavigationView</item>
+    </style>
+
+    <style name="Redrive.ThemeOverlay.BottomNavigationView" parent="">
+        <item name="colorOnSecondaryContainer">?attr/colorOnPrimary</item>
+        <item name="colorOnSurfaceVariant">?attr/colorOnBackground</item>
+    </style>
+
+
+    <style name="Redrive.App.VehicleToggle" parent="ThemeOverlay.Material3.Button">
+        <item name="colorSecondaryContainer">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Redrive.App.Auth.MaterialButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">?attr/colorTertiary</item>
+        <item name="android:textColor">?attr/colorOnTertiary</item>
+    </style>
+
+
+    <style name="Redrive.ThemeOverlay.TextAppearance.Base" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:textSize">@dimen/text_size_regular</item>
+    </style>
+
+    <style name="Redrive.App.TextAppearance.Small" parent="Redrive.ThemeOverlay.TextAppearance.Base">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Redrive.App.TextAppearance.Regular" parent="Redrive.ThemeOverlay.TextAppearance.Base">
+        <item name="android:textSize">@dimen/text_size_regular</item>
+    </style>
+    <style name="Redrive.App.TextAppearance.Input" parent="Redrive.ThemeOverlay.TextAppearance.Base">
+        <item name="android:textSize">@dimen/text_size_input</item>
+    </style>
+
+    <style name="Redrive.App.TextAppearance.Medium" parent="Redrive.ThemeOverlay.TextAppearance.Base">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="Redrive.App.TextAppearance.Large" parent="Redrive.ThemeOverlay.TextAppearance.Base">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+
+
+
+    <style name="Redrive.App.TextAppearance.Title.Regular" parent="Redrive.ThemeOverlay.TextAppearance.Base">
+        <item name="android:textSize">@dimen/text_size_regular</item>
+        <item name="fontFamily">@font/inter_medium</item>
+    </style>
+    <style name="Redrive.App.TextAppearance.Title.Medium" parent="Redrive.ThemeOverlay.TextAppearance.Base">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="fontFamily">@font/inter_medium</item>
+    </style>
+
+    <style name="Redrive.App.TextAppearance.Bold" parent="Redrive.ThemeOverlay.TextAppearance.Base">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="Redrive.App.TextAppearance." parent="Redrive.ThemeOverlay.TextAppearance.Base">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="Redrive.App.TextInputLayout.Auth" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="cursorColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorHint">#B7B6B6</item>
+        <item name="boxStrokeColor">#D7D6D6</item>
+        <item name="passwordToggleTint">?attr/colorOnBackground</item>
+
+    </style>
+
+    <style name="Redrive.App.TextInputEditText.Auth" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="fontFamily">@font/poppins_light</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textSize">@dimen/text_size_input</item>
+    </style>
+
+
+    <style name="BaseTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="cursorColor">?attr/colorOnBackground</item>
+        <item name="hintTextColor">#D7D6D6</item>
+        <item name="boxStrokeColor">#D7D6D6</item>
+        <item name="helperText">Required</item>
+        <item name="helperTextEnabled">true</item>
+        <item name="helperTextTextColor">#00B8D4</item>
+
+
+    </style>
+
+    <style name="TextInputLayout.Refuel" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="android:layout_marginStart">@dimen/margin_small</item>
+        <item name="android:layout_marginEnd">@dimen/margin_small</item>
+        <item name="boxBackgroundColor">#FFFFFF</item>
+        <item name="cursorColor">?attr/colorOnBackground</item>
+        <item name="hintTextColor">?attr/colorOnSurface</item>
+        <item name="boxStrokeColor">?attr/colorOnSurface</item>
+        <item name="helperText">""</item>
+
+    </style>
+
+    <style name="Redrive.App.CustomView" parent="">
+        <item name="android:layout_width">16dp</item>
+        <item name="android:layout_height">16dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="Redrive.App.MaterialButton.Primary" parent="Widget.Material3.Button">
+        <item name="textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+
+    <style name="Redrive.App.CardView.Base" parent="">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+    </style>
+
+
+</resources>

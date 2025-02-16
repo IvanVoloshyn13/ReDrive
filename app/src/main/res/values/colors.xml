@@ -11,6 +11,7 @@
     <color name="md_theme_light_onBackground">#000000</color>
     <color name="md_theme_light_surface">#ffffff</color>
     <color name="md_theme_light_onSurface">#000000</color>
+    <color name="md_theme_light_surface_container">#C0DEDEDE</color>
     <color name="md_theme_light_tertiary">#638FFF</color>
     <color name="md_theme_light_onTertiary">#FFFFFF</color>
 

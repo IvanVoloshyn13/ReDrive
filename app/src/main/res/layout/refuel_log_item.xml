@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Redrive.App.CardView.Base"
+    android:id="@+id/cv_last_refuel"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:layout_marginStart="@dimen/margin_large"
+    android:layout_marginTop="@dimen/margin_large"
+    android:layout_marginEnd="@dimen/margin_large"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6">
+
+        </androidx.constraintlayout.widget.Guideline>
+
+        <TextView
+            android:id="@+id/tv_refuel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/refuel_log_text_background"
+            android:paddingStart="@dimen/margin_regular"
+            android:paddingEnd="@dimen/margin_regular"
+            android:text="@string/refuel"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Medium"
+            android:textColor="@color/md_theme_light_onPrimary"
+            android:textSize="@dimen/text_size_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/distance_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+            app:layout_constraintBottom_toTopOf="@id/fuel_amount_value"
+            app:layout_constraintStart_toEndOf="@+id/view_last_refuel_km"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="3465">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_distance_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="@+id/distance_value"
+            app:layout_constraintStart_toEndOf="@+id/distance_value"
+            tools:text="km">
+
+        </TextView>
+
+        <View
+            android:id="@+id/view_last_refuel_km"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@color/md_theme_light_distance_data_color"
+            app:layout_constraintBottom_toBottomOf="@id/distance_value"
+            app:layout_constraintEnd_toStartOf="@id/distance_value"
+            app:layout_constraintStart_toStartOf="@+id/guideline_center"
+            app:layout_constraintTop_toTopOf="@id/distance_value">
+
+        </View>
+
+        <TextView
+            android:id="@+id/fuel_amount_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+            app:layout_constraintBottom_toTopOf="@id/payment_value"
+            app:layout_constraintStart_toEndOf="@+id/view_fuel_amount"
+            app:layout_constraintTop_toBottomOf="@id/distance_value"
+            tools:text="25">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_fuel_amount_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="@+id/fuel_amount_value"
+            app:layout_constraintStart_toEndOf="@+id/fuel_amount_value"
+            tools:text="l">
+
+        </TextView>
+
+        <View
+            android:id="@+id/view_fuel_amount"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:background="@color/md_theme_light_fuel_amount_data_color"
+            app:layout_constraintBottom_toBottomOf="@id/fuel_amount_value"
+            app:layout_constraintStart_toStartOf="@id/guideline_center"
+            app:layout_constraintTop_toTopOf="@id/fuel_amount_value">
+
+        </View>
+
+        <TextView
+            android:id="@+id/payment_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+            app:layout_constraintBottom_toTopOf="@id/fuel_price_per_unit_value"
+            app:layout_constraintStart_toEndOf="@+id/view_refuel_payment"
+            app:layout_constraintTop_toBottomOf="@id/fuel_amount_value"
+            tools:text="68">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_payment_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="@+id/payment_value"
+            app:layout_constraintStart_toEndOf="@+id/payment_value"
+            tools:text="PLN">
+
+        </TextView>
+
+        <View
+            android:id="@+id/view_refuel_payment"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:background="@color/md_theme_light_payments_data_color"
+            app:layout_constraintBottom_toBottomOf="@id/payment_value"
+            app:layout_constraintStart_toStartOf="@id/guideline_center"
+            app:layout_constraintTop_toTopOf="@id/payment_value">
+
+        </View>
+
+        <TextView
+            android:id="@+id/fuel_price_per_unit_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view_fuel_price"
+            app:layout_constraintTop_toBottomOf="@id/payment_value"
+            tools:text="6.24">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_fuel_price_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="@+id/fuel_price_per_unit_value"
+            app:layout_constraintStart_toEndOf="@+id/fuel_price_per_unit_value"
+            tools:text="PLN">
+
+        </TextView>
+
+        <View
+            android:id="@+id/view_fuel_price"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:background="@color/md_theme_light_fuel_price_data_color"
+            app:layout_constraintBottom_toBottomOf="@id/fuel_price_per_unit_value"
+            app:layout_constraintStart_toStartOf="@id/guideline_center"
+            app:layout_constraintTop_toTopOf="@id/fuel_price_per_unit_value">
+
+        </View>
+
+        <TextView
+            android:id="@+id/tv_avg_consumption_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/view_fuel_amount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="6.52">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_avg_consumption_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:textAppearance="@style/Redrive.App.TextAppearance.Small"
+            app:layout_constraintEnd_toEndOf="@+id/tv_avg_consumption_value"
+            app:layout_constraintTop_toBottomOf="@+id/tv_avg_consumption_value"
+            tools:text="l/100km">
+
+        </TextView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
+
+
+
+
+

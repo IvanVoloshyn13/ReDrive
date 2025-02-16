@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.V26.Theme.ReDrive" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Base.V26.Theme.ReDrive" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
@@ -14,6 +14,8 @@
         <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
         <item name="colorSurface">@color/md_theme_light_surface</item>
         <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceContainer">@color/md_theme_light_surface_container</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_onBackground</item>
 
         <item name="colorTertiary">@color/md_theme_light_tertiary</item>
         <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>

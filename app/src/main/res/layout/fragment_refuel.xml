@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/refuel_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="@dimen/default_card_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_calendar"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/margin_regular"
+                android:src="@drawable/ic_calendar"
+                app:layout_constraintBottom_toBottomOf="@id/date_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/date_container"
+                tools:ignore="ContentDescription" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/date_container"
+                style="@style/TextInputLayout.Refuel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_calendar"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textAppearance="@style/Redrive.App.TextAppearance.Input"
+                    tools:text="11.08.2024" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/iv_odometer"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/margin_regular"
+                android:src="@drawable/ic_odometer"
+                app:layout_constraintBottom_toBottomOf="@id/odometer_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/odometer_container"
+                tools:ignore="ContentDescription" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/odometer_container"
+                style="@style/TextInputLayout.Refuel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/odometer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_calendar"
+                app:layout_constraintTop_toBottomOf="@id/date_container">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_odometer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textAppearance="@style/Redrive.App.TextAppearance.Input" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/iv_fuel"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/margin_regular"
+                android:src="@drawable/ic_fuel"
+                app:layout_constraintBottom_toBottomOf="@id/fuel_volume_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/fuel_volume_container"
+                tools:ignore="ContentDescription" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fuel_volume_container"
+                style="@style/TextInputLayout.Refuel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/fuel_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_calendar"
+                app:layout_constraintTop_toBottomOf="@id/odometer_container">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_fuel_vol"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:textAppearance="@style/Redrive.App.TextAppearance.Input" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/iv_unit"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/margin_regular"
+                android:src="@drawable/ic_currency"
+                app:layout_constraintBottom_toBottomOf="@id/unit_price_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/unit_price_container"
+                tools:ignore="ContentDescription" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/unit_price_container"
+                style="@style/TextInputLayout.Refuel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/fuel_price"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_unit"
+                app:layout_constraintTop_toBottomOf="@id/fuel_volume_container">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_unit_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:textAppearance="@style/Redrive.App.TextAppearance.Input" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/iv_notes"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/margin_regular"
+                android:src="@drawable/ic_notes"
+                app:layout_constraintBottom_toBottomOf="@id/notes_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/notes_container"
+                tools:ignore="ContentDescription" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/notes_container"
+                style="@style/TextInputLayout.Refuel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/notes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_unit"
+                app:layout_constraintTop_toBottomOf="@id/unit_price_container">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:textAppearance="@style/Redrive.App.TextAppearance.Input" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/full_tank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_regular"
+                app:layout_constraintEnd_toEndOf="@+id/iv_notes"
+                app:layout_constraintStart_toStartOf="@+id/iv_notes"
+                app:layout_constraintTop_toBottomOf="@+id/iv_notes" />
+
+            <TextView
+                android:id="@+id/tv_full_tank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/full_tank"
+                android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+                app:layout_constraintBaseline_toBaselineOf="@id/full_tank"
+                app:layout_constraintStart_toEndOf="@id/full_tank"
+                app:layout_constraintTop_toTopOf="@id/full_tank" />
+
+            <CheckBox
+                android:id="@+id/missed_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/tv_missed_previous"
+                app:layout_constraintTop_toTopOf="@+id/full_tank" />
+
+            <TextView
+                android:id="@+id/tv_missed_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_regular"
+                android:text="@string/missing_previous"
+                android:textAppearance="@style/Redrive.App.TextAppearance.Regular"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_full_tank"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:layout_constraintTop_toBottomOf="@id/full_tank" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/btt_save"
+        style="@style/Redrive.App.MaterialButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/save"
+        app:layout_constraintEnd_toEndOf="@id/refuel_card"
+        app:layout_constraintTop_toBottomOf="@id/refuel_card" />
+
+    <Button
+        android:id="@+id/btt_clear"
+        style="@style/Redrive.App.MaterialButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:text="@string/clear"
+        android:textColor="?attr/colorOnSecondary"
+        app:layout_constraintStart_toStartOf="@id/refuel_card"
+        app:layout_constraintTop_toBottomOf="@id/refuel_card" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
