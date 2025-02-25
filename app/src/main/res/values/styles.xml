@@ -86,6 +86,7 @@
         <item name="cursorColor">?attr/colorOnPrimary</item>
         <item name="android:textColorHint">#B7B6B6</item>
         <item name="boxStrokeColor">#D7D6D6</item>
+        <item name="hintTextColor">?attr/colorTertiary</item>
         <item name="passwordToggleTint">?attr/colorOnBackground</item>
 
     </style>
