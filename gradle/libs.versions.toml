@@ -9,6 +9,8 @@ ksp = "2.0.21-1.0.27"
 roomVersion = "2.6.1"
 googleServices = "4.4.2"
 
+gsonVersion = "2.11.0"
+
 minSdk = "26"
 compileSdk = "35"
 slf4jSimple = "2.0.7"
@@ -64,6 +66,8 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4jSimple" }
+
+gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -8,7 +8,7 @@ import javax.inject.Inject
 @HiltAndroidApp
 class ReDriveApp : Application() {
 
-//    @Inject
-//    lateinit var firebaseApp: FirebaseApp
+    @Inject
+    lateinit var firebaseApp: FirebaseApp
 
 }

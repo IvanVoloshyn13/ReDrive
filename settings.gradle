@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "ReDrive"
 include ':app'
 include ':domain'
+include ':data'

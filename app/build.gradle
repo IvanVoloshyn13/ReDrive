@@ -9,12 +9,16 @@ plugins {
 }
 apply from: "$rootDir/core.gradle"
 android {
+    defaultConfig{
+        applicationId "com.example.redrive"
+    }
     buildFeatures {
         viewBinding true
     }
 }
 
 dependencies {
+    implementation project(path:':data')
 
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
