@@ -40,4 +40,12 @@
     <string name="at_least_one_number">✓ At least one number</string>
     <string name="password_length">✓ 8 or more characters</string>
     <string name="confirm_password">Confirm password</string>
+
+
+    <!-- FIREBASE_ERRORS-->
+    <string name="firebase_auth_error">An error occurred with Firebase Authentication. Please try again later.</string>
+    <string name="invalid_credentials">The credentials provided are invalid. Please check your email and password and try again.</string>
+    <string name="user_collision">An account with this email already exists. Please use a different email or log in to the existing account.</string>
+    <string name="no_user_detected">No user detected with the provided credentials. Please sign up or check your login information.</string>
+    <string name="unknown_error_firebase">An unknown error occurred. Please try again later or contact support.</string>
 </resources>

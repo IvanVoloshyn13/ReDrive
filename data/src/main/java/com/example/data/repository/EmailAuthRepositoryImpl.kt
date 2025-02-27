@@ -22,7 +22,7 @@ class EmailAuthRepositoryImpl @Inject constructor(
     ): AppResult<SignInStatus, AuthException> {
         return withContext(dispatcherIo) {
             try {
-                val firebaseUser = firebaseAuthManager.signInWithEmail(email, password)
+                firebaseAuthManager.signInWithEmail(email, password)
                 AppResult.Success(result = SignInStatus.SignedIn)
             } catch (e: FirebaseException) {
                 AppResult.Error(exception = firebaseAuthManager.toAppError(e))
