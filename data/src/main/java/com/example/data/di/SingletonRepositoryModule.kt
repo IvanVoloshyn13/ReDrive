@@ -1,7 +1,7 @@
 package com.example.data.di
 
-import com.example.data.firebase.FirebaseAuthManager
-import com.example.data.firebase.FirebaseAuthManagerImpl
+import com.example.firebase.FirebaseAuthRepository
+import com.example.firebase.FirebaseAuthRepositoryImpl
 import com.example.data.repository.EmailAuthRepositoryImpl
 import com.example.domain.repository.EmailAuthRepository
 import dagger.Binds
@@ -16,7 +16,7 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindFirebaseAuthManager(repository: FirebaseAuthManagerImpl): FirebaseAuthManager
+    fun bindFirebaseAuthManager(repository: FirebaseAuthRepositoryImpl): FirebaseAuthRepository
 
     @Binds
     @Singleton

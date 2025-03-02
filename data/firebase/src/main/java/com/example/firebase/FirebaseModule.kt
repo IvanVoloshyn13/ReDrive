@@ -1,4 +1,4 @@
-package com.example.data.di
+package com.example.firebase
 
 import android.content.Context
 import com.google.firebase.FirebaseApp
