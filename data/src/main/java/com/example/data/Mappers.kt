@@ -1,7 +1,7 @@
 package com.example.data
 
 import com.example.domain.appResult.AuthException
-import com.example.localedatasource.UserEntity
+import com.example.localedatasource.room.UserEntity
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException

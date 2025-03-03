@@ -9,7 +9,8 @@ import com.example.domain.appResult.AuthException
 import com.example.domain.model.SignInStatus
 import com.example.domain.model.UserAuthCredentials
 import com.example.domain.repository.EmailAuthRepository
-import com.example.localedatasource.UsersDao
+import com.example.localedatasource.dataStore.AppUserPreferences
+import com.example.localedatasource.room.UsersDao
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class EmailAuthRepositoryImpl @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher,
-    private val usersDao: UsersDao
+    private val usersDao: UsersDao,
+    private val appUserPreferences: AppUserPreferences,
 ) : EmailAuthRepository {
     override suspend fun signInWithEmailAndPassword(
         email: String,
@@ -30,6 +32,7 @@ class EmailAuthRepositoryImpl @Inject constructor(
             try {
                 val fbUser = firebaseAuthRepository.signInWithEmail(email, password)
                 saveNewUserToLocalDb(fbUser)
+                appUserPreferences.setCurrentUserId(fbUser.uid)
                 AppResult.Success(result = SignInStatus.SignedIn)
             } catch (e: FirebaseException) {
                 AppResult.Error(exception = e.toAppError(e))

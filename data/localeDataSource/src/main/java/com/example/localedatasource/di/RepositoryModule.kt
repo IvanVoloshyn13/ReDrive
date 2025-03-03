@@ -1,0 +1,15 @@
+package com.example.localedatasource.di
+
+import com.example.localedatasource.dataStore.AppUserPreferences
+import com.example.localedatasource.dataStore.AppUserPreferencesImpl
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface RepositoryModule {
+    @Binds
+    fun bindAppUserPreferences(impl: AppUserPreferencesImpl): AppUserPreferences
+}

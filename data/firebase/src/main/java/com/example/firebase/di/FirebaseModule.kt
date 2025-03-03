@@ -1,4 +1,4 @@
-package com.example.firebase
+package com.example.firebase.di
 
 import android.content.Context
 import com.google.firebase.FirebaseApp
@@ -23,4 +23,6 @@ class FirebaseModule {
     @Provides
     @Singleton
     fun provideFirebaseAuth() = Firebase.auth
+
+
 }

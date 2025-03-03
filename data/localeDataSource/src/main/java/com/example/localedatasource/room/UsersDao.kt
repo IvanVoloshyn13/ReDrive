@@ -1,4 +1,4 @@
-package com.example.localedatasource
+package com.example.localedatasource.room
 
 import androidx.room.Dao
 import androidx.room.Insert

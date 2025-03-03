@@ -1,4 +1,4 @@
-package com.example.localedatasource
+package com.example.localedatasource.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
