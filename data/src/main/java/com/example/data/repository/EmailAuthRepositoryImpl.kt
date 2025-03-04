@@ -1,7 +1,9 @@
 package com.example.data.repository
 
+import android.util.Patterns
 import com.example.data.di.DispatcherIo
 import com.example.data.toAppError
+import com.example.data.toFbUserAuthCredentials
 import com.example.firebase.FirebaseAuthRepository
 import com.example.data.toUserEntity
 import com.example.domain.appResult.AppResult
@@ -42,10 +44,25 @@ class EmailAuthRepositoryImpl @Inject constructor(
                 AppResult.Error(exception = AuthException.UNKNOWN_ERROR)
             }
         }
+
     }
 
     override suspend fun signUpWithEmail(credentials: UserAuthCredentials): AppResult<SignInStatus, AuthException> {
-        TODO("Not yet implemented")
+        return withContext(dispatcherIo) {
+            try {
+                val fbUser =
+                    firebaseAuthRepository.signUpWithEmail(credentials.toFbUserAuthCredentials())
+                saveNewUserToLocalDb(fbUser)
+                appUserPreferences.setCurrentUserId(fbUser.uid)
+                AppResult.Success(result = SignInStatus.SignedIn)
+            } catch (e: FirebaseException) {
+                AppResult.Error(exception = e.toAppError(e))
+            } catch (e: NullPointerException) {
+                AppResult.Error(exception = AuthException.USER_NOT_FOUND)
+            } catch (e: Exception) {
+                AppResult.Error(exception = AuthException.UNKNOWN_ERROR)
+            }
+        }
     }
 
     override suspend fun sendPasswordReset(email: String): AppResult<Unit, Nothing> {
