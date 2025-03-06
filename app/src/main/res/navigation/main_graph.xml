@@ -47,6 +47,7 @@
         <action
             android:id="@+id/action_global_tabsFragment"
             app:destination="@id/tabsFragment"
+            app:enterAnim="@anim/from_top_left_to_bottom_right"
             app:popUpTo="@id/auth_flow"
             app:popUpToInclusive="true" />
     </navigation>

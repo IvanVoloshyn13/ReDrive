@@ -27,7 +27,7 @@
     </style>
 
     <style name="Redrive.App.Auth.MaterialButton" parent="Widget.Material3.Button">
-        <item name="backgroundTint">?attr/colorTertiary</item>
+        <item name="backgroundTint">@color/btt_background_tint_primary</item>
         <item name="android:textColor">?attr/colorOnTertiary</item>
     </style>
 

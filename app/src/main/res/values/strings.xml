@@ -35,6 +35,9 @@
     <string name="full_name">Full Name</string>
     <string name="already_have_an_account">Already have an account?</string>
 
+    <string name="empty_string"> </string>
+
+
     <string name="one_symbol">✓ Special symbol</string>
     <string name="uppercase_and_lowercase_letter">✓ Uppercase and lowercase letter</string>
     <string name="at_least_one_number">✓ At least one number</string>
@@ -48,4 +51,12 @@
     <string name="user_collision">An account with this email already exists. Please use a different email or log in to the existing account.</string>
     <string name="no_user_detected">No user detected with the provided credentials. Please sign up or check your login information.</string>
     <string name="unknown_error_firebase">An unknown error occurred. Please try again later or contact support.</string>
+
+    <!-- SIGN_UP_ERRORS-->
+    <string name="required">Required</string>
+    <string name="please_enter_real_names">Please enter real names</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="password_error">Your password doesn\'t meet the required criteria </string>
+    <string name="confirm_password_error">Passwords do not match </string>
+
 </resources>

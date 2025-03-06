@@ -33,9 +33,9 @@ fun Fragment.hideSoftInputAndClearViewsFocus(root: ViewGroup) {
 
 fun AuthException.getStringResource(): Int {
     return when (this) {
-        // AuthException.AUTHENTICATION_FAILED -> R.string.firebase_auth_error
+        AuthException.AUTHENTICATION_FAILED -> R.string.firebase_auth_error
         AuthException.INVALID_PASSWORD -> R.string.invalid_credentials
-        //AuthException.USER_ALREADY_EXISTS -> R.string.user_collision
+        AuthException.USER_ALREADY_EXISTS -> R.string.user_collision
         AuthException.USER_NOT_FOUND -> R.string.no_user_detected
         AuthException.UNKNOWN_ERROR -> R.string.unknown_error_firebase
     }
