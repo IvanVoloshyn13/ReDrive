@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor"
-    tools:context=".MainActivity">
+    tools:context="com.example.redrive.presentation.profile.ProfileFragment">
 
     <FrameLayout
         android:id="@+id/layout_user_initial"
@@ -28,7 +27,6 @@
             android:textAppearance="@style/Redrive.App.TextAppearance.Large"
             android:textColor="?attr/colorOnPrimary"
             android:textSize="34sp"
-
             tools:text="RR">
 
         </TextView>
@@ -151,6 +149,19 @@
         android:textAppearance="@style/Redrive.App.TextAppearance.Medium"
         android:layout_marginTop="@dimen/margin_medium"
         android:text="@string/sign_out">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/tv_privacy_policy"
+        app:layout_constraintTop_toBottomOf="@id/tv_sign_out"
+        android:textAppearance="@style/Redrive.App.TextAppearance.Medium"
+        android:textColor="?attr/colorTertiary"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:text="@string/sign_in">
 
     </TextView>
 

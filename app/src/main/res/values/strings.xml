@@ -7,6 +7,7 @@
     <string name="save">Save</string>
     <string name="refuel">Refuel</string>
     <string name="settings">Settings</string>
+    <string name="vehicles">Vehicles</string>
     <string name="edit_vehicles">Edit vehicles</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="sign_out">Sign out</string>
@@ -34,9 +35,28 @@
     <string name="full_name">Full Name</string>
     <string name="already_have_an_account">Already have an account?</string>
 
+    <string name="empty_string"> </string>
+
+
     <string name="one_symbol">✓ Special symbol</string>
     <string name="uppercase_and_lowercase_letter">✓ Uppercase and lowercase letter</string>
     <string name="at_least_one_number">✓ At least one number</string>
     <string name="password_length">✓ 8 or more characters</string>
     <string name="confirm_password">Confirm password</string>
+
+
+    <!-- FIREBASE_ERRORS-->
+    <string name="firebase_auth_error">An error occurred with Firebase Authentication. Please try again later.</string>
+    <string name="invalid_credentials">The credentials provided are invalid. Please check your email and password and try again.</string>
+    <string name="user_collision">An account with this email already exists. Please use a different email or log in to the existing account.</string>
+    <string name="no_user_detected">No user detected with the provided credentials. Please sign up or check your login information.</string>
+    <string name="unknown_error_firebase">An unknown error occurred. Please try again later or contact support.</string>
+
+    <!-- SIGN_UP_ERRORS-->
+    <string name="required">Required</string>
+    <string name="please_enter_real_names">Please enter real names</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="password_error">Your password doesn\'t meet the required criteria </string>
+    <string name="confirm_password_error">Passwords do not match </string>
+
 </resources>

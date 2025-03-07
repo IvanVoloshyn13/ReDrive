@@ -1,0 +1,40 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.androidx.room)
+    alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.google.dagger.hilt)
+}
+
+apply from: "$rootDir/core.gradle"
+android {
+    namespace 'com.example.localedatasource'
+    room {
+        schemaDirectory "$projectDir/schemas"
+    }
+}
+
+dependencies {
+
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+
+    //Dagger_Hilt
+    implementation libs.hilt.android
+    ksp libs.ksp.hilt.compiler
+
+    //DataStore
+    implementation libs.datastore.preferences
+
+    //Room
+    implementation libs.androidx.room
+    implementation libs.androidx.room.ktx
+    implementation libs.androidx.room.paging
+    ksp libs.ksp.room
+
+    implementation libs.gson
+
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+}

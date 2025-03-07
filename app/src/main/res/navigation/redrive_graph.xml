@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/redrive_graph"
+    app:startDestination="@id/redriveFragment">
+
+    <fragment
+        android:id="@+id/redriveFragment"
+        android:name="com.example.redrive.presentation.RedriveFragment"
+        android:label="@string/redrive"
+        tools:layout="@layout/fragment_redrive">
+        <action
+            android:id="@+id/action_redriveFragment_to_vehiclesFragment"
+            app:destination="@id/vehiclesFragment" />
+        <action
+            android:id="@+id/action_redriveFragment_to_refuelFragment"
+            app:destination="@id/refuelFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehiclesFragment"
+        android:name="com.example.redrive.presentation.VehiclesFragment"
+        android:label="@string/vehicles"
+        tools:layout="@layout/fragment_vehicles" />
+    <fragment
+        android:id="@+id/refuelFragment"
+        android:name="com.example.redrive.presentation.RefuelFragment"
+        android:label="@string/refuel"
+        tools:layout="@layout/fragment_refuel" />
+</navigation>

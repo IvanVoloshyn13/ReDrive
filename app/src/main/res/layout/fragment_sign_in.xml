@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.example.redrive.presentation.auth.signIn.SignInFragment">
 
     <ImageView
         android:id="@+id/iv_logo"
@@ -42,7 +42,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/email"
-        app:hintTextColor="#D7D6D6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_in">

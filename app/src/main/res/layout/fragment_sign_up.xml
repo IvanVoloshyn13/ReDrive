@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.example.redrive.presentation.auth.signUp.SignUpFragment">
 
     <ImageView
         android:id="@+id/iv_logo"
@@ -155,7 +155,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btt_sign_up"
-        style="@style/Redrive.App.MaterialButton.Primary"
+        style="@style/Redrive.App.Auth.MaterialButton"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"

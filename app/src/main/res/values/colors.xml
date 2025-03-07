@@ -15,6 +15,8 @@
     <color name="md_theme_light_tertiary">#638FFF</color>
     <color name="md_theme_light_onTertiary">#FFFFFF</color>
 
+    <color name="md_theme_light_error">#EFFF3B3B</color>
+
     <color name="md_theme_light_distance_data_color">#36CF93</color>
     <color name="md_theme_light_fuel_amount_data_color">#00E2FD</color>
     <color name="md_theme_light_payments_data_color">#FFC800</color>

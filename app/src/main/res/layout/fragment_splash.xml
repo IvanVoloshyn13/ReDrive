@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background_splash"
-    tools:context=".MainActivity">
+    tools:context="com.example.redrive.presentation.SplashFragment">
 
     <ImageView
         android:id="@+id/iv_logo"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="32dp"
-        android:indeterminateTint="?attr/colorOnSurface">
+        android:indeterminateTint="?attr/colorOnSecondary">
 
     </ProgressBar>
 
