@@ -3,6 +3,7 @@ package com.example.redrive.presentation.auth.signUp
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -79,6 +80,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest {
+                Log.d("FRAGMENT", "init")
                 updateUi(it)
             }
         }

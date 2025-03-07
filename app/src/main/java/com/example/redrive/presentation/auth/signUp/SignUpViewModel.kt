@@ -8,14 +8,16 @@ import com.example.domain.useCase.IsValidConfirmPasswordUseCase
 import com.example.domain.useCase.IsValidEmailUseCase
 import com.example.domain.useCase.IsValidFullNameUseCase
 import com.example.domain.useCase.IsValidPasswordUseCase
+import com.example.domain.useCase.PasswordValidationResult
 import com.example.domain.useCase.SignUpWithEmailUseCase
 import com.example.redrive.getStringResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.flow.stateIn
@@ -30,119 +32,73 @@ class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpWithEmailUseCase
 ) : ViewModel() {
 
-
     private val _state: MutableStateFlow<FragmentSignUpState> =
         MutableStateFlow<FragmentSignUpState>(
             FragmentSignUpState()
         )
 
     val state = _state.onSubscription {
-        validateAndUpdate.forEach {
-            it()
-        }
+        validateAndUpdateFields()
     }.stateIn(
         viewModelScope, SharingStarted.WhileSubscribed(),
         FragmentSignUpState()
     )
 
-    private val validateAndUpdate by lazy {
-        arrayOf(
-            ::validateAndUpdateFullName,
-            ::validateAndUpdateEmail,
-            ::validateAndUpdatePassword,
-            ::validateAndUpdateConfirmPassword
-        )
-    }
 
-    private val fullNameInput: MutableSharedFlow<String> = MutableSharedFlow()
-    private val emailInput: MutableSharedFlow<String> = MutableSharedFlow()
-    private val passwordInput: MutableSharedFlow<String> = MutableSharedFlow()
-    private val confirmPasswordInput: MutableSharedFlow<String> = MutableSharedFlow()
+    private val _fullNameInput: MutableStateFlow<String> = MutableStateFlow("")
+    private val fullNameInput = _fullNameInput.asStateFlow()
+
+    private val _emailInput: MutableStateFlow<String> = MutableStateFlow("")
+    private val emailInput = _emailInput.asStateFlow()
+
+    private val _passwordInput: MutableStateFlow<String> = MutableStateFlow("")
+    private val passwordInput = _passwordInput.asStateFlow()
+
+    private val _confirmPasswordInput: MutableStateFlow<String> = MutableStateFlow("")
+    private val confirmPasswordInput = _confirmPasswordInput.asStateFlow()
 
     fun setFullNameInput(value: String) {
-        viewModelScope.launch {
-            fullNameInput.emit(value)
-        }
+        _fullNameInput.value = value
     }
 
     fun setEmailInput(value: String) {
-        viewModelScope.launch {
-            emailInput.emit(value)
-        }
+        _emailInput.value = value
     }
 
     fun setPasswordInput(value: String) {
-        viewModelScope.launch {
-            passwordInput.emit(value)
-        }
+        _passwordInput.value = value
     }
 
     fun setConfirmPasswordInput(value: String) {
-        viewModelScope.launch {
-            confirmPasswordInput.emit(value)
-        }
+        _confirmPasswordInput.value = value
     }
 
     @OptIn(FlowPreview::class)
-    private fun validateAndUpdateFullName() {
+    private fun validateAndUpdateFields() {
         viewModelScope.launch {
-            fullNameInput.debounce(DEBOUNCE_TIME_MILLIS).collectLatest { name ->
-                if (name == _state.value.fullName) return@collectLatest
-                val isValid = IsValidFullNameUseCase(name)
-                _state.update {
-                    it.copy(
-                        fullName = name,
-                        isValidFullName = isValid
-                    )
-                }
-            }
-        }
-    }
-
-    @OptIn(FlowPreview::class)
-    private fun validateAndUpdateEmail() {
-        viewModelScope.launch {
-            emailInput.debounce(DEBOUNCE_TIME_MILLIS).collectLatest { email ->
-                if (email == _state.value.email) return@collectLatest
-                val isValid = IsValidEmailUseCase(email)
-                _state.update {
-                    it.copy(
-                        email = email,
-                        isValidEmail = isValid
-                    )
-                }
-            }
-        }
-    }
-
-    @OptIn(FlowPreview::class)
-    private fun validateAndUpdatePassword() {
-        viewModelScope.launch {
-            passwordInput.debounce(DEBOUNCE_TIME_MILLIS).collectLatest { password ->
-                if (password == _state.value.password) return@collectLatest
-                val passwordValidationState = IsValidPasswordUseCase(password)
-                _state.update {
-                    it.copy(
-                        password = password,
-                        isValidPassword = passwordValidationState
-                    )
-                }
-            }
-        }
-    }
-
-    @OptIn(FlowPreview::class)
-    private fun validateAndUpdateConfirmPassword() {
-        viewModelScope.launch {
-            confirmPasswordInput.debounce(DEBOUNCE_TIME_MILLIS).collectLatest { confPassword ->
-                if (confPassword == _state.value.confirmPassword) return@collectLatest
-                val isValid = IsValidConfirmPasswordUseCase(
-                    password = _state.value.password,
-                    confirmPassword = confPassword
+            combine(
+                _fullNameInput.debounce(DEBOUNCE_TIME_MILLIS),
+                _emailInput.debounce(DEBOUNCE_TIME_MILLIS),
+                _passwordInput.debounce(DEBOUNCE_TIME_MILLIS),
+                _confirmPasswordInput.debounce(DEBOUNCE_TIME_MILLIS)
+            ) { fullName, email, password, confirmPassword ->
+                ValidationFlowState(
+                    IsValidFullNameUseCase(fullName),
+                    IsValidEmailUseCase(email),
+                    IsValidPasswordUseCase(password),
+                    IsValidConfirmPasswordUseCase(password, confirmPassword)
                 )
+            }.collectLatest { validation ->
                 _state.update {
                     it.copy(
-                        isValidConfirmPassword = isValid
+                        fullName = fullNameInput.value,
+                        isValidFullName = validation.isValidFullName,
+                        email = emailInput.value,
+                        isValidEmail = validation.isValidEmail,
+                        password = passwordInput.value,
+                        isValidPassword = validation.passwordValidationRes,
+                        confirmPassword = confirmPasswordInput.value,
+                        isValidConfirmPassword = validation.isValidConfPassword
                     )
                 }
             }
@@ -182,7 +138,6 @@ class SignUpViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun resetState() {
@@ -195,6 +150,13 @@ class SignUpViewModel @Inject constructor(
             }
         }
     }
+
+    private data class ValidationFlowState(
+        val isValidFullName: Boolean,
+        val isValidEmail: Boolean,
+        val passwordValidationRes: PasswordValidationResult,
+        val isValidConfPassword: Boolean
+    )
 
 
 }
