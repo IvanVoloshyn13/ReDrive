@@ -17,6 +17,8 @@ import com.example.redrive.R
 import com.example.redrive.databinding.FragmentSignUpBinding
 import com.example.redrive.hideSoftInputAndClearViewsFocus
 import com.example.redrive.viewBinding
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -50,10 +52,20 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun setupListeners() {
         hideSoftInputAndClearViewsFocus(binding.root)
 
-        setupFullNameEditTextListeners()
-        setupEmailEditTextListeners()
+        binding.etFullName.setupRequireFieldListener(
+            container = binding.fullNameContainer,
+            onTextChange = { name -> viewModel.setFullNameInput(name) }
+        )
+        binding.etEmail.setupRequireFieldListener(
+            container = binding.emailContainer,
+            onTextChange = { email -> viewModel.setEmailInput(email) }
+        )
+        binding.etConfirmPassword.setupRequireFieldListener(
+            container = binding.confirmPasswordContainer,
+            onTextChange = { confPassword -> viewModel.setConfirmPasswordInput(confPassword) }
+        )
+
         setupPasswordListeners()
-        setupConfirmPasswordEditTextListeners()
 
         binding.bttSignUp.setOnClickListener {
             viewModel.signUp()
@@ -76,10 +88,19 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         binding.progressBar.visibility = if (state.loading) View.VISIBLE else View.GONE
         binding.bttSignUp.isEnabled = state.signUpButtonState == SignUpButtonState.Enabled
 
-        updateFullNameContainerHelperText(state.isValidFullName)
-        updateEmailContainerHelperText(state.isValidEmail)
+        binding.fullNameContainer.updateContainerHelperText(
+            R.string.please_enter_real_names,
+            state.isValidFullName
+        )
+        binding.emailContainer.updateContainerHelperText(
+            R.string.invalid_email,
+            state.isValidEmail
+        )
+        binding.confirmPasswordContainer.updateContainerHelperText(
+            R.string.confirm_password_error,
+            state.isValidConfirmPassword
+        )
         updatePasswordValidationState(state.isValidPassword)
-        updateConfirmPasswordContainerHelperText(state.isValidConfirmPassword)
 
         when (state.signUpStatus) {
             SignUpStatus.Failure -> {
@@ -101,31 +122,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             .show()
     }
 
-    private fun setupFullNameEditTextListeners() {
-        with(binding.etFullName) {
-            doAfterTextChanged { editable ->
-                viewModel.setFullNameInput(editable.toString())
-            }
-            setOnFocusChangeListener { view, hasFocus ->
-                if (hasFocus && text.isNullOrEmpty()) binding.fullNameContainer.helperText = null
-                if (!hasFocus && text.isNullOrEmpty()) binding.fullNameContainer.helperText =
-                    getString(R.string.required)
-            }
-        }
-    }
-
-    private fun setupEmailEditTextListeners() {
-        with(binding.etEmail) {
-            doAfterTextChanged { editable ->
-                viewModel.setEmailInput(editable.toString())
-            }
-            setOnFocusChangeListener { view, hasFocus ->
-                if (hasFocus && text.isNullOrEmpty()) binding.emailContainer.helperText = null
-                if (!hasFocus && text.isNullOrEmpty()) binding.emailContainer.helperText =
-                    getString(R.string.required)
-            }
-        }
-    }
 
     private fun setupPasswordListeners() {
         with(binding.etPassword) {
@@ -152,34 +148,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private fun setupConfirmPasswordEditTextListeners() {
-        with(binding.etConfirmPassword) {
-            doAfterTextChanged { editable ->
-                viewModel.setConfirmPasswordInput(editable.toString())
-            }
-            setOnFocusChangeListener { view, hasFocus ->
-                if (hasFocus && text.isNullOrEmpty()) binding.confirmPasswordContainer.helperText =
-                    null
-                if (!hasFocus && text.isNullOrEmpty()) binding.confirmPasswordContainer.helperText =
-                    getString(R.string.required)
-            }
-        }
-    }
-
-    private fun updateFullNameContainerHelperText(isValidName: Boolean) {
-        if (binding.etFullName.hasFocus() && !isValidName && binding.etFullName.text!!.isNotEmpty()) {
-            binding.fullNameContainer.helperText = getString(R.string.please_enter_real_names)
-        } else binding.fullNameContainer.helperText = null
-
-    }
-
-    private fun updateEmailContainerHelperText(isValidEmail: Boolean) {
-        if (binding.etEmail.hasFocus() && !isValidEmail && binding.etEmail.text!!.isNotEmpty()) {
-            binding.emailContainer.helperText = getString(R.string.invalid_email)
-        } else binding.emailContainer.helperText = null
-
-    }
-
     private fun updatePasswordValidationState(result: PasswordValidationResult) {
         with(binding) {
             tvPasswordNumber.setTextColor(getColourFromRes(result.hasDigit))
@@ -191,18 +159,33 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private fun updateConfirmPasswordContainerHelperText(isValidConfirmPassword: Boolean) {
-        if (binding.etConfirmPassword.hasFocus() && !isValidConfirmPassword && binding.etConfirmPassword.text!!.isNotEmpty()) {
-            binding.confirmPasswordContainer.helperText = getString(R.string.confirm_password_error)
-        } else binding.confirmPasswordContainer.helperText = null
-
-    }
-
     private fun getColourFromRes(condition: Boolean): Int {
         return ContextCompat.getColor(
             requireContext(),
             if (condition) R.color.md_theme_light_primary else R.color.md_theme_light_error
         )
+    }
+
+    private fun TextInputEditText.setupRequireFieldListener(
+        container: TextInputLayout,
+        onTextChange: (String) -> Unit
+    ) {
+        this.doAfterTextChanged { editable -> onTextChange(editable.toString()) }
+        this.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus && text.isNullOrEmpty()) container.helperText = null
+
+            if (!hasFocus && text.isNullOrEmpty()) container.helperText =
+                getString(R.string.required)
+        }
+    }
+
+    private fun TextInputLayout.updateContainerHelperText(
+        @StringRes helperText: Int,
+        isValid: Boolean,
+    ) {
+        if (this.editText?.hasFocus() == true && !isValid && this.editText?.text!!.isNotEmpty()) {
+            this.helperText = getString(helperText)
+        } else this.helperText = null
     }
 
 }
