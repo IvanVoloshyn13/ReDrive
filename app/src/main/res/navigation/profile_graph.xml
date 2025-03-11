@@ -14,7 +14,7 @@
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_vehiclesFragment2"
+            android:id="@+id/action_profileFragment_to_vehiclesFragment"
             app:destination="@id/vehiclesFragment" />
     </fragment>
     <fragment

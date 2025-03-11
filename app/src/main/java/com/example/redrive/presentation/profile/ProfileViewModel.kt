@@ -1,11 +1,15 @@
 package com.example.redrive.presentation.profile
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.SignInStatus
-import com.example.domain.useCase.GetUserInitialsUseCase
-import com.example.domain.useCase.IsUserSignedInUseCase
+import com.example.domain.useCase.userSession.GetUserInitialsUseCase
+import com.example.domain.useCase.userSession.IsUserSignedInUseCase
+import com.example.domain.useCase.userSession.ObserveCurrentUserIdUseCase
+import com.example.domain.useCase.userSession.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -19,7 +23,8 @@ private typealias SignedInStatusAndUserInitials = Pair<SignInStatus, String>
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val isUserSignedInUseCase: IsUserSignedInUseCase,
-    private val getUserInitialsUseCase: GetUserInitialsUseCase
+    private val getUserInitialsUseCase: GetUserInitialsUseCase,
+    private val signOutUseCase: SignOutUseCase,
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<FragmentProfileState> = MutableStateFlow(
@@ -47,6 +52,25 @@ class ProfileViewModel @Inject constructor(
                         userInitials = combineResult.second
                     )
                 }
+            }
+        }
+
+    }
+
+    fun signOut() {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
+            delay(500)
+            signOutUseCase()
+
+            _state.update {
+                it.copy(
+                    isLoading = false
+                )
             }
         }
     }

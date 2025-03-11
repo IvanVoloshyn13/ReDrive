@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.domain.model.SignInStatus
 import com.example.redrive.R
 import com.example.redrive.databinding.FragmentProfileBinding
@@ -23,9 +24,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         collectState()
-        binding.tvSignIn.setOnClickListener {
-            findTopNavController().navigate(R.id.action_tabsFragment_to_auth_flow)
-        }
+        setupListeners()
     }
 
     private fun collectState() {
@@ -37,6 +36,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun updateUi(state: FragmentProfileState) {
+        binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
         when (state.signedInStatus) {
             SignInStatus.Failure -> TODO()
             SignInStatus.SignOut -> {
@@ -52,5 +52,23 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         binding.tvUserInitial.text = state.userInitials
     }
+
+    private fun setupListeners() {
+        binding.tvSignIn.setOnClickListener {
+            findTopNavController().navigate(R.id.action_tabsFragment_to_auth_flow)
+        }
+        binding.tvSignOut.setOnClickListener {
+            viewModel.signOut()
+
+        }
+        binding.tvEditVehicles.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_vehiclesFragment)
+        }
+        binding.tvSettings.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+        }
+
+    }
+
 }
 

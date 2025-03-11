@@ -1,4 +1,4 @@
-package com.example.domain.useCase
+package com.example.domain.useCase.signUpFieldValidation
 
 object IsValidConfirmPasswordUseCase {
 

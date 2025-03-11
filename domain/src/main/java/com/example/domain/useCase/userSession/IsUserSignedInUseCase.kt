@@ -1,4 +1,4 @@
-package com.example.domain.useCase
+package com.example.domain.useCase.userSession
 
 import com.example.domain.model.SignInStatus
 import com.example.domain.repository.UserSessionRepository

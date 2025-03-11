@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.domain.useCase.PasswordValidationResult
+import com.example.domain.useCase.signUpFieldValidation.PasswordValidationResult
 import com.example.redrive.R
 import com.example.redrive.databinding.FragmentSignUpBinding
 import com.example.redrive.hideSoftInputAndClearViewsFocus

@@ -10,6 +10,8 @@ interface UserSessionRepository {
     // Observes the current authenticated user, emitting updates as the authentication state changes
     fun observeCurrentUser(): Flow<User?>
 
+    fun observeCurrentUserId(): Flow<String?>
+
     // Logs out the current user
     suspend fun signOut()
 

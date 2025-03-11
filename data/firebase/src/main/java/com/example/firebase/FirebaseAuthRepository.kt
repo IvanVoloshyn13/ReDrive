@@ -9,11 +9,13 @@ interface FirebaseAuthRepository {
     suspend fun signInWithEmail(email: String, password: String): FirebaseUser
 
     // Registers a new user with email, password, and additional credentials like displayName
-   suspend fun signUpWithEmail(credentials: FbUserAuthCredentials): FirebaseUser
+    suspend fun signUpWithEmail(credentials: FbUserAuthCredentials): FirebaseUser
+
+    suspend fun signOut()
 
     // Sends a password reset email to the provided address
     suspend fun sendPasswordReset(email: String)
 
-    fun getAuthState():Flow<FirebaseUser?>
+    fun getAuthState(): Flow<FirebaseUser?>
 
-    }
+}

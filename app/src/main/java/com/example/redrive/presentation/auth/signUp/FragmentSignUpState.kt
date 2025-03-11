@@ -1,8 +1,7 @@
 package com.example.redrive.presentation.auth.signUp
 
 import androidx.annotation.StringRes
-import com.example.domain.model.SignInStatus
-import com.example.domain.useCase.PasswordValidationResult
+import com.example.domain.useCase.signUpFieldValidation.PasswordValidationResult
 import com.example.redrive.R
 
 data class FragmentSignUpState(

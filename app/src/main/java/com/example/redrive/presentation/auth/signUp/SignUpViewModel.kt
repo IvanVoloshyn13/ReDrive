@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.appResult.AppResult
 import com.example.domain.model.UserAuthCredentials
-import com.example.domain.useCase.IsValidConfirmPasswordUseCase
-import com.example.domain.useCase.IsValidEmailUseCase
-import com.example.domain.useCase.IsValidFullNameUseCase
-import com.example.domain.useCase.IsValidPasswordUseCase
-import com.example.domain.useCase.PasswordValidationResult
+import com.example.domain.useCase.signUpFieldValidation.IsValidConfirmPasswordUseCase
+import com.example.domain.useCase.signUpFieldValidation.IsValidEmailUseCase
+import com.example.domain.useCase.signUpFieldValidation.IsValidFullNameUseCase
+import com.example.domain.useCase.signUpFieldValidation.IsValidPasswordUseCase
+import com.example.domain.useCase.signUpFieldValidation.PasswordValidationResult
 import com.example.domain.useCase.SignUpWithEmailUseCase
 import com.example.redrive.getStringResource
 import dagger.hilt.android.lifecycle.HiltViewModel

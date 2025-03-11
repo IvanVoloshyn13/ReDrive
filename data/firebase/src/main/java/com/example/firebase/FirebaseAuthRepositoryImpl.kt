@@ -38,6 +38,10 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         return firebaseUser ?: throw NullPointerException()
     }
 
+    override suspend fun signOut() {
+        auth.signOut()
+    }
+
     override suspend fun sendPasswordReset(email: String) {
         TODO("Not yet implemented")
     }

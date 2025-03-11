@@ -34,7 +34,6 @@ class EmailAuthRepositoryImpl @Inject constructor(
             try {
                 val fbUser = firebaseAuthRepository.signInWithEmail(email, password)
                 saveNewUserToLocalDb(fbUser)
-                appUserPreferences.setCurrentUserId(fbUser.uid)
                 AppResult.Success(result = SignInStatus.SignedIn)
             } catch (e: FirebaseException) {
                 AppResult.Error(exception = e.toAppError(e))
@@ -53,7 +52,6 @@ class EmailAuthRepositoryImpl @Inject constructor(
                 val fbUser =
                     firebaseAuthRepository.signUpWithEmail(credentials.toFbUserAuthCredentials())
                 saveNewUserToLocalDb(fbUser)
-                appUserPreferences.setCurrentUserId(fbUser.uid)
                 AppResult.Success(result = SignInStatus.SignedIn)
             } catch (e: FirebaseException) {
                 AppResult.Error(exception = e.toAppError(e))
