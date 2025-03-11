@@ -2,9 +2,13 @@ package com.example.firebase
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -23,7 +27,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         return firebaseUser ?: throw NullPointerException()
     }
 
-     override suspend fun signUpWithEmail(credentials: FbUserAuthCredentials): FirebaseUser {
+    override suspend fun signUpWithEmail(credentials: FbUserAuthCredentials): FirebaseUser {
         val result =
             auth.createUserWithEmailAndPassword(credentials.email, credentials.password)
                 .await()
@@ -36,6 +40,18 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
 
     override suspend fun sendPasswordReset(email: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun getAuthState(): Flow<FirebaseUser?> {
+        return callbackFlow {
+            val listener = AuthStateListener { firebaseAuth ->
+                trySend(firebaseAuth.currentUser)
+            }
+            auth.addAuthStateListener(listener)
+            awaitClose { auth.removeAuthStateListener(listener) }
+        }
+
+
     }
 
 

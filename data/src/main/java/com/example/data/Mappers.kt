@@ -1,6 +1,7 @@
 package com.example.data
 
 import com.example.domain.appResult.AuthException
+import com.example.domain.model.User
 import com.example.domain.model.UserAuthCredentials
 import com.example.firebase.FbUserAuthCredentials
 import com.example.localedatasource.room.UserEntity
@@ -19,6 +20,13 @@ fun FirebaseUser.toUserEntity(): UserEntity {
     )
 }
 
+fun FirebaseUser.toUser(): User {
+    return User(
+        uUid = this.uid,
+        fullName = this.displayName ?: ""
+    )
+}
+
 fun UserAuthCredentials.toFbUserAuthCredentials(): FbUserAuthCredentials {
     return FbUserAuthCredentials(
         password = password,
@@ -31,8 +39,8 @@ fun FirebaseException.toAppError(e: FirebaseException): AuthException {
     return when (e) {
         is FirebaseAuthInvalidCredentialsException -> AuthException.INVALID_PASSWORD
         is FirebaseAuthInvalidUserException -> AuthException.USER_NOT_FOUND
-        is FirebaseAuthUserCollisionException ->  AuthException.USER_ALREADY_EXISTS
-        is FirebaseAuthException ->  AuthException.AUTHENTICATION_FAILED
+        is FirebaseAuthUserCollisionException -> AuthException.USER_ALREADY_EXISTS
+        is FirebaseAuthException -> AuthException.AUTHENTICATION_FAILED
         else -> AuthException.UNKNOWN_ERROR
 
     }

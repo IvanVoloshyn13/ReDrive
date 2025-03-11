@@ -1,6 +1,7 @@
 package com.example.firebase
 
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.flow.Flow
 
 interface FirebaseAuthRepository {
 
@@ -12,5 +13,7 @@ interface FirebaseAuthRepository {
 
     // Sends a password reset email to the provided address
     suspend fun sendPasswordReset(email: String)
+
+    fun getAuthState():Flow<FirebaseUser?>
 
     }
