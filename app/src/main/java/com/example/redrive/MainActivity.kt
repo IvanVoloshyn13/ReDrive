@@ -23,9 +23,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     @SuppressLint("RestrictedApi")
     private val destinationListener =
         NavController.OnDestinationChangedListener { navController, destination, _ ->
-            val backStackList = navController.currentBackStack.value.map { it.destination.displayName }
-            Log.d("STACK", backStackList.joinToString(" -> "))
-
             isStartDestination(destination, navController)
         }
 
