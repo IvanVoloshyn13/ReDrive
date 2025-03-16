@@ -6,6 +6,8 @@ plugins {
 
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.com.google.gms)
+
+    alias(libs.plugins.androidx.safeArgs)
 }
 apply from: "$rootDir/core.gradle"
 android {

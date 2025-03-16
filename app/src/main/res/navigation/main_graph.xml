@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.redrive.presentation.SplashFragment"
+        android:name="com.example.redrive.presentation.splash.SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_tabsFragment"
@@ -26,6 +26,10 @@
             app:enterAnim="@anim/from_top_left_to_bottom_right"
             app:popUpTo="@id/tabsFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isUserSignedIn"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <navigation android:id="@+id/auth_flow"
         app:startDestination="@id/signInFragment">

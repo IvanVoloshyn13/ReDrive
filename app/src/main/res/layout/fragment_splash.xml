@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background_splash"
-    tools:context="com.example.redrive.presentation.SplashFragment">
+    tools:context="com.example.redrive.presentation.splash.SplashFragment">
 
     <ImageView
         android:id="@+id/iv_logo"
