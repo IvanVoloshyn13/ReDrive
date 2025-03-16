@@ -27,6 +27,13 @@ fun FirebaseUser.toUser(): User {
     )
 }
 
+fun UserEntity.toUser(): User {
+    return User(
+        uUid = this.id,
+        fullName = this.fullName ?: ""
+    )
+}
+
 fun UserAuthCredentials.toFbUserAuthCredentials(): FbUserAuthCredentials {
     return FbUserAuthCredentials(
         password = password,

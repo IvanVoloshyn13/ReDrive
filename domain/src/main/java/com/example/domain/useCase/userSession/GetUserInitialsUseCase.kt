@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.map
 const val REDRIVE_APP_INITIALS = "RD"
 
 class GetUserInitialsUseCase(private val repository: UserSessionRepository) {
+
     operator fun invoke(): Flow<String> {
         return repository.observeCurrentUser().map {
             return@map if (it != null) {

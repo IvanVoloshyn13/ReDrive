@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 
 class IsUserSignedInUseCase(private val repository: UserSessionRepository) {
      operator fun invoke(): Flow<SignInStatus> {
-        return repository.observeCurrentUser().map { user ->
+        return repository.observeAuthState().map { user ->
             if (user != null) SignInStatus.SignedIn else SignInStatus.SignOut
         }
     }

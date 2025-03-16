@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,7 +45,7 @@ class ProfileViewModel @Inject constructor(
                 getUserInitialsUseCase.invoke()
             ) { signedInStatus, initials ->
                 SignedInStatusAndUserInitials(signedInStatus, initials)
-            }.collectLatest { combineResult ->
+            }.collect { combineResult ->
                 _state.update {
                     it.copy(
                         isLoading = false,
@@ -54,7 +55,6 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun signOut() {
