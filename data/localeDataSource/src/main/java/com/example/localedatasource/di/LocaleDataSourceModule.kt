@@ -10,6 +10,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.room.Room
 import com.example.localedatasource.room.AppDatabase
 import com.example.localedatasource.room.UsersDao
+import com.example.localedatasource.room.VehiclesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,6 +47,12 @@ class LocaleDataSourceModule {
     @Singleton
     fun provideUsersDao(db: AppDatabase): UsersDao {
         return db.getUsersDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideVehiclesDao(db: AppDatabase): VehiclesDao {
+        return db.getVehiclesDao()
     }
 
 }

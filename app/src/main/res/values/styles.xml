@@ -27,7 +27,7 @@
     </style>
 
     <style name="Redrive.App.Auth.MaterialButton" parent="Widget.Material3.Button">
-        <item name="backgroundTint">@color/btt_background_tint_primary</item>
+        <item name="backgroundTint">@color/btt_background_tint_auth</item>
         <item name="android:textColor">?attr/colorOnTertiary</item>
     </style>
 
@@ -112,7 +112,7 @@
 
     </style>
 
-    <style name="TextInputLayout.Refuel" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+    <style name="TextInputLayout.Refuel" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="android:layout_marginStart">@dimen/margin_small</item>
         <item name="android:layout_marginEnd">@dimen/margin_small</item>
         <item name="boxBackgroundColor">#FFFFFF</item>

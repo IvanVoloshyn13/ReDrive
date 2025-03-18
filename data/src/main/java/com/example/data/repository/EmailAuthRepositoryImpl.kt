@@ -24,7 +24,6 @@ class EmailAuthRepositoryImpl @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher,
     private val usersDao: UsersDao,
-    private val appUserPreferences: AppUserPreferences,
 ) : EmailAuthRepository {
     override suspend fun signInWithEmailAndPassword(
         email: String,

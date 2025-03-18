@@ -3,8 +3,10 @@ package com.example.data
 import com.example.domain.appResult.AuthException
 import com.example.domain.model.User
 import com.example.domain.model.UserAuthCredentials
+import com.example.domain.model.Vehicle
 import com.example.firebase.FbUserAuthCredentials
 import com.example.localedatasource.room.UserEntity
+import com.example.localedatasource.room.VehicleEntity
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -39,6 +41,16 @@ fun UserAuthCredentials.toFbUserAuthCredentials(): FbUserAuthCredentials {
         password = password,
         email = email,
         fullName = fullName
+    )
+}
+
+fun Vehicle.toEntity(uUid: String): VehicleEntity {
+    return VehicleEntity(
+        id = 0,
+        userId = uUid,
+        name = this.name,
+        vehicleType = type.name,
+        initialOdometerValue = this.initialOdometerValue
     )
 }
 

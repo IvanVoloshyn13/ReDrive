@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.redrive.presentation.NewVehicleFragment">
+    tools:context="com.example.redrive.presentation.vehicle.NewVehicleFragment">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -39,8 +39,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    app:tint="?attr/colorOnPrimary"
-                    android:src="@drawable/ic_bike">
+                    android:src="@drawable/ic_car"
+                    app:tint="?attr/colorOnPrimary">
 
                 </ImageView>
 
@@ -55,7 +55,7 @@
                 app:checkedButton="@id/btt_car"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toBottomOf="@id/current_vehicle_type_container"
+                app:layout_constraintTop_toBottomOf="@id/current_vehicle_type_container"
                 app:materialThemeOverlay="@style/Redrive.App.VehicleToggle"
                 app:selectionRequired="true"
                 app:singleSelection="true">
@@ -65,9 +65,9 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="56dp"
                     android:layout_height="wrap_content"
-                    app:tint="@color/icon_tint_selector"
                     app:icon="@drawable/ic_car"
-                    app:iconGravity="textEnd">
+                    app:iconGravity="textEnd"
+                    app:tint="@color/icon_tint_selector">
 
                 </Button>
 
@@ -77,8 +77,8 @@
                     android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     app:icon="@drawable/ic_bike"
-                    app:tint="@color/icon_tint_selector"
-                    app:iconGravity="textStart">
+                    app:iconGravity="textStart"
+                    app:tint="@color/icon_tint_selector">
 
                 </Button>
             </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -91,8 +91,9 @@
                 android:layout_marginStart="@dimen/margin_regular"
                 android:layout_marginTop="@dimen/margin_large"
                 android:src="@drawable/ic_car"
+                app:layout_constraintBottom_toBottomOf="@id/vehicle_name_container"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/vehicle_toggle"
+                app:layout_constraintTop_toTopOf="@id/vehicle_name_container"
                 tools:ignore="ContentDescription">
 
             </ImageView>
@@ -103,6 +104,7 @@
                 style="@style/TextInputLayout.Refuel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_vehicle"
                 app:layout_constraintTop_toBottomOf="@id/vehicle_toggle">
@@ -124,9 +126,9 @@
                 android:layout_height="36dp"
                 android:layout_marginStart="@dimen/margin_regular"
                 android:src="@drawable/ic_odometer"
+                app:layout_constraintBottom_toBottomOf="@id/odometer_container"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="@dimen/margin_large"
-                app:layout_constraintTop_toBottomOf="@id/iv_vehicle"
+                app:layout_constraintTop_toTopOf="@id/odometer_container"
                 tools:ignore="ContentDescription">
 
             </ImageView>
@@ -136,9 +138,10 @@
                 style="@style/TextInputLayout.Refuel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_vehicle"
-                app:layout_constraintBottom_toBottomOf="@id/iv_odometer">
+                app:layout_constraintTop_toBottomOf="@+id/vehicle_name_container">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_odometer"
@@ -160,7 +163,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTint="@color/btt_background_tint_primary_selector"
         android:text="@string/save"
         android:textAllCaps="true"
         android:textColor="?attr/colorOnPrimaryContainer"

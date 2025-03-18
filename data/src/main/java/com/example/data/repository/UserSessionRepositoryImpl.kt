@@ -39,8 +39,8 @@ class UserSessionRepositoryImpl @Inject constructor(
     override fun observeCurrentUser(): Flow<User?> {
         return appUserPreferences.observeUserId().flatMapLatest {
             if (it != null) {
-                usersDao.observeCurrentUser(it).map {
-                    return@map it!!.toUser()
+                usersDao.observeCurrentUser(it).map {entity->
+                    return@map entity!!.toUser()
                 }
             } else return@flatMapLatest flowOf(null)
         }

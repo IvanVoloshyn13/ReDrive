@@ -4,6 +4,7 @@
     <string name="profile">Profile</string>
     <string name="redrive">Redrive</string>
     <string name="logs">Logs</string>
+    <string name="new_vehicle_fragment">Add Vehicle</string>
     <string name="save">Save</string>
     <string name="refuel">Refuel</string>
     <string name="settings">Settings</string>

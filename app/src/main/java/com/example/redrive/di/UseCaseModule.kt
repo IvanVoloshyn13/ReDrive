@@ -2,12 +2,14 @@ package com.example.redrive.di
 
 import com.example.domain.repository.EmailAuthRepository
 import com.example.domain.repository.UserSessionRepository
+import com.example.domain.repository.VehiclesRepository
 import com.example.domain.useCase.userSession.GetUserInitialsUseCase
 import com.example.domain.useCase.userSession.IsUserSignedInUseCase
 import com.example.domain.useCase.SignInWithEmailUseCase
 import com.example.domain.useCase.userSession.SignOutUseCase
 import com.example.domain.useCase.SignUpWithEmailUseCase
 import com.example.domain.useCase.userSession.ObserveCurrentUserIdUseCase
+import com.example.domain.useCase.vehicle.AddNewVehicleUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,5 +47,15 @@ class UseCaseModule {
     @ViewModelScoped
     fun provideSignOutUseCae(repository: UserSessionRepository) = SignOutUseCase(repository)
 
+    @Provides
+    @ViewModelScoped
+    fun provideAddNewVehicleUseCase(
+        vehicleRepo: VehiclesRepository,
+        userSessionRepo: UserSessionRepository
+    ) =
+        AddNewVehicleUseCase(
+            userSessionRepository = userSessionRepo,
+            vehiclesRepository = vehicleRepo
+        )
 
 }
