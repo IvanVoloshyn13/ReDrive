@@ -1,9 +1,10 @@
 package com.example.data
 
-import com.example.domain.appResult.AuthException
+import com.example.domain.appResult.AuthError
 import com.example.domain.model.User
 import com.example.domain.model.UserAuthCredentials
 import com.example.domain.model.Vehicle
+import com.example.domain.model.VehicleType
 import com.example.firebase.FbUserAuthCredentials
 import com.example.localedatasource.room.UserEntity
 import com.example.localedatasource.room.VehicleEntity
@@ -54,13 +55,22 @@ fun Vehicle.toEntity(uUid: String): VehicleEntity {
     )
 }
 
-fun FirebaseException.toAppError(e: FirebaseException): AuthException {
+fun VehicleEntity.toVehicle(): Vehicle {
+    return Vehicle(
+        id = this.id,
+        name = this.name,
+        initialOdometerValue = this.initialOdometerValue,
+        type = VehicleType.valueOf(this.vehicleType)
+    )
+}
+
+fun FirebaseException.toAppError(e: FirebaseException): AuthError {
     return when (e) {
-        is FirebaseAuthInvalidCredentialsException -> AuthException.INVALID_PASSWORD
-        is FirebaseAuthInvalidUserException -> AuthException.USER_NOT_FOUND
-        is FirebaseAuthUserCollisionException -> AuthException.USER_ALREADY_EXISTS
-        is FirebaseAuthException -> AuthException.AUTHENTICATION_FAILED
-        else -> AuthException.UNKNOWN_ERROR
+        is FirebaseAuthInvalidCredentialsException -> AuthError.INVALID_PASSWORD
+        is FirebaseAuthInvalidUserException -> AuthError.USER_NOT_FOUND
+        is FirebaseAuthUserCollisionException -> AuthError.USER_ALREADY_EXISTS
+        is FirebaseAuthException -> AuthError.AUTHENTICATION_FAILED
+        else -> AuthError.UNKNOWN_ERROR
 
     }
 

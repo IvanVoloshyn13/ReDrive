@@ -1,17 +1,15 @@
 package com.example.data.repository
 
-import android.util.Patterns
 import com.example.data.di.DispatcherIo
 import com.example.data.toAppError
 import com.example.data.toFbUserAuthCredentials
 import com.example.firebase.FirebaseAuthRepository
 import com.example.data.toUserEntity
 import com.example.domain.appResult.AppResult
-import com.example.domain.appResult.AuthException
+import com.example.domain.appResult.AuthError
 import com.example.domain.model.SignInStatus
 import com.example.domain.model.UserAuthCredentials
 import com.example.domain.repository.EmailAuthRepository
-import com.example.localedatasource.dataStore.AppUserPreferences
 import com.example.localedatasource.room.UsersDao
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseUser
@@ -28,7 +26,7 @@ class EmailAuthRepositoryImpl @Inject constructor(
     override suspend fun signInWithEmailAndPassword(
         email: String,
         password: String
-    ): AppResult<SignInStatus, AuthException> {
+    ): AppResult<SignInStatus, AuthError> {
         return withContext(dispatcherIo) {
             try {
                 val fbUser = firebaseAuthRepository.signInWithEmail(email, password)
@@ -37,15 +35,15 @@ class EmailAuthRepositoryImpl @Inject constructor(
             } catch (e: FirebaseException) {
                 AppResult.Error(exception = e.toAppError(e))
             } catch (e: NullPointerException) {
-                AppResult.Error(exception = AuthException.USER_NOT_FOUND)
+                AppResult.Error(exception = AuthError.USER_NOT_FOUND)
             } catch (e: Exception) {
-                AppResult.Error(exception = AuthException.UNKNOWN_ERROR)
+                AppResult.Error(exception = AuthError.UNKNOWN_ERROR)
             }
         }
 
     }
 
-    override suspend fun signUpWithEmail(credentials: UserAuthCredentials): AppResult<SignInStatus, AuthException> {
+    override suspend fun signUpWithEmail(credentials: UserAuthCredentials): AppResult<SignInStatus, AuthError> {
         return withContext(dispatcherIo) {
             try {
                 val fbUser =
@@ -55,9 +53,9 @@ class EmailAuthRepositoryImpl @Inject constructor(
             } catch (e: FirebaseException) {
                 AppResult.Error(exception = e.toAppError(e))
             } catch (e: NullPointerException) {
-                AppResult.Error(exception = AuthException.USER_NOT_FOUND)
+                AppResult.Error(exception = AuthError.USER_NOT_FOUND)
             } catch (e: Exception) {
-                AppResult.Error(exception = AuthException.UNKNOWN_ERROR)
+                AppResult.Error(exception = AuthError.UNKNOWN_ERROR)
             }
         }
     }

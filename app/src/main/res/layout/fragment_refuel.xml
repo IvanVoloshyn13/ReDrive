@@ -223,7 +223,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <Button
-        android:id="@+id/btt_save"
+        android:id="@+id/btn_save"
         style="@style/Redrive.App.MaterialButton.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

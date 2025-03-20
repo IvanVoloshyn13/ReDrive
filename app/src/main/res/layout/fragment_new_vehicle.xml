@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.redrive.presentation.vehicle.NewVehicleFragment">
+    tools:context="com.example.redrive.presentation.vehicle.newVehicle.NewVehicleFragment">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -159,7 +159,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <Button
-        android:id="@+id/btt_save"
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"

@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/vehiclesFragment"
-        android:name="com.example.redrive.presentation.vehicle.VehiclesFragment"
+        android:name="com.example.redrive.presentation.vehicle.vehicles.VehiclesFragment"
         android:label="@string/vehicles"
         tools:layout="@layout/fragment_vehicles" />
     <fragment

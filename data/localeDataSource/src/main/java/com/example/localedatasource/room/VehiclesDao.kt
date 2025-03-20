@@ -19,8 +19,8 @@ interface VehiclesDao {
     @Query("DELETE from vehicles WHERE id=:vehicleId ")
     suspend fun deleteVehicle(vehicleId: Long)
 
-    @Query("SELECT * from vehicles")
-    fun observeVehicles(): Flow<List<VehicleEntity>>
+    @Query("SELECT * from vehicles WHERE user_id=:userId")
+    fun observeVehicles(userId:String): Flow<List<VehicleEntity>>
 
     @Query("SELECT * FROM vehicles WHERE id=:vehicleId ")
     fun observeCurrentVehicle(vehicleId: Long): Flow<VehicleEntity>

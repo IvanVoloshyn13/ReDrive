@@ -38,6 +38,8 @@
 
     <string name="empty_string"> </string>
 
+    <string name="is_current_vehicle_exception">You can not delete this vehicle because it is set as current</string>
+
 
     <string name="one_symbol">✓ Special symbol</string>
     <string name="uppercase_and_lowercase_letter">✓ Uppercase and lowercase letter</string>
@@ -59,5 +61,7 @@
     <string name="invalid_email">Invalid email</string>
     <string name="password_error">Your password doesn\'t meet the required criteria </string>
     <string name="confirm_password_error">Passwords do not match </string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
 </resources>

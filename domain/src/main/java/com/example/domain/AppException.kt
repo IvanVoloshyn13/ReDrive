@@ -2,6 +2,9 @@ package com.example.domain
 
 open class AppException : RuntimeException()
 
-class IsCurrentVehicleException() : AppException()
+sealed class VehicleException() : AppException() {
+    class IsCurrentVehicleException() : VehicleException()
 
-class NoCurrentVehicleException() : AppException()
+    class NoCurrentVehicleException() : VehicleException()
+}
+

@@ -10,6 +10,9 @@ import com.example.domain.useCase.userSession.SignOutUseCase
 import com.example.domain.useCase.SignUpWithEmailUseCase
 import com.example.domain.useCase.userSession.ObserveCurrentUserIdUseCase
 import com.example.domain.useCase.vehicle.AddNewVehicleUseCase
+import com.example.domain.useCase.vehicle.DeleteVehicleUseCase
+import com.example.domain.useCase.vehicle.ObserveVehiclesUseCase
+import com.example.domain.useCase.vehicle.SetVehicleAsCurrentUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,4 +61,21 @@ class UseCaseModule {
             vehiclesRepository = vehicleRepo
         )
 
+    @Provides
+    @ViewModelScoped
+    fun provideObserveVehiclesUseCase(
+        repository: VehiclesRepository,
+        userSessionRepo: UserSessionRepository
+    ) =
+        ObserveVehiclesUseCase(repository, userSessionRepo)
+
+    @Provides
+    @ViewModelScoped
+    fun setVehicleAsCurrentUseCase(repository: VehiclesRepository) =
+        SetVehicleAsCurrentUseCase(repository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideDeleteVehicleUseCase(repository: VehiclesRepository) =
+        DeleteVehicleUseCase(repository)
 }

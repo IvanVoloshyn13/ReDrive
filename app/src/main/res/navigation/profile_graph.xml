@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/vehiclesFragment"
-        android:name="com.example.redrive.presentation.vehicle.VehiclesFragment"
+        android:name="com.example.redrive.presentation.vehicle.vehicles.VehiclesFragment"
         android:label="Vehicles"
         tools:layout="@layout/fragment_vehicles" >
         <action
@@ -33,7 +33,7 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/newVehicleFragment"
-        android:name="com.example.redrive.presentation.vehicle.NewVehicleFragment"
+        android:name="com.example.redrive.presentation.vehicle.newVehicle.NewVehicleFragment"
         android:label="Add Vehicle"
         tools:layout="@layout/fragment_new_vehicle" />
 </navigation>

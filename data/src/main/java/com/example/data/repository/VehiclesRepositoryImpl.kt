@@ -1,7 +1,8 @@
 package com.example.data.repository
 
 import com.example.data.toEntity
-import com.example.domain.NoCurrentVehicleException
+import com.example.data.toVehicle
+import com.example.domain.VehicleException
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.domain.repository.VehiclesRepository
@@ -18,8 +19,8 @@ class VehiclesRepositoryImpl @Inject constructor(
     private val vehiclesDao: VehiclesDao
 ) : VehiclesRepository {
 
-    override suspend fun addNewVehicle(uUid: String, vehicle: Vehicle):Long {
-      return  vehiclesDao.addVehicle(vehicle.toEntity(uUid))
+    override suspend fun addNewVehicle(uUid: String, vehicle: Vehicle): Long {
+        return vehiclesDao.addVehicle(vehicle.toEntity(uUid))
     }
 
     override suspend fun editVehicle(uUid: String, vehicle: Vehicle) {
@@ -40,7 +41,7 @@ class VehiclesRepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeCurrentVehicle(): Flow<Vehicle?> {
-     return   appVehiclePreferences.observeCurrentVehicleId().flatMapLatest {vehicleId->
+        return appVehiclePreferences.observeCurrentVehicleId().flatMapLatest { vehicleId ->
             if (vehicleId != null) {
                 vehiclesDao.observeCurrentVehicle(vehicleId).map {
                     Vehicle(
@@ -49,11 +50,15 @@ class VehiclesRepositoryImpl @Inject constructor(
                         type = VehicleType.valueOf(it.vehicleType)
                     )
                 }
-            } else throw NoCurrentVehicleException()
+            } else throw VehicleException.NoCurrentVehicleException()
         }
     }
 
-    override fun observeVehicles(): Flow<List<Vehicle>> {
-        TODO("Not yet implemented")
+    override fun observeVehicles(userId: String): Flow<List<Vehicle>> {
+        return vehiclesDao.observeVehicles(userId).map {
+            return@map it.map { entity ->
+                entity.toVehicle()
+            }
+        }
     }
 }

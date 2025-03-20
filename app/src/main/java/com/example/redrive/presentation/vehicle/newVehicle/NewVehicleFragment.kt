@@ -1,10 +1,11 @@
-package com.example.redrive.presentation.vehicle
+package com.example.redrive.presentation.vehicle.newVehicle
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,11 +31,11 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
         super.onViewCreated(view, savedInstanceState)
 
         collectStates()
-        onOdometerTextChangeListener()
-        onVehicleNameTextChangeListener()
-        vehicleTypeSwitcher()
+        setupOnOdometerTextChangeListener()
+        setupOnVehicleNameTextChangeListener()
+        setupVehicleTypeSwitcher()
 
-        binding.bttSave.setOnClickListener {
+        binding.btnSave.setOnClickListener {
             viewModel.saveNewVehicle()
         }
 
@@ -77,7 +78,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
 
             launch {
                 viewModel.isBttSaveEnabled.collectLatest {
-                    binding.bttSave.isEnabled = it
+                    binding.btnSave.isEnabled = it
                 }
             }
 
@@ -96,7 +97,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
 
     }
 
-    private fun onVehicleNameTextChangeListener() {
+    private fun setupOnVehicleNameTextChangeListener() {
         with(binding) {
             etVehicleName.setOnFocusChangeListener { v, hasFocus ->
                 if (!hasFocus && etVehicleName.text!!.isEmpty()) {
@@ -113,7 +114,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
         }
     }
 
-    private fun onOdometerTextChangeListener() {
+    private fun setupOnOdometerTextChangeListener() {
         with(binding) {
             etOdometer.setOnFocusChangeListener { v, hasFocus ->
                 if (!hasFocus && etOdometer.text.isNullOrEmpty()) {
@@ -129,7 +130,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
         }
     }
 
-    private fun vehicleTypeSwitcher() {
+    private fun setupVehicleTypeSwitcher() {
         binding.vehicleToggle.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
@@ -161,8 +162,8 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
             .withEndAction {
                 // Change the drawable after animation ends
                 binding.ivCurrentVehicleType.setImageDrawable(
-                    requireContext().getDrawable(
-                        vehicleType
+                    AppCompatResources.getDrawable(
+                        requireContext(), vehicleType
                     )
                 )
 

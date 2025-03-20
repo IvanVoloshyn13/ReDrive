@@ -1,5 +1,5 @@
 import com.example.domain.appResult.AppResult
-import com.example.domain.appResult.AuthException
+import com.example.domain.appResult.AuthError
 import com.example.domain.model.SignInStatus
 import com.example.domain.repository.EmailAuthRepository
 import com.example.domain.useCase.SignInWithEmailUseCase
@@ -50,7 +50,7 @@ class SignInWithEmailUseCaseTest {
         //Arrange
         val email = "wrong@example.com"
         val password = "wrongPassword"
-        val expectedResult = AppResult.Error(AuthException.INVALID_PASSWORD)
+        val expectedResult = AppResult.Error(AuthError.INVALID_PASSWORD)
 
         coEvery {
             authRepository.signInWithEmailAndPassword(
@@ -73,7 +73,7 @@ class SignInWithEmailUseCaseTest {
         //Arrange
         val email = "notFound@example.com"
         val password = "justPassword"
-        val expectedResult = AppResult.Error(AuthException.USER_NOT_FOUND)
+        val expectedResult = AppResult.Error(AuthError.USER_NOT_FOUND)
 
         coEvery {
             authRepository.signInWithEmailAndPassword(

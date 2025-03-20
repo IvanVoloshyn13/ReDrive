@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.example.domain.appResult.AuthException
+import com.example.domain.appResult.AuthError
 
 fun Fragment.findTopNavController(): NavController {
     val topLevelHost =
@@ -31,12 +31,12 @@ fun Fragment.hideSoftInputAndClearViewsFocus(root: ViewGroup) {
     }
 }
 
-fun AuthException.getStringResource(): Int {
+fun AuthError.getStringResource(): Int {
     return when (this) {
-        AuthException.AUTHENTICATION_FAILED -> R.string.firebase_auth_error
-        AuthException.INVALID_PASSWORD -> R.string.invalid_credentials
-        AuthException.USER_ALREADY_EXISTS -> R.string.user_collision
-        AuthException.USER_NOT_FOUND -> R.string.no_user_detected
-        AuthException.UNKNOWN_ERROR -> R.string.unknown_error_firebase
+        AuthError.AUTHENTICATION_FAILED -> R.string.firebase_auth_error
+        AuthError.INVALID_PASSWORD -> R.string.invalid_credentials
+        AuthError.USER_ALREADY_EXISTS -> R.string.user_collision
+        AuthError.USER_NOT_FOUND -> R.string.no_user_detected
+        AuthError.UNKNOWN_ERROR -> R.string.unknown_error_firebase
     }
 }

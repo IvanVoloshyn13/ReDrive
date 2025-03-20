@@ -1,6 +1,6 @@
 package com.example.domain.appResult
 
-typealias RootException = AppException
+typealias RootException = AppError
 
 /** Use it only for network  */
 interface AppResult<out R, out E : RootException> {

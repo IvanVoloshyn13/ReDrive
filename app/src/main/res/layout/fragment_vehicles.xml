@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.redrive.presentation.vehicle.VehiclesFragment">
+    tools:context="com.example.redrive.presentation.vehicle.vehicles.VehiclesFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/refuel_card"
         android:layout_width="0dp"
         android:layout_height="400dp"
         android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginEnd="@dimen/margin_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
