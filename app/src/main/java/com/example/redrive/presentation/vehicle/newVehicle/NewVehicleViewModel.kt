@@ -2,9 +2,12 @@ package com.example.redrive.presentation.vehicle.newVehicle
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.UserException
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.domain.useCase.vehicle.AddNewVehicleUseCase
+import com.example.redrive.AppStringResProvider
+import com.example.redrive.wrapLocaleDataSourceRequests
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,12 +17,14 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NewVehicleViewModel @Inject constructor(
-    private val addNewVehicleUseCase: AddNewVehicleUseCase
+    private val addNewVehicleUseCase: AddNewVehicleUseCase,
+    private val appStringResProvider: AppStringResProvider
 ) : ViewModel() {
     private val _vehicleType = MutableStateFlow<VehicleType>(VehicleType.Default)
     val vehicleTypeState: StateFlow<VehicleType> = _vehicleType.asStateFlow()
@@ -35,6 +40,10 @@ class NewVehicleViewModel @Inject constructor(
 
     private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
+
+    private val _errorState: MutableStateFlow<Pair<Boolean, String>> =
+        MutableStateFlow(Pair(false, ""))
+    val errorState = _errorState.asStateFlow()
 
     private val _navigation: MutableSharedFlow<NavigationPath?> =
         MutableSharedFlow(
@@ -76,10 +85,26 @@ class NewVehicleViewModel @Inject constructor(
             type = _vehicleType.value
         )
         viewModelScope.launch {
-            addNewVehicleUseCase.invoke(vehicle)
-            _navigation.emit(NavigationPath.ToVehicles)
+            try {
+                addNewVehicleUseCase.invoke(vehicle)
+            } catch (e: UserException.NoUserDetectedException) {
+                _errorState.update {
+                    it.copy(
+                        first = true,
+                        second = appStringResProvider.provideStringRes(e)
+                    )
+                }
+            }
         }
 
+    }
+
+    fun resetErrorState() {
+        _errorState.update {
+            it.copy(
+                first = false, second = ""
+            )
+        }
     }
 
     sealed class NavigationPath {

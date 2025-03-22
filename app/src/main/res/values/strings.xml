@@ -1,51 +1,74 @@
 <resources>
     <string name="app_name">ReDrive</string>
 
+    <!--Profile -->
     <string name="profile">Profile</string>
-    <string name="redrive">Redrive</string>
-    <string name="logs">Logs</string>
-    <string name="new_vehicle_fragment">Add Vehicle</string>
-    <string name="save">Save</string>
-    <string name="refuel">Refuel</string>
     <string name="settings">Settings</string>
-    <string name="vehicles">Vehicles</string>
     <string name="edit_vehicles">Edit vehicles</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="sign_out">Sign out</string>
-    <string name="overview">Overview</string>
-    <string name="avg_consumption">Avg Consumption</string>
-    <string name="driving_cost">Driving cost</string>
-    <string name="summary">Summary</string>
-    <string name="last_refuel">Last Refuel</string>
-    <string name="refuel_date">Refuel Date</string>
-    <string name="odometer">Odometer</string>
-    <string name="notes">Notes</string>
-    <string name="full_tank">Full tank</string>
-    <string name="missing_previous">Missing previous</string>
-    <string name="clear">Clear</string>
-    <string name="fuel_amount">Fuel amount</string>
-    <string name="fuel_price">Fuel price</string>
+
+    <!--SignIn -->
     <string name="sign_in_to_redrive">Sign In to ReDrive</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot password</string>
     <string name="sign_in">Sign In</string>
+    <string name="dont_have_an_account">Don\'t have an account</string>
+
+    <!--SignUp -->
     <string name="sign_up">Sign Up</string>
-    <string name="dont_have_an_account">Dont have an account</string>
     <string name="sign_up_to_redrive">Sign Up to ReDrive</string>
     <string name="full_name">Full Name</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="already_have_an_account">Already have an account?</string>
-
-    <string name="empty_string"> </string>
-
-    <string name="is_current_vehicle_exception">You can not delete this vehicle because it is set as current</string>
-
-
+    <!--SignUp password -->
     <string name="one_symbol">✓ Special symbol</string>
     <string name="uppercase_and_lowercase_letter">✓ Uppercase and lowercase letter</string>
     <string name="at_least_one_number">✓ At least one number</string>
     <string name="password_length">✓ 8 or more characters</string>
-    <string name="confirm_password">Confirm password</string>
+
+    <!--Vehicles -->
+    <string name="vehicles">Vehicles</string>
+    <string name="new_vehicle_fragment">Add Vehicle</string>
+
+    <!--RedriveFragment -->
+    <string name="redrive">Redrive</string>
+    <string name="overview">Overview</string>
+    <string name="last_refuel">Last Refuel</string>
+    <string name="summary">Summary</string>
+    <string name="avg_consumption">Avg Consumption</string>
+    <string name="driving_cost">Driving cost</string>
+    <!--LogsFragment -->
+    <string name="logs">Logs</string>
+
+    <!--Buttons -->
+    <string name="save">Save</string>
+    <string name="clear">Clear</string>
+
+
+
+
+    <string name="refuel">Refuel</string>
+    <string name="refuel_date">Refuel Date</string>
+    <string name="odometer">Odometer</string>
+    <string name="notes">Notes</string>
+    <string name="full_tank">Full tank</string>
+    <string name="missing_previous">Missing previous</string>
+    <string name="fuel_amount">Fuel amount</string>
+    <string name="fuel_price">Fuel price</string>
+
+
+
+
+
+    <string name="empty_string"> </string>
+    <string name="is_current_vehicle_exception">You can not delete this vehicle because it is set as current</string>
+    <string name="no_user_detected_exception_message">Please signIn or create account to add new vehicle</string>
+
+
+
+
 
 
     <!-- FIREBASE_ERRORS-->

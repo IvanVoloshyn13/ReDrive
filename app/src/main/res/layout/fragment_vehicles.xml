@@ -36,4 +36,17 @@
         app:layout_constraintEnd_toEndOf="@id/refuel_card"
         app:layout_constraintTop_toBottomOf="@id/refuel_card" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="?attr/colorOnSurface"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/refuel_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/refuel_card">
+
+    </ProgressBar>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

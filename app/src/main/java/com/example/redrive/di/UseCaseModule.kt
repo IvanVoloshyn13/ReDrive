@@ -8,9 +8,9 @@ import com.example.domain.useCase.userSession.IsUserSignedInUseCase
 import com.example.domain.useCase.SignInWithEmailUseCase
 import com.example.domain.useCase.userSession.SignOutUseCase
 import com.example.domain.useCase.SignUpWithEmailUseCase
-import com.example.domain.useCase.userSession.ObserveCurrentUserIdUseCase
 import com.example.domain.useCase.vehicle.AddNewVehicleUseCase
 import com.example.domain.useCase.vehicle.DeleteVehicleUseCase
+import com.example.domain.useCase.vehicle.EditVehicleUseCase
 import com.example.domain.useCase.vehicle.ObserveVehiclesUseCase
 import com.example.domain.useCase.vehicle.SetVehicleAsCurrentUseCase
 import dagger.Module
@@ -78,4 +78,12 @@ class UseCaseModule {
     @ViewModelScoped
     fun provideDeleteVehicleUseCase(repository: VehiclesRepository) =
         DeleteVehicleUseCase(repository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideEditVehicleUseCase(
+        repository: VehiclesRepository,
+        userSessionRepo: UserSessionRepository
+    ) = EditVehicleUseCase(repository, userSessionRepository = userSessionRepo)
+
 }

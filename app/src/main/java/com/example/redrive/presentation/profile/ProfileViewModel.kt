@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.model.SignInStatus
 import com.example.domain.useCase.userSession.GetUserInitialsUseCase
 import com.example.domain.useCase.userSession.IsUserSignedInUseCase
-import com.example.domain.useCase.userSession.ObserveCurrentUserIdUseCase
 import com.example.domain.useCase.userSession.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay

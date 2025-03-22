@@ -21,16 +21,8 @@ class ObserveVehiclesUseCase(
     fun invoke(): Flow<List<Vehicle>> {
         return userSessionRepository.observeCurrentUserId().flatMapLatest { userId ->
             if (!userId.isNullOrEmpty()) {
-
                 val vehiclesFlow = repository.observeVehicles(userId)
                 val currentVehicleFlow = repository.observeCurrentVehicle()
-                    .catch { exception ->
-                        if (exception is VehicleException.NoCurrentVehicleException) {
-                            emit(null) // Emit null if no current vehicle exists
-                        } else {
-                            emit(null) // Fallback to emitting null for any other unexpected error
-                        }
-                    }
 
                 combine(
                    vehiclesFlow,
@@ -49,10 +41,6 @@ class ObserveVehiclesUseCase(
                         )
                     }.sortedByDescending {
                         it.isCurrentVehicle
-                    }
-                }.catch { exception ->
-                    if(exception is VehicleException.NoCurrentVehicleException){
-
                     }
                 }
             } else {

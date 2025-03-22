@@ -1,7 +1,10 @@
 package com.example.redrive.presentation.vehicle.vehicles
 
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -35,7 +38,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
     }
 
     private fun collectState() {
-        lifecycleScope.launch {
+       viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect {
                 updateUi(it)
             }
@@ -43,12 +46,15 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
     }
 
     private fun updateUi(state: VehiclesFragmentState) {
+        binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
         if (!state.isLoading) {
-            vehiclesAdapter.submitList(state.vehicles)
+            vehiclesAdapter.submitList(state.vehicles){
+                binding.rvVehicles.scrollToPosition(0)
+            }
             if (state.error) {
                 Toast.makeText(
                     requireContext(),
-                   state.errorMessage,
+                    state.errorMessage,
                     Toast.LENGTH_SHORT
                 )
                     .show()
@@ -69,11 +75,11 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
     }
 
     override fun editVehicle(vehicle: Vehicle) {
-        TODO()
+      TODO("navigate to editVehicle fragment and send vehicle as args")
     }
 
     override fun deleteVehicle(vehicleId: Long) {
-       viewModel.deleteVehicle(vehicleId)
+        viewModel.deleteVehicle(vehicleId)
     }
 
 }

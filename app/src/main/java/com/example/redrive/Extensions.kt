@@ -5,10 +5,15 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.example.domain.AppException
 import com.example.domain.appResult.AuthError
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 fun Fragment.findTopNavController(): NavController {
     val topLevelHost =
@@ -28,6 +33,20 @@ fun Fragment.hideSoftInputAndClearViewsFocus(root: ViewGroup) {
 
     root.children.forEach {
         it.clearFocus()
+    }
+}
+
+fun ViewModel.wrapLocaleDataSourceRequests(
+    action:suspend () -> Unit,
+    onError: suspend (e: AppException) -> Unit
+) {
+    viewModelScope.launch {
+        try {
+            action()
+            delay(500)
+        } catch (e: AppException) {
+            onError(e)
+        }
     }
 }
 

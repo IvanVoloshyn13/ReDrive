@@ -8,3 +8,8 @@ sealed class VehicleException() : AppException() {
     class NoCurrentVehicleException() : VehicleException()
 }
 
+sealed class UserException() : AppException() {
+    class NoUserDetectedException() : UserException()
+}
+
+

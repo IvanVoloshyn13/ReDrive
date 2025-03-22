@@ -3,6 +3,7 @@ package com.example.data.repository
 import android.util.Log
 import com.example.data.di.DispatcherIo
 import com.example.data.toUser
+import com.example.domain.UserException
 import com.example.domain.model.User
 import com.example.domain.repository.UserSessionRepository
 import com.example.firebase.FirebaseAuthRepository
@@ -14,7 +15,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UserSessionRepositoryImpl @Inject constructor(
@@ -26,20 +26,25 @@ class UserSessionRepositoryImpl @Inject constructor(
 
     override fun observeAuthState(): Flow<User?> {
         return firebaseAuthRepository.getAuthState().map {
+            Log.d("USER", it.toString())
             toggleUserIdPreferences(it?.uid ?: "")
             it?.toUser()
         }
     }
 
     override fun observeCurrentUserId(): Flow<String?> {
-        return appUserPreferences.observeUserId()
+        return try {
+            appUserPreferences.observeUserId()
+        } catch (e: NullPointerException) {
+            throw UserException.NoUserDetectedException()
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeCurrentUser(): Flow<User?> {
         return appUserPreferences.observeUserId().flatMapLatest {
             if (it != null) {
-                usersDao.observeCurrentUser(it).map {entity->
+                usersDao.observeCurrentUser(it).map { entity ->
                     return@map entity!!.toUser()
                 }
             } else return@flatMapLatest flowOf(null)
@@ -50,7 +55,8 @@ class UserSessionRepositoryImpl @Inject constructor(
         firebaseAuthRepository.signOut()
     }
 
-    private suspend fun toggleUserIdPreferences(uUid: String) = withContext(dispatcherIo) {
+    private suspend fun toggleUserIdPreferences(uUid: String) {
+        Log.d("USER_LOG", uUid)
         if (uUid.isEmpty()) {
             appUserPreferences.clearCurrentUserId()
         } else appUserPreferences.setCurrentUserId(uUid)
