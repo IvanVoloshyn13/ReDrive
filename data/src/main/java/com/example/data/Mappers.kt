@@ -1,6 +1,7 @@
 package com.example.data
 
-import com.example.domain.appResult.AuthError
+import com.example.domain.AppException
+import com.example.domain.AuthException
 import com.example.domain.model.User
 import com.example.domain.model.UserAuthCredentials
 import com.example.domain.model.Vehicle
@@ -33,7 +34,7 @@ fun FirebaseUser.toUser(): User {
 fun UserEntity.toUser(): User {
     return User(
         uUid = this.id,
-        fullName = this.fullName ?: ""
+        fullName = this.fullName
     )
 }
 
@@ -64,13 +65,13 @@ fun VehicleEntity.toVehicle(): Vehicle {
     )
 }
 
-fun FirebaseException.toAppError(e: FirebaseException): AuthError {
-    return when (e) {
-        is FirebaseAuthInvalidCredentialsException -> AuthError.INVALID_PASSWORD
-        is FirebaseAuthInvalidUserException -> AuthError.USER_NOT_FOUND
-        is FirebaseAuthUserCollisionException -> AuthError.USER_ALREADY_EXISTS
-        is FirebaseAuthException -> AuthError.AUTHENTICATION_FAILED
-        else -> AuthError.UNKNOWN_ERROR
+fun FirebaseException.toAppAuthException(): AppException {
+    return when (this) {
+        is FirebaseAuthInvalidCredentialsException -> AuthException.InvalidPasswordException()
+        is FirebaseAuthInvalidUserException -> AuthException.UserNotFoundException()
+        is FirebaseAuthUserCollisionException -> AuthException.UserAlreadyExistsException()
+        is FirebaseAuthException -> AuthException.AuthenticationFailed()
+        else -> AuthException.UnknownException()
 
     }
 

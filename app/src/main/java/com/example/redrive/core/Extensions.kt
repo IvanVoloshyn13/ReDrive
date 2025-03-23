@@ -1,4 +1,4 @@
-package com.example.redrive
+package com.example.redrive.core
 
 import android.content.Context
 import android.view.ViewGroup
@@ -11,8 +11,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.domain.AppException
-import com.example.domain.appResult.AuthError
-import kotlinx.coroutines.delay
+import com.example.redrive.R
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 fun Fragment.findTopNavController(): NavController {
@@ -36,26 +36,34 @@ fun Fragment.hideSoftInputAndClearViewsFocus(root: ViewGroup) {
     }
 }
 
+fun Fragment.showErrorAndResetState(
+    errorMessage: String,
+    setAction: String? = null,
+    action: () -> Unit = { },
+    resetStateAction: () -> Unit
+) {
+    Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_LONG)
+        .setTextMaxLines(3)
+        .setAction(setAction) {
+            action()
+        }
+        .show()
+    resetStateAction()
+}
+
+
 fun ViewModel.wrapLocaleDataSourceRequests(
-    action:suspend () -> Unit,
-    onError: suspend (e: AppException) -> Unit
+    appStringResProvider: AppStringResProvider,
+    action: suspend () -> Unit,
+    onError: suspend (message: String) -> Unit
 ) {
     viewModelScope.launch {
         try {
             action()
-            delay(500)
         } catch (e: AppException) {
-            onError(e)
+            val message = appStringResProvider.provideStringRes(e)
+            onError(message)
         }
     }
 }
 
-fun AuthError.getStringResource(): Int {
-    return when (this) {
-        AuthError.AUTHENTICATION_FAILED -> R.string.firebase_auth_error
-        AuthError.INVALID_PASSWORD -> R.string.invalid_credentials
-        AuthError.USER_ALREADY_EXISTS -> R.string.user_collision
-        AuthError.USER_NOT_FOUND -> R.string.no_user_detected
-        AuthError.UNKNOWN_ERROR -> R.string.unknown_error_firebase
-    }
-}

@@ -1,7 +1,6 @@
 package com.example.redrive.presentation.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,11 +9,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.model.SignInStatus
 import com.example.redrive.R
 import com.example.redrive.databinding.FragmentProfileBinding
-import com.example.redrive.findTopNavController
+import com.example.redrive.core.findTopNavController
 import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

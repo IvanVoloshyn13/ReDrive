@@ -1,8 +1,6 @@
 package com.example.redrive.presentation.auth.signUp
 
-import androidx.annotation.StringRes
 import com.example.domain.useCase.signUpFieldValidation.PasswordValidationResult
-import com.example.redrive.R
 
 data class FragmentSignUpState(
     val loading: Boolean = false,
@@ -15,7 +13,7 @@ data class FragmentSignUpState(
     val isValidPassword: PasswordValidationResult = PasswordValidationResult(),
     val isValidConfirmPassword: Boolean = false,
     val signUpStatus: SignUpStatus = SignUpStatus.SignOut,
-    @StringRes val signUpErrorMessage: Int = R.string.empty_string
+    val signUpErrorMessage: String = "",
 ) {
     val signUpButtonState: SignUpButtonState
         get() =
@@ -27,5 +25,5 @@ enum class SignUpButtonState {
 }
 
 enum class SignUpStatus {
-    Failure,SignOut,SignIn
+    Failure, SignOut, SignIn
 }

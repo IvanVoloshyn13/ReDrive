@@ -1,12 +1,10 @@
 package com.example.domain.useCase.vehicle
 
-import com.example.domain.VehicleException
 import com.example.domain.model.Vehicle
 import com.example.domain.repository.UserSessionRepository
 import com.example.domain.repository.VehiclesRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf

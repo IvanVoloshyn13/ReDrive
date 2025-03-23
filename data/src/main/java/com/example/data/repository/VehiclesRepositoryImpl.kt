@@ -2,7 +2,6 @@ package com.example.data.repository
 
 import com.example.data.toEntity
 import com.example.data.toVehicle
-import com.example.domain.VehicleException
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.domain.repository.VehiclesRepository
@@ -11,6 +10,7 @@ import com.example.localedatasource.room.VehiclesDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -50,7 +50,7 @@ class VehiclesRepositoryImpl @Inject constructor(
                         type = VehicleType.valueOf(it.vehicleType)
                     )
                 }
-            } else throw VehicleException.NoCurrentVehicleException()
+            } else flowOf(null)
         }
     }
 

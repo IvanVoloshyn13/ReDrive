@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.redrive.R
 import com.example.redrive.databinding.FragmentLogsBinding
-import com.example.redrive.findTopNavController
 import com.example.redrive.viewBinding
 
 class LogsFragment : Fragment(R.layout.fragment_logs) {

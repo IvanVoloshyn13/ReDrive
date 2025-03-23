@@ -2,15 +2,15 @@ package com.example.redrive.presentation.auth.signUp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.appResult.AppResult
+import com.example.domain.AppException
 import com.example.domain.model.UserAuthCredentials
+import com.example.domain.useCase.SignUpWithEmailUseCase
 import com.example.domain.useCase.signUpFieldValidation.IsValidConfirmPasswordUseCase
 import com.example.domain.useCase.signUpFieldValidation.IsValidEmailUseCase
 import com.example.domain.useCase.signUpFieldValidation.IsValidFullNameUseCase
 import com.example.domain.useCase.signUpFieldValidation.IsValidPasswordUseCase
 import com.example.domain.useCase.signUpFieldValidation.PasswordValidationResult
-import com.example.domain.useCase.SignUpWithEmailUseCase
-import com.example.redrive.getStringResource
+import com.example.redrive.core.AppStringResProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +29,8 @@ private const val DEBOUNCE_TIME_MILLIS = 250L
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val signUpUseCase: SignUpWithEmailUseCase
+    private val signUpUseCase: SignUpWithEmailUseCase,
+    private val appStringResProvider: AppStringResProvider
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<FragmentSignUpState> =
@@ -115,26 +116,21 @@ class SignUpViewModel @Inject constructor(
             _state.update {
                 it.copy(loading = true)
             }
-            val result = signUpUseCase.invoke(userCredentials)
-            when (result) {
-                is AppResult.Success -> {
-                    _state.update {
-                        it.copy(
-                            signUpStatus = SignUpStatus.SignIn,
-                            loading = false
-                        )
-                    }
+            try {
+                signUpUseCase.invoke(userCredentials)
+                _state.update {
+                    it.copy(
+                        signUpStatus = SignUpStatus.SignIn,
+                        loading = false
+                    )
                 }
-
-                is AppResult.Error -> {
-                    val errorMessage = result.exception.getStringResource()
-                    _state.update {
-                        it.copy(
-                            loading = false,
-                            signUpStatus = SignUpStatus.Failure,
-                            signUpErrorMessage = errorMessage
-                        )
-                    }
+            }catch (e:AppException){
+                _state.update {
+                    it.copy(
+                        loading = false,
+                        signUpStatus = SignUpStatus.Failure,
+                        signUpErrorMessage =appStringResProvider.provideStringRes(e)
+                    )
                 }
             }
         }

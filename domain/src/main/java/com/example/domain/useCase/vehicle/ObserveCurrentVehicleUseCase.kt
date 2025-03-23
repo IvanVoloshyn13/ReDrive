@@ -16,17 +16,14 @@ class ObserveCurrentVehicleUseCase(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Vehicle?> {
-        return try {
-            userSessionRepository.observeCurrentUserId().flatMapLatest {
+        return userSessionRepository.observeCurrentUserId().flatMapLatest {
                 if (!it.isNullOrEmpty()) {
                     return@flatMapLatest vehiclesRepository.observeCurrentVehicle()
                 } else {
                     flowOf(null)
                 }
             }
-        } catch (e: VehicleException.NoCurrentVehicleException) {
-            flowOf(Vehicle.NO_VEHICLE)
-        }
+
     }
 
 }

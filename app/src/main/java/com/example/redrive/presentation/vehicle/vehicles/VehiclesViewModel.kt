@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.useCase.vehicle.DeleteVehicleUseCase
 import com.example.domain.useCase.vehicle.ObserveVehiclesUseCase
 import com.example.domain.useCase.vehicle.SetVehicleAsCurrentUseCase
-import com.example.redrive.AppStringResProvider
-import com.example.redrive.wrapLocaleDataSourceRequests
+import com.example.redrive.core.AppStringResProvider
+import com.example.redrive.core.wrapLocaleDataSourceRequests
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,16 +36,10 @@ class VehiclesViewModel @Inject constructor(
 
 
     suspend fun vehicles() {
-        _state.update {
-            it.copy(
-                isLoading = true
-            )
-        }
         val vehiclesFlow = observeVehiclesUseCase.invoke()
         vehiclesFlow.collectLatest { vehicles ->
             _state.update {
                 it.copy(
-                    isLoading = false,
                     error = false, errorMessage = "",
                     vehicles = vehicles
                 )
@@ -61,25 +55,24 @@ class VehiclesViewModel @Inject constructor(
 
     fun deleteVehicle(vehicleId: Long) {
         wrapLocaleDataSourceRequests(
+            appStringResProvider = stringResProvider,
             action = {
-                _state.update {
-                    it.copy(
-                        isLoading = true
-                    )
-                }
                 deleteVehicleUseCase.invoke(vehicleId)
             }
-        ) { e ->
+        ) { message ->
             _state.update {
                 it.copy(
                     error = true,
-                    errorMessage = stringResProvider.provideStringRes(e)
+                    errorMessage = message
                 )
             }
         }
 
     }
 
+    fun confirmDeleteCurrentVehicle(vehicleId:Long){
+
+    }
 
 
     fun resetError() {

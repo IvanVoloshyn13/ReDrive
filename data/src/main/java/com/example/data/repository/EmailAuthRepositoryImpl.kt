@@ -1,12 +1,11 @@
 package com.example.data.repository
 
 import com.example.data.di.DispatcherIo
-import com.example.data.toAppError
+import com.example.data.toAppAuthException
 import com.example.data.toFbUserAuthCredentials
 import com.example.firebase.FirebaseAuthRepository
 import com.example.data.toUserEntity
-import com.example.domain.appResult.AppResult
-import com.example.domain.appResult.AuthError
+import com.example.domain.AuthException
 import com.example.domain.model.SignInStatus
 import com.example.domain.model.UserAuthCredentials
 import com.example.domain.repository.EmailAuthRepository
@@ -26,41 +25,40 @@ class EmailAuthRepositoryImpl @Inject constructor(
     override suspend fun signInWithEmailAndPassword(
         email: String,
         password: String
-    ): AppResult<SignInStatus, AuthError> {
+    ) {
         return withContext(dispatcherIo) {
             try {
                 val fbUser = firebaseAuthRepository.signInWithEmail(email, password)
                 saveNewUserToLocalDb(fbUser)
-                AppResult.Success(result = SignInStatus.SignedIn)
             } catch (e: FirebaseException) {
-                AppResult.Error(exception = e.toAppError(e))
+                val appException = e.toAppAuthException()
+                throw appException
             } catch (e: NullPointerException) {
-                AppResult.Error(exception = AuthError.USER_NOT_FOUND)
+                throw AuthException.UserNotFoundException()
             } catch (e: Exception) {
-                AppResult.Error(exception = AuthError.UNKNOWN_ERROR)
+                throw AuthException.UnknownException()
             }
         }
 
     }
 
-    override suspend fun signUpWithEmail(credentials: UserAuthCredentials): AppResult<SignInStatus, AuthError> {
+    override suspend fun signUpWithEmail(credentials: UserAuthCredentials) {
         return withContext(dispatcherIo) {
             try {
                 val fbUser =
                     firebaseAuthRepository.signUpWithEmail(credentials.toFbUserAuthCredentials())
                 saveNewUserToLocalDb(fbUser)
-                AppResult.Success(result = SignInStatus.SignedIn)
             } catch (e: FirebaseException) {
-                AppResult.Error(exception = e.toAppError(e))
+                throw e.toAppAuthException()
             } catch (e: NullPointerException) {
-                AppResult.Error(exception = AuthError.USER_NOT_FOUND)
+                throw AuthException.UserNotFoundException()
             } catch (e: Exception) {
-                AppResult.Error(exception = AuthError.UNKNOWN_ERROR)
+                throw AuthException.UnknownException()
             }
         }
     }
 
-    override suspend fun sendPasswordReset(email: String): AppResult<Unit, Nothing> {
+    override suspend fun sendPasswordReset(email: String) {
         TODO("Not yet implemented")
     }
 

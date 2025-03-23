@@ -5,7 +5,6 @@ import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -16,8 +15,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.useCase.signUpFieldValidation.PasswordValidationResult
 import com.example.redrive.R
 import com.example.redrive.databinding.FragmentSignUpBinding
-import com.example.redrive.hideSoftInputAndClearViewsFocus
+import com.example.redrive.core.hideSoftInputAndClearViewsFocus
+import com.example.redrive.core.showErrorAndResetState
 import com.example.redrive.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -106,7 +107,9 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
         when (state.signUpStatus) {
             SignUpStatus.Failure -> {
-                showError(state.signUpErrorMessage)
+                showErrorAndResetState(state.signUpErrorMessage) {
+                    viewModel.resetState()
+                }
                 viewModel.resetState()
             }
 
@@ -114,16 +117,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             SignUpStatus.SignIn -> findNavController().navigate(R.id.action_global_tabsFragment)
         }
     }
-
-    private fun showError(@StringRes error: Int) {
-        Toast.makeText(
-            requireContext(),
-            getString(error),
-            Toast.LENGTH_SHORT
-        )
-            .show()
-    }
-
 
     private fun setupPasswordListeners() {
         with(binding.etPassword) {

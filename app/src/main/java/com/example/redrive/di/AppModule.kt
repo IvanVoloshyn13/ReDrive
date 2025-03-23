@@ -1,7 +1,7 @@
 package com.example.redrive.di
 
-import com.example.redrive.AppStringResProvider
-import com.example.redrive.AppStringResProviderImpl
+import com.example.redrive.core.AppStringResProvider
+import com.example.redrive.core.AppStringResProviderImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

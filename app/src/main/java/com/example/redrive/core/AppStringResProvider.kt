@@ -1,4 +1,4 @@
-package com.example.redrive
+package com.example.redrive.core
 
 import com.example.domain.AppException
 

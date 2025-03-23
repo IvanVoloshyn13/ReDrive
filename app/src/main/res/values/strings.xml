@@ -45,8 +45,7 @@
     <!--Buttons -->
     <string name="save">Save</string>
     <string name="clear">Clear</string>
-
-
+    <string name="delete_anyway">Delete Anyway</string>
 
 
     <string name="refuel">Refuel</string>
@@ -59,23 +58,16 @@
     <string name="fuel_price">Fuel price</string>
 
 
-
-
-
     <string name="empty_string"> </string>
-    <string name="is_current_vehicle_exception">You can not delete this vehicle because it is set as current</string>
+    <string name="is_current_vehicle_exception">You are about to delete the current vehicle, which will remove all associated data. Are you sure you want to proceed?</string>
     <string name="no_user_detected_exception_message">Please signIn or create account to add new vehicle</string>
-
-
-
-
 
 
     <!-- FIREBASE_ERRORS-->
     <string name="firebase_auth_error">An error occurred with Firebase Authentication. Please try again later.</string>
-    <string name="invalid_credentials">The credentials provided are invalid. Please check your email and password and try again.</string>
+    <string name="invalid_password">The credentials provided are invalid. Please check your password and try again.</string>
     <string name="user_collision">An account with this email already exists. Please use a different email or log in to the existing account.</string>
-    <string name="no_user_detected">No user detected with the provided credentials. Please sign up or check your login information.</string>
+    <string name="no_user_detected">The user account corresponding to email does not exist or has been disabled.Please sign up or check your login information.</string>
     <string name="unknown_error_firebase">An unknown error occurred. Please try again later or contact support.</string>
 
     <!-- SIGN_UP_ERRORS-->

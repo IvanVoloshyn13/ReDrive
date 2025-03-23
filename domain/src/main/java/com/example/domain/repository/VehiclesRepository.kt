@@ -13,7 +13,7 @@ interface VehiclesRepository {
     suspend fun editVehicle(uUid: String, vehicle: Vehicle)
 
     /** Delete vehicle from database
-     * @throws VehicleException.IsCurrentVehicleException() if vehicle trying to be delete is set as Current */
+     * @throws VehicleException.IsCurrentVehicleException if vehicle trying to be delete is set as Current */
     @Throws(VehicleException.IsCurrentVehicleException::class)
     suspend fun deleteVehicle(vehicleId: Long)
 
@@ -25,7 +25,6 @@ interface VehiclesRepository {
     suspend fun setVehicleAsCurrent(vehicleId: Long)
 
     /** Observe current vehicle from dataStore */
-    @Throws(VehicleException.NoCurrentVehicleException::class)
     fun observeCurrentVehicle(): Flow<Vehicle?>
 
     /**Observe vehicles from database */

@@ -1,5 +1,4 @@
-import com.example.domain.appResult.AppResult
-import com.example.domain.appResult.AuthError
+import com.example.domain.AuthException
 import com.example.domain.model.SignInStatus
 import com.example.domain.repository.EmailAuthRepository
 import com.example.domain.useCase.SignInWithEmailUseCase
@@ -22,11 +21,11 @@ class SignInWithEmailUseCaseTest {
     }
 
     @Test
-    fun `should return success if email and password are correct`()= runTest {
+    fun `should return success if email and password are correct`() = runTest {
         //Arrange
         val email = "test@example.com"
         val password = "123456"
-        val expectedResult = AppResult.Success(SignInStatus.SignedIn)
+        val expectedResult = SignInStatus.SignedIn
 
         coEvery {
             authRepository.signInWithEmailAndPassword(
@@ -37,7 +36,7 @@ class SignInWithEmailUseCaseTest {
         }
 
         // Act
-        val result =signInWithEmailUseCase.invoke(email, password)
+        val result = signInWithEmailUseCase.invoke(email, password)
 
         // Assert
         assertEquals(expectedResult, result)
@@ -45,52 +44,43 @@ class SignInWithEmailUseCaseTest {
     }
 
 
-    @Test
-    fun `should return error when email or password are wrong`()= runTest {
+    @Test(expected = AuthException.InvalidPasswordException::class)
+    fun `should return error when email or password are wrong`() = runTest {
         //Arrange
         val email = "wrong@example.com"
         val password = "wrongPassword"
-        val expectedResult = AppResult.Error(AuthError.INVALID_PASSWORD)
 
         coEvery {
             authRepository.signInWithEmailAndPassword(
                 email,
                 password
             )
-            expectedResult
         }
 
         // Act
-        val result =signInWithEmailUseCase.invoke(email, password)
+        signInWithEmailUseCase.invoke(email, password)
 
         // Assert
-        assertEquals(expectedResult, result)
 
     }
 
-    @Test
-    fun `should return UserNotFound when email is wrong`()= runTest {
+    @Test(expected = AuthException.UserNotFoundException::class)
+    fun `should return UserNotFound when email is wrong`() = runTest {
         //Arrange
         val email = "notFound@example.com"
         val password = "justPassword"
-        val expectedResult = AppResult.Error(AuthError.USER_NOT_FOUND)
-
         coEvery {
             authRepository.signInWithEmailAndPassword(
                 email,
                 password
             )
-            expectedResult
         }
 
         // Act
-        val result =signInWithEmailUseCase.invoke(email, password)
+       signInWithEmailUseCase.invoke(email, password)
 
         // Assert
-        assertEquals(expectedResult, result)
-
     }
-
 
 
 }

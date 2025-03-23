@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,8 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.model.SignInStatus
 import com.example.redrive.R
 import com.example.redrive.databinding.FragmentSignInBinding
-import com.example.redrive.findTopNavController
-import com.example.redrive.hideSoftInputAndClearViewsFocus
+import com.example.redrive.core.findTopNavController
+import com.example.redrive.core.hideSoftInputAndClearViewsFocus
+import com.example.redrive.core.showErrorAndResetState
 import com.example.redrive.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +54,10 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         }
 
         when (state.signInStatus) {
-            SignInStatus.Failure -> showError(state.errorMessage)
+            SignInStatus.Failure -> showErrorAndResetState(state.errorMessage) {
+                viewModel.resetErrorState()
+            }
+
             SignInStatus.SignedIn -> navigateToTabs()
             SignInStatus.SignOut -> Unit
         }
@@ -69,14 +72,6 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 }
             }
         }
-    }
-
-    private fun showError(@StringRes errorMessage: Int) {
-        if (errorMessage == NO_STRING_RES) return
-        Snackbar.make(requireView(), getString(errorMessage), Snackbar.LENGTH_LONG)
-            .setTextMaxLines(3)
-            .show()
-        viewModel.resetErrorState()
     }
 
     private fun setupListeners() {

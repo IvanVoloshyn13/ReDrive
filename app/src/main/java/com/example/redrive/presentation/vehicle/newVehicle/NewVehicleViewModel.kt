@@ -6,8 +6,7 @@ import com.example.domain.UserException
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.domain.useCase.vehicle.AddNewVehicleUseCase
-import com.example.redrive.AppStringResProvider
-import com.example.redrive.wrapLocaleDataSourceRequests
+import com.example.redrive.core.AppStringResProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -37,9 +36,6 @@ class NewVehicleViewModel @Inject constructor(
 
     private val _isBttSaveEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isBttSaveEnabled = _isBttSaveEnabled.asStateFlow()
-
-    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
 
     private val _errorState: MutableStateFlow<Pair<Boolean, String>> =
         MutableStateFlow(Pair(false, ""))

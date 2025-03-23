@@ -2,10 +2,10 @@ package com.example.redrive.presentation.auth.signIn
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.appResult.AppResult
+import com.example.domain.AppException
 import com.example.domain.model.SignInStatus
 import com.example.domain.useCase.SignInWithEmailUseCase
-import com.example.redrive.getStringResource
+import com.example.redrive.core.AppStringResProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signInUseCase: SignInWithEmailUseCase
+    private val signInUseCase: SignInWithEmailUseCase,
+    private val appStringResProvider: AppStringResProvider
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<FragmentSignInState>(FragmentSignInState())
@@ -42,34 +43,29 @@ class SignInViewModel @Inject constructor(
 
             val email = _state.value.email
             val password = _state.value.password
-            val result = signInUseCase.invoke(email = email, password = password)
 
-            when (result) {
-                is AppResult.Success -> {
-                    _state.update {
-                        it.copy(
-                            loading = false,
-                            signInStatus = SignInStatus.SignedIn,
-                            isError = false,
-                            errorMessage = NO_STRING_RES
-                        )
-                    }
-                    _navigation.emit(true)
+            try {
+               signInUseCase.invoke(email = email, password = password)
+                _state.update {
+                    it.copy(
+                        loading = false,
+                        signInStatus = SignInStatus.SignedIn,
+                        isError = false,
+                        errorMessage = ""
+                    )
                 }
-
-                is AppResult.Error -> {
-                    _state.update {
-                        it.copy(
-                            loading = false,
-                            isError = true,
-                            errorMessage = result.exception.getStringResource(),
-                            signInStatus = SignInStatus.Failure
-                        )
-                    }
-                    _navigation.emit(false)
+                _navigation.emit(true)
+            }catch (e:AppException){
+                _state.update {
+                    it.copy(
+                        loading = false,
+                        isError = true,
+                        errorMessage = appStringResProvider.provideStringRes(e),
+                        signInStatus = SignInStatus.Failure
+                    )
                 }
-
             }
+
         }
     }
 
@@ -92,7 +88,7 @@ class SignInViewModel @Inject constructor(
                 loading = false,
                 isError = false,
                 signInStatus = SignInStatus.SignOut,
-                errorMessage = NO_STRING_RES
+                errorMessage = ""
             )
         }
     }

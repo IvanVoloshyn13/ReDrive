@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -14,10 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.domain.model.VehicleType
 import com.example.redrive.R
+import com.example.redrive.core.showErrorAndResetState
 import com.example.redrive.databinding.FragmentNewVehicleBinding
-import com.example.redrive.presentation.auth.signIn.NO_STRING_RES
 import com.example.redrive.viewBinding
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -88,7 +86,9 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
             launch {
                 viewModel.errorState.collectLatest {
                     if (it.first) {
-                        showError(it.second)
+                        showErrorAndResetState(it.second) {
+                            viewModel.resetErrorState()
+                        }
                     }
                 }
             }
@@ -141,12 +141,6 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
         }
     }
 
-    private fun showError(errorMessage: String) {
-        Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_LONG)
-            .setTextMaxLines(3)
-            .show()
-        viewModel.resetErrorState()
-    }
 
     private fun setupVehicleTypeSwitcher() {
         binding.vehicleToggle.addOnButtonCheckedListener { group, checkedId, isChecked ->
