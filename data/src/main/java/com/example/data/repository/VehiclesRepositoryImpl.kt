@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import android.util.Log
 import com.example.data.toEntity
 import com.example.data.toVehicle
 import com.example.domain.model.Vehicle
@@ -32,6 +33,7 @@ class VehiclesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun confirmCurrentVehicleDelete(vehicleId: Long) {
+        appVehiclePreferences.clearCurrentVehicleId()
         vehiclesDao.deleteVehicle(vehicleId)
     }
 

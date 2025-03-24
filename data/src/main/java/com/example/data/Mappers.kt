@@ -48,7 +48,7 @@ fun UserAuthCredentials.toFbUserAuthCredentials(): FbUserAuthCredentials {
 
 fun Vehicle.toEntity(uUid: String): VehicleEntity {
     return VehicleEntity(
-        id = 0,
+        id = this.id ,
         userId = uUid,
         name = this.name,
         vehicleType = type.name,

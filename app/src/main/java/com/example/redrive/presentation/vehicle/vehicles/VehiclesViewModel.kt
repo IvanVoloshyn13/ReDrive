@@ -2,6 +2,7 @@ package com.example.redrive.presentation.vehicle.vehicles
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.useCase.vehicle.ConfirmDeleteVehicleUseCase
 import com.example.domain.useCase.vehicle.DeleteVehicleUseCase
 import com.example.domain.useCase.vehicle.ObserveVehiclesUseCase
 import com.example.domain.useCase.vehicle.SetVehicleAsCurrentUseCase
@@ -20,6 +21,7 @@ class VehiclesViewModel @Inject constructor(
     private val observeVehiclesUseCase: ObserveVehiclesUseCase,
     private val setVehicleAsCurrentUseCase: SetVehicleAsCurrentUseCase,
     private val deleteVehicleUseCase: DeleteVehicleUseCase,
+    private val confirmDeleteVehicleUseCase: ConfirmDeleteVehicleUseCase,
     private val stringResProvider: AppStringResProvider
 ) : ViewModel() {
 
@@ -70,7 +72,10 @@ class VehiclesViewModel @Inject constructor(
 
     }
 
-    fun confirmDeleteCurrentVehicle(vehicleId:Long){
+    fun confirmDeleteCurrentVehicle(vehicleId: Long) {
+        viewModelScope.launch {
+            confirmDeleteVehicleUseCase.invoke(vehicleId)
+        }
 
     }
 

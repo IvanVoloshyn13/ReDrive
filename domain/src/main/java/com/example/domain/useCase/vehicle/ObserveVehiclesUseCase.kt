@@ -8,15 +8,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
 
-class ObserveVehiclesUseCase(
+class ObserveVehiclesUseCase  @Inject constructor(
     private val repository: VehiclesRepository,
     private val userSessionRepository: UserSessionRepository
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun invoke(): Flow<List<Vehicle>> {
+    operator fun invoke(): Flow<List<Vehicle>>  {
         return userSessionRepository.observeCurrentUserId().flatMapLatest { userId ->
             if (!userId.isNullOrEmpty()) {
                 val vehiclesFlow = repository.observeVehicles(userId)

@@ -4,8 +4,9 @@ import com.example.domain.model.Vehicle
 import com.example.domain.repository.UserSessionRepository
 import com.example.domain.repository.VehiclesRepository
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-class EditVehicleUseCase(
+class EditVehicleUseCase  @Inject constructor(
     private val repository: VehiclesRepository,
     private val userSessionRepository: UserSessionRepository
 ) {

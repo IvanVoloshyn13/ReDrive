@@ -1,14 +1,11 @@
 package com.example.redrive.presentation.vehicle.vehicles
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,11 +13,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.Vehicle
 import com.example.redrive.R
-import com.example.redrive.core.showErrorAndResetState
+import com.example.redrive.core.hideSoftInputAndClearViewsFocus
 import com.example.redrive.databinding.FragmentVehiclesBinding
 import com.example.redrive.viewBinding
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.SnackbarContentLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -33,7 +28,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        hideSoftInputAndClearViewsFocus(binding.root)
         vehiclesAdapter = VehiclesAdapter(this)
         initVehicleRecyclerView()
         collectState()
@@ -55,24 +50,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
         vehiclesAdapter.submitList(state.vehicles) {
             binding.rvVehicles.scrollToPosition(0)
             if (state.error) {
-                AlertDialog.Builder(requireContext()).setMessage(state.errorMessage)
-                    .setPositiveButton(
-                        getString(R.string.delete_anyway),
-                    ) { _, _ ->
-                        Toast.makeText(
-                            requireContext(),
-                            "Delete",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    .setNeutralButton("Cancel") { _, _ ->
-                        Toast.makeText(
-                            requireContext(),
-                            "Cancel",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }.show()
-
+                showAlertDialog(state.errorMessage, state.vehicles)
                 viewModel.resetError()
 
             }
@@ -86,12 +64,34 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
         rv.adapter = vehiclesAdapter
     }
 
+    private fun showAlertDialog(message: String, vehicles: List<Vehicle>) {
+        val dialog = AlertDialog.Builder(requireContext()).setMessage(message)
+            .setPositiveButton(
+                getString(R.string.delete_anyway),
+            ) { _, _ ->
+                val currentVehicleId = vehicles.find { it.isCurrentVehicle }?.id
+                viewModel.confirmDeleteCurrentVehicle(
+                    currentVehicleId ?: throw RuntimeException("TODO")
+                )
+            }
+            .setNegativeButton(getString(R.string.cancel)) { di, _ ->
+                di.dismiss()
+            }.create()
+
+        dialog.show()
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(
+            ContextCompat.getColor(requireContext(), R.color.md_theme_light_error)
+        )
+    }
+
     override fun onVehicleItemClick(vehicle: Vehicle) {
         viewModel.setVehicleAsCurrent(vehicleId = vehicle.id)
     }
 
     override fun editVehicle(vehicle: Vehicle) {
-        TODO("navigate to editVehicle fragment and send vehicle as args")
+        val action = VehiclesFragmentDirections.actionVehiclesFragmentToEditVehicleFragment(vehicle)
+        findNavController().navigate(action)
     }
 
     override fun deleteVehicle(vehicleId: Long) {

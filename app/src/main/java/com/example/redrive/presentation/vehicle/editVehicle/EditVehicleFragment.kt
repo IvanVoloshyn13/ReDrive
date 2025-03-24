@@ -1,4 +1,4 @@
-package com.example.redrive.presentation.vehicle.newVehicle
+package com.example.redrive.presentation.vehicle.editVehicle
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -11,104 +11,86 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.domain.model.VehicleType
 import com.example.redrive.R
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
-import com.example.redrive.core.showErrorAndResetState
-import com.example.redrive.databinding.FragmentNewVehicleBinding
+import com.example.redrive.databinding.FragmentEditVehicleBinding
 import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
-    private val binding by viewBinding<FragmentNewVehicleBinding>()
-    private val viewModel by viewModels<NewVehicleViewModel>()
+class EditVehicleFragment : Fragment(R.layout.fragment_edit_vehicle) {
+
+    private val args: EditVehicleFragmentArgs by navArgs()
+
+    private val viewModel by viewModels<EditVehicleViewModel>()
+    private val binding by viewBinding<FragmentEditVehicleBinding>()
+    private val vehicle by lazy {
+        viewModel.emitVehicle(args.editedVehicle)
+        args.editedVehicle
+    }
     private val editable by lazy {
         Editable.Factory.getInstance()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         hideSoftInputAndClearViewsFocus(binding.root)
-
-        collectStates()
-        setupOnOdometerTextChangeListener()
-        setupOnVehicleNameTextChangeListener()
+        viewModel.emitVehicle(vehicle)
         setupVehicleTypeSwitcher()
+        setupOnVehicleNameTextChangeListener()
+        setupOnOdometerTextChangeListener()
+
+        updateUi()
 
         binding.btnSave.setOnClickListener {
-            viewModel.saveNewVehicle()
+            viewModel.editVehicle()
         }
 
     }
 
-    private fun collectStates() {
+    private fun updateUi() {
         viewLifecycleOwner.lifecycleScope.launch {
-
             launch {
-                viewModel.vehicleNameState.collectLatest {
-                    binding.etVehicleName.setTextKeepState(editable.newEditable(it))
+                viewModel.areVehiclesTheSame.collectLatest {
+                    binding.btnSave.isEnabled = !it
                 }
             }
 
             launch {
-                viewModel.vehicleTypeState.collectLatest {
-                    when (it) {
+                viewModel.editedVehicle.collectLatest {
+                    binding.etVehicleName.setTextKeepState(editable.newEditable(it.name))
+                    binding.etOdometer.setTextKeepState(
+                        editable.newEditable(it.initialOdometerValue.toString())
+                    )
+                    when (it.type) {
                         VehicleType.Car -> {
+                            binding.vehicleToggle.check(R.id.btt_car)
                             setVehicleTypeIcon(R.drawable.ic_car)
                         }
 
                         VehicleType.Bike -> {
+                            binding.vehicleToggle.check(R.id.btt_bike)
                             setVehicleTypeIcon(R.drawable.ic_bike)
                         }
 
                         VehicleType.Default -> {
+                            binding.vehicleToggle.check(R.id.btt_car)
                             return@collectLatest
                         }
                     }
                 }
             }
-
             launch {
-                viewModel.odometerState.collectLatest {
-                    binding.etOdometer.setTextKeepState(
-                        editable.newEditable(it)
-                    )
+                viewModel.navigate.collectLatest {
+                    if (it) findNavController().popBackStack()
                 }
             }
 
-            launch {
-                viewModel.isBttSaveEnabled.collectLatest {
-                    binding.btnSave.isEnabled = it
-                }
-            }
-
-            launch {
-                viewModel.errorState.collectLatest {
-                    if (it.first) {
-                        showErrorAndResetState(it.second) {
-                            viewModel.resetErrorState()
-                        }
-                    }
-                }
-            }
-
-            launch {
-                viewModel.navigation.collectLatest {
-                    when (it) {
-                        NewVehicleViewModel.NavigationPath.ToVehicles -> {
-                            findNavController().popBackStack()
-                        }
-
-                        null -> return@collectLatest
-                    }
-                }
-            }
         }
-
     }
 
     private fun setupOnVehicleNameTextChangeListener() {
@@ -122,7 +104,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
                 }
             }
             etVehicleName.doAfterTextChanged {
-                viewModel.setVehicleName(it.toString())
+                viewModel.updateVehicleName(it.toString())
             }
 
         }
@@ -139,7 +121,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
                 }
             }
             etOdometer.doAfterTextChanged {
-                viewModel.setVehicleOdometer(it.toString())
+                viewModel.updateOdometer(it.toString())
             }
         }
     }

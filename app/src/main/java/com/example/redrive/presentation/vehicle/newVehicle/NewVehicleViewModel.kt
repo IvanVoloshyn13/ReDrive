@@ -83,6 +83,7 @@ class NewVehicleViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 addNewVehicleUseCase.invoke(vehicle)
+                _navigation.emit(NavigationPath.ToVehicles)
             } catch (e: UserException.NoUserDetectedException) {
                 _errorState.update {
                     it.copy(

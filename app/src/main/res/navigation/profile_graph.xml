@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_vehiclesFragment_to_newVehicleFragment"
             app:destination="@id/newVehicleFragment" />
+        <action
+            android:id="@+id/action_vehiclesFragment_to_editVehicleFragment"
+            app:destination="@id/editVehicleFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -36,4 +39,13 @@
         android:name="com.example.redrive.presentation.vehicle.newVehicle.NewVehicleFragment"
         android:label="Add Vehicle"
         tools:layout="@layout/fragment_new_vehicle" />
+    <fragment
+        android:id="@+id/editVehicleFragment"
+        android:name="com.example.redrive.presentation.vehicle.editVehicle.EditVehicleFragment"
+        android:label="@string/edit_vehicle"
+        tools:layout="@layout/fragment_edit_vehicle">
+        <argument
+            android:name="edited_vehicle"
+            app:argType="com.example.domain.model.Vehicle" />
+    </fragment>
 </navigation>

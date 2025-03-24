@@ -11,5 +11,10 @@
         android:title="@string/delete">
 
     </item>
+    <item
+        android:id="@+id/set_as_current"
+        android:title="@string/set_as_current">
+
+    </item>
 
 </menu>

@@ -1,25 +1,26 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id 'java-library'
-    alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.google.dagger.hilt)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+apply from: "$rootDir/core.gradle"
+android {
+    namespace 'com.example.domain'
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_11
-    }
-}
 
 dependencies {
 
     implementation libs.kotlinx.coroutines
     testImplementation libs.junit
+
+    //Dagger_Hilt
+    implementation libs.hilt.android
+    ksp libs.ksp.hilt.compiler
 
     testImplementation libs.mockk
     testImplementation libs.slf4j.simple

@@ -24,7 +24,7 @@ class VehiclesAdapter(private val listener: VehicleActionsListener) :
         val vehicle = v.tag as Vehicle
 
         when (v.id) {
-            R.id.iv_more -> showPopUpMenu(view = v)
+            R.id.iv_more -> showPopUpMenu(view = v, vehicle)
             else -> listener.onVehicleItemClick(vehicle)
         }
     }
@@ -43,11 +43,12 @@ class VehiclesAdapter(private val listener: VehicleActionsListener) :
         holder.bind(vehicle)
     }
 
-    private fun showPopUpMenu(view: View) {
+    private fun showPopUpMenu(view: View, vehicle: Vehicle) {
         popupMenu = PopupMenu(view.context, view)
         popupMenu.menuInflater.inflate(R.menu.vehicles_more_pop_up_menu, popupMenu.menu)
+        val setAsCurrentItem = popupMenu.menu.findItem(R.id.set_as_current)
+        setAsCurrentItem.isVisible = !vehicle.isCurrentVehicle
         popupMenu.setOnMenuItemClickListener {
-            val vehicle = view.tag as Vehicle
             when (it.itemId) {
                 R.id.edit -> {
                     listener.editVehicle(vehicle)
@@ -55,6 +56,10 @@ class VehiclesAdapter(private val listener: VehicleActionsListener) :
 
                 R.id.delete -> {
                     listener.deleteVehicle(vehicle.id)
+                }
+
+                R.id.set_as_current -> {
+                    listener.onVehicleItemClick(vehicle)
                 }
 
             }
@@ -81,6 +86,7 @@ class VehicleViewHolder(
     fun bind(vehicle: Vehicle) {
         binding.root.tag = vehicle
         binding.ivMore.tag = vehicle
+        binding.ivIsCurrent.visibility = if (vehicle.isCurrentVehicle) View.VISIBLE else View.GONE
         binding.tvVehicleName.text = vehicle.name
         binding.ivVehicleType.setImageDrawable(
             setVehicleIconByType(

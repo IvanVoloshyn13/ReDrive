@@ -3,10 +3,11 @@ package com.example.domain.useCase.userSession
 import com.example.domain.repository.UserSessionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 const val REDRIVE_APP_INITIALS = "RD"
 
-class GetUserInitialsUseCase(private val repository: UserSessionRepository) {
+class GetUserInitialsUseCase  @Inject constructor (private val repository: UserSessionRepository) {
 
     operator fun invoke(): Flow<String> {
         return repository.observeCurrentUser().map {

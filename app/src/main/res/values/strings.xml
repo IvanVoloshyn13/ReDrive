@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ReDrive</string>
 
+    <string name="edit_vehicle">Edit vehicle</string>
+
     <!--Profile -->
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
@@ -46,6 +48,7 @@
     <string name="save">Save</string>
     <string name="clear">Clear</string>
     <string name="delete_anyway">Delete Anyway</string>
+    <string name="cancel">Cancel</string>
 
 
     <string name="refuel">Refuel</string>
@@ -78,5 +81,6 @@
     <string name="confirm_password_error">Passwords do not match </string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="set_as_current">Set as current</string>
 
 </resources>
