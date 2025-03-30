@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.domain.model.AppSettingsItem
 import com.example.domain.model.AvgConsumption
 import com.example.domain.model.Capacity
@@ -15,6 +16,7 @@ import com.example.domain.model.Distance
 import com.example.domain.model.SettingType
 import com.example.domain.model.Settings
 import com.example.redrive.R
+import com.example.redrive.core.findTopNavController
 import com.example.redrive.core.showErrorAndResetState
 import com.example.redrive.databinding.FragmentSettingsBinding
 import com.example.redrive.viewBinding
@@ -38,7 +40,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 viewModel.settings.collectLatest {
-                    Log.d("LOG", it.toString())
                     setUnitsAbbreviation(state = it)
                 }
             }
@@ -55,6 +56,15 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                             errorMessage = it.second,
                             resetStateAction = { viewModel.resetErrorState() }
                         )
+                    }
+                }
+            }
+
+            launch {
+                viewModel.navigation.collectLatest {
+                    when (it) {
+                        SettingsViewModel.NavigateBack -> findNavController().popBackStack()
+                        null -> return@collectLatest
                     }
                 }
             }

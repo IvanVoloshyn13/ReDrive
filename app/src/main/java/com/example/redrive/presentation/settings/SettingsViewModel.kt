@@ -14,8 +14,11 @@ import com.example.domain.useCase.settings.UpdateSettingsUseCase
 import com.example.redrive.core.AppStringResProvider
 import com.example.redrive.core.wrapLocaleDataSourceRequests
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -43,6 +46,14 @@ class SettingsViewModel @Inject constructor(
     val areSettingsTheSame = settings.map { settings ->
         originalSettings.value == settings
     }.stateIn(viewModelScope, SharingStarted.Lazily, true)
+
+    private val _navigation: MutableSharedFlow<NavigateBack?> = MutableSharedFlow(
+        replay = 1,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_LATEST
+    )
+
+    val navigation = _navigation.asSharedFlow()
 
 
     init {
@@ -123,7 +134,10 @@ class SettingsViewModel @Inject constructor(
     fun updateSettings() {
         wrapLocaleDataSourceRequests(
             appStringResProvider = appStringResProvider,
-            action = { updateSettingsUseCase.invoke(settings = settings.value) }
+            action = {
+                updateSettingsUseCase.invoke(settings = settings.value)
+                _navigation.emit(NavigateBack)
+            }
         ) { message ->
             _error.update {
                 it.copy(first = true, second = message)
@@ -136,5 +150,7 @@ class SettingsViewModel @Inject constructor(
             it.copy(first = false, second = "")
         }
     }
+
+    data object NavigateBack
 
 }
