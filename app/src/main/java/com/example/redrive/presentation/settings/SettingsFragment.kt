@@ -1,11 +1,11 @@
 package com.example.redrive.presentation.settings
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.example.domain.model.AppSettingsItem
 import com.example.domain.model.AvgConsumption
 import com.example.domain.model.Capacity
@@ -38,7 +38,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 viewModel.settings.collectLatest {
-                    updateUi(state = it)
+                    Log.d("LOG", it.toString())
+                    setUnitsAbbreviation(state = it)
                 }
             }
 
@@ -62,84 +63,104 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun setupListeners() {
         binding.itemCurrency.itemCurrency.setOnClickListener {
-            val currencies = viewModel.getCurrencies()
-            val items = currencies.map {
-                it.unit
-            }.toTypedArray()
-
-            openItemUnitsDialog(
-                title = getString(R.string.currency),
-                items = items,
-                type = SettingType.Currency,
-                elements = currencies
-            )
+            showCurrencyUnits()
         }
 
         binding.itemCapacity.itemCapacity.setOnClickListener {
-            val capacities = viewModel.getCapacities()
-            val items = capacities.map {
-                it.unit
-            }.toTypedArray()
-            openItemUnitsDialog(
-                title = getString(R.string.capacity),
-                items = items,
-                type = SettingType.Capacity,
-                elements = capacities
-            )
+            showCapacityUnits()
         }
 
         binding.itemDistance.itemDistance.setOnClickListener {
-            val distances = viewModel.getDistances()
-            val items = distances.map {
-                it.unit
-            }.toTypedArray()
-            openItemUnitsDialog(
-                title = getString(R.string.capacity),
-                items = items,
-                type = SettingType.Distance,
-                elements = distances
-            )
+            showDistanceUnits()
         }
 
         binding.itemAvgConsumption.itemAvgConsumption.setOnClickListener {
-            val avgConsumptions = viewModel.getAvgConsumptions()
-            val items = avgConsumptions.map {
-                it.unit
-            }.toTypedArray()
-            openItemUnitsDialog(
-                title = getString(R.string.capacity),
-                items = items,
-                type = SettingType.AvgConsumption,
-                elements = avgConsumptions
-            )
+            showAvgConsumptionUnits()
         }
 
         binding.itemDatePattern.itemDatePattern.setOnClickListener {
-            val datePatterns = viewModel.getDateFormatPatternsUnits()
-            val items = datePatterns.map {
-                it.pattern
-            }.toTypedArray()
-            openItemUnitsDialog(
-                title = getString(R.string.capacity),
-                items = items,
-                type = SettingType.FormatOfDate,
-                elements = datePatterns
-            )
+            showDateFormatPatternsUnits()
         }
 
         binding.btnSave.setOnClickListener {
             viewModel.updateSettings()
         }
-
     }
 
-    private fun updateUi(state: Settings) {
+    private fun setUnitsAbbreviation(state: Settings) {
         binding.itemCurrency.tvAbbreviation.text = state.currencyAbbr
         binding.itemCapacity.tvAbbreviation.text = state.capacityAbbr
         binding.itemDistance.tvAbbreviation.text = state.distanceAbbr
         binding.itemAvgConsumption.tvAbbreviation.text = state.avgConsumptionAbbr
         binding.itemDatePattern.tvAbbreviation.text = state.dateFormatPattern
     }
+
+    private fun showCurrencyUnits() {
+        val currencies = viewModel.getCurrencies()
+        val items = currencies.map {
+            it.unit
+        }.toTypedArray()
+
+        openItemUnitsDialog(
+            title = getString(R.string.currency),
+            items = items,
+            type = SettingType.Currency,
+            elements = currencies
+        )
+    }
+
+    private fun showCapacityUnits() {
+        val capacities = viewModel.getCapacities()
+        val items = capacities.map {
+            it.unit
+        }.toTypedArray()
+        openItemUnitsDialog(
+            title = getString(R.string.capacity),
+            items = items,
+            type = SettingType.Capacity,
+            elements = capacities
+        )
+    }
+
+    private fun showDistanceUnits() {
+        val distances = viewModel.getDistances()
+        val items = distances.map {
+            it.unit
+        }.toTypedArray()
+        openItemUnitsDialog(
+            title = getString(R.string.capacity),
+            items = items,
+            type = SettingType.Distance,
+            elements = distances
+        )
+    }
+
+    private fun showAvgConsumptionUnits() {
+        val avgConsumptions = viewModel.getAvgConsumptions()
+        val items = avgConsumptions.map {
+            it.unit
+        }.toTypedArray()
+        openItemUnitsDialog(
+            title = getString(R.string.capacity),
+            items = items,
+            type = SettingType.AvgConsumption,
+            elements = avgConsumptions
+        )
+    }
+
+    private fun showDateFormatPatternsUnits() {
+        val datePatterns = viewModel.getDateFormatPatternsUnits()
+        val items = datePatterns.map {
+            it.pattern
+        }.toTypedArray()
+        openItemUnitsDialog(
+            title = getString(R.string.capacity),
+            items = items,
+            type = SettingType.FormatOfDate,
+            elements = datePatterns
+        )
+    }
+
 
     private fun openItemUnitsDialog(
         title: String,

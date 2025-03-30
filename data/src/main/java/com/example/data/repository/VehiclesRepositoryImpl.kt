@@ -2,10 +2,12 @@ package com.example.data.repository
 
 import com.example.data.toEntity
 import com.example.data.toVehicle
+import com.example.domain.model.Settings
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.domain.repository.VehiclesRepository
 import com.example.localedatasource.dataStore.AppVehiclePreferences
+import com.example.localedatasource.room.daos.SettingsDao
 import com.example.localedatasource.room.daos.VehiclesDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -19,8 +21,16 @@ class VehiclesRepositoryImpl @Inject constructor(
     private val vehiclesDao: VehiclesDao
 ) : VehiclesRepository {
 
-    override suspend fun addNewVehicle(uUid: String, vehicle: Vehicle): Long {
-        return vehiclesDao.addVehicle(vehicle.toEntity(uUid))
+    override suspend fun addVehicleWithSettings(
+        uUid: String,
+        vehicle: Vehicle,
+        settings: Settings
+    ): Long {
+        val vehicleId = vehiclesDao.addVehicleWithSettings(
+            vehicle = vehicle.toEntity(uUid),
+            settings = settings.toEntity()
+        )
+        return  vehicleId
     }
 
     override suspend fun editVehicle(uUid: String, vehicle: Vehicle) {

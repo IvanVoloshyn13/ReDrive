@@ -78,13 +78,26 @@ fun DefaultAppSettingsResponse.toSettings(): Settings {
     )
 }
 
-fun SettingsEntity.toSettings():Settings{
+fun SettingsEntity.toSettings(): Settings {
     return Settings(
-        currencyAbbr = this.currency.abbreviation,
-        capacityAbbr = this.capacity.abbreviation,
-        distanceAbbr = this.distance.abbreviation,
-        avgConsumptionAbbr = this.avgConsumption.abbreviation,
-        dateFormatPattern = this.dateFormatPatter.pattern
+        id = this.id,
+        currencyAbbr = this.currency,
+        capacityAbbr = this.capacity,
+        distanceAbbr = this.distance,
+        avgConsumptionAbbr = this.avgConsumption,
+        dateFormatPattern = this.dateFormatPatter
+    )
+}
+
+fun Settings.toEntity(vehicleId: Long? = null): SettingsEntity {
+    return SettingsEntity(
+        id = this.id,
+        vehicleId = vehicleId ?: 0,
+        currency = this.currencyAbbr,
+        capacity = this.capacityAbbr,
+        distance = this.distanceAbbr,
+        avgConsumption = this.avgConsumptionAbbr,
+        dateFormatPatter = this.dateFormatPattern
     )
 }
 

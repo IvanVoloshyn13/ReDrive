@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.UserException
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
+import com.example.domain.useCase.settings.UpdateSettingsUseCase
 import com.example.domain.useCase.vehicle.AddNewVehicleUseCase
 import com.example.redrive.core.AppStringResProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NewVehicleViewModel @Inject constructor(
     private val addNewVehicleUseCase: AddNewVehicleUseCase,
-    private val appStringResProvider: AppStringResProvider
+    private val appStringResProvider: AppStringResProvider,
 ) : ViewModel() {
     private val _vehicleType = MutableStateFlow<VehicleType>(VehicleType.Default)
     val vehicleTypeState: StateFlow<VehicleType> = _vehicleType.asStateFlow()
@@ -60,6 +61,8 @@ class NewVehicleViewModel @Inject constructor(
             }
         }
     }
+
+
 
     fun switchVehicleType(type: VehicleType) {
         _vehicleType.value = type

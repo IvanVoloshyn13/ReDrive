@@ -11,13 +11,12 @@ class UpdateSettingsUseCase @Inject constructor(
     private val repository: SettingsRepository,
     private val observeCurrentVehicleUseCase: ObserveCurrentVehicleUseCase
 ) {
-
     suspend operator fun invoke(settings: Settings) {
         val vehicle = observeCurrentVehicleUseCase.invoke().first()
         vehicle?.let {
             repository.updateSettings(settings = settings, vehicleId = it.id)
         }
             ?: throw VehicleException.NoCurrentVehicleException() //maybe i can find better Exception name
-
     }
+
 }

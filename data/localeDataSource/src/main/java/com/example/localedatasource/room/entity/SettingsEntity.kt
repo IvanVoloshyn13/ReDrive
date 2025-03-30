@@ -18,13 +18,13 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["vehicle_id"], unique = true)]
 )
 data class SettingsEntity(
-    @PrimaryKey(autoGenerate = false) val id: Long = 1L,
-    @ColumnInfo(name = "vehicle_id") val vehicleId: String,
-    val currency: Currency,
-    val distance: Distance,
-    val capacity: Capacity,
-    @ColumnInfo(name = "avg_consumption") val avgConsumption: AvgConsumption,
-    @ColumnInfo(name = "date_format_pattern") val dateFormatPatter: DateFormatPattern
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @ColumnInfo(name = "vehicle_id") val vehicleId: Long = 0,
+    val currency: String,
+    val distance: String,
+    val capacity: String,
+    @ColumnInfo(name = "avg_consumption") val avgConsumption: String,
+    @ColumnInfo(name = "date_format_pattern") val dateFormatPatter: String
 )
 
 data class Currency(

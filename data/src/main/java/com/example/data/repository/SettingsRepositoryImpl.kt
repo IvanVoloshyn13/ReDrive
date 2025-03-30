@@ -1,5 +1,7 @@
 package com.example.data.repository
 
+import android.util.Log
+import com.example.data.toEntity
 import com.example.data.toSettings
 import com.example.domain.model.AvgConsumption
 import com.example.domain.model.Capacity
@@ -81,10 +83,10 @@ class SettingsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateSettings(settings: Settings, vehicleId: Long) {
-        TODO("Not yet implemented")
+        settingsDao.updateSettings(settings.toEntity(vehicleId))
     }
 
     override suspend fun getDateFormatPattern(): String {
-        return settingsDao.getDateFormatPattern().pattern
+        return settingsDao.getDateFormatPattern()
     }
 }

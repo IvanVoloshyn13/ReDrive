@@ -1,20 +1,20 @@
 package com.example.domain.repository
 
 import com.example.domain.VehicleException
+import com.example.domain.model.Settings
 import com.example.domain.model.Vehicle
 import kotlinx.coroutines.flow.Flow
 
 interface VehiclesRepository {
 
-    /** Add new vehicle to local database */
-    suspend fun addNewVehicle(uUid: String, vehicle: Vehicle): Long
+    /** Add new vehicle with default settings to local database using
+     * database Transaction */
+    suspend fun addVehicleWithSettings(uUid: String, vehicle: Vehicle, settings: Settings): Long
 
     /** Edit vehicle  */
     suspend fun editVehicle(uUid: String, vehicle: Vehicle)
 
-    /** Delete vehicle from database
-     * @throws VehicleException.IsCurrentVehicleException if vehicle trying to be delete is set as Current */
-    @Throws(VehicleException.IsCurrentVehicleException::class)
+    /** Delete vehicle from database */
     suspend fun deleteVehicle(vehicleId: Long)
 
     /** Delete current vehicle and all related data  from database after user confirm */

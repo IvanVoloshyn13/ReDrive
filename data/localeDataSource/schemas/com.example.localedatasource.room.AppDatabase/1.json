@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "35b83acb313d5f4b539c002b042e45a2",
+    "identityHash": "fbad20fdaaa4e8ac4e5a1a6b13d1badf",
     "entities": [
       {
         "tableName": "users",
@@ -114,7 +114,7 @@
       },
       {
         "tableName": "app_settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `vehicle_id` TEXT NOT NULL, `currency` TEXT NOT NULL, `distance` TEXT NOT NULL, `capacity` TEXT NOT NULL, `avg_consumption` TEXT NOT NULL, `date_format_pattern` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`vehicle_id`) REFERENCES `vehicles`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `vehicle_id` INTEGER NOT NULL, `currency` TEXT NOT NULL, `distance` TEXT NOT NULL, `capacity` TEXT NOT NULL, `avg_consumption` TEXT NOT NULL, `date_format_pattern` TEXT NOT NULL, FOREIGN KEY(`vehicle_id`) REFERENCES `vehicles`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -125,7 +125,7 @@
           {
             "fieldPath": "vehicleId",
             "columnName": "vehicle_id",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -160,7 +160,7 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
             "id"
           ]
@@ -194,7 +194,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '35b83acb313d5f4b539c002b042e45a2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fbad20fdaaa4e8ac4e5a1a6b13d1badf')"
     ]
   }
 }

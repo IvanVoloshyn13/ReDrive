@@ -13,7 +13,6 @@ class ObserveSettingsUseCase @Inject constructor(
     private val repository: SettingsRepository,
     private val observeCurrentVehicleUseCase: ObserveCurrentVehicleUseCase,
 ) {
-
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Settings> {
         return observeCurrentVehicleUseCase.invoke().flatMapLatest {
@@ -21,6 +20,5 @@ class ObserveSettingsUseCase @Inject constructor(
                 repository.observeAppSettings(vehicle.id)
             } ?: flowOf(repository.getDefaultSettings())
         }
-
     }
 }

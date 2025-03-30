@@ -1,10 +1,9 @@
 package com.example.localedatasource.room.daos
 
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.localedatasource.room.entity.DateFormatPattern
+import androidx.room.Update
 import com.example.localedatasource.room.entity.SettingsEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,8 +13,8 @@ interface SettingsDao {
     fun getSettingsByCurrentVehicleId(vehicleId: Long): Flow<SettingsEntity>
 
     @Query("SELECT date_format_pattern FROM app_settings")
-    suspend fun getDateFormatPattern(): DateFormatPattern
+    suspend fun getDateFormatPattern(): String
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdate(settings: SettingsEntity)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateSettings(settings: SettingsEntity)
 }
