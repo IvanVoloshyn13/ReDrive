@@ -1,0 +1,47 @@
+{
+  "currencies": [
+    { "id": 1, "unit": "USD - Dolar amerykański", "abbreviation": "USD" },
+    { "id": 2, "unit": "EUR - Euro", "abbreviation": "EUR" },
+    { "id": 3, "unit": "JPY - Jen japoński", "abbreviation": "JPY" },
+    { "id": 4, "unit": "GBP - Funt szterling", "abbreviation": "GBP" },
+    { "id": 5, "unit": "AUD - Dolar australijski", "abbreviation": "AUD" },
+    { "id": 6, "unit": "CAD - Dolar kanadyjski", "abbreviation": "CAD" },
+    { "id": 7, "unit": "CHF - Frank szwajcarski", "abbreviation": "CHF" },
+    { "id": 8, "unit": "CNY - Juan chiński", "abbreviation": "CNY" },
+    { "id": 9, "unit": "HKD - Dolar hongkoński", "abbreviation": "HKD" },
+    { "id": 10, "unit": "NOK - Korona norweska", "abbreviation": "NOK" },
+    { "id": 11, "unit": "SEK - Korona szwedzka", "abbreviation": "SEK" },
+    { "id": 12, "unit": "NZD - Dolar nowozelandzki", "abbreviation": "NZD" },
+    { "id": 13, "unit": "PLN - Złoty polski", "abbreviation": "PLN" },
+    { "id": 14, "unit": "INR - Rupia indyjska", "abbreviation": "INR" }
+  ],
+  "distances": [
+    { "id": 1, "unit": "Kilometry", "abbreviation": "km" },
+    { "id": 2, "unit": "Mile", "abbreviation": "mi" }
+  ],
+  "capacities": [
+    { "id": 1, "unit": "Litry", "abbreviation": "l" },
+    { "id": 2, "unit": "Galony (US)", "abbreviation": "gal (US)" },
+    { "id": 3, "unit": "Galony (imp)", "abbreviation": "gal (imp)" }
+  ],
+  "avg_consumption": [
+    { "id": 1, "unit": "l/100km", "abbreviation": "l/100km" },
+    { "id": 2, "unit": "km/l", "abbreviation": "km/l" },
+    { "id": 3, "unit": "l/mi", "abbreviation": "l/mi" },
+    { "id": 4, "unit": "mpg (US)", "abbreviation": "mpg (US)" },
+    { "id": 5, "unit": "mpg (imp)", "abbreviation": "mpg (imp)" },
+    { "id": 6, "unit": "mi/gal (US)", "abbreviation": "mi/gal (US)" },
+    { "id": 7, "unit": "mi/gal (imp)", "abbreviation": "mi/gal (imp)" }
+  ],
+  "date_formats": [
+    { "id": 1, "pattern": "DD.MM.RRRR" },
+    { "id": 2, "pattern": "MM.DD.RRRR" },
+    { "id": 3, "pattern": "RRRR.MM.DD" },
+    { "id": 4, "pattern": "DD/MM/RRRR" },
+    { "id": 5, "pattern": "MM/DD/RRRR" },
+    { "id": 6, "pattern": "RRRR/MM/DD" },
+    { "id": 7, "pattern": "DD-MM-RRRR" },
+    { "id": 8, "pattern": "MM-DD-RRRR" },
+    { "id": 9, "pattern": "RRRR-MM-DD" }
+  ]
+}

@@ -64,6 +64,7 @@
     <string name="empty_string"> </string>
     <string name="is_current_vehicle_exception">You are about to delete the current vehicle, which will remove all associated data. Are you sure you want to proceed?</string>
     <string name="no_user_detected_exception_message">Please signIn or create account to add new vehicle</string>
+    <string name="no_current_vehicle_exception_message">Please add first vehicle to update settings</string>
 
 
     <!-- FIREBASE_ERRORS-->
@@ -82,5 +83,9 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="set_as_current">Set as current</string>
+    <string name="currency">Currency</string>
+    <string name="distance">Distance</string>
+    <string name="capacity">Capacity</string>
+    <string name="date_format">Date format</string>
 
 </resources>

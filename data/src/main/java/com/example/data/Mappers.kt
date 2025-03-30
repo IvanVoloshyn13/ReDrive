@@ -2,13 +2,16 @@ package com.example.data
 
 import com.example.domain.AppException
 import com.example.domain.AuthException
+import com.example.domain.model.Settings
 import com.example.domain.model.User
 import com.example.domain.model.UserAuthCredentials
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.firebase.FbUserAuthCredentials
-import com.example.localedatasource.room.UserEntity
-import com.example.localedatasource.room.VehicleEntity
+import com.example.localedatasource.inMemoryAppSettings.models.DefaultAppSettingsResponse
+import com.example.localedatasource.room.entity.SettingsEntity
+import com.example.localedatasource.room.entity.UserEntity
+import com.example.localedatasource.room.entity.VehicleEntity
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -48,7 +51,7 @@ fun UserAuthCredentials.toFbUserAuthCredentials(): FbUserAuthCredentials {
 
 fun Vehicle.toEntity(uUid: String): VehicleEntity {
     return VehicleEntity(
-        id = this.id ,
+        id = this.id,
         userId = uUid,
         name = this.name,
         vehicleType = type.name,
@@ -62,6 +65,26 @@ fun VehicleEntity.toVehicle(): Vehicle {
         name = this.name,
         initialOdometerValue = this.initialOdometerValue,
         type = VehicleType.valueOf(this.vehicleType)
+    )
+}
+
+fun DefaultAppSettingsResponse.toSettings(): Settings {
+    return Settings(
+        currencyAbbr = this.currency.abbreviation,
+        capacityAbbr = this.capacity.abbreviation,
+        distanceAbbr = this.distance.abbreviation,
+        avgConsumptionAbbr = this.avgConsumption.abbreviation,
+        dateFormatPattern = this.dateFormat.pattern
+    )
+}
+
+fun SettingsEntity.toSettings():Settings{
+    return Settings(
+        currencyAbbr = this.currency.abbreviation,
+        capacityAbbr = this.capacity.abbreviation,
+        distanceAbbr = this.distance.abbreviation,
+        avgConsumptionAbbr = this.avgConsumption.abbreviation,
+        dateFormatPattern = this.dateFormatPatter.pattern
     )
 }
 

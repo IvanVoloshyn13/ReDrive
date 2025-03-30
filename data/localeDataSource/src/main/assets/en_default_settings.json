@@ -1,0 +1,26 @@
+{
+  "currency": {
+    "id": 1,
+    "unit": "USD - Dolar amerykański",
+    "abbreviation": "USD"
+  },
+  "distance": {
+    "id": 1,
+    "unit": "Kilometers",
+    "abbreviation": "km"
+  },
+  "capacity": {
+    "id": 1,
+    "unit": "Liters",
+    "abbreviation": "l"
+  },
+  "avg_consumption": {
+    "id": 1,
+    "unit": "l/100km",
+    "abbreviation": "l/100km"
+  },
+  "date_format": {
+    "id": 1,
+    "pattern": "DD.MM.YYYY"
+  }
+}

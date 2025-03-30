@@ -1,13 +1,12 @@
 package com.example.data.repository
 
-import android.util.Log
 import com.example.data.toEntity
 import com.example.data.toVehicle
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.domain.repository.VehiclesRepository
 import com.example.localedatasource.dataStore.AppVehiclePreferences
-import com.example.localedatasource.room.VehiclesDao
+import com.example.localedatasource.room.daos.VehiclesDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

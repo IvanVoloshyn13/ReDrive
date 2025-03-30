@@ -26,6 +26,7 @@ class AppStringResProviderImpl @Inject constructor(
     private fun fromVehicleException(e: VehicleException): String {
         return when (e) {
             is VehicleException.IsCurrentVehicleException -> context.resources.getString(R.string.is_current_vehicle_exception)
+            is VehicleException.NoCurrentVehicleException -> context.resources.getString(R.string.no_current_vehicle_exception_message)
         }
     }
 

@@ -8,7 +8,7 @@ import com.example.domain.model.User
 import com.example.domain.repository.UserSessionRepository
 import com.example.firebase.FirebaseAuthRepository
 import com.example.localedatasource.dataStore.AppUserPreferences
-import com.example.localedatasource.room.UsersDao
+import com.example.localedatasource.room.daos.UsersDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +26,6 @@ class UserSessionRepositoryImpl @Inject constructor(
 
     override fun observeAuthState(): Flow<User?> {
         return firebaseAuthRepository.getAuthState().map {
-            Log.d("USER", it.toString())
             toggleUserIdPreferences(it?.uid ?: "")
             it?.toUser()
         }
@@ -56,7 +55,6 @@ class UserSessionRepositoryImpl @Inject constructor(
     }
 
     private suspend fun toggleUserIdPreferences(uUid: String) {
-        Log.d("USER_LOG", uUid)
         if (uUid.isEmpty()) {
             appUserPreferences.clearCurrentUserId()
         } else appUserPreferences.setCurrentUserId(uUid)

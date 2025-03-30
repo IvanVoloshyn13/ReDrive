@@ -1,6 +1,5 @@
 package com.example.domain.useCase.vehicle
 
-import com.example.domain.VehicleException
 import com.example.domain.model.Vehicle
 import com.example.domain.repository.UserSessionRepository
 import com.example.domain.repository.VehiclesRepository

@@ -6,10 +6,9 @@ import com.example.data.toFbUserAuthCredentials
 import com.example.firebase.FirebaseAuthRepository
 import com.example.data.toUserEntity
 import com.example.domain.AuthException
-import com.example.domain.model.SignInStatus
 import com.example.domain.model.UserAuthCredentials
 import com.example.domain.repository.EmailAuthRepository
-import com.example.localedatasource.room.UsersDao
+import com.example.localedatasource.room.daos.UsersDao
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineDispatcher

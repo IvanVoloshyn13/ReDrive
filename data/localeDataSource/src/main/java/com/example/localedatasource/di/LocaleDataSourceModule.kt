@@ -9,8 +9,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.room.Room
 import com.example.localedatasource.room.AppDatabase
-import com.example.localedatasource.room.UsersDao
-import com.example.localedatasource.room.VehiclesDao
+import com.example.localedatasource.room.daos.UsersDao
+import com.example.localedatasource.room.daos.VehiclesDao
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,6 +43,13 @@ class LocaleDataSourceModule {
         )
     }
 
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        val gson = Gson()
+        return gson
+    }
+
     //Dao's
     @Provides
     @Singleton
@@ -54,5 +62,8 @@ class LocaleDataSourceModule {
     fun provideVehiclesDao(db: AppDatabase): VehiclesDao {
         return db.getVehiclesDao()
     }
+    @Provides
+    @Singleton
+    fun provideSettingsDao(db: AppDatabase) = db.getSettingsDao()
 
 }

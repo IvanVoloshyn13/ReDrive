@@ -4,6 +4,8 @@ import com.example.localedatasource.dataStore.AppUserPreferences
 import com.example.localedatasource.dataStore.AppUserPreferencesImpl
 import com.example.localedatasource.dataStore.AppVehiclePreferences
 import com.example.localedatasource.dataStore.AppVehiclePreferencesImpl
+import com.example.localedatasource.inMemoryAppSettings.InMemoryAppSettingsRepository
+import com.example.localedatasource.inMemoryAppSettings.InMemoryAppSettingsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +19,7 @@ interface RepositoryModule {
 
     @Binds
     fun bindAppVehiclesPreferences(impl: AppVehiclePreferencesImpl): AppVehiclePreferences
+
+    @Binds
+    fun bindInMemoryAppSettings(impl: InMemoryAppSettingsRepositoryImpl): InMemoryAppSettingsRepository
 }
