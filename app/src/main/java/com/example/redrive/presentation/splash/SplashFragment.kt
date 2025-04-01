@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.redrive.R
 import com.example.redrive.databinding.FragmentSplashBinding
-import com.example.redrive.presentation.tabs.TabsFragmentDirections
 import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay

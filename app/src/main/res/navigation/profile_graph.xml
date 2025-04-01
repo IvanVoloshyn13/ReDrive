@@ -12,40 +12,48 @@
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:enterAnim="@anim/from_top_left_to_bottom_right"
             app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_vehiclesFragment"
-            app:destination="@id/vehiclesFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/vehiclesFragment"
-        android:name="com.example.redrive.presentation.vehicle.vehicles.VehiclesFragment"
-        android:label="Vehicles"
-        tools:layout="@layout/fragment_vehicles" >
+            android:id="@+id/action_profileFragment_to_vehicle_flow"
+            app:destination="@id/vehicle_flow"
+            app:enterAnim="@anim/from_top_left_to_bottom_right" />
         <action
-            android:id="@+id/action_vehiclesFragment_to_newVehicleFragment"
-            app:destination="@id/newVehicleFragment" />
-        <action
-            android:id="@+id/action_vehiclesFragment_to_editVehicleFragment"
-            app:destination="@id/editVehicleFragment" />
+            android:id="@+id/action_profileFragment_to_signInFragment"
+            app:enterAnim="@anim/from_top_left_to_bottom_right"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.redrive.presentation.settings.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/fragment_settings" />
+    <include app:graph="@navigation/vehicle_flow" />
     <fragment
-        android:id="@+id/newVehicleFragment"
-        android:name="com.example.redrive.presentation.vehicle.newVehicle.NewVehicleFragment"
-        android:label="Add Vehicle"
-        tools:layout="@layout/fragment_new_vehicle" />
-    <fragment
-        android:id="@+id/editVehicleFragment"
-        android:name="com.example.redrive.presentation.vehicle.editVehicle.EditVehicleFragment"
-        android:label="@string/edit_vehicle"
-        tools:layout="@layout/fragment_edit_vehicle">
-        <argument
-            android:name="edited_vehicle"
-            app:argType="com.example.domain.model.Vehicle" />
+        android:id="@+id/signInFragment"
+        android:name="com.example.redrive.presentation.auth.signIn.SignInFragment"
+        android:label="@string/sign_in"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:enterAnim="@anim/from_top_left_to_bottom_right"
+            app:destination="@id/signUpFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.redrive.presentation.auth.signUp.SignUpFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/signUpFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment"
+        app:enterAnim="@anim/from_top_left_to_bottom_right"/>
+
 </navigation>
+

@@ -14,7 +14,7 @@ class LogsFragment : Fragment(R.layout.fragment_logs) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.ivDropDownMenu.setOnClickListener {
-            findNavController().navigate(R.id.action_logsFragment_to_vehiclesFragment)
+            findNavController().navigate(R.id.action_logsFragment_to_vehicle_flow)
         }
     }
 }

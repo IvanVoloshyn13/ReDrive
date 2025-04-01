@@ -81,7 +81,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest {
-                Log.d("FRAGMENT", "init")
                 updateUi(it)
             }
         }
@@ -114,7 +113,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             }
 
             SignUpStatus.SignOut -> return
-            SignUpStatus.SignIn -> findNavController().navigate(R.id.action_global_tabsFragment)
+            SignUpStatus.SignIn -> requireActivity().recreate()
         }
     }
 

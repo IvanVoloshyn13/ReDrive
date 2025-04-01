@@ -1,7 +1,6 @@
 package com.example.redrive.presentation.tabs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -21,6 +20,8 @@ class TabsFragment : Fragment(R.layout.fragment_tabs) {
     private val binding by viewBinding<FragmentTabsBinding>()
     private val args: TabsFragmentArgs by navArgs<TabsFragmentArgs>()
 
+    private val topNavGraphsSet = setOf(R.id.profile_graph, R.id.logs_graph, R.id.redrive_graph)
+
     /** Rewrite this with viewModel. Navigation using SharedFlow, args store in ViewModel, because
      * when configuration changes tabs open at startDestination
      */
@@ -32,26 +33,16 @@ class TabsFragment : Fragment(R.layout.fragment_tabs) {
                 as NavHost
         val navController = navHost.navController
 
-        initTabsGraphStartDestination(navController, args.isUserSignedIn)
-        setupToolbar(navController)
+        setTabsGraphStartDestination(navController, args.isUserSignedIn)
+        configureToolbar(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            toggleToolbarHomeBttVisibility(destination)
+            toggleTabBarNavIconVisibility(destination)
         }
-
     }
 
-    private fun toggleToolbarHomeBttVisibility(destination: NavDestination?) {
-        val currentGraph = destination?.parent ?: return
-        val currentGraphStartDestinationId = currentGraph.startDestinationId
-        if (currentGraphStartDestinationId != destination.id) {
-            binding.tabsToolbar.setNavigationIcon(
-                R.drawable.ic_back
-            )
-        } else binding.tabsToolbar.navigationIcon = null
-    }
 
-    private fun setupToolbar(navController: NavController) {
+    private fun configureToolbar(navController: NavController) {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.tabsToolbar.setupWithNavController(
             navController,
@@ -59,23 +50,34 @@ class TabsFragment : Fragment(R.layout.fragment_tabs) {
         )
     }
 
-    private fun initTabsGraphStartDestination(
-        navController: NavController,
-        isUserSignedIn: Boolean
-    ) {
-        val tabsGraph = navController.navInflater.inflate(R.navigation.tabs_graph)
-        tabsGraph.setStartDestination(getStartDestinationId(isUserSignedIn))
-        navController.graph = tabsGraph
-        NavigationUI.setupWithNavController(binding.bottomNavView, navController)
-    }
+    private fun toggleTabBarNavIconVisibility(destination: NavDestination) {
+        val currentGraph = destination.parent?:return
+        if (topNavGraphsSet.contains(currentGraph.id)) {
+            if (currentGraph.startDestinationId == destination.id) {
+                binding.tabsToolbar.navigationIcon = null
+            } else return
+        } else Unit
 
-    private fun getStartDestinationId(isUserSignedIn: Boolean): Int {
-        return if (isUserSignedIn) {
-            getRedriveGraphId()
-        } else getProfileGraphId()
-    }
+}
 
-    private fun getProfileGraphId() = R.id.profile_graph
-    private fun getRedriveGraphId() = R.id.redrive_graph
+private fun setTabsGraphStartDestination(
+    navController: NavController,
+    isUserSignedIn: Boolean
+) {
+    val tabsGraph = navController.navInflater.inflate(R.navigation.tabs_graph)
+    tabsGraph.setStartDestination(getStartDestinationId(isUserSignedIn))
+    navController.graph = tabsGraph
+    NavigationUI.setupWithNavController(binding.bottomNavView, navController)
+}
+
+private fun getStartDestinationId(isUserSignedIn: Boolean): Int {
+    return if (isUserSignedIn) {
+        getRedriveGraphId()
+    } else getProfileGraphId()
+}
+
+private fun getProfileGraphId() = R.id.profile_graph
+private fun getRedriveGraphId() = R.id.redrive_graph
+
 
 }

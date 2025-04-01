@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.redrive.presentation.profile.ProfileFragment">
 
     <FrameLayout
         android:id="@+id/layout_user_initial"
         android:layout_width="128dp"
         android:layout_height="128dp"
+        android:layout_gravity="center"
         android:layout_marginTop="64dp"
         android:background="@drawable/rounded_background"
         android:backgroundTint="#8FD2B8"
-        android:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:elevation="4dp">
 
         <TextView
             android:id="@+id/tv_user_initial"
@@ -41,25 +40,20 @@
         android:layout_marginTop="@dimen/margin_large"
         android:text="@string/settings"
         android:textAppearance="@style/Redrive.App.TextAppearance.Title.Medium"
-        android:textColor="?attr/colorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_user_initial">
+        android:textColor="?attr/colorPrimary">
 
     </TextView>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/settings_card"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_large"
         android:elevation="4dp"
         app:cardBackgroundColor="?attr/colorSurface"
-        app:cardCornerRadius="@dimen/default_card_corner_radius"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_card_settings">
+        app:cardCornerRadius="@dimen/default_card_corner_radius">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -81,8 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginStart="@dimen/margin_medium"
-                android:text="@string/edit_vehicles"
                 android:gravity="center"
+                android:text="@string/edit_vehicles"
                 android:textAppearance="@style/Redrive.App.TextAppearance.Medium"
                 app:layout_constraintBottom_toBottomOf="@id/iv_vehicle"
                 app:layout_constraintStart_toEndOf="@id/iv_vehicle"
@@ -132,11 +126,10 @@
         android:id="@+id/tv_privacy_policy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/tv_card_settings"
-        app:layout_constraintTop_toBottomOf="@id/settings_card"
-        android:textAppearance="@style/Redrive.App.TextAppearance.Medium"
+        android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_large"
-        android:text="@string/privacy_policy">
+        android:text="@string/privacy_policy"
+        android:textAppearance="@style/Redrive.App.TextAppearance.Medium">
 
     </TextView>
 
@@ -144,11 +137,10 @@
         android:id="@+id/tv_sign_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/tv_privacy_policy"
-        app:layout_constraintTop_toBottomOf="@id/tv_privacy_policy"
-        android:textAppearance="@style/Redrive.App.TextAppearance.Medium"
+        android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_medium"
-        android:text="@string/sign_out">
+        android:text="@string/sign_out"
+        android:textAppearance="@style/Redrive.App.TextAppearance.Medium">
 
     </TextView>
 
@@ -156,12 +148,11 @@
         android:id="@+id/tv_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/tv_privacy_policy"
-        app:layout_constraintTop_toBottomOf="@id/tv_sign_out"
-        android:textAppearance="@style/Redrive.App.TextAppearance.Medium"
-        android:textColor="?attr/colorTertiary"
+        android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_medium"
-        android:text="@string/sign_in">
+        android:text="@string/sign_in"
+        android:textAppearance="@style/Redrive.App.TextAppearance.Medium"
+        android:textColor="?attr/colorTertiary">
 
     </TextView>
 
@@ -171,13 +162,10 @@
         android:layout_height="wrap_content"
         android:indeterminateTint="?attr/colorOnSurface"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_gravity="center"
+       >
 
     </ProgressBar>
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

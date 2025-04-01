@@ -16,7 +16,6 @@ import com.example.redrive.core.findTopNavController
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
 import com.example.redrive.core.showErrorAndResetState
 import com.example.redrive.viewBinding
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -58,17 +57,17 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 viewModel.resetErrorState()
             }
 
-            SignInStatus.SignedIn -> navigateToTabs()
+            SignInStatus.SignedIn -> navigateToProfile()
             SignInStatus.SignOut -> Unit
         }
 
     }
 
-    private fun navigateToTabs() {
+    private fun navigateToProfile() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.navigation.collectLatest { navigate ->
                 if (navigate) {
-                    findTopNavController().navigate(R.id.action_global_tabsFragment)
+                    findNavController().popBackStack()
                 }
             }
         }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vehicle_flow"
+    app:startDestination="@id/vehiclesFragment">
+
+    <fragment
+        android:id="@+id/vehiclesFragment"
+        android:name="com.example.redrive.presentation.vehicle.vehicles.VehiclesFragment"
+        android:label="@string/vehicles"
+        tools:layout="@layout/fragment_vehicles">
+        <action
+            android:id="@+id/action_vehiclesFragment_to_editVehicleFragment"
+            app:destination="@id/editVehicleFragment"
+            app:enterAnim="@anim/from_top_left_to_bottom_right" />
+        <action
+            android:id="@+id/action_vehiclesFragment_to_newVehicleFragment"
+            app:destination="@id/newVehicleFragment"
+            app:enterAnim="@anim/from_top_left_to_bottom_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/editVehicleFragment"
+        android:name="com.example.redrive.presentation.vehicle.editVehicle.EditVehicleFragment"
+        android:label="@string/edit_vehicle"
+        tools:layout="@layout/fragment_edit_vehicle" >
+        <argument
+            android:name="editedVehicle"
+            app:argType="com.example.domain.model.Vehicle" />
+    </fragment>
+    <fragment
+        android:id="@+id/newVehicleFragment"
+        android:name="com.example.redrive.presentation.vehicle.newVehicle.NewVehicleFragment"
+        android:label="@string/new_vehicle_fragment"
+        tools:layout="@layout/fragment_new_vehicle" />
+</navigation>

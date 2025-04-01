@@ -11,17 +11,9 @@
         android:label="@string/redrive"
         tools:layout="@layout/fragment_redrive">
         <action
-            android:id="@+id/action_redriveFragment_to_vehiclesFragment"
-            app:destination="@id/vehiclesFragment" />
-        <action
             android:id="@+id/action_redriveFragment_to_refuelFragment"
             app:destination="@id/refuelFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/vehiclesFragment"
-        android:name="com.example.redrive.presentation.vehicle.vehicles.VehiclesFragment"
-        android:label="@string/vehicles"
-        tools:layout="@layout/fragment_vehicles" />
     <fragment
         android:id="@+id/refuelFragment"
         android:name="com.example.redrive.presentation.RefuelFragment"

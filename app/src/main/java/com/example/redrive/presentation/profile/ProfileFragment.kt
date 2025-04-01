@@ -54,14 +54,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun setupListeners() {
         binding.tvSignIn.setOnClickListener {
-            findTopNavController().navigate(R.id.action_tabsFragment_to_auth_flow)
+            findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
         }
         binding.tvSignOut.setOnClickListener {
             viewModel.signOut()
 
         }
         binding.tvEditVehicles.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_vehiclesFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_vehicle_flow)
         }
         binding.tvSettings.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
