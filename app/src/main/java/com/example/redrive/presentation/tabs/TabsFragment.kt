@@ -3,6 +3,8 @@ package com.example.redrive.presentation.tabs
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHost
@@ -14,70 +16,84 @@ import com.example.redrive.R
 import com.example.redrive.databinding.FragmentTabsBinding
 import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TabsFragment : Fragment(R.layout.fragment_tabs) {
     private val binding by viewBinding<FragmentTabsBinding>()
+    private val viewModel: TabsViewModel by viewModels()
+    private lateinit var navController: NavController
     private val args: TabsFragmentArgs by navArgs<TabsFragmentArgs>()
-
     private val topNavGraphsSet = setOf(R.id.profile_graph, R.id.logs_graph, R.id.redrive_graph)
-
-    /** Rewrite this with viewModel. Navigation using SharedFlow, args store in ViewModel, because
-     * when configuration changes tabs open at startDestination
-     */
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val navHost = childFragmentManager.findFragmentById(R.id.tabs_fragment_container)
                 as NavHost
-        val navController = navHost.navController
+        navController = navHost.navController
+        configureAppBars(navController)
 
-        setTabsGraphStartDestination(navController, args.isUserSignedIn)
-        configureToolbar(navController)
+        collectState()
+        viewModel.onArgs(args.startDestination)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            toggleTabBarNavIconVisibility(destination)
+            toggleToolbarNavIconVisibility(destination)
+        }
+
+    }
+
+    private fun collectState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.destination.collectLatest {
+                setTabsGraphStartDestination(navController = navController, startDestination = it)
+            }
         }
     }
 
-
-    private fun configureToolbar(navController: NavController) {
+    private fun configureAppBars(navController: NavController) {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
-        binding.tabsToolbar.setupWithNavController(
+        binding.toolbar.setupWithNavController(
             navController,
             configuration = appBarConfiguration
         )
+        NavigationUI.setupWithNavController(binding.bottomNavView, navController)
     }
 
-    private fun toggleTabBarNavIconVisibility(destination: NavDestination) {
-        val currentGraph = destination.parent?:return
+    private fun toggleToolbarNavIconVisibility(destination: NavDestination) {
+        val currentGraph = destination.parent ?: return
         if (topNavGraphsSet.contains(currentGraph.id)) {
             if (currentGraph.startDestinationId == destination.id) {
-                binding.tabsToolbar.navigationIcon = null
+                binding.toolbar.navigationIcon = null
             } else return
         } else Unit
+    }
 
-}
+    private fun setTabsGraphStartDestination(
+        navController: NavController,
+        startDestination: String
+    ) {
+        val tabsGraph = navController.navInflater.inflate(R.navigation.tabs_graph)
+        tabsGraph.setStartDestination(getStartDestinationId(startDestination))
+        navController.graph = tabsGraph
+    }
 
-private fun setTabsGraphStartDestination(
-    navController: NavController,
-    isUserSignedIn: Boolean
-) {
-    val tabsGraph = navController.navInflater.inflate(R.navigation.tabs_graph)
-    tabsGraph.setStartDestination(getStartDestinationId(isUserSignedIn))
-    navController.graph = tabsGraph
-    NavigationUI.setupWithNavController(binding.bottomNavView, navController)
-}
+    private fun getStartDestinationId(destination: String): Int {
+        return when (destination) {
+            Destinations.REDRIVE -> getRedriveGraphId()
+            Destinations.PROFILE -> getProfileGraphId()
+            else -> throw IllegalArgumentException()
+        }
+    }
 
-private fun getStartDestinationId(isUserSignedIn: Boolean): Int {
-    return if (isUserSignedIn) {
-        getRedriveGraphId()
-    } else getProfileGraphId()
-}
+    private fun getProfileGraphId() = R.id.profile_graph
+    private fun getRedriveGraphId() = R.id.redrive_graph
 
-private fun getProfileGraphId() = R.id.profile_graph
-private fun getRedriveGraphId() = R.id.redrive_graph
-
+    companion object {
+        object Destinations {
+            const val REDRIVE = "redrive"
+            const val PROFILE = "profile"
+        }
+    }
 
 }

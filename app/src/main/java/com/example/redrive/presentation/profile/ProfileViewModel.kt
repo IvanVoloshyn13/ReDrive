@@ -1,19 +1,17 @@
 package com.example.redrive.presentation.profile
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.SignInStatus
 import com.example.domain.useCase.userSession.GetUserInitialsUseCase
 import com.example.domain.useCase.userSession.IsUserSignedInUseCase
 import com.example.domain.useCase.userSession.SignOutUseCase
+import com.example.redrive.core.BaseViewModel
+import com.example.redrive.core.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,7 +23,7 @@ class ProfileViewModel @Inject constructor(
     private val isUserSignedInUseCase: IsUserSignedInUseCase,
     private val getUserInitialsUseCase: GetUserInitialsUseCase,
     private val signOutUseCase: SignOutUseCase,
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _state: MutableStateFlow<FragmentProfileState> = MutableStateFlow(
         FragmentProfileState()
@@ -56,7 +54,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun signOut() {
+    fun onSignOutClick() {
         viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -65,13 +63,18 @@ class ProfileViewModel @Inject constructor(
             }
             delay(500)
             signOutUseCase()
-
             _state.update {
                 it.copy(
                     isLoading = false
                 )
             }
         }
+    }
+
+    sealed class Route : NavRoute {
+        data object ToSettings : Route()
+        data object ToEditVehicles : Route()
+        data object ToSignIn : Route()
     }
 
 

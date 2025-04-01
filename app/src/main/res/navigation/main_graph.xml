@@ -21,9 +21,8 @@
         android:name="com.example.redrive.presentation.tabs.TabsFragment"
         tools:layout="@layout/fragment_tabs">
         <argument
-            android:name="isUserSignedIn"
-            android:defaultValue="false"
-            app:argType="boolean" />
+            android:name="startDestination"
+            app:argType="string" />
     </fragment>
 
 </navigation>

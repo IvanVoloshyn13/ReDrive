@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.redrive.R
 import com.example.redrive.databinding.FragmentSplashBinding
+import com.example.redrive.presentation.tabs.TabsFragment
 import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -27,8 +28,16 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             launch {
                 delay(1500)
                 viewModel.navigation.collectLatest {
-                    val action = SplashFragmentDirections.actionSplashFragmentToTabsFragment(it)
-                    findNavController().navigate(action)
+                    when (it) {
+                        SplashViewModel.Route.ToProfile -> {
+                            navigate(TabsFragment.Companion.Destinations.PROFILE)
+                        }
+
+                        SplashViewModel.Route.ToRedrive -> {
+                            navigate(TabsFragment.Companion.Destinations.REDRIVE)
+                        }
+                    }
+
                 }
             }
         }
@@ -65,5 +74,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             .setDuration(1500)
             .setInterpolator(android.view.animation.OvershootInterpolator())
             .start()
+    }
+
+    private fun navigate(destination: String) {
+        val action = SplashFragmentDirections.actionSplashFragmentToTabsFragment(destination)
+        findNavController().navigate(action)
     }
 }
