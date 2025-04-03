@@ -1,12 +1,13 @@
 package com.example.redrive.presentation.vehicle.vehicles
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.model.Vehicle
 import com.example.domain.useCase.vehicle.ConfirmDeleteVehicleUseCase
 import com.example.domain.useCase.vehicle.DeleteVehicleUseCase
 import com.example.domain.useCase.vehicle.ObserveVehiclesUseCase
 import com.example.domain.useCase.vehicle.SetVehicleAsCurrentUseCase
 import com.example.redrive.core.AppStringResProvider
+import com.example.redrive.core.BaseViewModel
 import com.example.redrive.core.wrapLocaleDataSourceRequests
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,11 +24,10 @@ class VehiclesViewModel @Inject constructor(
     private val deleteVehicleUseCase: DeleteVehicleUseCase,
     private val confirmDeleteVehicleUseCase: ConfirmDeleteVehicleUseCase,
     private val stringResProvider: AppStringResProvider
-) : ViewModel() {
+) : BaseViewModel() {
 
-
-    private val _state: MutableStateFlow<VehiclesFragmentState> =
-        MutableStateFlow(VehiclesFragmentState())
+    private val _state: MutableStateFlow<List<Vehicle>> =
+        MutableStateFlow(ArrayList())
     val state = _state.asStateFlow()
 
     init {
@@ -36,58 +36,34 @@ class VehiclesViewModel @Inject constructor(
         }
     }
 
-
     suspend fun vehicles() {
         val vehiclesFlow = observeVehiclesUseCase.invoke()
         vehiclesFlow.collectLatest { vehicles ->
-            _state.update {
-                it.copy(
-                    error = false, errorMessage = "",
-                    vehicles = vehicles
-                )
-            }
+          _state.value=vehicles
         }
     }
 
-    fun setVehicleAsCurrent(vehicleId: Long) {
+    fun onVehicleItemClick(vehicleId: Long) {
         viewModelScope.launch {
             setVehicleAsCurrentUseCase(vehicleId)
         }
     }
 
-    fun deleteVehicle(vehicleId: Long) {
+    fun onDeleteBtnClick(vehicleId: Long) {
         wrapLocaleDataSourceRequests(
             appStringResProvider = stringResProvider,
             action = {
                 deleteVehicleUseCase.invoke(vehicleId)
             }
         ) { message ->
-            _state.update {
-                it.copy(
-                    error = true,
-                    errorMessage = message
-                )
-            }
+            emitError(message)
         }
-
     }
 
     fun confirmDeleteCurrentVehicle(vehicleId: Long) {
         viewModelScope.launch {
             confirmDeleteVehicleUseCase.invoke(vehicleId)
         }
-
     }
-
-
-    fun resetError() {
-        _state.update {
-            it.copy(
-                error = false,
-                errorMessage = ""
-            )
-        }
-    }
-
 
 }

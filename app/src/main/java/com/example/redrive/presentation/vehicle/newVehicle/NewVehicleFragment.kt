@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.domain.model.VehicleType
 import com.example.redrive.R
+import com.example.redrive.core.Router
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
 import com.example.redrive.core.showErrorAndResetState
 import com.example.redrive.databinding.FragmentNewVehicleBinding
@@ -40,14 +41,13 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
         setupVehicleTypeSwitcher()
 
         binding.btnSave.setOnClickListener {
-            viewModel.saveNewVehicle()
+            viewModel.doOnBtnSaveClick()
         }
 
     }
 
     private fun collectStates() {
         viewLifecycleOwner.lifecycleScope.launch {
-
             launch {
                 viewModel.vehicleNameState.collectLatest {
                     binding.etVehicleName.setTextKeepState(editable.newEditable(it))
@@ -57,16 +57,12 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
             launch {
                 viewModel.vehicleTypeState.collectLatest {
                     when (it) {
-                        VehicleType.Car -> {
+                        VehicleType.Car, VehicleType.Default -> {
                             setVehicleTypeIcon(R.drawable.ic_car)
                         }
 
                         VehicleType.Bike -> {
                             setVehicleTypeIcon(R.drawable.ic_bike)
-                        }
-
-                        VehicleType.Default -> {
-                            return@collectLatest
                         }
                     }
                 }
@@ -99,11 +95,9 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
             launch {
                 viewModel.navigation.collectLatest {
                     when (it) {
-                        NewVehicleViewModel.NavigationPath.ToVehicles -> {
+                        Router.NewVehicleDirections.ToVehicles -> {
                             findNavController().popBackStack()
                         }
-
-                        null -> return@collectLatest
                     }
                 }
             }
@@ -122,7 +116,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
                 }
             }
             etVehicleName.doAfterTextChanged {
-                viewModel.setVehicleName(it.toString())
+                viewModel.onVehicleNameTextChange(it.toString())
             }
 
         }
@@ -139,7 +133,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
                 }
             }
             etOdometer.doAfterTextChanged {
-                viewModel.setVehicleOdometer(it.toString())
+                viewModel.onVehicleOdometerTextChange(it.toString())
             }
         }
     }
@@ -150,11 +144,11 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
             if (isChecked) {
                 when (checkedId) {
                     R.id.btt_car -> {
-                        viewModel.switchVehicleType(VehicleType.Car)
+                        viewModel.onVehicleTypeSwitcherClick(VehicleType.Car)
                     }
 
                     R.id.btt_bike -> {
-                        viewModel.switchVehicleType(VehicleType.Bike)
+                        viewModel.onVehicleTypeSwitcherClick(VehicleType.Bike)
                     }
                 }
             }

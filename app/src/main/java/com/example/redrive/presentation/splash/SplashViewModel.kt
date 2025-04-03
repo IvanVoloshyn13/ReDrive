@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.model.SignInStatus
 import com.example.domain.useCase.userSession.IsUserSignedInUseCase
 import com.example.redrive.core.BaseViewModel
-import com.example.redrive.core.NavRoute
+import com.example.redrive.core.Router
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -23,15 +23,11 @@ class SplashViewModel @Inject constructor(
             isUserSignedInUseCase.invoke().collectLatest {
                 when (it) {
                     SignInStatus.Failure -> return@collectLatest
-                    SignInStatus.SignOut -> navigate(Route.ToProfile)
-                    SignInStatus.SignedIn -> navigate(Route.ToRedrive)
+                    SignInStatus.SignOut -> navigate(Router.SplashDirections.ToProfile)
+                    SignInStatus.SignedIn -> navigate(Router.SplashDirections.ToRedrive)
                 }
             }
         }
     }
 
-    sealed class Route : NavRoute {
-        data object ToRedrive : Route()
-        data object ToProfile : Route()
-    }
 }

@@ -3,7 +3,6 @@ package com.example.redrive.presentation.auth.signUp
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -14,11 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.domain.useCase.signUpFieldValidation.PasswordValidationResult
 import com.example.redrive.R
+import com.example.redrive.core.Router
 import com.example.redrive.databinding.FragmentSignUpBinding
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
+import com.example.redrive.core.navigate
 import com.example.redrive.core.showErrorAndResetState
+import com.example.redrive.presentation.auth.signIn.SignInFragmentDirections
 import com.example.redrive.viewBinding
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,14 +42,9 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val spannableString = SpannableString(binding.bttSignIn.text)
-        spannableString.setSpan(UnderlineSpan(), 0, spannableString.length, 0)
-        binding.bttSignIn.text = spannableString
-
+        setupSpannableText()
         setupListeners()
-        observeState()
-
+        collectState()
     }
 
     private fun setupListeners() {
@@ -56,32 +52,59 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
         binding.etFullName.setupRequireFieldListener(
             container = binding.fullNameContainer,
-            onTextChange = { name -> viewModel.setFullNameInput(name) }
+            onTextChange = { name -> viewModel.onFullNameTextChange(name) }
         )
         binding.etEmail.setupRequireFieldListener(
             container = binding.emailContainer,
-            onTextChange = { email -> viewModel.setEmailInput(email) }
+            onTextChange = { email -> viewModel.onEmailTextChange(email) }
         )
         binding.etConfirmPassword.setupRequireFieldListener(
             container = binding.confirmPasswordContainer,
-            onTextChange = { confPassword -> viewModel.setConfirmPasswordInput(confPassword) }
+            onTextChange = { confPassword -> viewModel.onConfirmPasswordTextChange(confPassword) }
         )
-
-        setupPasswordListeners()
-
         binding.bttSignUp.setOnClickListener {
-            viewModel.signUp()
+            viewModel.onSignUpBttClick()
         }
 
         binding.bttSignIn.setOnClickListener {
-            findNavController().popBackStack()
+            viewModel.navigate(Router.SignUpDirections.ToSignIn)
         }
+
+        setupPasswordListeners()
+
     }
 
-    private fun observeState() {
+    private fun collectState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collectLatest {
-                updateUi(it)
+            launch {
+                viewModel.state.collectLatest {
+                    updateUi(it)
+                }
+            }
+
+            launch {
+                viewModel.error.collectLatest {
+                    if (it.first) {
+                        showErrorAndResetState(errorMessage = it.second) {
+                            viewModel.onErrorShown()
+                        }
+                    }
+
+                }
+            }
+            launch {
+                viewModel.navigation.collectLatest {
+                    when (it) {
+                        Router.SignUpDirections.ToSignIn -> {
+                            findNavController().popBackStack()
+
+                        }
+
+                        Router.SignUpDirections.ToProfile -> {
+                            navigate(SignInFragmentDirections.actionGlobalProfileFragment())
+                        }
+                    }
+                }
             }
         }
     }
@@ -104,23 +127,12 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         )
         updatePasswordValidationState(state.isValidPassword)
 
-        when (state.signUpStatus) {
-            SignUpStatus.Failure -> {
-                showErrorAndResetState(state.signUpErrorMessage) {
-                    viewModel.resetState()
-                }
-                viewModel.resetState()
-            }
-
-            SignUpStatus.SignOut -> return
-            SignUpStatus.SignIn -> requireActivity().recreate()
-        }
     }
 
     private fun setupPasswordListeners() {
         with(binding.etPassword) {
             doAfterTextChanged { editable ->
-                viewModel.setPasswordInput(editable.toString())
+                viewModel.onPasswordTextChange(editable.toString())
             }
             setOnFocusChangeListener { view, hasFocus ->
                 if (hasFocus) {
@@ -182,4 +194,9 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         } else this.helperText = null
     }
 
+    private fun setupSpannableText() {
+        val spannableString = SpannableString(binding.bttSignIn.text)
+        spannableString.setSpan(UnderlineSpan(), 0, spannableString.length, 0)
+        binding.bttSignIn.text = spannableString
+    }
 }

@@ -4,6 +4,7 @@ import com.example.domain.VehicleException
 import com.example.domain.repository.VehiclesRepository
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
+import kotlin.jvm.Throws
 
 /**
  * Delete vehicle and all related data for the currently signed-in user.
@@ -12,9 +13,10 @@ import javax.inject.Inject
  * @throws VehicleException.IsCurrentVehicleException If vehicle user is trying to delete is
  * set as current
  */
-class DeleteVehicleUseCase  @Inject constructor(
+class DeleteVehicleUseCase @Inject constructor(
     private val repository: VehiclesRepository
 ) {
+    @Throws(VehicleException.IsCurrentVehicleException::class)
     suspend operator fun invoke(
         vehicleId: Long,
     ) {

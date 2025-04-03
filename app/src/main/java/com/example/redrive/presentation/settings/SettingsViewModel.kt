@@ -1,6 +1,5 @@
 package com.example.redrive.presentation.settings
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.AvgConsumption
 import com.example.domain.model.Capacity
@@ -12,13 +11,12 @@ import com.example.domain.useCase.settings.ObserveSettingsUseCase
 import com.example.domain.useCase.settings.SettingsFacade
 import com.example.domain.useCase.settings.UpdateSettingsUseCase
 import com.example.redrive.core.AppStringResProvider
+import com.example.redrive.core.BaseViewModel
+import com.example.redrive.core.Router
 import com.example.redrive.core.wrapLocaleDataSourceRequests
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -33,28 +31,16 @@ class SettingsViewModel @Inject constructor(
     private val updateSettingsUseCase: UpdateSettingsUseCase,
     private val settingsFacade: SettingsFacade,
     private val appStringResProvider: AppStringResProvider
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _settings: MutableStateFlow<Settings> = MutableStateFlow(Settings())
     val settings = _settings.asStateFlow()
-
-    private val _error: MutableStateFlow<Pair<Boolean, String>> = MutableStateFlow(Pair(false, ""))
-    val error = _error.asStateFlow()
 
     private val originalSettings = MutableStateFlow(Settings())
 
     val areSettingsTheSame = settings.map { settings ->
         originalSettings.value == settings
     }.stateIn(viewModelScope, SharingStarted.Lazily, true)
-
-    private val _navigation: MutableSharedFlow<NavigateBack?> = MutableSharedFlow(
-        replay = 1,
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_LATEST
-    )
-
-    val navigation = _navigation.asSharedFlow()
-
 
     init {
         viewModelScope.launch {
@@ -86,7 +72,7 @@ class SettingsViewModel @Inject constructor(
         return settingsFacade.getDateFormatPatterns()
     }
 
-    fun updateCurrency(currency: Currency) {
+    fun onCurrencyUnitItemClick(currency: Currency) {
         if (currency.unit == settings.value.currencyAbbr) return
         _settings.update {
             it.copy(
@@ -95,7 +81,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun updateCapacity(capacity: Capacity) {
+    fun onCapacityUnitItemClick(capacity: Capacity) {
         if (capacity.unit == settings.value.capacityAbbr) return
         _settings.update {
             it.copy(
@@ -104,7 +90,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun updateDistance(distance: Distance) {
+    fun onDistanceUnitItemClick(distance: Distance) {
         if (distance.unit == settings.value.distanceAbbr) return
         _settings.update {
             it.copy(
@@ -113,7 +99,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun updateAvgConsumption(avgConsumption: AvgConsumption) {
+    fun onAvgConsumptionUnitItemClick(avgConsumption: AvgConsumption) {
         if (avgConsumption.unit == settings.value.avgConsumptionAbbr) return
         _settings.update {
             it.copy(
@@ -122,7 +108,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun updateDatePattern(datePattern: DateFormatPattern) {
+    fun onDatePatternItemClick(datePattern: DateFormatPattern) {
         if (datePattern.pattern == settings.value.dateFormatPattern) return
         _settings.update {
             it.copy(
@@ -131,23 +117,15 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun updateSettings() {
+    fun onBtnSaveClick() {
         wrapLocaleDataSourceRequests(
             appStringResProvider = appStringResProvider,
             action = {
                 updateSettingsUseCase.invoke(settings = settings.value)
-                _navigation.emit(NavigateBack)
+                navigate(Router.SettingsDirection.ToProfile)
             }
         ) { message ->
-            _error.update {
-                it.copy(first = true, second = message)
-            }
-        }
-    }
-
-    fun resetErrorState() {
-        _error.update {
-            it.copy(first = false, second = "")
+            emitError(message)
         }
     }
 

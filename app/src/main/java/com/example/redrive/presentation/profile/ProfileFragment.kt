@@ -5,10 +5,10 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.example.domain.model.SignInStatus
 import com.example.redrive.R
+import com.example.redrive.core.Router
+import com.example.redrive.core.navigate
 import com.example.redrive.databinding.FragmentProfileBinding
 import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,15 +37,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             launch {
                 viewModel.navigation.collectLatest {
                     when (it) {
-                        ProfileViewModel.Route.ToSettings -> {
+                        Router.ProfileDirections.ToSettings -> {
                             navigate(ProfileFragmentDirections.actionProfileFragmentToSettingsFragment())
                         }
 
-                        ProfileViewModel.Route.ToSignIn -> {
+                        Router.ProfileDirections.ToSignIn -> {
                             navigate(ProfileFragmentDirections.actionProfileFragmentToSignInFragment())
                         }
 
-                        ProfileViewModel.Route.ToEditVehicles -> {
+                        Router.ProfileDirections.ToEditVehicles -> {
                             navigate(ProfileFragmentDirections.actionProfileFragmentToVehicleFlow())
                         }
 
@@ -67,21 +67,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun setupListeners() {
         binding.tvSignIn.setOnClickListener {
-            viewModel.navigate(ProfileViewModel.Route.ToSignIn)
+            viewModel.navigate(Router.ProfileDirections.ToSignIn)
         }
         binding.tvEditVehicles.setOnClickListener {
-            viewModel.navigate(ProfileViewModel.Route.ToEditVehicles)
+            viewModel.navigate(Router.ProfileDirections.ToEditVehicles)
         }
         binding.tvSettings.setOnClickListener {
-            viewModel.navigate(ProfileViewModel.Route.ToSettings)
+            viewModel.navigate(Router.ProfileDirections.ToSettings)
         }
         binding.tvSignOut.setOnClickListener {
             viewModel.onSignOutClick()
         }
-    }
-
-    private fun navigate(direction: NavDirections) {
-        findNavController().navigate(direction)
     }
 
 }

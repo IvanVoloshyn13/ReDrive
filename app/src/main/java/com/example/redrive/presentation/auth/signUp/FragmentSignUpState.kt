@@ -12,7 +12,6 @@ data class FragmentSignUpState(
     val isValidEmail: Boolean = false,
     val isValidPassword: PasswordValidationResult = PasswordValidationResult(),
     val isValidConfirmPassword: Boolean = false,
-    val signUpStatus: SignUpStatus = SignUpStatus.SignOut,
     val signUpErrorMessage: String = "",
 ) {
     val signUpButtonState: SignUpButtonState
@@ -22,8 +21,4 @@ data class FragmentSignUpState(
 
 enum class SignUpButtonState {
     Enabled, Disabled
-}
-
-enum class SignUpStatus {
-    Failure, SignOut, SignIn
 }

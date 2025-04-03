@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.redrive.presentation.settings.SettingsFragment">
 
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/refuel_card"
         style="@style/Redrive.App.CardView.Base"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_large"
@@ -60,10 +61,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:layout_marginEnd="@dimen/margin_large"
         android:text="@string/save"
-        app:layout_constraintEnd_toEndOf="@id/refuel_card"
-        app:layout_constraintTop_toBottomOf="@id/refuel_card">
+        android:layout_gravity="end"
+       >
 
     </Button>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

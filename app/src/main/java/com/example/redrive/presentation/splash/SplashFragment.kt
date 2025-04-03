@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.redrive.R
+import com.example.redrive.core.Router
 import com.example.redrive.databinding.FragmentSplashBinding
 import com.example.redrive.presentation.tabs.TabsFragment
 import com.example.redrive.viewBinding
@@ -29,11 +30,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                 delay(1500)
                 viewModel.navigation.collectLatest {
                     when (it) {
-                        SplashViewModel.Route.ToProfile -> {
+                        Router.SplashDirections.ToProfile -> {
                             navigate(TabsFragment.Companion.Destinations.PROFILE)
                         }
 
-                        SplashViewModel.Route.ToRedrive -> {
+                        Router.SplashDirections.ToRedrive -> {
                             navigate(TabsFragment.Companion.Destinations.REDRIVE)
                         }
                     }

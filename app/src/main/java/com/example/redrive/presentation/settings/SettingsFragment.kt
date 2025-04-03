@@ -1,7 +1,6 @@
 package com.example.redrive.presentation.settings
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +15,7 @@ import com.example.domain.model.Distance
 import com.example.domain.model.SettingType
 import com.example.domain.model.Settings
 import com.example.redrive.R
-import com.example.redrive.core.findTopNavController
+import com.example.redrive.core.Router
 import com.example.redrive.core.showErrorAndResetState
 import com.example.redrive.databinding.FragmentSettingsBinding
 import com.example.redrive.viewBinding
@@ -54,7 +53,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     if (it.first) {
                         showErrorAndResetState(
                             errorMessage = it.second,
-                            resetStateAction = { viewModel.resetErrorState() }
+                            resetStateAction = { viewModel.onErrorShown() }
                         )
                     }
                 }
@@ -63,8 +62,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             launch {
                 viewModel.navigation.collectLatest {
                     when (it) {
-                        SettingsViewModel.NavigateBack -> findNavController().popBackStack()
-                        null -> return@collectLatest
+                        Router.SettingsDirection.ToProfile -> findNavController().popBackStack()
                     }
                 }
             }
@@ -93,7 +91,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         binding.btnSave.setOnClickListener {
-            viewModel.updateSettings()
+            viewModel.onBtnSaveClick()
         }
     }
 
@@ -184,23 +182,23 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .setItems(items) { dialog, which ->
                 when (type) {
                     SettingType.Currency -> {
-                        viewModel.updateCurrency(elements[which] as Currency)
+                        viewModel.onCurrencyUnitItemClick(elements[which] as Currency)
                     }
 
                     SettingType.Capacity -> {
-                        viewModel.updateCapacity(elements[which] as Capacity)
+                        viewModel.onCapacityUnitItemClick(elements[which] as Capacity)
                     }
 
                     SettingType.Distance -> {
-                        viewModel.updateDistance(elements[which] as Distance)
+                        viewModel.onDistanceUnitItemClick(elements[which] as Distance)
                     }
 
                     SettingType.AvgConsumption -> {
-                        viewModel.updateAvgConsumption(elements[which] as AvgConsumption)
+                        viewModel.onAvgConsumptionUnitItemClick(elements[which] as AvgConsumption)
                     }
 
                     SettingType.FormatOfDate -> {
-                        viewModel.updateDatePattern(elements[which] as DateFormatPattern)
+                        viewModel.onDatePatternItemClick(elements[which] as DateFormatPattern)
                     }
                 }
             }

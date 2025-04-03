@@ -11,6 +11,8 @@ import com.example.domain.useCase.signUpFieldValidation.IsValidFullNameUseCase
 import com.example.domain.useCase.signUpFieldValidation.IsValidPasswordUseCase
 import com.example.domain.useCase.signUpFieldValidation.PasswordValidationResult
 import com.example.redrive.core.AppStringResProvider
+import com.example.redrive.core.BaseViewModel
+import com.example.redrive.core.Router
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +33,7 @@ private const val DEBOUNCE_TIME_MILLIS = 250L
 class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpWithEmailUseCase,
     private val appStringResProvider: AppStringResProvider
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _state: MutableStateFlow<FragmentSignUpState> =
         MutableStateFlow<FragmentSignUpState>(
@@ -58,19 +60,19 @@ class SignUpViewModel @Inject constructor(
     private val _confirmPasswordInput: MutableStateFlow<String> = MutableStateFlow("")
     private val confirmPasswordInput = _confirmPasswordInput.asStateFlow()
 
-    fun setFullNameInput(value: String) {
+    fun onFullNameTextChange(value: String) {
         _fullNameInput.value = value
     }
 
-    fun setEmailInput(value: String) {
+    fun onEmailTextChange(value: String) {
         _emailInput.value = value
     }
 
-    fun setPasswordInput(value: String) {
+    fun onPasswordTextChange(value: String) {
         _passwordInput.value = value
     }
 
-    fun setConfirmPasswordInput(value: String) {
+    fun onConfirmPasswordTextChange(value: String) {
         _confirmPasswordInput.value = value
     }
 
@@ -106,7 +108,7 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun signUp() {
+    fun onSignUpBttClick() {
         val userCredentials = UserAuthCredentials(
             fullName = _state.value.fullName,
             email = _state.value.email,
@@ -120,32 +122,21 @@ class SignUpViewModel @Inject constructor(
                 signUpUseCase.invoke(userCredentials)
                 _state.update {
                     it.copy(
-                        signUpStatus = SignUpStatus.SignIn,
                         loading = false
                     )
                 }
-            }catch (e:AppException){
+                navigate(Router.SignUpDirections.ToProfile)
+            } catch (e: AppException) {
                 _state.update {
                     it.copy(
-                        loading = false,
-                        signUpStatus = SignUpStatus.Failure,
-                        signUpErrorMessage =appStringResProvider.provideStringRes(e)
+                        loading = false
                     )
                 }
+                emitError(appStringResProvider.provideStringRes(e))
             }
         }
     }
 
-    fun resetState() {
-        viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    signUpStatus = SignUpStatus.SignOut,
-                    loading = false
-                )
-            }
-        }
-    }
 
     private data class ValidationFlowState(
         val isValidFullName: Boolean,
@@ -153,6 +144,5 @@ class SignUpViewModel @Inject constructor(
         val passwordValidationRes: PasswordValidationResult,
         val isValidConfPassword: Boolean
     )
-
 
 }

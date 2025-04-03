@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.domain.model.VehicleType
 import com.example.redrive.R
+import com.example.redrive.core.Router
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
 import com.example.redrive.databinding.FragmentEditVehicleBinding
 import com.example.redrive.viewBinding
@@ -29,7 +30,6 @@ class EditVehicleFragment : Fragment(R.layout.fragment_edit_vehicle) {
     private val viewModel by viewModels<EditVehicleViewModel>()
     private val binding by viewBinding<FragmentEditVehicleBinding>()
     private val vehicle by lazy {
-        viewModel.emitVehicle(args.editedVehicle)
         args.editedVehicle
     }
     private val editable by lazy {
@@ -47,7 +47,7 @@ class EditVehicleFragment : Fragment(R.layout.fragment_edit_vehicle) {
         updateUi()
 
         binding.btnSave.setOnClickListener {
-            viewModel.editVehicle()
+            viewModel.onSaveBtnClick()
         }
 
     }
@@ -85,8 +85,8 @@ class EditVehicleFragment : Fragment(R.layout.fragment_edit_vehicle) {
                 }
             }
             launch {
-                viewModel.navigate.collectLatest {
-                    if (it) findNavController().popBackStack()
+                viewModel.navigation.collectLatest {
+                    if (it == Router.EditVehicleDirections.ToVehicles) findNavController().popBackStack()
                 }
             }
 
@@ -104,7 +104,7 @@ class EditVehicleFragment : Fragment(R.layout.fragment_edit_vehicle) {
                 }
             }
             etVehicleName.doAfterTextChanged {
-                viewModel.updateVehicleName(it.toString())
+                viewModel.onVehicleNameTextChange(it.toString())
             }
 
         }
@@ -121,7 +121,7 @@ class EditVehicleFragment : Fragment(R.layout.fragment_edit_vehicle) {
                 }
             }
             etOdometer.doAfterTextChanged {
-                viewModel.updateOdometer(it.toString())
+                viewModel.onOdometerTextChange(it.toString())
             }
         }
     }
@@ -132,11 +132,11 @@ class EditVehicleFragment : Fragment(R.layout.fragment_edit_vehicle) {
             if (isChecked) {
                 when (checkedId) {
                     R.id.btt_car -> {
-                        viewModel.switchVehicleType(VehicleType.Car)
+                        viewModel.onVehicleTypeChange(VehicleType.Car)
                     }
 
                     R.id.btt_bike -> {
-                        viewModel.switchVehicleType(VehicleType.Bike)
+                        viewModel.onVehicleTypeChange(VehicleType.Bike)
                     }
                 }
             }

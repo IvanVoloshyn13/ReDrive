@@ -11,9 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.domain.model.SignInStatus
 import com.example.redrive.R
+import com.example.redrive.core.Router
 import com.example.redrive.databinding.FragmentSignInBinding
-import com.example.redrive.core.findTopNavController
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
+import com.example.redrive.core.navigate
 import com.example.redrive.core.showErrorAndResetState
 import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,16 +29,42 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeState()
+        collectState()
         setSpannableSignUpText()
         setupListeners()
     }
 
-    private fun observeState() {
+    private fun collectState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collectLatest { state ->
-                updateUI(state)
+            launch {
+                viewModel.state.collectLatest { state ->
+                    updateUI(state)
+                }
             }
+            launch {
+                viewModel.error.collectLatest {
+                    if (it.first) {
+                        showErrorAndResetState(it.second) {
+                            viewModel.onErrorShown()
+                        }
+                    }
+                }
+            }
+
+            launch {
+                viewModel.navigation.collectLatest {
+                    when (it) {
+                        Router.SignInDirections.ToSignUp -> {
+                            navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
+                        }
+
+                        Router.SignInDirections.ToProfile -> {
+                            findNavController().popBackStack()
+                        }
+                    }
+                }
+            }
+
         }
     }
 
@@ -52,34 +79,15 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             binding.etPassword.setTextKeepState(state.password)
         }
 
-        when (state.signInStatus) {
-            SignInStatus.Failure -> showErrorAndResetState(state.errorMessage) {
-                viewModel.resetErrorState()
-            }
-
-            SignInStatus.SignedIn -> navigateToProfile()
-            SignInStatus.SignOut -> Unit
-        }
-
-    }
-
-    private fun navigateToProfile() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigation.collectLatest { navigate ->
-                if (navigate) {
-                    findNavController().popBackStack()
-                }
-            }
-        }
     }
 
     private fun setupListeners() {
 
         binding.bttSignIn.setOnClickListener { viewModel.signIn() }
-        binding.tvSignUp.setOnClickListener { findNavController().navigate(R.id.action_signInFragment_to_signUpFragment) }
+        binding.tvSignUp.setOnClickListener { viewModel.navigate(Router.SignInDirections.ToSignUp) }
 
-        binding.etEmail.doAfterTextChanged { viewModel.updateEmail(it.toString()) }
-        binding.etPassword.doAfterTextChanged { viewModel.updatePassword(it.toString()) }
+        binding.etEmail.doAfterTextChanged { viewModel.onEmailTextChange(it.toString()) }
+        binding.etPassword.doAfterTextChanged { viewModel.onPasswordTextChange(it.toString()) }
 
         hideSoftInputAndClearViewsFocus(binding.root)
 

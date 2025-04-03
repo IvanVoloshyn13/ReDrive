@@ -1,16 +1,13 @@
 package com.example.redrive.presentation.vehicle.editVehicle
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.domain.useCase.vehicle.EditVehicleUseCase
+import com.example.redrive.core.BaseViewModel
+import com.example.redrive.core.Router
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -21,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EditVehicleViewModel @Inject constructor(
     private val editVehicleUseCase: EditVehicleUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val oldVehicle = MutableStateFlow<Vehicle>(Vehicle.NO_VEHICLE)
 
@@ -30,13 +27,6 @@ class EditVehicleViewModel @Inject constructor(
 
     private val _areVehiclesTheSame = MutableStateFlow<Boolean>(false)
     val areVehiclesTheSame = _areVehiclesTheSame.asStateFlow()
-
-    private val _navigation = MutableSharedFlow<Boolean>(
-        replay = 1,
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_LATEST
-    )
-    val navigate = _navigation.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -56,7 +46,7 @@ class EditVehicleViewModel @Inject constructor(
         _editedVehicle.value = vehicle
     }
 
-    fun updateVehicleName(name: String) {
+    fun onVehicleNameTextChange(name: String) {
         _editedVehicle.update {
             it.copy(
                 name = name,
@@ -64,7 +54,7 @@ class EditVehicleViewModel @Inject constructor(
         }
     }
 
-    fun updateOdometer(odometer: String) {
+    fun onOdometerTextChange(odometer: String) {
         _editedVehicle.update {
             it.copy(
                 initialOdometerValue = odometer.toInt(),
@@ -72,7 +62,7 @@ class EditVehicleViewModel @Inject constructor(
         }
     }
 
-    fun switchVehicleType(type: VehicleType) {
+    fun onVehicleTypeChange(type: VehicleType) {
         _editedVehicle.update {
             it.copy(
                 type = type,
@@ -80,10 +70,10 @@ class EditVehicleViewModel @Inject constructor(
         }
     }
 
-    fun editVehicle() {
+    fun onSaveBtnClick() {
         viewModelScope.launch {
             editVehicleUseCase(_editedVehicle.value)
-            _navigation.emit(true)
+            navigate(Router.EditVehicleDirections.ToVehicles)
         }
     }
 

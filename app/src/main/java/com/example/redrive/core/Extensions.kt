@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.domain.AppException
@@ -19,6 +20,10 @@ fun Fragment.findTopNavController(): NavController {
     val topLevelHost =
         requireActivity().supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment?
     return topLevelHost?.navController ?: findNavController()
+}
+
+fun Fragment.navigate(direction: NavDirections) {
+    findNavController().navigate(direction)
 }
 
 fun Fragment.hideSoftInputAndClearViewsFocus(root: ViewGroup) {

@@ -1,22 +1,23 @@
 package com.example.redrive.presentation.vehicle.vehicles
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.Vehicle
 import com.example.redrive.R
+import com.example.redrive.core.RedriveDirection
+import com.example.redrive.core.Router
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
+import com.example.redrive.core.navigate
 import com.example.redrive.databinding.FragmentVehiclesBinding
 import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -33,28 +34,36 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
         initVehicleRecyclerView()
         collectState()
         binding.bttAddNewVehicle.setOnClickListener {
-            findNavController().navigate(R.id.action_vehiclesFragment_to_newVehicleFragment)
+            viewModel.navigate(Router.VehiclesDirections.ToNewVehicle)
         }
-
     }
 
     private fun collectState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collect {
-                updateUi(it)
+
+            launch {
+                viewModel.state.collectLatest {
+                    vehiclesAdapter.submitList(it) {
+                        binding.rvVehicles.scrollToPosition(0)
+                    }
+                }
+            }
+            launch {
+                viewModel.navigation.collectLatest { direction ->
+                    navigateTo(direction)
+                }
+            }
+
+            launch {
+                viewModel.error.collectLatest { error ->
+                    if (error.first) {
+                        showAlertDialog(error.second, viewModel.state.value)
+                        viewModel.onErrorShown()
+                    }
+                }
             }
         }
-    }
 
-    private fun updateUi(state: VehiclesFragmentState) {
-        vehiclesAdapter.submitList(state.vehicles) {
-            binding.rvVehicles.scrollToPosition(0)
-            if (state.error) {
-                showAlertDialog(state.errorMessage, state.vehicles)
-                viewModel.resetError()
-
-            }
-        }
     }
 
     private fun initVehicleRecyclerView() {
@@ -71,7 +80,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
             ) { _, _ ->
                 val currentVehicleId = vehicles.find { it.isCurrentVehicle }?.id
                 viewModel.confirmDeleteCurrentVehicle(
-                    currentVehicleId ?: throw RuntimeException("TODO")
+                    currentVehicleId!! //If there is at least one vehicle it by default will be as current
                 )
             }
             .setNegativeButton(getString(R.string.cancel)) { di, _ ->
@@ -86,16 +95,33 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
     }
 
     override fun onVehicleItemClick(vehicle: Vehicle) {
-        viewModel.setVehicleAsCurrent(vehicleId = vehicle.id)
+        viewModel.onVehicleItemClick(vehicleId = vehicle.id)
     }
 
-    override fun editVehicle(vehicle: Vehicle) {
-        val action = VehiclesFragmentDirections.actionVehiclesFragmentToEditVehicleFragment(vehicle)
-        findNavController().navigate(action)
+    override fun onEditItemClick(vehicle: Vehicle) {
+        viewModel.navigate(Router.VehiclesDirections.ToEditVehicle(vehicle))
     }
 
-    override fun deleteVehicle(vehicleId: Long) {
-        viewModel.deleteVehicle(vehicleId)
+    override fun onDeleteItemClick(vehicleId: Long) {
+        viewModel.onDeleteBtnClick(vehicleId)
+    }
+
+    private fun navigateTo(direction: RedriveDirection?) {
+        when (direction) {
+            Router.VehiclesDirections.ToNewVehicle -> {
+                navigate(VehiclesFragmentDirections.actionVehiclesFragmentToNewVehicleFragment())
+            }
+
+            is Router.VehiclesDirections.ToEditVehicle -> {
+                navigate(
+                    VehiclesFragmentDirections.actionVehiclesFragmentToEditVehicleFragment(
+                        direction.vehicle
+                    )
+                )
+            }
+
+            else -> return
+        }
     }
 
 }

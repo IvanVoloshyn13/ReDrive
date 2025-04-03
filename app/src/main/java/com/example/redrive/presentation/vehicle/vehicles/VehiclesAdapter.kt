@@ -51,11 +51,11 @@ class VehiclesAdapter(private val listener: VehicleActionsListener) :
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.edit -> {
-                    listener.editVehicle(vehicle)
+                    listener.onEditItemClick(vehicle)
                 }
 
                 R.id.delete -> {
-                    listener.deleteVehicle(vehicle.id)
+                    listener.onDeleteItemClick(vehicle.id)
                 }
 
                 R.id.set_as_current -> {
@@ -72,8 +72,8 @@ class VehiclesAdapter(private val listener: VehicleActionsListener) :
 
     interface VehicleActionsListener {
         fun onVehicleItemClick(vehicle: Vehicle)
-        fun editVehicle(vehicle: Vehicle)
-        fun deleteVehicle(vehicleId: Long)
+        fun onEditItemClick(vehicle: Vehicle)
+        fun onDeleteItemClick(vehicleId: Long)
     }
 
 

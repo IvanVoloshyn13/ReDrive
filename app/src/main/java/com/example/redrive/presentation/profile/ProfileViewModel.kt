@@ -6,7 +6,6 @@ import com.example.domain.useCase.userSession.GetUserInitialsUseCase
 import com.example.domain.useCase.userSession.IsUserSignedInUseCase
 import com.example.domain.useCase.userSession.SignOutUseCase
 import com.example.redrive.core.BaseViewModel
-import com.example.redrive.core.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -70,12 +69,5 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-
-    sealed class Route : NavRoute {
-        data object ToSettings : Route()
-        data object ToEditVehicles : Route()
-        data object ToSignIn : Route()
-    }
-
 
 }

@@ -1,19 +1,17 @@
 package com.example.redrive.presentation.vehicle.newVehicle
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.UserException
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
-import com.example.domain.useCase.settings.UpdateSettingsUseCase
 import com.example.domain.useCase.vehicle.AddNewVehicleUseCase
 import com.example.redrive.core.AppStringResProvider
+import com.example.redrive.core.BaseViewModel
+import com.example.redrive.core.RedriveDirection
+import com.example.redrive.core.Router
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -25,7 +23,7 @@ import javax.inject.Inject
 class NewVehicleViewModel @Inject constructor(
     private val addNewVehicleUseCase: AddNewVehicleUseCase,
     private val appStringResProvider: AppStringResProvider,
-) : ViewModel() {
+) : BaseViewModel() {
     private val _vehicleType = MutableStateFlow<VehicleType>(VehicleType.Default)
     val vehicleTypeState: StateFlow<VehicleType> = _vehicleType.asStateFlow()
 
@@ -42,13 +40,6 @@ class NewVehicleViewModel @Inject constructor(
         MutableStateFlow(Pair(false, ""))
     val errorState = _errorState.asStateFlow()
 
-    private val _navigation: MutableSharedFlow<NavigationPath?> =
-        MutableSharedFlow(
-            replay = 1,
-            extraBufferCapacity = 1,
-            onBufferOverflow = BufferOverflow.DROP_LATEST
-        )
-    val navigation = _navigation.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -63,20 +54,19 @@ class NewVehicleViewModel @Inject constructor(
     }
 
 
-
-    fun switchVehicleType(type: VehicleType) {
+    fun onVehicleTypeSwitcherClick(type: VehicleType) {
         _vehicleType.value = type
     }
 
-    fun setVehicleName(name: String) {
+    fun onVehicleNameTextChange(name: String) {
         _vehicleName.value = name
     }
 
-    fun setVehicleOdometer(name: String) {
+    fun onVehicleOdometerTextChange(name: String) {
         _odometer.value = name
     }
 
-    fun saveNewVehicle() {
+    fun doOnBtnSaveClick() {
         val vehicle = Vehicle(
             id = 0,
             name = _vehicleName.value,
@@ -86,7 +76,7 @@ class NewVehicleViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 addNewVehicleUseCase.invoke(vehicle)
-                _navigation.emit(NavigationPath.ToVehicles)
+                navigate(Router.NewVehicleDirections.ToVehicles)
             } catch (e: UserException.NoUserDetectedException) {
                 _errorState.update {
                     it.copy(
@@ -107,9 +97,6 @@ class NewVehicleViewModel @Inject constructor(
         }
     }
 
-    sealed class NavigationPath {
-        data object ToVehicles : NavigationPath()
-    }
 
 
 }
