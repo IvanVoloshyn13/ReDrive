@@ -34,14 +34,14 @@
     { "id": 7, "unit": "mi/gal (imp)", "abbreviation": "mi/gal (imp)" }
   ],
   "date_formats": [
-    { "id": 1, "pattern": "DD.MM.YYYY" },
-    { "id": 2, "pattern": "MM.DD.YYYY" },
-    { "id": 3, "pattern": "YYYY.MM.DD" },
-    { "id": 4, "pattern": "DD/MM/YYYY" },
-    { "id": 5, "pattern": "MM/DD/YYYY" },
-    { "id": 6, "pattern": "YYYY/MM/DD" },
-    { "id": 7, "pattern": "DD-MM-YYYY" },
-    { "id": 8, "pattern": "MM-DD-YYYY" },
-    { "id": 9, "pattern": "YYYY-MM-DD" }
+    { "id": 1, "pattern": "dd.MM.yyyy" },
+    { "id": 2, "pattern": "MM.dd.yyyy" },
+    { "id": 3, "pattern": "yyyy.MM.dd" },
+    { "id": 4, "pattern": "dd/MM/yyyy" },
+    { "id": 5, "pattern": "MM/dd/yyyy" },
+    { "id": 6, "pattern": "yyyy/MM/dd" },
+    { "id": 7, "pattern": "dd-MM-yyyy" },
+    { "id": 8, "pattern": "MM-dd-yyyy" },
+    { "id": 9, "pattern": "yyyy-MM-dd" }
   ]
 }

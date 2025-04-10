@@ -1,18 +1,16 @@
 package com.example.domain.repository
 
-import com.example.domain.VehicleException
 import com.example.domain.model.Settings
 import com.example.domain.model.Vehicle
 import kotlinx.coroutines.flow.Flow
 
 interface VehiclesRepository {
 
-    /** Add new vehicle with default settings to local database using
-     * database Transaction */
-    suspend fun addVehicleWithSettings(uUid: String, vehicle: Vehicle, settings: Settings): Long
+    /** Add new vehicle with default settings to local database*/
+    suspend fun saveVehicleWithSettings(uUid: String, vehicle: Vehicle, settings: Settings): Long
 
     /** Edit vehicle  */
-    suspend fun editVehicle(uUid: String, vehicle: Vehicle)
+    suspend fun updateVehicle(uUid: String, vehicle: Vehicle)
 
     /** Delete vehicle from database */
     suspend fun deleteVehicle(vehicleId: Long)

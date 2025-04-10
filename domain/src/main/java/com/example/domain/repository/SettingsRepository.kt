@@ -42,7 +42,7 @@ interface SettingsRepository {
     /**
      * Retrieves the currently set date format pattern for the app.
      */
-    suspend fun getDateFormatPattern(): String
+    suspend fun getDateFormatPattern(vehicleId: Long?): String
 
     /**
      * Updates the app settings for the current vehicle.

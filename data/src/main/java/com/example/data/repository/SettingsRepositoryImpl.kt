@@ -83,10 +83,18 @@ class SettingsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateSettings(settings: Settings, vehicleId: Long) {
-        settingsDao.updateSettings(settings.toEntity(vehicleId))
+        val settingsWithCorrectDatePattern = settings.copy(
+            dateFormatPattern = inMemoryAppSettingsRepository.getSettings(language).dateFormats.first {
+                it.pattern.uppercase() == settings.dateFormatPattern
+            }.pattern
+        )
+        settingsDao.updateSettings(settingsWithCorrectDatePattern.toEntity(vehicleId))
     }
 
-    override suspend fun getDateFormatPattern(): String {
-        return settingsDao.getDateFormatPattern()
+    override suspend fun getDateFormatPattern(vehicleId: Long?): String {
+        return vehicleId?.let {
+            settingsDao.getDateFormatPattern(it)
+        } ?: inMemoryAppSettingsRepository.getSettings(language).dateFormats[0].pattern
+
     }
 }

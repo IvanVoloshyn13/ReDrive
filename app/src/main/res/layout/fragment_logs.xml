@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.redrive.presentation.LogsFragment">
+    tools:context="com.example.redrive.presentation.logs.LogsFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_current_vehicle"

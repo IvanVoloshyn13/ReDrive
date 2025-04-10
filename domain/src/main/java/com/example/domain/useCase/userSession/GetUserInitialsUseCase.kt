@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 const val REDRIVE_APP_INITIALS = "RD"
 
-class GetUserInitialsUseCase  @Inject constructor (private val repository: UserSessionRepository) {
+class GetUserInitialsUseCase @Inject constructor(private val repository: UserSessionRepository) {
 
     operator fun invoke(): Flow<String> {
         return repository.observeCurrentUser().map {

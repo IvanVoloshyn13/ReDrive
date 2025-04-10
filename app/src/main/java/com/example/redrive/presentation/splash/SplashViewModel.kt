@@ -1,5 +1,6 @@
 package com.example.redrive.presentation.splash
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.SignInStatus
 import com.example.domain.useCase.userSession.IsUserSignedInUseCase

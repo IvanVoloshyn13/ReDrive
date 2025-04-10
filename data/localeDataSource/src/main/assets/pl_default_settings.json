@@ -21,6 +21,6 @@
   },
   "date_format": {
     "id": 1,
-    "pattern": "DD.MM.RRRR"
+    "pattern": "dd.MM.yyyy"
   }
 }

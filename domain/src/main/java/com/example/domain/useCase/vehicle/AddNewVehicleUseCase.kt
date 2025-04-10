@@ -1,7 +1,6 @@
 package com.example.domain.useCase.vehicle
 
 import com.example.domain.UserException
-import com.example.domain.model.Settings
 import com.example.domain.model.Vehicle
 import com.example.domain.repository.SettingsRepository
 import com.example.domain.repository.UserSessionRepository
@@ -26,7 +25,7 @@ class AddNewVehicleUseCase @Inject constructor(
         val uUid = userSessionRepository.observeCurrentUserId().first()
         if (uUid.isNullOrEmpty()) throw UserException.NoUserDetectedException()
         val defaultSettings = settingsRepository.getDefaultSettings()
-        val vehicleId = vehiclesRepository.addVehicleWithSettings(
+        val vehicleId = vehiclesRepository.saveVehicleWithSettings(
             uUid = uUid,
             vehicle = vehicle,
             settings = defaultSettings

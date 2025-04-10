@@ -21,3 +21,4 @@
 local.properties
 /kotlin-profile
 /daemon
+/data/localeDataSource/schemas

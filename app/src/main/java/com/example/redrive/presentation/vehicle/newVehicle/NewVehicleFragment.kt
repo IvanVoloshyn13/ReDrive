@@ -26,9 +26,6 @@ import kotlinx.coroutines.launch
 class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
     private val binding by viewBinding<FragmentNewVehicleBinding>()
     private val viewModel by viewModels<NewVehicleViewModel>()
-    private val editable by lazy {
-        Editable.Factory.getInstance()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +47,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 viewModel.vehicleNameState.collectLatest {
-                    binding.etVehicleName.setTextKeepState(editable.newEditable(it))
+                    binding.etVehicleName.setTextKeepState(it)
                 }
             }
 
@@ -71,7 +68,7 @@ class NewVehicleFragment : Fragment(R.layout.fragment_new_vehicle) {
             launch {
                 viewModel.odometerState.collectLatest {
                     binding.etOdometer.setTextKeepState(
-                        editable.newEditable(it)
+                       it
                     )
                 }
             }

@@ -21,7 +21,7 @@ class VehiclesRepositoryImpl @Inject constructor(
     private val vehiclesDao: VehiclesDao
 ) : VehiclesRepository {
 
-    override suspend fun addVehicleWithSettings(
+    override suspend fun saveVehicleWithSettings(
         uUid: String,
         vehicle: Vehicle,
         settings: Settings
@@ -33,7 +33,7 @@ class VehiclesRepositoryImpl @Inject constructor(
         return  vehicleId
     }
 
-    override suspend fun editVehicle(uUid: String, vehicle: Vehicle) {
+    override suspend fun updateVehicle(uUid: String, vehicle: Vehicle) {
         vehiclesDao.updateVehicle(vehicle.toEntity(uUid))
     }
 

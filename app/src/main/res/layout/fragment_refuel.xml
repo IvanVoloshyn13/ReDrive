@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.redrive.presentation.RefuelFragment">
+    tools:context="com.example.redrive.presentation.refuel.RefuelFragment">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -12,14 +12,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginEnd="@dimen/margin_large"
         app:cardBackgroundColor="?attr/colorSurface"
         app:cardCornerRadius="@dimen/default_card_corner_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/iv_calendar"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginStart="@dimen/margin_regular"
                 android:src="@drawable/ic_calendar"
                 app:layout_constraintBottom_toBottomOf="@id/date_container"
@@ -51,15 +49,16 @@
                     android:id="@+id/et_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/refuel_date"
                     android:inputType="none"
                     android:textAppearance="@style/Redrive.App.TextAppearance.Input"
-                    tools:text="11.08.2024" />
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
                 android:id="@+id/iv_odometer"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginStart="@dimen/margin_regular"
                 android:src="@drawable/ic_odometer"
                 app:layout_constraintBottom_toBottomOf="@id/odometer_container"
@@ -80,7 +79,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_odometer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:inputType="number"
                     android:textAppearance="@style/Redrive.App.TextAppearance.Input" />
 
@@ -88,8 +87,8 @@
 
             <ImageView
                 android:id="@+id/iv_fuel"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginStart="@dimen/margin_regular"
                 android:src="@drawable/ic_fuel"
                 app:layout_constraintBottom_toBottomOf="@id/fuel_volume_container"
@@ -119,17 +118,17 @@
 
             <ImageView
                 android:id="@+id/iv_unit"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginStart="@dimen/margin_regular"
                 android:src="@drawable/ic_currency"
-                app:layout_constraintBottom_toBottomOf="@id/unit_price_container"
+                app:layout_constraintBottom_toBottomOf="@id/price_per_container"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/unit_price_container"
+                app:layout_constraintTop_toTopOf="@id/price_per_container"
                 tools:ignore="ContentDescription" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/unit_price_container"
+                android:id="@+id/price_per_container"
                 style="@style/TextInputLayout.Refuel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -139,7 +138,7 @@
                 app:layout_constraintTop_toBottomOf="@id/fuel_volume_container">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_unit_price"
+                    android:id="@+id/et_price_per_unit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="numberDecimal"
@@ -149,8 +148,8 @@
 
             <ImageView
                 android:id="@+id/iv_notes"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginStart="@dimen/margin_regular"
                 android:src="@drawable/ic_notes"
                 app:layout_constraintBottom_toBottomOf="@id/notes_container"
@@ -166,7 +165,7 @@
                 android:hint="@string/notes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_unit"
-                app:layout_constraintTop_toBottomOf="@id/unit_price_container">
+                app:layout_constraintTop_toBottomOf="@id/price_per_container">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_notes"
@@ -238,7 +237,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:backgroundTint="?attr/colorSecondary"
+        android:backgroundTint="@color/btt_background_tint_secondary_selector"
         android:text="@string/clear"
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintStart_toStartOf="@id/refuel_card"

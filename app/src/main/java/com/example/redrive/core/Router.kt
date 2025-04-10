@@ -1,5 +1,6 @@
 package com.example.redrive.core
 
+import com.example.domain.model.Refuel
 import com.example.domain.model.Vehicle
 
 object Router {
@@ -36,8 +37,20 @@ object Router {
     sealed class NewVehicleDirections : RedriveDirection {
         data object ToVehicles : NewVehicleDirections()
     }
+
     sealed class EditVehicleDirections : RedriveDirection {
         data object ToVehicles : NewVehicleDirections()
+    }
+
+    sealed class LogsDirections : RedriveDirection {
+        data object ToVehicles : LogsDirections()
+        data object ToRefuel : LogsDirections()
+        data class ToEditRefuel(val refuel: Refuel) : LogsDirections()
+    }
+
+    sealed class RefuelDirection : RedriveDirection {
+        data object ToLogs : LogsDirections()
+
     }
 }
 

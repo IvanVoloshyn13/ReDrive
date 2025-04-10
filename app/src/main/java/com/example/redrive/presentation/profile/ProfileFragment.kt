@@ -1,6 +1,7 @@
 package com.example.redrive.presentation.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +13,9 @@ import com.example.redrive.core.navigate
 import com.example.redrive.databinding.FragmentProfileBinding
 import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -22,6 +26,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val viewModel by viewModels<ProfileViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.addAuthStateListener()
         collectState()
         setupListeners()
     }
@@ -78,6 +83,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.tvSignOut.setOnClickListener {
             viewModel.onSignOutClick()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.removeAuthStateListener()
     }
 
 }

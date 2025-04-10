@@ -136,7 +136,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             it.unit
         }.toTypedArray()
         openItemUnitsDialog(
-            title = getString(R.string.capacity),
+            title = getString(R.string.distance),
             items = items,
             type = SettingType.Distance,
             elements = distances
@@ -149,7 +149,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             it.unit
         }.toTypedArray()
         openItemUnitsDialog(
-            title = getString(R.string.capacity),
+            title = getString(R.string.avg_consumption),
             items = items,
             type = SettingType.AvgConsumption,
             elements = avgConsumptions
@@ -162,7 +162,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             it.pattern
         }.toTypedArray()
         openItemUnitsDialog(
-            title = getString(R.string.capacity),
+            title = getString(R.string.date_format),
             items = items,
             type = SettingType.FormatOfDate,
             elements = datePatterns

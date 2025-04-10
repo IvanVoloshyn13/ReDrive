@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.AppException
 import com.example.redrive.R
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 
 fun Fragment.findTopNavController(): NavController {
@@ -24,6 +25,11 @@ fun Fragment.findTopNavController(): NavController {
 
 fun Fragment.navigate(direction: NavDirections) {
     findNavController().navigate(direction)
+}
+
+ fun TextInputEditText.setTextFromState(value: String) {
+    if (this.text.toString() == value) return
+    this.setTextKeepState(value)
 }
 
 fun Fragment.hideSoftInputAndClearViewsFocus(root: ViewGroup) {

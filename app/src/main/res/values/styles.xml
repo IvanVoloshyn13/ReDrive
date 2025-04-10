@@ -132,7 +132,7 @@
     <style name="Redrive.App.MaterialButton.Primary" parent="Widget.Material3.Button">
         <item name="textAllCaps">true</item>
         <item name="android:textSize">14sp</item>
-        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="backgroundTint">@color/btt_background_tint_primary_selector</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 

@@ -3,10 +3,12 @@ package com.example.data.di
 import com.example.firebase.FirebaseAuthRepository
 import com.example.firebase.FirebaseAuthRepositoryImpl
 import com.example.data.repository.EmailAuthRepositoryImpl
+import com.example.data.repository.RefuelRepositoryImpl
 import com.example.data.repository.SettingsRepositoryImpl
 import com.example.data.repository.UserSessionRepositoryImpl
 import com.example.data.repository.VehiclesRepositoryImpl
 import com.example.domain.repository.EmailAuthRepository
+import com.example.domain.repository.RefuelRepository
 import com.example.domain.repository.SettingsRepository
 import com.example.domain.repository.UserSessionRepository
 import com.example.domain.repository.VehiclesRepository
@@ -35,4 +37,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindSettingsRepository(repository: SettingsRepositoryImpl): SettingsRepository
+
+    @Binds
+    @Singleton
+    fun bindRefuelRepository(refuelRepository: RefuelRepositoryImpl): RefuelRepository
 }

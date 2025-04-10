@@ -11,7 +11,7 @@ class EditVehicleUseCase  @Inject constructor(
     private val userSessionRepository: UserSessionRepository
 ) {
     suspend operator fun invoke(newVehicle: Vehicle) {
-        repository.editVehicle(
+        repository.updateVehicle(
             uUid = userSessionRepository.observeCurrentUserId().first()!!,
             vehicle = newVehicle
         )

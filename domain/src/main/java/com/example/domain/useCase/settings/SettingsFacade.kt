@@ -1,5 +1,6 @@
 package com.example.domain.useCase.settings
 
+import com.example.domain.model.DateFormatPattern
 import com.example.domain.repository.SettingsRepository
 import javax.inject.Inject
 
@@ -14,5 +15,10 @@ class SettingsFacade @Inject constructor(
     fun getDistanceUnits() = repository.getDistanceUnits()
     fun getAvgConsumptionUnits() = repository.getAvgConsumptionUnits()
     fun getCapacityUnits() = repository.getCapacityUnits()
-    fun getDateFormatPatterns() = repository.getDateFormatPatterns()
+    fun getDateFormatPatterns() = repository.getDateFormatPatterns().map {
+        DateFormatPattern(
+            id = it.id,
+            pattern = it.pattern.uppercase()
+        )
+    }
 }

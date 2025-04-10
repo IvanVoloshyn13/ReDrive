@@ -65,6 +65,7 @@
     <string name="is_current_vehicle_exception">You are about to delete the current vehicle, which will remove all associated data. Are you sure you want to proceed?</string>
     <string name="no_user_detected_exception_message">Please signIn or create account to add new vehicle</string>
     <string name="no_current_vehicle_exception_message">Please add first vehicle to update settings</string>
+    <string name="invalid_odometer_value_exception_message"> Please enter a value bigger than the initial odometer value: %d </string>
 
 
     <!-- FIREBASE_ERRORS-->

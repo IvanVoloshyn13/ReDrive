@@ -1,5 +1,6 @@
 package com.example.redrive.presentation.auth.signUp
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.AppException

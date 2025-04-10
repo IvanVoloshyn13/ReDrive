@@ -81,4 +81,5 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         val action = SplashFragmentDirections.actionSplashFragmentToTabsFragment(destination)
         findNavController().navigate(action)
     }
+
 }
