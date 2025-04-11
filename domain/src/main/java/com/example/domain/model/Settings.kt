@@ -31,7 +31,7 @@ data class Capacity(
 data class AvgConsumption(
     val id: Int = 0,
     val unit: String = "",
-    val abbreviation: String = "",
+    val key: String = "",
 ) : AppSettingsItem
 
 data class DateFormatPattern(

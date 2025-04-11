@@ -16,7 +16,7 @@
   },
   "avg_consumption": {
     "id": 1,
-    "unit": "l/100km",
+    "key": "L_PER_100KM",
     "abbreviation": "l/100km"
   },
   "date_format": {

@@ -25,13 +25,13 @@
     { "id": 3, "unit": "Gallons (imp)", "abbreviation": "gal (imp)" }
   ],
   "avg_consumption": [
-    { "id": 1, "unit": "l/100km", "abbreviation": "l/100km" },
-    { "id": 2, "unit": "km/l", "abbreviation": "km/l" },
-    { "id": 3, "unit": "l/mi", "abbreviation": "l/mi" },
-    { "id": 4, "unit": "mpg (US)", "abbreviation": "mpg (US)" },
-    { "id": 5, "unit": "mpg (imp)", "abbreviation": "mpg (imp)" },
-    { "id": 6, "unit": "mi/gal (US)", "abbreviation": "mi/gal (US)" },
-    { "id": 7, "unit": "mi/gal (imp)", "abbreviation": "mi/gal (imp)" }
+    { "id": 1, "key": "L_PER_100KM", "unit": "l/100km" },
+    { "id": 2, "key": "KM_PER_L", "unit": "km/l" },
+    { "id": 3, "key": "L_PER_MI", "unit": "l/mi" },
+    { "id": 4, "key": "MPG_US", "unit": "mpg (US)" },
+    { "id": 5, "key": "MPG_IMP", "unit": "mpg (imp)" },
+    { "id": 6, "key": "MI_PER_GAL_US", "unit": "mi/gal (US)" },
+    { "id": 7, "key": "MI_PER_GAL_IMP", "unit": "mi/gal (imp)" }
   ],
   "date_formats": [
     { "id": 1, "pattern": "dd.MM.yyyy" },

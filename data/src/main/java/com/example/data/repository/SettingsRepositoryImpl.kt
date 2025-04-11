@@ -48,7 +48,7 @@ class SettingsRepositoryImpl @Inject constructor(
             AvgConsumption(
                 id = it.id,
                 unit = it.unit,
-                abbreviation = it.abbreviation
+                key = it.key
             )
         }
     }

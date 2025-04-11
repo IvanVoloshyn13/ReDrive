@@ -4,6 +4,7 @@ import com.example.data.toEntity
 import com.example.domain.model.Refuel
 import com.example.domain.repository.RefuelRepository
 import com.example.localedatasource.room.daos.RefuelDao
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RefuelRepositoryImpl @Inject constructor(
@@ -19,5 +20,9 @@ class RefuelRepositoryImpl @Inject constructor(
 
     override suspend fun deleteRefuel(refuelId: Long) {
         refuelDao.deleteRefuel(refuelId)
+    }
+
+    override fun observeRefuels(vehicleId: Long): Flow<List<Refuel>> {
+        TODO("Not yet implemented")
     }
 }
