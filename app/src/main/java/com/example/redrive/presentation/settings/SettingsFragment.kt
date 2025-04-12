@@ -96,22 +96,22 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun setUnitsAbbreviation(state: Settings) {
-        binding.itemCurrency.tvAbbreviation.text = state.currencyAbbr
-        binding.itemCapacity.tvAbbreviation.text = state.capacityAbbr
-        binding.itemDistance.tvAbbreviation.text = state.distanceAbbr
-        binding.itemAvgConsumption.tvAbbreviation.text = state.avgConsumptionAbbr
+        binding.itemCurrency.tvAbbreviation.text = state.currency
+        binding.itemCapacity.tvAbbreviation.text = state.capacity
+        binding.itemDistance.tvAbbreviation.text = state.distance
+        binding.itemAvgConsumption.tvAbbreviation.text = state.avgConsumption
         binding.itemDatePattern.tvAbbreviation.text = state.dateFormatPattern
     }
 
     private fun showCurrencyUnits() {
         val currencies = viewModel.getCurrencies()
-        val items = currencies.map {
+        val units = currencies.map {
             it.unit
         }.toTypedArray()
 
         openItemUnitsDialog(
             title = getString(R.string.currency),
-            items = items,
+            units = units,
             type = SettingType.Currency,
             elements = currencies
         )
@@ -119,12 +119,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun showCapacityUnits() {
         val capacities = viewModel.getCapacities()
-        val items = capacities.map {
+        val units = capacities.map {
             it.unit
         }.toTypedArray()
         openItemUnitsDialog(
             title = getString(R.string.capacity),
-            items = items,
+            units = units,
             type = SettingType.Capacity,
             elements = capacities
         )
@@ -132,12 +132,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun showDistanceUnits() {
         val distances = viewModel.getDistances()
-        val items = distances.map {
+        val units = distances.map {
             it.unit
         }.toTypedArray()
         openItemUnitsDialog(
             title = getString(R.string.distance),
-            items = items,
+            units = units,
             type = SettingType.Distance,
             elements = distances
         )
@@ -145,12 +145,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun showAvgConsumptionUnits() {
         val avgConsumptions = viewModel.getAvgConsumptions()
-        val items = avgConsumptions.map {
+        val units = avgConsumptions.map {
             it.unit
         }.toTypedArray()
         openItemUnitsDialog(
             title = getString(R.string.avg_consumption),
-            items = items,
+            units = units,
             type = SettingType.AvgConsumption,
             elements = avgConsumptions
         )
@@ -158,12 +158,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun showDateFormatPatternsUnits() {
         val datePatterns = viewModel.getDateFormatPatternsUnits()
-        val items = datePatterns.map {
-            it.pattern
+        val units = datePatterns.map {
+            it.unit
         }.toTypedArray()
         openItemUnitsDialog(
             title = getString(R.string.date_format),
-            items = items,
+            units = units,
             type = SettingType.FormatOfDate,
             elements = datePatterns
         )
@@ -172,14 +172,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun openItemUnitsDialog(
         title: String,
-        items: Array<String>,
+        units: Array<String>,
         elements: List<AppSettingsItem>,
         type: SettingType
     ) {
         val builder: MaterialAlertDialogBuilder =
             MaterialAlertDialogBuilder(requireContext(), R.style.App_SettingsDialog)
         builder.setTitle(title)
-            .setItems(items) { dialog, which ->
+            .setItems(units) { dialog, which ->
                 when (type) {
                     SettingType.Currency -> {
                         viewModel.onCurrencyUnitItemClick(elements[which] as Currency)

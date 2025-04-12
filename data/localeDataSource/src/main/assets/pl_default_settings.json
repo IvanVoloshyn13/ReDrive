@@ -1,26 +1,31 @@
 {
   "currency": {
     "id": 13,
+    "key": "PLN",
     "unit": "PLN - Złoty polski",
     "abbreviation": "PLN"
   },
   "distance": {
     "id": 1,
+    "key": "KM",
     "unit": "Kilometry",
     "abbreviation": "km"
   },
   "capacity": {
     "id": 1,
+    "key": "LITER",
     "unit": "Litry",
     "abbreviation": "l"
   },
   "avg_consumption": {
     "id": 1,
     "key": "L_PER_100KM",
-    "abbreviation": "l/100km"
+    "unit": "l/100km"
   },
   "date_format": {
     "id": 1,
-    "pattern": "dd.MM.yyyy"
+    "key": "DD_MM_YYYY_DOTS",
+    "pattern": "dd.MM.yyyy",
+    "unit": "DD.MM.RRRR"
   }
 }

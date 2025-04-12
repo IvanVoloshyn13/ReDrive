@@ -15,10 +15,5 @@ class SettingsFacade @Inject constructor(
     fun getDistanceUnits() = repository.getDistanceUnits()
     fun getAvgConsumptionUnits() = repository.getAvgConsumptionUnits()
     fun getCapacityUnits() = repository.getCapacityUnits()
-    fun getDateFormatPatterns() = repository.getDateFormatPatterns().map {
-        DateFormatPattern(
-            id = it.id,
-            pattern = it.pattern.uppercase()
-        )
-    }
+    fun getDateFormatPatterns() = repository.getDateFormatPatterns()
 }

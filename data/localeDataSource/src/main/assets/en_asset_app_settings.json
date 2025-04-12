@@ -1,28 +1,28 @@
 {
   "currencies": [
-    { "id": 1, "unit": "USD - United States Dollar", "abbreviation": "USD" },
-    { "id": 2, "unit": "EUR - Euro", "abbreviation": "EUR" },
-    { "id": 3, "unit": "JPY - Japanese Yen", "abbreviation": "JPY" },
-    { "id": 4, "unit": "GBP - British Pound Sterling", "abbreviation": "GBP" },
-    { "id": 5, "unit": "AUD - Australian Dollar", "abbreviation": "AUD" },
-    { "id": 6, "unit": "CAD - Canadian Dollar", "abbreviation": "CAD" },
-    { "id": 7, "unit": "CHF - Swiss Franc", "abbreviation": "CHF" },
-    { "id": 8, "unit": "CNY - Chinese Yuan", "abbreviation": "CNY" },
-    { "id": 9, "unit": "HKD - Hong Kong Dollar", "abbreviation": "HKD" },
-    { "id": 10, "unit": "NOK - Norwegian Krone", "abbreviation": "NOK" },
-    { "id": 11, "unit": "SEK - Swedish Krona", "abbreviation": "SEK" },
-    { "id": 12, "unit": "NZD - New Zealand Dollar", "abbreviation": "NZD" },
-    { "id": 13, "unit": "PLN - Polish Zloty", "abbreviation": "PLN" },
-    { "id": 14, "unit": "INR - Indian Rupee", "abbreviation": "INR" }
+    { "id": 1, "key": "USD", "unit": "USD - United States Dollar", "abbreviation": "USD" },
+    { "id": 2, "key": "EUR", "unit": "EUR - Euro", "abbreviation": "EUR" },
+    { "id": 3, "key": "JPY", "unit": "JPY - Japanese Yen", "abbreviation": "JPY" },
+    { "id": 4, "key": "GBP", "unit": "GBP - British Pound Sterling", "abbreviation": "GBP" },
+    { "id": 5, "key": "AUD", "unit": "AUD - Australian Dollar", "abbreviation": "AUD" },
+    { "id": 6, "key": "CAD", "unit": "CAD - Canadian Dollar", "abbreviation": "CAD" },
+    { "id": 7, "key": "CHF", "unit": "CHF - Swiss Franc", "abbreviation": "CHF" },
+    { "id": 8, "key": "CNY", "unit": "CNY - Chinese Yuan", "abbreviation": "CNY" },
+    { "id": 9, "key": "HKD", "unit": "HKD - Hong Kong Dollar", "abbreviation": "HKD" },
+    { "id": 10, "key": "NOK", "unit": "NOK - Norwegian Krone", "abbreviation": "NOK" },
+    { "id": 11, "key": "SEK", "unit": "SEK - Swedish Krona", "abbreviation": "SEK" },
+    { "id": 12, "key": "NZD", "unit": "NZD - New Zealand Dollar", "abbreviation": "NZD" },
+    { "id": 13, "key": "PLN", "unit": "PLN - Polish Zloty", "abbreviation": "PLN" },
+    { "id": 14, "key": "INR", "unit": "INR - Indian Rupee", "abbreviation": "INR" }
   ],
   "distances": [
-    { "id": 1, "unit": "Kilometers", "abbreviation": "km" },
-    { "id": 2, "unit": "Miles", "abbreviation": "mi" }
+    { "id": 1, "key": "KM", "unit": "Kilometers", "abbreviation": "km" },
+    { "id": 2, "key": "MI", "unit": "Miles", "abbreviation": "mi" }
   ],
   "capacities": [
-    { "id": 1, "unit": "Liters", "abbreviation": "l" },
-    { "id": 2, "unit": "Gallons (US)", "abbreviation": "gal (US)" },
-    { "id": 3, "unit": "Gallons (imp)", "abbreviation": "gal (imp)" }
+    { "id": 1, "key": "LITER", "unit": "Liters", "abbreviation": "l" },
+    { "id": 2, "key": "GALLON_US", "unit": "Gallons (US)", "abbreviation": "gal (US)" },
+    { "id": 3, "key": "GALLON_IMP", "unit": "Gallons (imp)", "abbreviation": "gal (imp)" }
   ],
   "avg_consumption": [
     { "id": 1, "key": "L_PER_100KM", "unit": "l/100km" },
@@ -34,14 +34,14 @@
     { "id": 7, "key": "MI_PER_GAL_IMP", "unit": "mi/gal (imp)" }
   ],
   "date_formats": [
-    { "id": 1, "pattern": "dd.MM.yyyy" },
-    { "id": 2, "pattern": "MM.dd.yyyy" },
-    { "id": 3, "pattern": "yyyy.MM.dd" },
-    { "id": 4, "pattern": "dd/MM/yyyy" },
-    { "id": 5, "pattern": "MM/dd/yyyy" },
-    { "id": 6, "pattern": "yyyy/MM/dd" },
-    { "id": 7, "pattern": "dd-MM-yyyy" },
-    { "id": 8, "pattern": "MM-dd-yyyy" },
-    { "id": 9, "pattern": "yyyy-MM-dd" }
+    { "id": 1, "key": "DD_MM_YYYY_DOTS", "pattern": "dd.MM.yyyy", "unit": "DD.MM.YYYY" },
+    { "id": 2, "key": "MM_DD_YYYY_DOTS", "pattern": "MM.dd.yyyy", "unit": "MM.DD.YYYY" },
+    { "id": 3, "key": "YYYY_MM_DD_DOTS", "pattern": "yyyy.MM.dd", "unit": "YYYY.MM.DD" },
+    { "id": 4, "key": "DD_MM_YYYY_SLASH", "pattern": "dd/MM/yyyy", "unit": "DD/MM/YYYY" },
+    { "id": 5, "key": "MM_DD_YYYY_SLASH", "pattern": "MM/dd/yyyy", "unit": "MM/DD/YYYY" },
+    { "id": 6, "key": "YYYY_MM_DD_SLASH", "pattern": "yyyy/MM/dd", "unit": "YYYY/MM/DD" },
+    { "id": 7, "key": "DD_MM_YYYY_DASH", "pattern": "dd-MM-yyyy", "unit": "DD-MM-YYYY" },
+    { "id": 8, "key": "MM_DD_YYYY_DASH", "pattern": "MM-dd-yyyy", "unit": "MM-DD-YYYY" },
+    { "id": 9, "key": "YYYY_MM_DD_DASH", "pattern": "yyyy-MM-dd", "unit": "YYYY-MM-DD" }
   ]
 }

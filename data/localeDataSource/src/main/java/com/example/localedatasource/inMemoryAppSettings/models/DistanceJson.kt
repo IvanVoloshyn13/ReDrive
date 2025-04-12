@@ -1,7 +1,8 @@
 package com.example.localedatasource.inMemoryAppSettings.models
 
 data class DistanceJson(
-    val abbreviation: String,
     val id: Int,
+    val key: String,
+    val abbreviation: String,
     val unit: String
 )

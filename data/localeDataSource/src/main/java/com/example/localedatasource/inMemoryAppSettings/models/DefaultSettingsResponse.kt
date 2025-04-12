@@ -2,7 +2,7 @@ package com.example.localedatasource.inMemoryAppSettings.models
 
 import com.google.gson.annotations.SerializedName
 
-data class DefaultAppSettingsResponse(
+data class DefaultSettingsResponse(
     @SerializedName(value = "avg_consumption")
     val avgConsumption: AvgConsumptionJson,
     val capacity: CapacityJson,

@@ -1,8 +1,6 @@
 package com.example.data.repository
 
-import android.util.Log
-import com.example.data.toEntity
-import com.example.data.toSettings
+import com.example.data.SettingsMapper
 import com.example.domain.model.AvgConsumption
 import com.example.domain.model.Capacity
 import com.example.domain.model.Currency
@@ -14,22 +12,26 @@ import com.example.localedatasource.inMemoryAppSettings.InMemoryAppSettingsRepos
 import com.example.localedatasource.room.daos.SettingsDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.util.Locale
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
     private val inMemoryAppSettingsRepository: InMemoryAppSettingsRepository,
-    private val settingsDao: SettingsDao
+    private val settingsDao: SettingsDao,
+    private val settingsMapper: SettingsMapper,
+    private val language: String
 ) : SettingsRepository {
-    private val language = Locale.getDefault().language
     override suspend fun getDefaultSettings(): Settings {
-        val response = inMemoryAppSettingsRepository.getDefaultSettings(language)
-        return response.toSettings()
+        return with(settingsMapper) {
+            val response = inMemoryAppSettingsRepository.getDefaultSettings(language)
+            response.toSettings()
+        }
     }
 
     override fun observeAppSettings(vehicleId: Long): Flow<Settings> {
         return settingsDao.getSettingsByCurrentVehicleId(vehicleId).map {
-            it.toSettings()
+            with(settingsMapper) {
+                it.toSettings()
+            }
         }
     }
 
@@ -77,24 +79,26 @@ class SettingsRepositoryImpl @Inject constructor(
         return inMemoryAppSettingsRepository.getSettings(language).dateFormats.map {
             DateFormatPattern(
                 id = it.id,
-                pattern = it.pattern
+                pattern = it.pattern,
+                unit = it.unit
             )
         }
     }
 
     override suspend fun updateSettings(settings: Settings, vehicleId: Long) {
-        val settingsWithCorrectDatePattern = settings.copy(
-            dateFormatPattern = inMemoryAppSettingsRepository.getSettings(language).dateFormats.first {
-                it.pattern.uppercase() == settings.dateFormatPattern
-            }.pattern
-        )
-        settingsDao.updateSettings(settingsWithCorrectDatePattern.toEntity(vehicleId))
+        val entity = with(settingsMapper) {
+            settings.toEntity(vehicleId = vehicleId)
+        }
+        settingsDao.updateSettings(entity)
     }
 
     override suspend fun getDateFormatPattern(vehicleId: Long?): String {
         return vehicleId?.let {
-            settingsDao.getDateFormatPattern(it)
+            inMemoryAppSettingsRepository.getSettings(language).dateFormats.first { json ->
+                val key = settingsDao.getDateFormatPatternKey(it)
+                json.key == key
+            }.pattern
         } ?: inMemoryAppSettingsRepository.getSettings(language).dateFormats[0].pattern
-
     }
+    
 }

@@ -20,38 +20,10 @@ import androidx.room.PrimaryKey
 data class SettingsEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "vehicle_id") val vehicleId: Long = 0,
-    val currency: String,
-    val distance: String,
-    val capacity: String,
-    @ColumnInfo(name = "avg_consumption") val avgConsumption: String,
-    @ColumnInfo(name = "date_format_pattern") val dateFormatPatter: String
+    val currencyKey: String,
+    val distanceKey: String,
+    val capacityKey: String,
+    @ColumnInfo(name = "avg_consumption_key") val avgConsumptionKey: String,
+    @ColumnInfo(name = "date_format_pattern_key") val dateFormatPatternKey: String
 )
 
-data class Currency(
-    val id: Int = 0,
-    val unit: String = "",
-    val abbreviation: String = "",
-)
-
-data class Distance(
-    val id: Int = 0,
-    val unit: String = "",
-    val abbreviation: String = "",
-)
-
-data class Capacity(
-    val id: Int = 0,
-    val unit: String = "",
-    val abbreviation: String = "",
-)
-
-data class AvgConsumption(
-    val id: Int = 0,
-    val unit: String = "",
-    val abbreviation: String = "",
-)
-
-data class DateFormatPattern(
-    val id: Int = 0,
-    val pattern: String = ""
-)

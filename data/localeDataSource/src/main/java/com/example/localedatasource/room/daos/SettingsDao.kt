@@ -12,8 +12,8 @@ interface SettingsDao {
     @Query("SELECT * FROM app_settings WHERE vehicle_id=:vehicleId LIMIT 1")
     fun getSettingsByCurrentVehicleId(vehicleId: Long): Flow<SettingsEntity>
 
-    @Query("SELECT date_format_pattern FROM app_settings where vehicle_id =:vehicleId")
-    suspend fun getDateFormatPattern(vehicleId: Long): String
+    @Query("SELECT date_format_pattern_key FROM app_settings where vehicle_id =:vehicleId")
+    suspend fun getDateFormatPatternKey(vehicleId: Long): String
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateSettings(settings: SettingsEntity)

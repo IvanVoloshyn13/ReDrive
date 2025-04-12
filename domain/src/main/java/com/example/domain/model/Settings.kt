@@ -1,29 +1,36 @@
 package com.example.domain.model
 
+/**
+ * Represents the selected abbreviations for each setting category,
+ * such as currency, distance, capacity, average consumption, and date format.
+ */
 data class Settings(
     val id: Long = 0,
-    val currencyAbbr: String = "",
-    val distanceAbbr: String = "",
-    val capacityAbbr: String = "",
-    val avgConsumptionAbbr: String = "",
+    val currency: String = "",
+    val distance: String = "",
+    val capacity: String = "",
+    val avgConsumption: String = "",
     val dateFormatPattern: String = ""
 )
 
 
 data class Currency(
     val id: Int = 0,
+    val key: String = "",
     val unit: String = "",
     val abbreviation: String = "",
 ) : AppSettingsItem
 
 data class Distance(
     val id: Int = 0,
+    val key: String = "",
     val unit: String = "",
     val abbreviation: String = "",
 ) : AppSettingsItem
 
 data class Capacity(
     val id: Int = 0,
+    val key: String = "",
     val unit: String = "",
     val abbreviation: String = "",
 ) : AppSettingsItem
@@ -36,7 +43,9 @@ data class AvgConsumption(
 
 data class DateFormatPattern(
     val id: Int = 0,
-    val pattern: String = ""
+    val key: String = "",
+    val pattern: String = "",
+    val unit: String = ""
 ) : AppSettingsItem
 
 enum class SettingType {
@@ -44,18 +53,3 @@ enum class SettingType {
 }
 
 interface AppSettingsItem
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

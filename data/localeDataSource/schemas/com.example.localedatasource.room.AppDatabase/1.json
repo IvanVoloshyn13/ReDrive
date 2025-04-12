@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "402ce783c2049010c03dc0084d1a776f",
+    "identityHash": "496a033fdad46926999a9b726c6ac70c",
     "entities": [
       {
         "tableName": "users",
@@ -114,7 +114,7 @@
       },
       {
         "tableName": "app_settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `vehicle_id` INTEGER NOT NULL, `currency` TEXT NOT NULL, `distance` TEXT NOT NULL, `capacity` TEXT NOT NULL, `avg_consumption` TEXT NOT NULL, `date_format_pattern` TEXT NOT NULL, FOREIGN KEY(`vehicle_id`) REFERENCES `vehicles`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `vehicle_id` INTEGER NOT NULL, `currencyKey` TEXT NOT NULL, `distanceKey` TEXT NOT NULL, `capacityKey` TEXT NOT NULL, `avg_consumption_key` TEXT NOT NULL, `date_format_pattern_key` TEXT NOT NULL, FOREIGN KEY(`vehicle_id`) REFERENCES `vehicles`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -129,32 +129,32 @@
             "notNull": true
           },
           {
-            "fieldPath": "currency",
-            "columnName": "currency",
+            "fieldPath": "currencyKey",
+            "columnName": "currencyKey",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "distance",
-            "columnName": "distance",
+            "fieldPath": "distanceKey",
+            "columnName": "distanceKey",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "capacity",
-            "columnName": "capacity",
+            "fieldPath": "capacityKey",
+            "columnName": "capacityKey",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "avgConsumption",
-            "columnName": "avg_consumption",
+            "fieldPath": "avgConsumptionKey",
+            "columnName": "avg_consumption_key",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "dateFormatPatter",
-            "columnName": "date_format_pattern",
+            "fieldPath": "dateFormatPatternKey",
+            "columnName": "date_format_pattern_key",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -285,7 +285,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '402ce783c2049010c03dc0084d1a776f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '496a033fdad46926999a9b726c6ac70c')"
     ]
   }
 }

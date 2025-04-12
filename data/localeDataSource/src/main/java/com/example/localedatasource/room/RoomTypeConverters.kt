@@ -1,11 +1,6 @@
 package com.example.localedatasource.room
 
 import androidx.room.TypeConverter
-import com.example.localedatasource.room.entity.AvgConsumption
-import com.example.localedatasource.room.entity.Capacity
-import com.example.localedatasource.room.entity.Currency
-import com.example.localedatasource.room.entity.DateFormatPattern
-import com.example.localedatasource.room.entity.Distance
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -68,3 +63,32 @@ class RoomTypeConverters {
         return gson.fromJson(json, type)
     }
 }
+
+data class Currency(
+    val id: Int = 0,
+    val unit: String = "",
+    val abbreviation: String = "",
+)
+
+data class Distance(
+    val id: Int = 0,
+    val unit: String = "",
+    val abbreviation: String = "",
+)
+
+data class Capacity(
+    val id: Int = 0,
+    val unit: String = "",
+    val abbreviation: String = "",
+)
+
+data class AvgConsumption(
+    val id: Int = 0,
+    val unit: String = "",
+    val abbreviation: String = "",
+)
+
+data class DateFormatPattern(
+    val id: Int = 0,
+    val pattern: String = ""
+)

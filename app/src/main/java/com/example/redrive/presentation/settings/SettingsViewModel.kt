@@ -73,37 +73,37 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onCurrencyUnitItemClick(currency: Currency) {
-        if (currency.unit == settings.value.currencyAbbr) return
+        if (currency.unit == settings.value.currency) return
         _settings.update {
             it.copy(
-                currencyAbbr = currency.abbreviation
+                currency = currency.abbreviation
             )
         }
     }
 
     fun onCapacityUnitItemClick(capacity: Capacity) {
-        if (capacity.unit == settings.value.capacityAbbr) return
+        if (capacity.unit == settings.value.capacity) return
         _settings.update {
             it.copy(
-                capacityAbbr = capacity.abbreviation
+                capacity = capacity.abbreviation
             )
         }
     }
 
     fun onDistanceUnitItemClick(distance: Distance) {
-        if (distance.unit == settings.value.distanceAbbr) return
+        if (distance.unit == settings.value.distance) return
         _settings.update {
             it.copy(
-                distanceAbbr = distance.abbreviation
+                distance = distance.abbreviation
             )
         }
     }
 
     fun onAvgConsumptionUnitItemClick(avgConsumption: AvgConsumption) {
-        if (avgConsumption.unit == settings.value.avgConsumptionAbbr) return
+        if (avgConsumption.unit == settings.value.avgConsumption) return
         _settings.update {
             it.copy(
-                avgConsumptionAbbr = avgConsumption.abbreviation
+                avgConsumption = avgConsumption.unit
             )
         }
     }
@@ -112,7 +112,7 @@ class SettingsViewModel @Inject constructor(
         if (datePattern.pattern == settings.value.dateFormatPattern) return
         _settings.update {
             it.copy(
-                dateFormatPattern = datePattern.pattern
+                dateFormatPattern = datePattern.unit
             )
         }
     }

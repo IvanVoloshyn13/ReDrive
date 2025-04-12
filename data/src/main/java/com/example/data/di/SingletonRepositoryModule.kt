@@ -1,5 +1,7 @@
 package com.example.data.di
 
+import com.example.data.SettingsMapper
+import com.example.data.SettingsMapperImpl
 import com.example.firebase.FirebaseAuthRepository
 import com.example.firebase.FirebaseAuthRepositoryImpl
 import com.example.data.repository.EmailAuthRepositoryImpl
@@ -24,21 +26,25 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindEmailAuthRepository(repository: EmailAuthRepositoryImpl): EmailAuthRepository
+    fun bindEmailAuthRepository(impl: EmailAuthRepositoryImpl): EmailAuthRepository
 
     @Binds
     @Singleton
-    fun bindUserSessionRepository(repository: UserSessionRepositoryImpl): UserSessionRepository
+    fun bindUserSessionRepository(impl: UserSessionRepositoryImpl): UserSessionRepository
 
     @Binds
     @Singleton
-    fun bindVehiclesRepository(repository: VehiclesRepositoryImpl): VehiclesRepository
+    fun bindVehiclesRepository(impl: VehiclesRepositoryImpl): VehiclesRepository
 
     @Binds
     @Singleton
-    fun bindSettingsRepository(repository: SettingsRepositoryImpl): SettingsRepository
+    fun bindSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
 
     @Binds
     @Singleton
-    fun bindRefuelRepository(refuelRepository: RefuelRepositoryImpl): RefuelRepository
+    fun bindRefuelRepository(impl: RefuelRepositoryImpl): RefuelRepository
+
+    @Binds
+    @Singleton
+    fun bindSettingsMapperRepository(impl: SettingsMapperImpl): SettingsMapper
 }
