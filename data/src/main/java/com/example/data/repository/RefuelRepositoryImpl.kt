@@ -1,10 +1,12 @@
 package com.example.data.repository
 
 import com.example.data.toEntity
+import com.example.data.toRefuel
 import com.example.domain.model.Refuel
 import com.example.domain.repository.RefuelRepository
 import com.example.localedatasource.room.daos.RefuelDao
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RefuelRepositoryImpl @Inject constructor(
@@ -23,6 +25,10 @@ class RefuelRepositoryImpl @Inject constructor(
     }
 
     override fun observeRefuels(vehicleId: Long): Flow<List<Refuel>> {
-        TODO("Not yet implemented")
+        return refuelDao.observeRefuels(vehicleId).map {
+            it.map {entity->
+                entity.toRefuel()
+            }
+        }
     }
 }

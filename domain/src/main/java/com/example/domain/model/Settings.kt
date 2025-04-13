@@ -53,3 +53,26 @@ enum class SettingType {
 }
 
 interface AppSettingsItem
+
+//Maybe in feature set units dynamically
+//fun isValidAvgConsumptionType(
+//    distanceUnit: String,
+//    capacityUnit: String,
+//    avgConsumptionType: AvgConsumptionType
+//): Boolean {
+//    return when {
+//        distanceUnit == "km" && capacityUnit == "l" -> avgConsumptionType in listOf(
+//            AvgConsumptionType.L_PER_100KM,
+//            AvgConsumptionType.KM_PER_L
+//        )
+//        distanceUnit == "mi" && capacityUnit == "gal (US)" -> avgConsumptionType in listOf(
+//            AvgConsumptionType.MPG_US,
+//            AvgConsumptionType.MILES_PER_GALLON_US
+//        )
+//        distanceUnit == "mi" && capacityUnit == "gal (imp)" -> avgConsumptionType in listOf(
+//            AvgConsumptionType.MPG_IMP,
+//            AvgConsumptionType.MILES_PER_GALLON_IMP
+//        )
+//        else -> false
+//    }
+//}

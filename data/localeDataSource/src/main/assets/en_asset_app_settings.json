@@ -29,9 +29,7 @@
     { "id": 2, "key": "KM_PER_L", "unit": "km/l" },
     { "id": 3, "key": "L_PER_MI", "unit": "l/mi" },
     { "id": 4, "key": "MPG_US", "unit": "mpg (US)" },
-    { "id": 5, "key": "MPG_IMP", "unit": "mpg (imp)" },
-    { "id": 6, "key": "MI_PER_GAL_US", "unit": "mi/gal (US)" },
-    { "id": 7, "key": "MI_PER_GAL_IMP", "unit": "mi/gal (imp)" }
+    { "id": 5, "key": "MPG_IMP", "unit": "mpg (imp)" }
   ],
   "date_formats": [
     { "id": 1, "key": "DD_MM_YYYY_DOTS", "pattern": "dd.MM.yyyy", "unit": "DD.MM.YYYY" },

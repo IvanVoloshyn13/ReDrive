@@ -35,6 +35,10 @@ class SettingsRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getAvgConsumptionType(vehicleId: Long): String {
+      return settingsDao.getAvgConsumptionKey(vehicleId)
+    }
+
     override fun getCurrencyUnits(): List<Currency> {
         return inMemoryAppSettingsRepository.getSettings(language).currencies.map {
             Currency(

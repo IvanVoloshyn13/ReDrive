@@ -3,11 +3,12 @@ package com.example.domain.model
 data class RefuelLog(
     val id: Long = 0L,
     val date: Long = System.currentTimeMillis(),
-    val avgConsumption: LogItem,
-    val travelledDistance: LogItem,
-    val fuelAmount: LogItem,
-    val pricePerUnit: LogItem,
-    val payment: LogItem
+    val avgConsumption: String,
+    val travelledDistance: String,
+    val odometerReading:String,
+    val fuelAmount: String,
+    val pricePerUnit: String,
+    val payment: String
 )
 
 data class LogItem(

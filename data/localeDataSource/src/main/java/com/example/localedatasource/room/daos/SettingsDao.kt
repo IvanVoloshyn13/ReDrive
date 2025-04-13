@@ -15,6 +15,9 @@ interface SettingsDao {
     @Query("SELECT date_format_pattern_key FROM app_settings where vehicle_id =:vehicleId")
     suspend fun getDateFormatPatternKey(vehicleId: Long): String
 
+    @Query("SELECT avg_consumption_key FROM app_settings where vehicle_id =:vehicleId")
+   suspend fun getAvgConsumptionKey(vehicleId: Long): String
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateSettings(settings: SettingsEntity)
 }

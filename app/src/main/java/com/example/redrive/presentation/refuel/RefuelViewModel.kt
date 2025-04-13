@@ -112,7 +112,7 @@ class RefuelViewModel @Inject constructor(
         val refuel = Refuel(
             refuelDate = _date.value,
             odometerValue = _odometerInput.value.toInt(),
-            fuelVolume = _fuelVolumeInput.value.toDouble(),
+            fuelAmount = _fuelVolumeInput.value.toDouble(),
             pricePerUnit = _pricePerUnitInput.value.toDouble(),
             notes = _notesInput.value,
             fullTank = _fullTank.value,
