@@ -12,11 +12,16 @@
         tools:layout="@layout/fragment_logs">
         <action
             android:id="@+id/action_logsFragment_to_refuelFragment"
+            app:enterAnim="@anim/from_top_left_to_bottom_right"
             app:destination="@id/refuelFragment" />
         <action
             android:id="@+id/action_logsFragment_to_vehicle_flow"
             app:enterAnim="@anim/from_top_left_to_bottom_right"
             app:destination="@id/vehicle_flow" />
+        <action
+            android:id="@+id/action_logsFragment_to_editRefuelFragment"
+            app:enterAnim="@anim/from_top_left_to_bottom_right"
+            app:destination="@id/editRefuelFragment" />
     </fragment>
     <fragment
         android:id="@+id/refuelFragment"
@@ -24,4 +29,13 @@
         android:label="@string/refuel"
         tools:layout="@layout/fragment_refuel" />
     <include app:graph="@navigation/vehicle_flow" />
+    <fragment
+        android:id="@+id/editRefuelFragment"
+        android:name="com.example.redrive.presentation.editRefuel.EditRefuelFragment"
+        android:label="@string/refuel"
+        tools:layout="@layout/fragment_refuel">
+        <argument
+            android:name="refuelId"
+            app:argType="long" />
+    </fragment>
 </navigation>

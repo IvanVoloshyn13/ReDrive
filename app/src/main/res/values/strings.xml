@@ -43,6 +43,7 @@
     <string name="driving_cost">Driving cost</string>
     <!--LogsFragment -->
     <string name="logs">Logs</string>
+    <string name="refuel_message">on %1$s in the day %2$s</string>
 
     <!--Buttons -->
     <string name="save">Save</string>

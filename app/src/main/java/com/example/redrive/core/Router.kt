@@ -45,7 +45,7 @@ object Router {
     sealed class LogsDirections : RedriveDirection {
         data object ToVehicles : LogsDirections()
         data object ToRefuel : LogsDirections()
-        data class ToEditRefuel(val refuel: Refuel) : LogsDirections()
+        data class ToEditRefuel(val refuelId: Long) : LogsDirections()
     }
 
     sealed class RefuelDirection : RedriveDirection {

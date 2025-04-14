@@ -1,9 +1,10 @@
 package com.example.domain.useCase
 
+import android.annotation.SuppressLint
 import com.example.domain.model.Refuel
 import com.example.domain.model.RefuelLog
 import com.example.domain.model.Settings
-import com.example.domain.model.Vehicle
+import com.example.domain.model.VehicleWithLogs
 import com.example.domain.repository.RefuelRepository
 import com.example.domain.repository.SettingsRepository
 import com.example.domain.useCase.vehicle.ObserveCurrentVehicleUseCase
@@ -14,6 +15,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 class ObserveRefuelLogsUseCase @Inject constructor(
@@ -21,8 +25,6 @@ class ObserveRefuelLogsUseCase @Inject constructor(
     private val currentVehicleUseCase: ObserveCurrentVehicleUseCase,
     private val settingsRepository: SettingsRepository
 ) {
-
-    private lateinit var settings: Settings
 
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<VehicleWithLogs> {
@@ -34,19 +36,24 @@ class ObserveRefuelLogsUseCase @Inject constructor(
                 ) { refuels, settings ->
                     RefuelsWithSettings(refuels, settings)
                 }.map { refuelsWithSettings ->
-                    var previousOdometerReading: Int
-                    settings = refuelsWithSettings.settings
+                    val settings = refuelsWithSettings.settings
+                    val pattern = settingsRepository.getDateFormatPattern(vehicle.id)
                     val avgConsumptionTypeKey =
                         settingsRepository.getAvgConsumptionType(vehicleId = vehicle.id)
-                    val avgConsumptionType = findAvgConsumptionType(avgConsumptionTypeKey)
+                    val avgConsumptionType = AvgConsumptionType.fromKey(avgConsumptionTypeKey)
                     val logs = refuelsWithSettings.refuels.mapIndexed { i, refuel ->
-                        if (i == 0) {
-                            refuel.toRefuelLog(1, avgConsumptionType)
-                        } else {
-                            previousOdometerReading =
-                                refuelsWithSettings.refuels[i - 1].odometerValue
-                            refuel.toRefuelLog(previousOdometerReading, avgConsumptionType)
-                        }
+                        val previousOdometerReading = if (i == 0) vehicle.initialOdometerValue
+                        else refuelsWithSettings.refuels[i - 1].odometerValue
+
+                        refuel.toRefuelLog(
+                            previousOdometerReading,
+                            avgConsumptionType,
+                            settings,
+                            pattern
+                        )
+
+                    }.sortedByDescending { log ->
+                        log.odometerReading
                     }
                     VehicleWithLogs(vehicle, logs)
                 }
@@ -56,16 +63,16 @@ class ObserveRefuelLogsUseCase @Inject constructor(
         }
     }
 
-
     private fun Refuel.toRefuelLog(
         previousOdometerReading: Int,
-        avgConsumptionType: AvgConsumptionType
+        avgConsumptionType: AvgConsumptionType,
+        settings: Settings,
+        pattern: String
     ): RefuelLog {
-        val date = this.refuelDate
-        val travelledDistance = this.odometerValue - previousOdometerReading
+        val travelledDistance = (this.odometerValue - previousOdometerReading)
         val fuelAmount = this.fuelAmount
         val pricePerUnit = this.pricePerUnit
-        val payment = pricePerUnit * fuelAmount.formatToScale()
+        val payment = (pricePerUnit * fuelAmount).formatToScale()
         val avgConsumption = getAvgConsumptionByType(
             avgConsumptionType,
             travelledDistance,
@@ -73,27 +80,29 @@ class ObserveRefuelLogsUseCase @Inject constructor(
         ).formatToScale()
         return RefuelLog(
             id = this.id,
-            date = date,
-            avgConsumption = avgConsumption.concatenateValueWithUnit(settings.avgConsumption),
+            date = this.refuelDate.toFormatedDate(pattern),
+            avgConsumption = Pair(avgConsumption.toString(), settings.avgConsumption),
             travelledDistance = travelledDistance.concatenateValueWithUnit(settings.distance),
-            odometerReading = this.odometerValue.concatenateValueWithUnit(settings.distance),
+            odometerReading = this.odometerValue.format()
+                .concatenateValueWithUnit(settings.distance),
             fuelAmount = fuelAmount.concatenateValueWithUnit(settings.capacity),
             pricePerUnit = pricePerUnit.concatenateValueWithUnit("${settings.currency}/${settings.capacity}"),
             payment = payment.concatenateValueWithUnit(settings.currency),
         )
     }
 
-    private fun <T : Number> T.concatenateValueWithUnit(unit: String): String {
+    private fun Int.format(): String {
+        val formatter = DecimalFormat("#,###")
+        return formatter.format(this).replace(",", " ")
+    }
+
+    private fun <T> T.concatenateValueWithUnit(unit: String): String {
         return "$this $unit"
     }
 
     private fun Double.formatToScale(): Double {
-        return if (this <= 0) 1.0 else this.toBigDecimal()
-            .setScale(2, RoundingMode.HALF_UP).toDouble()
-    }
-
-    private fun findAvgConsumptionType(key: String): AvgConsumptionType {
-        return AvgConsumptionType.fromKey(key)
+        return if (this <= 0) 1.0 else
+            this.toBigDecimal().setScale(2, RoundingMode.HALF_UP).toDouble()
     }
 
     private fun getAvgConsumptionByType(
@@ -102,21 +111,20 @@ class ObserveRefuelLogsUseCase @Inject constructor(
         fuelAmount: Double
     ): Double {
         return when (type) {
-            AvgConsumptionType.LITERS_PER_100KM -> {
-                fuelAmount * 100 / travelledDistance
-            }
-
+            AvgConsumptionType.LITERS_PER_100KM -> (fuelAmount * 100) / travelledDistance
             AvgConsumptionType.KILOMETERS_PER_LITER -> travelledDistance / fuelAmount
             AvgConsumptionType.LITERS_PER_MILE -> fuelAmount / travelledDistance
-            AvgConsumptionType.MPG_US -> travelledDistance / fuelAmount
-            AvgConsumptionType.MPG_IMP -> travelledDistance / fuelAmount
+            AvgConsumptionType.MPG_US, AvgConsumptionType.MPG_IMP -> travelledDistance / fuelAmount
         }
     }
+}
+
+private fun Long.toFormatedDate(pattern: String): String {
+    return SimpleDateFormat(pattern, Locale.getDefault()).format(this)
 
 }
 
-
-private enum class AvgConsumptionType(val key: String) {
+internal enum class AvgConsumptionType(val key: String) {
     LITERS_PER_100KM("L_PER_100KM"),
     KILOMETERS_PER_LITER("KM_PER_L"),
     LITERS_PER_MILE("L_PER_MI"),
@@ -130,12 +138,10 @@ private enum class AvgConsumptionType(val key: String) {
     }
 }
 
-private data class RefuelsWithSettings(
+internal data class RefuelsWithSettings(
     val refuels: List<Refuel>,
     val settings: Settings
 )
 
-data class VehicleWithLogs(
-    val vehicle: Vehicle? = null,
-    val logs: List<RefuelLog> = emptyList()
-)
+
+

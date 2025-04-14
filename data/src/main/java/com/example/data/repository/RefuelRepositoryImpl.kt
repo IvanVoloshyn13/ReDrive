@@ -24,6 +24,10 @@ class RefuelRepositoryImpl @Inject constructor(
         refuelDao.deleteRefuel(refuelId)
     }
 
+    override suspend fun getRefuelById(refuelId: Long) {
+        TODO("Not yet implemented")
+    }
+
     override fun observeRefuels(vehicleId: Long): Flow<List<Refuel>> {
         return refuelDao.observeRefuels(vehicleId).map {
             it.map {entity->

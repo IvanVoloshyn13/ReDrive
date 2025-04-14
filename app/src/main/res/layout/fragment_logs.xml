@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginTop="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_large"
         app:cardCornerRadius="@dimen/default_card_corner_radius">
 
