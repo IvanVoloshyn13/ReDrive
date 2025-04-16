@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.domain.model.SignInStatus
 import com.example.redrive.R
 import com.example.redrive.core.Router
 import com.example.redrive.databinding.FragmentSignInBinding

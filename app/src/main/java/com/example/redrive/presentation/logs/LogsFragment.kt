@@ -52,7 +52,10 @@ class LogsFragment : Fragment(R.layout.fragment_logs), RefuelLogsAdapter.LogItem
 
             launch {
                 viewModel.state.collectLatest {
-                    adapter.submitList(it.logs)
+                    adapter.submitList(it.logs){
+                        binding.rvLogs.scrollToPosition(0)
+                    }
+
                     binding.tvCurrentVehicleName.text =
                         it.vehicle?.name ?: getString(R.string.app_name)
                 }

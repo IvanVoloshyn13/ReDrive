@@ -2,7 +2,7 @@ package com.example.redrive.presentation.logs
 
 import androidx.lifecycle.viewModelScope
 import com.example.domain.useCase.ObserveRefuelLogsUseCase
-import com.example.domain.model.VehicleWithLogs
+import com.example.domain.model.log.VehicleWithLogs
 import com.example.redrive.core.BaseViewModel
 import com.example.redrive.core.Router
 import dagger.hilt.android.lifecycle.HiltViewModel

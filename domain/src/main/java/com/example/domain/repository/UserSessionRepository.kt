@@ -1,8 +1,7 @@
 package com.example.domain.repository
 
-import com.example.domain.model.User
+import com.example.domain.model.account.User
 import kotlinx.coroutines.flow.Flow
-
 
 interface UserSessionRepository {
 

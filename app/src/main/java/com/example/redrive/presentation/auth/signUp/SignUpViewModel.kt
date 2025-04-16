@@ -1,10 +1,8 @@
 package com.example.redrive.presentation.auth.signUp
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.AppException
-import com.example.domain.model.UserAuthCredentials
+import com.example.domain.model.account.UserAuthCredentials
 import com.example.domain.useCase.SignUpWithEmailUseCase
 import com.example.domain.useCase.signUpFieldValidation.IsValidConfirmPasswordUseCase
 import com.example.domain.useCase.signUpFieldValidation.IsValidEmailUseCase

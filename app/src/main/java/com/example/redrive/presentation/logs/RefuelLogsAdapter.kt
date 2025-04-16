@@ -14,7 +14,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.RefuelLog
+import com.example.domain.model.log.RefuelLog
 import com.example.redrive.R
 import com.example.redrive.databinding.RefuelLogItemBinding
 
@@ -47,7 +47,6 @@ class RefuelLogsAdapter(private val listener: LogItemClickListener) :
         listener.onItemClick(v.tag as Long)
     }
 
-    //Maybe in helper class, divide odometerReading by thousands
     private fun spannableText(odometerReading: String, date: String, context: Context): Spannable {
         val message = context.getString(R.string.refuel_message, odometerReading, date)
         val spannable = SpannableString(message)

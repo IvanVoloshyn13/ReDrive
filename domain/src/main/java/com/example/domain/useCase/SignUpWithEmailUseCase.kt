@@ -1,6 +1,6 @@
 package com.example.domain.useCase
 
-import com.example.domain.model.UserAuthCredentials
+import com.example.domain.model.account.UserAuthCredentials
 import com.example.domain.repository.EmailAuthRepository
 import javax.inject.Inject
 

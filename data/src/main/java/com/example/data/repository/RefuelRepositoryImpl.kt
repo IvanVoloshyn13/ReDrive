@@ -1,7 +1,7 @@
 package com.example.data.repository
 
-import com.example.data.toEntity
-import com.example.data.toRefuel
+import com.example.data.mappers.toEntity
+import com.example.data.mappers.toRefuel
 import com.example.domain.model.Refuel
 import com.example.domain.repository.RefuelRepository
 import com.example.localedatasource.room.daos.RefuelDao

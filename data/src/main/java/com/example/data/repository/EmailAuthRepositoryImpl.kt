@@ -1,19 +1,17 @@
 package com.example.data.repository
 
-import android.util.Log
 import com.example.data.di.DispatcherIo
-import com.example.data.toAppAuthException
-import com.example.data.toFbUserAuthCredentials
+import com.example.data.mappers.toAppAuthException
+import com.example.data.mappers.toFbUserAuthCredentials
 import com.example.firebase.FirebaseAuthRepository
-import com.example.data.toUserEntity
+import com.example.data.mappers.toUserEntity
 import com.example.domain.AuthException
-import com.example.domain.model.UserAuthCredentials
+import com.example.domain.model.account.UserAuthCredentials
 import com.example.domain.repository.EmailAuthRepository
 import com.example.localedatasource.room.daos.UsersDao
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

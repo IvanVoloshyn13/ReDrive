@@ -1,14 +1,13 @@
 package com.example.data.repository
 
-import com.example.data.di.DispatcherIo
-import com.example.data.toUser
+import com.example.data.mappers.toUser
 import com.example.domain.UserException
-import com.example.domain.model.User
+import com.example.domain.model.account.User
 import com.example.domain.repository.UserSessionRepository
 import com.example.firebase.FirebaseAuthRepository
 import com.example.localedatasource.dataStore.AppUserPreferences
+import com.example.localedatasource.dataStore.AppVehiclePreferences
 import com.example.localedatasource.room.daos.UsersDao
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -21,7 +20,8 @@ class UserSessionRepositoryImpl @Inject constructor(
     private val firebaseAuthRepository: FirebaseAuthRepository,
     private val usersDao: UsersDao,
     private val appUserPreferences: AppUserPreferences,
-    @DispatcherIo private val dispatcherIo: CoroutineDispatcher
+
+    private val appVehiclePreferences: AppVehiclePreferences,
 ) : UserSessionRepository {
 
     override fun observeAuthState(): Flow<User?> {
@@ -60,10 +60,11 @@ class UserSessionRepositoryImpl @Inject constructor(
     private suspend fun toggleUserIdPreferences(uUid: String) {
         if (uUid.isEmpty()) {
             appUserPreferences.clearCurrentUserId()
+
+            //TODO(create a broadcastReceiver or some helper class to deal with SignIn and LogOut notifying )
+            appVehiclePreferences.clearCurrentVehicleId()
         } else
             appUserPreferences.setCurrentUserId(uUid)
     }
-
-
 
 }

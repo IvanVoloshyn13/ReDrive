@@ -1,12 +1,11 @@
 package com.example.domain.useCase
 
-import android.annotation.SuppressLint
 import com.example.domain.model.Refuel
-import com.example.domain.model.RefuelLog
-import com.example.domain.model.Settings
-import com.example.domain.model.VehicleWithLogs
+import com.example.domain.model.log.RefuelLog
+import com.example.domain.model.UnitsPreferencesAbbreviation
+import com.example.domain.model.log.VehicleWithLogs
 import com.example.domain.repository.RefuelRepository
-import com.example.domain.repository.SettingsRepository
+import com.example.domain.repository.UnitPreferencesRepository
 import com.example.domain.useCase.vehicle.ObserveCurrentVehicleUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +22,7 @@ import javax.inject.Inject
 class ObserveRefuelLogsUseCase @Inject constructor(
     private val refuelRepository: RefuelRepository,
     private val currentVehicleUseCase: ObserveCurrentVehicleUseCase,
-    private val settingsRepository: SettingsRepository
+    private val unitPreferencesRepository: UnitPreferencesRepository
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -32,28 +31,27 @@ class ObserveRefuelLogsUseCase @Inject constructor(
             it?.let { vehicle ->
                 return@flatMapLatest combine(
                     refuelRepository.observeRefuels(vehicleId = vehicle.id),
-                    settingsRepository.observeAppSettings(vehicleId = vehicle.id),
+                    unitPreferencesRepository.observeUnitPreferences(vehicleId = vehicle.id),
                 ) { refuels, settings ->
                     RefuelsWithSettings(refuels, settings)
                 }.map { refuelsWithSettings ->
-                    val settings = refuelsWithSettings.settings
-                    val pattern = settingsRepository.getDateFormatPattern(vehicle.id)
+                    val preferences = refuelsWithSettings.unitPreferences
+                    val pattern = unitPreferencesRepository.getCurrentDateFormatPattern(vehicle.id)
                     val avgConsumptionTypeKey =
-                        settingsRepository.getAvgConsumptionType(vehicleId = vehicle.id)
+                        unitPreferencesRepository.getAvgConsumptionType(vehicleId = vehicle.id)
                     val avgConsumptionType = AvgConsumptionType.fromKey(avgConsumptionTypeKey)
                     val logs = refuelsWithSettings.refuels.mapIndexed { i, refuel ->
                         val previousOdometerReading = if (i == 0) vehicle.initialOdometerValue
                         else refuelsWithSettings.refuels[i - 1].odometerValue
-
                         refuel.toRefuelLog(
                             previousOdometerReading,
                             avgConsumptionType,
-                            settings,
+                            preferences,
                             pattern
                         )
 
                     }.sortedByDescending { log ->
-                        log.odometerReading
+                        log.odometerRead
                     }
                     VehicleWithLogs(vehicle, logs)
                 }
@@ -66,7 +64,7 @@ class ObserveRefuelLogsUseCase @Inject constructor(
     private fun Refuel.toRefuelLog(
         previousOdometerReading: Int,
         avgConsumptionType: AvgConsumptionType,
-        settings: Settings,
+        unitPreferences: UnitsPreferencesAbbreviation,
         pattern: String
     ): RefuelLog {
         val travelledDistance = (this.odometerValue - previousOdometerReading)
@@ -81,13 +79,14 @@ class ObserveRefuelLogsUseCase @Inject constructor(
         return RefuelLog(
             id = this.id,
             date = this.refuelDate.toFormatedDate(pattern),
-            avgConsumption = Pair(avgConsumption.toString(), settings.avgConsumption),
-            travelledDistance = travelledDistance.concatenateValueWithUnit(settings.distance),
+            avgConsumption = Pair(avgConsumption.toString(), unitPreferences.avgConsumption),
+            travelledDistance = travelledDistance.concatenateValueWithUnit(unitPreferences.distance),
             odometerReading = this.odometerValue.format()
-                .concatenateValueWithUnit(settings.distance),
-            fuelAmount = fuelAmount.concatenateValueWithUnit(settings.capacity),
-            pricePerUnit = pricePerUnit.concatenateValueWithUnit("${settings.currency}/${settings.capacity}"),
-            payment = payment.concatenateValueWithUnit(settings.currency),
+                .concatenateValueWithUnit(unitPreferences.distance),
+            odometerRead = this.odometerValue,
+            fuelAmount = fuelAmount.concatenateValueWithUnit(unitPreferences.capacity),
+            pricePerUnit = pricePerUnit.concatenateValueWithUnit("${unitPreferences.currency}/${unitPreferences.capacity}"),
+            payment = payment.concatenateValueWithUnit(unitPreferences.currency),
         )
     }
 
@@ -140,7 +139,7 @@ internal enum class AvgConsumptionType(val key: String) {
 
 internal data class RefuelsWithSettings(
     val refuels: List<Refuel>,
-    val settings: Settings
+    val unitPreferences: UnitsPreferencesAbbreviation
 )
 
 

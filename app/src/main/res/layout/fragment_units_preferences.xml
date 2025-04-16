@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.redrive.presentation.unitPreferences.UnitsPrefFragment">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/refuel_card"
+        style="@style/Redrive.App.CardView.Base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layout_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/item_currency"
+                layout="@layout/item_currency" />
+
+            <include
+                android:id="@+id/item_distance"
+                layout="@layout/item_distance" />
+
+            <include
+                android:id="@+id/item_capacity"
+                layout="@layout/item_capacity" />
+
+            <include
+                android:id="@+id/item_avg_consumption"
+                layout="@layout/item_avg_consumption" />
+
+            <include
+                android:id="@+id/item_date_pattern"
+                layout="@layout/item_date_pattern" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_regular">
+
+            </View>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/Redrive.App.MaterialButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:text="@string/save"
+        android:layout_gravity="end"
+       >
+
+    </Button>
+
+</LinearLayout>

@@ -2,8 +2,7 @@ package com.example.domain.repository
 
 
 import com.example.domain.AuthException
-import com.example.domain.model.SignInStatus
-import com.example.domain.model.UserAuthCredentials
+import com.example.domain.model.account.UserAuthCredentials
 
 interface EmailAuthRepository {
     /** Signs in with email and password

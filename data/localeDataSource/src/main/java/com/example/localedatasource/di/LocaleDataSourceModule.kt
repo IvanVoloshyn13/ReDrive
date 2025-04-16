@@ -50,25 +50,5 @@ class LocaleDataSourceModule {
         return gson
     }
 
-    //Dao's
-    @Provides
-    @Singleton
-    fun provideUsersDao(db: AppDatabase): UsersDao {
-        return db.getUsersDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideVehiclesDao(db: AppDatabase): VehiclesDao {
-        return db.getVehiclesDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideSettingsDao(db: AppDatabase) = db.getSettingsDao()
-
-    @Provides
-    @Singleton
-    fun provideRefuelsDao(db: AppDatabase) = db.getRefuelDao()
 
 }

@@ -1,5 +1,5 @@
 import com.example.domain.AuthException
-import com.example.domain.model.SignInStatus
+import com.example.domain.model.account.SignInStatus
 import com.example.domain.repository.EmailAuthRepository
 import com.example.domain.useCase.SignInWithEmailUseCase
 import io.mockk.coEvery

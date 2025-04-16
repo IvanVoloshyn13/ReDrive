@@ -4,13 +4,13 @@ import androidx.room.Dao
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.localedatasource.room.entity.SettingsEntity
+import com.example.localedatasource.room.entity.UnitPreferencesEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SettingsDao {
     @Query("SELECT * FROM app_settings WHERE vehicle_id=:vehicleId LIMIT 1")
-    fun getSettingsByCurrentVehicleId(vehicleId: Long): Flow<SettingsEntity>
+    fun getUnitPreferencesByCurrentVehicleId(vehicleId: Long): Flow<UnitPreferencesEntity>
 
     @Query("SELECT date_format_pattern_key FROM app_settings where vehicle_id =:vehicleId")
     suspend fun getDateFormatPatternKey(vehicleId: Long): String
@@ -19,5 +19,5 @@ interface SettingsDao {
    suspend fun getAvgConsumptionKey(vehicleId: Long): String
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateSettings(settings: SettingsEntity)
+    suspend fun updatePreferences(settings: UnitPreferencesEntity)
 }

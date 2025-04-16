@@ -1,38 +1,37 @@
 package com.example.data.repository
 
-import com.example.data.SettingsMapper
-import com.example.data.toEntity
-import com.example.data.toVehicle
-import com.example.domain.model.Settings
+import com.example.data.mappers.UnitPreferencesMapper
+import com.example.data.mappers.toEntity
+import com.example.data.mappers.toVehicle
+import com.example.domain.model.UnitsPreferencesAbbreviation
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.domain.repository.VehiclesRepository
+import com.example.localedatasource.dataStore.AppUserPreferences
 import com.example.localedatasource.dataStore.AppVehiclePreferences
-import com.example.localedatasource.inMemoryAppSettings.InMemoryAppSettingsRepository
-import com.example.localedatasource.room.daos.SettingsDao
 import com.example.localedatasource.room.daos.VehiclesDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import java.util.Locale
 import javax.inject.Inject
 
 class VehiclesRepositoryImpl @Inject constructor(
     private val appVehiclePreferences: AppVehiclePreferences,
     private val vehiclesDao: VehiclesDao,
-    private val settingsMapper: SettingsMapper
+    private val unitPreferencesMapper: UnitPreferencesMapper,
 ) : VehiclesRepository {
     override suspend fun saveVehicleWithSettings(
         uUid: String,
         vehicle: Vehicle,
-        settings: Settings
+        unitPreferences: UnitsPreferencesAbbreviation
     ): Long {
         val vehicleId = vehiclesDao.addVehicleWithSettings(
             vehicle = vehicle.toEntity(uUid),
-            settings = settingsMapper.run {
-                settings.toEntity()
+            settings = unitPreferencesMapper.run {
+                unitPreferences.toEntity()
             }
         )
         return vehicleId

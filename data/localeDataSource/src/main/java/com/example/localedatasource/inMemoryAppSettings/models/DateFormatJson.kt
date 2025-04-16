@@ -4,5 +4,5 @@ data class DateFormatJson(
     val id: Int,
     val key:String,
     val pattern: String,
-    val unit:String
+    val displayName:String
 )

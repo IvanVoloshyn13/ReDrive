@@ -19,6 +19,7 @@
     <style name="Redrive.ThemeOverlay.BottomNavigationView" parent="">
         <item name="colorOnSecondaryContainer">?attr/colorOnPrimary</item>
         <item name="colorOnSurfaceVariant">?attr/colorOnBackground</item>
+        <item name="colorSecondaryContainer">?attr/colorPrimary</item>
     </style>
 
 

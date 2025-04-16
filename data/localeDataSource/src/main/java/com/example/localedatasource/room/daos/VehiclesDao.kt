@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.example.localedatasource.room.entity.SettingsEntity
+import com.example.localedatasource.room.entity.UnitPreferencesEntity
 import com.example.localedatasource.room.entity.VehicleEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -17,10 +17,10 @@ interface VehiclesDao {
     suspend fun addVehicle(vehicle: VehicleEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addSettings(settings: SettingsEntity)
+    suspend fun addSettings(settings: UnitPreferencesEntity)
 
     @Transaction
-    suspend fun addVehicleWithSettings(vehicle: VehicleEntity, settings: SettingsEntity): Long {
+    suspend fun addVehicleWithSettings(vehicle: VehicleEntity, settings: UnitPreferencesEntity): Long {
         val vehicleId = addVehicle(vehicle)
         val settingsWithVehicleId = settings.copy(
             vehicleId = vehicleId

@@ -5,12 +5,14 @@ open class AppException : RuntimeException()
 sealed class VehicleException() : AppException() {
     class IsCurrentVehicleException() : VehicleException()
     class NoCurrentVehicleException() : VehicleException()
-    class InvalidOdometerValueException(val initialValue:Int):VehicleException()
-
 }
 
 sealed class UserException() : AppException() {
     class NoUserDetectedException() : UserException()
+}
+
+sealed class RefuelException():AppException(){
+    class InvalidOdometerValueException(val initialValue:Int):RefuelException()
 }
 
 sealed class AuthException : AppException() {

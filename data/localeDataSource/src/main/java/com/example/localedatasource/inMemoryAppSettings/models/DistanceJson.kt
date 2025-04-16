@@ -4,5 +4,5 @@ data class DistanceJson(
     val id: Int,
     val key: String,
     val abbreviation: String,
-    val unit: String
+    val displayName: String
 )

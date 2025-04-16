@@ -3,6 +3,7 @@ package com.example.redrive.core
 import android.content.Context
 import com.example.domain.AppException
 import com.example.domain.AuthException
+import com.example.domain.RefuelException
 import com.example.domain.UserException
 import com.example.domain.VehicleException
 import com.example.redrive.R
@@ -17,8 +18,9 @@ class AppStringResProviderImpl @Inject constructor(
             is VehicleException -> fromVehicleException(e)
             is UserException -> fromUserException(e)
             is AuthException -> fromAuthException(e)
+            is RefuelException -> fromRefuelException(e)
             else -> {
-                TODO()
+                throw IllegalStateException("Not implemented")
             }
         }
     }
@@ -27,11 +29,16 @@ class AppStringResProviderImpl @Inject constructor(
         return when (e) {
             is VehicleException.IsCurrentVehicleException -> context.resources.getString(R.string.is_current_vehicle_exception)
             is VehicleException.NoCurrentVehicleException -> context.resources.getString(R.string.no_current_vehicle_exception_message)
-            is VehicleException.InvalidOdometerValueException -> context.resources.getString(
+
+        }
+    }
+
+    private fun fromRefuelException(e: RefuelException): String {
+        return when (e) {
+            is RefuelException.InvalidOdometerValueException -> context.resources.getString(
                 R.string.invalid_odometer_value_exception_message,
                 e.initialValue
             )
-
         }
     }
 

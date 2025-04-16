@@ -1,6 +1,6 @@
 package com.example.domain.useCase.userSession
 
-import com.example.domain.model.SignInStatus
+import com.example.domain.model.account.SignInStatus
 import com.example.domain.repository.UserSessionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
