@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val DEBOUNCE_TIME_MILLIS = 250L
+
 
 @HiltViewModel
 class RefuelViewModel @Inject constructor(
@@ -39,7 +39,7 @@ class RefuelViewModel @Inject constructor(
     private val _missedPrevious: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val missedPrevious = _missedPrevious.asStateFlow()
 
-    private val _date: MutableStateFlow<Long> = MutableStateFlow(System.currentTimeMillis())
+    private val _timeStamp: MutableStateFlow<Long> = MutableStateFlow(System.currentTimeMillis())
     private val _dateFormatPattern = MutableStateFlow<String>("")
 
     init {
@@ -49,9 +49,9 @@ class RefuelViewModel @Inject constructor(
     }
 
     val date = combine(
-        _date, _dateFormatPattern
-    ) { date, pattern ->
-        DateUiModel(date, pattern)
+        _timeStamp, _dateFormatPattern
+    ) { timeStamp, pattern ->
+        DateUiModel(timeStamp, pattern)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
@@ -83,7 +83,7 @@ class RefuelViewModel @Inject constructor(
     }
 
     fun onDateChange(date: Long) {
-        _date.onTextChange(date)
+        _timeStamp.onTextChange(date)
     }
 
     fun onNotesTextChange(notes: String) {
@@ -105,12 +105,12 @@ class RefuelViewModel @Inject constructor(
         _notesInput.value = ""
         _fullTank.value = true
         _missedPrevious.value = false
-        _date.value = System.currentTimeMillis()
+        _timeStamp.value = System.currentTimeMillis()
     }
 
     fun onBtnSaveClick() {
         val refuel = Refuel(
-            refuelDate = _date.value,
+            refuelTimeStamp = _timeStamp.value,
             odometerValue = _odometerInput.value.toInt(),
             fuelAmount = _fuelVolumeInput.value.toDouble(),
             pricePerUnit = _pricePerUnitInput.value.toDouble(),
@@ -129,13 +129,7 @@ class RefuelViewModel @Inject constructor(
         }
     }
 
-    private fun <T> MutableStateFlow<T>.onTextChange(value: T) {
-        if (this.value != value)
-            viewModelScope.launch {
-                this@onTextChange.emit(value)
-            }
 
-    }
 
     data class DateUiModel(
         val date: Long = 0L,

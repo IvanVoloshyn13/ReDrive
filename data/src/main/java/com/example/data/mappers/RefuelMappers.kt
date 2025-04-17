@@ -6,9 +6,9 @@ import com.example.localedatasource.room.entity.RefuelEntity
 
 fun Refuel.toEntity(vehicleId: Long): RefuelEntity {
     return RefuelEntity(
-        id = 0,
+        id = this.id ?: 0,
         vehicleId = vehicleId,
-        date = this.refuelDate,
+        date = this.refuelTimeStamp,
         odometer = this.odometerValue,
         fuelVolume = this.fuelAmount,
         unitPrice = this.pricePerUnit,
@@ -21,7 +21,7 @@ fun Refuel.toEntity(vehicleId: Long): RefuelEntity {
 fun RefuelEntity.toRefuel(): Refuel {
     return Refuel(
         id = this.id,
-        refuelDate = this.date,
+        refuelTimeStamp = this.date,
         odometerValue = this.odometer,
         fuelAmount = this.fuelVolume,
         pricePerUnit = this.unitPrice,

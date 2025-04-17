@@ -2,6 +2,7 @@ package com.example.redrive.presentation.refuel
 
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment

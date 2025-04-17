@@ -78,7 +78,7 @@ class ObserveRefuelLogsUseCase @Inject constructor(
         ).formatToScale()
         return RefuelLog(
             id = this.id,
-            date = this.refuelDate.toFormatedDate(pattern),
+            date = this.refuelTimeStamp.toFormatedDate(pattern),
             avgConsumption = Pair(avgConsumption.toString(), unitPreferences.avgConsumption),
             travelledDistance = travelledDistance.concatenateValueWithUnit(unitPreferences.distance),
             odometerReading = this.odometerValue.format()

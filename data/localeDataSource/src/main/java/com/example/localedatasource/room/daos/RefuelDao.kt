@@ -15,6 +15,8 @@ interface RefuelDao {
 
     @Query("SELECT * FROM refuels WHERE vehicle_id=:currentVehicleId order by odometer ASC  ")
     fun observeRefuels(currentVehicleId: Long): Flow<List<RefuelEntity>>
+    @Query("SELECT * FROM refuels WHERE id=:refuelId")
+    suspend fun getRefuelById(refuelId:Long):RefuelEntity
 
     @Query("DELETE FROM refuels WHERE id=:id")
     fun deleteRefuel(id:Long)

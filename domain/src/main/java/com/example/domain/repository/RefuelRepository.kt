@@ -11,7 +11,7 @@ interface RefuelRepository {
 
     suspend fun deleteRefuel(refuelId: Long)
 
-    suspend fun getRefuelById(refuelId:Long)
+    suspend fun getRefuelById(refuelId: Long): Refuel
 
     fun observeRefuels(vehicleId: Long): Flow<List<Refuel>>
 }
