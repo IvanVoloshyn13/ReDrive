@@ -28,16 +28,20 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        collectState()
+
+        hideSoftInputAndClearViewsFocus(binding.root)
+
+        observeViewModel()
         setSpannableSignUpText()
-        setupListeners()
+        setOnEditTextChangeListeners()
+        setViewsClickListeners()
     }
 
-    private fun collectState() {
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 viewModel.state.collectLatest { state ->
-                    updateUI(state)
+                    renderUiWithState(state)
                 }
             }
             launch {
@@ -67,10 +71,9 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         }
     }
 
-    private fun updateUI(state: FragmentSignInState) {
+    private fun renderUiWithState(state: FragmentSignInState) {
         binding.progressBar.visibility = if (state.loading) View.VISIBLE else View.GONE
 
-        // Prevent unnecessary updates
         if (binding.etEmail.text.toString() != state.email) {
             binding.etEmail.setTextKeepState(state.email)
         }
@@ -80,16 +83,14 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     }
 
-    private fun setupListeners() {
-
-        binding.bttSignIn.setOnClickListener { viewModel.signIn() }
+    private fun setViewsClickListeners() {
+        binding.bttSignIn.setOnClickListener { viewModel.onSignInBtnClick() }
         binding.tvSignUp.setOnClickListener { viewModel.navigate(Router.SignInDirections.ToSignUp) }
+    }
 
+    private fun setOnEditTextChangeListeners() {
         binding.etEmail.doAfterTextChanged { viewModel.onEmailTextChange(it.toString()) }
         binding.etPassword.doAfterTextChanged { viewModel.onPasswordTextChange(it.toString()) }
-
-        hideSoftInputAndClearViewsFocus(binding.root)
-
     }
 
     private fun setSpannableSignUpText() {

@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/refuelFragment"
-        android:name="com.example.redrive.presentation.refuel.RefuelFragment"
+        android:name="com.example.redrive.presentation.refuelFeature.refuel.RefuelFragment"
         android:label="@string/refuel"
         tools:layout="@layout/fragment_refuel" />
 </navigation>

@@ -1,21 +1,18 @@
-package com.example.redrive.presentation.editRefuel
+package com.example.redrive.presentation.refuelFeature.editRefuel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.Refuel
 import com.example.domain.useCase.refuel.GetRefuelByIdUseCase
 import com.example.domain.useCase.refuel.UpdateRefuelUseCase
 import com.example.domain.useCase.settings.GetDateFormatPatternUseCase
 import com.example.redrive.core.AppStringResProvider
-import com.example.redrive.core.BaseViewModel
 import com.example.redrive.core.Router
 import com.example.redrive.core.wrapLocaleDataSourceRequests
-import com.example.redrive.presentation.refuel.RefuelViewModel.DateUiModel
+import com.example.redrive.presentation.refuelFeature.BaseRefuelViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
@@ -29,43 +26,14 @@ class EditRefuelViewModel @Inject constructor(
     private val getDateFormatPatternUseCase: GetDateFormatPatternUseCase,
     private val appStringResProvider: AppStringResProvider,
     private val updateRefuelUseCase: UpdateRefuelUseCase
-) : BaseViewModel() {
-
-    private val oldRefuel: MutableStateFlow<Refuel?> = MutableStateFlow(null)
-
-    private val _timeStamp: MutableStateFlow<Long> = MutableStateFlow(System.currentTimeMillis())
-    private val _dateFormatPattern = MutableStateFlow<String>("")
-
-    val date = combine(
-        _timeStamp, _dateFormatPattern
-    ) { timeStamp, pattern ->
-        DateUiModel(timeStamp, pattern)
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        DateUiModel()
-    )
-
-    private val _odometerInput: MutableStateFlow<String> = MutableStateFlow("")
-    val odometerInput = _odometerInput.asStateFlow()
-    private val _fuelVolumeInput: MutableStateFlow<String> = MutableStateFlow("")
-    val fuelVolumeInput = _fuelVolumeInput.asStateFlow()
-    private val _pricePerUnitInput: MutableStateFlow<String> = MutableStateFlow("")
-    val pricePerUnitInput = _pricePerUnitInput.asStateFlow()
-    private val _notesInput: MutableStateFlow<String> = MutableStateFlow("")
-    val notesInput = _notesInput.asStateFlow()
-    private val _fullTank: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    val fullTank = _fullTank.asStateFlow()
-    private val _missedPrevious: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val missedPrevious = _missedPrevious.asStateFlow()
+) : BaseRefuelViewModel() {
 
     private val _refuelId = MutableStateFlow<Long?>(null)
 
-
     private val textInputsFlow: StateFlow<TextInputs> =
         combine(
-            _odometerInput, _fuelVolumeInput,
-            _pricePerUnitInput, _notesInput
+            mOdometerInput, mFuelVolumeInput,
+            mPricePerUnitInput, mNotesInput
         ) { odo, vol, price, notes ->
             TextInputs(odo, vol, price, notes)
         }
@@ -75,7 +43,7 @@ class EditRefuelViewModel @Inject constructor(
             )
 
     private val boolInputsFlow: StateFlow<BoolInputs> =
-        combine(_fullTank, _missedPrevious) { full, missed ->
+        combine(mFullTank, mMissedPrevious) { full, missed ->
             BoolInputs(full, missed)
         }
             .stateIn(
@@ -83,11 +51,12 @@ class EditRefuelViewModel @Inject constructor(
                 BoolInputs()
             )
 
+    private val oldRefuel: MutableStateFlow<Refuel?> = MutableStateFlow(null)
     private val newRefuel: StateFlow<Refuel> =
         combine(
             oldRefuel.filterNotNull(),
-            _timeStamp,
-            _dateFormatPattern,
+            mTimeStamp,
+            mDateFormatPattern,
             textInputsFlow,
             boolInputsFlow
         ) { old, ts, pattern, textInputs, bools ->
@@ -106,22 +75,17 @@ class EditRefuelViewModel @Inject constructor(
             .stateIn(viewModelScope, SharingStarted.Lazily, Refuel())
 
 
-    val isSaveBtnEnabled = combine(
-        oldRefuel, newRefuel
+    override val isSaveBtnEnabled = combine(
+        oldRefuel.filterNotNull(), newRefuel
     ) { old, new ->
         old != new && fieldsNotEmpty(new)
     }.stateIn(viewModelScope, SharingStarted.Lazily, true)
 
-    val isClearBtnEnabled = combine(
-        _odometerInput, _fuelVolumeInput, _pricePerUnitInput
-    ) { odometer, fuelVolume, pricePerUnit ->
-        odometer.isNotEmpty() || fuelVolume.isNotEmpty() || pricePerUnit.isNotEmpty()
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     init {
         viewModelScope.launch {
             launch {
-                _dateFormatPattern.emit(getDateFormatPatternUseCase())
+                mDateFormatPattern.emit(getDateFormatPatternUseCase())
             }
             launch {
                 _refuelId.filterNotNull().collectLatest {
@@ -154,56 +118,17 @@ class EditRefuelViewModel @Inject constructor(
 
     private fun setInputsFrom(refuel: Refuel) {
         oldRefuel.value = refuel
-        _timeStamp.value = refuel.refuelTimeStamp
-        _odometerInput.value = refuel.odometerValue.toString()
-        _fuelVolumeInput.value = refuel.fuelAmount.toString()
-        _pricePerUnitInput.value = refuel.pricePerUnit.toString()
-        _notesInput.value = refuel.notes
-        _fullTank.value = refuel.fullTank
-        _missedPrevious.value = refuel.missedPrevious
+        mTimeStamp.value = refuel.refuelTimeStamp
+        mOdometerInput.value = refuel.odometerValue.toString()
+        mFuelVolumeInput.value = refuel.fuelAmount.toString()
+        mPricePerUnitInput.value = refuel.pricePerUnit.toString()
+        mNotesInput.value = refuel.notes
+        mFullTank.value = refuel.fullTank
+        mMissedPrevious.value = refuel.missedPrevious
     }
 
 
-    fun onOdometerTextChange(odometer: String) {
-        _odometerInput.onTextChange(odometer)
-
-    }
-
-    fun onFuelVolumeTextChange(fuelAmount: String) {
-        _fuelVolumeInput.onTextChange(fuelAmount)
-    }
-
-    fun onPricePerUnitTextChange(pricePerUnit: String) {
-        _pricePerUnitInput.onTextChange(pricePerUnit)
-    }
-
-    fun onDateChange(timeStamp: Long) {
-        _timeStamp.onTextChange(timeStamp)
-    }
-
-    fun onNotesTextChange(notes: String) {
-        _notesInput.onTextChange(notes)
-    }
-
-    fun onFullTankChange(fullTank: Boolean) {
-        _fullTank.value = fullTank
-    }
-
-    fun onMissedPreviousChange(missedPrevious: Boolean) {
-        _missedPrevious.value = missedPrevious
-    }
-
-    fun onBtnClearClick() {
-        _odometerInput.value = ""
-        _fuelVolumeInput.value = ""
-        _pricePerUnitInput.value = ""
-        _notesInput.value = ""
-        _fullTank.value = true
-        _missedPrevious.value = false
-        _timeStamp.value = System.currentTimeMillis()
-    }
-
-    fun onBtnSaveClick() {
+    override fun onBtnSaveClick() {
         wrapLocaleDataSourceRequests(
             appStringResProvider = appStringResProvider,
             action = {

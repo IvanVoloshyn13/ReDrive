@@ -25,13 +25,13 @@
     </fragment>
     <fragment
         android:id="@+id/refuelFragment"
-        android:name="com.example.redrive.presentation.refuel.RefuelFragment"
+        android:name="com.example.redrive.presentation.refuelFeature.refuel.RefuelFragment"
         android:label="@string/refuel"
         tools:layout="@layout/fragment_refuel" />
     <include app:graph="@navigation/vehicle_flow" />
     <fragment
         android:id="@+id/editRefuelFragment"
-        android:name="com.example.redrive.presentation.editRefuel.EditRefuelFragment"
+        android:name="com.example.redrive.presentation.refuelFeature.editRefuel.EditRefuelFragment"
         android:label="@string/refuel"
         tools:layout="@layout/fragment_refuel">
         <argument

@@ -5,9 +5,10 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.NavDirections
 import com.example.redrive.R
 import com.example.redrive.core.Router
+import com.example.redrive.core.navigate
 import com.example.redrive.databinding.FragmentSplashBinding
 import com.example.redrive.presentation.tabs.TabsFragment
 import com.example.redrive.viewBinding
@@ -24,37 +25,33 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        renderAnimations()
+        renderLogoAnimation()
+        renderProgressBarAnimation()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            launch {
                 delay(1500)
                 viewModel.navigation.collectLatest {
                     when (it) {
                         Router.SplashDirections.ToProfile -> {
-                            navigate(TabsFragment.Companion.Destinations.PROFILE)
+                            navigate(getNavigationAction(TabsFragment.Companion.Destinations.PROFILE))
                         }
 
                         Router.SplashDirections.ToRedrive -> {
-                            navigate(TabsFragment.Companion.Destinations.REDRIVE)
+                            navigate(getNavigationAction(TabsFragment.Companion.Destinations.REDRIVE))
                         }
                     }
-
                 }
-            }
         }
     }
 
-    private fun renderAnimations() {
+    private fun renderProgressBarAnimation() {
         binding.progressBar.apply {
             alpha = 0.2f
             scaleX = 0.7f
             scaleY = 0.7f
-        }
-
-        binding.ivLogo.apply {
-            alpha = 0.2f
-            scaleX = 0.4f
-            scaleY = 0.4f
         }
 
         binding.progressBar.animate()
@@ -65,7 +62,14 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             .setDuration(1500)
             .setInterpolator(android.view.animation.OvershootInterpolator())
             .start()
+    }
 
+    private fun renderLogoAnimation() {
+        binding.ivLogo.apply {
+            alpha = 0.2f
+            scaleX = 0.4f
+            scaleY = 0.4f
+        }
 
         binding.ivLogo.animate()
             .alpha(1f)
@@ -77,9 +81,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             .start()
     }
 
-    private fun navigate(destination: String) {
-        val action = SplashFragmentDirections.actionSplashFragmentToTabsFragment(destination)
-        findNavController().navigate(action)
+    private fun getNavigationAction(destination: String): NavDirections {
+        return SplashFragmentDirections.actionSplashFragmentToTabsFragment(
+            destination
+        )
     }
 
 }

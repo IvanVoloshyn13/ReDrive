@@ -31,7 +31,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private val binding by viewBinding<FragmentSignUpBinding>()
     private val viewModel: SignUpViewModel by viewModels()
-    private val passwordInfoView by lazy {
+    private val passwordInfoViews by lazy {
         arrayOf(
             binding.tvPasswordLength,
             binding.tvPasswordNumber,
@@ -42,14 +42,25 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupSpannableText()
-        setupListeners()
-        collectState()
-    }
-
-    private fun setupListeners() {
         hideSoftInputAndClearViewsFocus(binding.root)
 
+        setupSpannableSignInBtnText()
+        setOnEditTextChangeListeners()
+        observeViewModel()
+        setViewsClickListeners()
+    }
+
+    private fun setViewsClickListeners(){
+        binding.bttSignUp.setOnClickListener {
+            viewModel.onSignUpBtnClick()
+        }
+
+        binding.bttSignIn.setOnClickListener {
+            viewModel.navigate(Router.SignUpDirections.ToSignIn)
+        }
+    }
+
+    private fun setOnEditTextChangeListeners() {
         binding.etFullName.setupRequireFieldListener(
             container = binding.fullNameContainer,
             onTextChange = { name -> viewModel.onFullNameTextChange(name) }
@@ -62,23 +73,40 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             container = binding.confirmPasswordContainer,
             onTextChange = { confPassword -> viewModel.onConfirmPasswordTextChange(confPassword) }
         )
-        binding.bttSignUp.setOnClickListener {
-            viewModel.onSignUpBttClick()
-        }
 
-        binding.bttSignIn.setOnClickListener {
-            viewModel.navigate(Router.SignUpDirections.ToSignIn)
-        }
-
-        setupPasswordListeners()
-
+        setOnPasswordTextChangeListener()
     }
 
-    private fun collectState() {
+    private fun setOnPasswordTextChangeListener() {
+        with(binding.etPassword) {
+            doAfterTextChanged { editable ->
+                viewModel.onPasswordTextChange(editable.toString())
+            }
+            setOnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    passwordInfoViews.forEach {
+                        it.visibility = View.VISIBLE
+                    }
+                    binding.passwordContainer.helperText = null
+                } else {
+                    passwordInfoViews.forEach {
+                        it.visibility = View.GONE
+                    }
+                    if (text!!.isEmpty()) {
+                        binding.passwordContainer.helperText = getString(R.string.required)
+                    } else if (!viewModel.state.value.isValidPassword.isValid) {
+                        binding.passwordContainer.helperText = getString(R.string.password_error)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 viewModel.state.collectLatest {
-                    updateUi(it)
+                    renderUiWithState(it)
                 }
             }
 
@@ -109,52 +137,27 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private fun updateUi(state: FragmentSignUpState) {
+    private fun renderUiWithState(state: FragmentSignUpState) {
         binding.progressBar.visibility = if (state.loading) View.VISIBLE else View.GONE
         binding.bttSignUp.isEnabled = state.signUpButtonState == SignUpButtonState.Enabled
 
-        binding.fullNameContainer.updateContainerHelperText(
+        binding.fullNameContainer.toggleContainerHelperText(
             R.string.please_enter_real_names,
             state.isValidFullName
         )
-        binding.emailContainer.updateContainerHelperText(
+        binding.emailContainer.toggleContainerHelperText(
             R.string.invalid_email,
             state.isValidEmail
         )
-        binding.confirmPasswordContainer.updateContainerHelperText(
+        binding.confirmPasswordContainer.toggleContainerHelperText(
             R.string.confirm_password_error,
             state.isValidConfirmPassword
         )
-        updatePasswordValidationState(state.isValidPassword)
+        renderPasswordValidationState(state.isValidPassword)
 
     }
 
-    private fun setupPasswordListeners() {
-        with(binding.etPassword) {
-            doAfterTextChanged { editable ->
-                viewModel.onPasswordTextChange(editable.toString())
-            }
-            setOnFocusChangeListener { view, hasFocus ->
-                if (hasFocus) {
-                    passwordInfoView.forEach {
-                        it.visibility = View.VISIBLE
-                    }
-                    binding.passwordContainer.helperText = null
-                } else {
-                    passwordInfoView.forEach {
-                        it.visibility = View.GONE
-                    }
-                    if (text!!.isEmpty()) {
-                        binding.passwordContainer.helperText = getString(R.string.required)
-                    } else if (!viewModel.state.value.isValidPassword.isValid) {
-                        binding.passwordContainer.helperText = getString(R.string.password_error)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun updatePasswordValidationState(result: PasswordValidationResult) {
+    private fun renderPasswordValidationState(result: PasswordValidationResult) {
         with(binding) {
             tvPasswordNumber.setTextColor(getColourFromRes(result.hasDigit))
             tvPasswordUpperLowerCase.setTextColor(
@@ -185,7 +188,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private fun TextInputLayout.updateContainerHelperText(
+    private fun TextInputLayout.toggleContainerHelperText(
         @StringRes helperText: Int,
         isValid: Boolean,
     ) {
@@ -194,7 +197,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         } else this.helperText = null
     }
 
-    private fun setupSpannableText() {
+    private fun setupSpannableSignInBtnText() {
         val spannableString = SpannableString(binding.bttSignIn.text)
         spannableString.setSpan(UnderlineSpan(), 0, spannableString.length, 0)
         binding.bttSignIn.text = spannableString

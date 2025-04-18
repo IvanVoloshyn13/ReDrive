@@ -107,7 +107,7 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun onSignUpBttClick() {
+    fun onSignUpBtnClick() {
         val userCredentials = UserAuthCredentials(
             fullName = _state.value.fullName,
             email = _state.value.email,

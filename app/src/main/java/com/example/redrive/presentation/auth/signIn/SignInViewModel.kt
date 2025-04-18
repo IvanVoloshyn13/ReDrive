@@ -22,7 +22,7 @@ class SignInViewModel @Inject constructor(
     private val _state = MutableStateFlow<FragmentSignInState>(FragmentSignInState())
     val state = _state.asStateFlow()
 
-    fun signIn() {
+    fun onSignInBtnClick() {
         viewModelScope.launch {
 
             _state.update {
