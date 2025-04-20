@@ -1,6 +1,5 @@
 package com.example.redrive.presentation.unitPreferences
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.AvgConsumption
 import com.example.domain.model.Capacity
@@ -25,7 +24,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.system.measureTimeMillis
 
 @HiltViewModel
 class UnitsPrefViewModel @Inject constructor(
@@ -71,7 +69,7 @@ class UnitsPrefViewModel @Inject constructor(
         return unitsPreferencesFacade.getDistanceUnits()
     }
 
-    fun getDateFormatPatternsUnits(): List<DateFormatPattern> {
+    fun getDateFormatPatterns(): List<DateFormatPattern> {
         return unitsPreferencesFacade.getDateFormatPatterns()
     }
 

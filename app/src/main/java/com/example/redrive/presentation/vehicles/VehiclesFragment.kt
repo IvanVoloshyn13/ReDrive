@@ -1,4 +1,4 @@
-package com.example.redrive.presentation.vehicle.vehicles
+package com.example.redrive.presentation.vehicles
 
 import android.os.Bundle
 import android.view.View

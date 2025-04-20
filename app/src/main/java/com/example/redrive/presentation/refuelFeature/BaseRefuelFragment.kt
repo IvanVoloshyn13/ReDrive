@@ -3,13 +3,12 @@ package com.example.redrive.presentation.refuelFeature
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
-import android.widget.EditText
 import androidx.annotation.LayoutRes
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.redrive.core.Router
+import com.example.redrive.core.addDebouncedListener
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
 import com.example.redrive.core.setTextFromState
 import com.example.redrive.core.showErrorAndResetState
@@ -19,8 +18,6 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -244,19 +241,6 @@ abstract class BaseRefuelFragment<VM : BaseRefuelViewModel>(@LayoutRes layoutRes
     }
 
 
-    private fun EditText.addDebouncedListener(
-        coroutineScope: CoroutineScope,
-        delayMillis: Long = 500,
-        onTextChanged: (String) -> Unit
-    ) {
-        var job: Job? = null
-        this.doAfterTextChanged { text ->
-            job?.cancel()
-            job = coroutineScope.launch {
-                delay(delayMillis)
-                onTextChanged(text.toString())
-            }
-        }
-    }
+
 
 }

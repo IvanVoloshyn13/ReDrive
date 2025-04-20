@@ -1,4 +1,4 @@
-package com.example.redrive.presentation.vehicle.vehicles
+package com.example.redrive.presentation.vehicles
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -99,7 +99,7 @@ class VehicleViewHolder(
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setVehicleIconByType(type: VehicleType, context: Context): Drawable {
         return when (type) {
-            VehicleType.Car, VehicleType.Default -> context.getDrawable(R.drawable.ic_car)!!
+            VehicleType.Car -> context.getDrawable(R.drawable.ic_car)!!
             VehicleType.Bike -> context.getDrawable(R.drawable.ic_bike)!!
 
         }

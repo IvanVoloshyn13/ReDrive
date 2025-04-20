@@ -18,7 +18,7 @@ class LogsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _state: MutableStateFlow<VehicleWithLogs> = MutableStateFlow(VehicleWithLogs())
-    val state = _state.asStateFlow()
+    val vehicleWithLogs = _state.asStateFlow()
 
     init {
         viewModelScope.launch {

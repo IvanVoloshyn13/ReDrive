@@ -14,11 +14,28 @@ data class Vehicle(
             id = 0,
             name = "",
             initialOdometerValue = 0,
-            type = VehicleType.Default, isCurrentVehicle = false
+            type = VehicleType.Car, isCurrentVehicle = false
         )
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Vehicle) return false
+        return id == other.id &&
+                name == other.name &&
+                initialOdometerValue == other.initialOdometerValue &&
+                type == other.type
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + initialOdometerValue
+        result = 31 * result + type.hashCode()
+        return result
     }
 }
 
 enum class VehicleType {
-    Car, Bike, Default
+    Car, Bike
 }

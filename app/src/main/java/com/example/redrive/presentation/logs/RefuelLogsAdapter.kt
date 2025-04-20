@@ -44,7 +44,7 @@ class RefuelLogsAdapter(private val listener: LogItemClickListener) :
     }
 
     override fun onClick(v: View) {
-        listener.onItemClick(v.tag as Long)
+        listener.onLogItemClick(v.tag as Long)
     }
 
     private fun spannableText(odometerReading: String, date: String, context: Context): Spannable {
@@ -72,7 +72,7 @@ class RefuelLogsAdapter(private val listener: LogItemClickListener) :
     }
 
     interface LogItemClickListener {
-        fun onItemClick(itemId: Long)
+        fun onLogItemClick(itemId: Long)
     }
 }
 

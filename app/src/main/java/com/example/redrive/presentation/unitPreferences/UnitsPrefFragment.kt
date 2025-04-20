@@ -1,7 +1,6 @@
 package com.example.redrive.presentation.unitPreferences
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,11 +31,11 @@ class UnitsPrefFragment : Fragment(R.layout.fragment_units_preferences) {
     private val binding by viewBinding<FragmentUnitsPreferencesBinding>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        collectStates()
-        setupListeners()
+        observeViewModel()
+        setViewOnClickListeners()
     }
 
-    private fun collectStates() {
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 viewModel.unitPreferences.collectLatest {
@@ -70,7 +69,7 @@ class UnitsPrefFragment : Fragment(R.layout.fragment_units_preferences) {
         }
     }
 
-    private fun setupListeners() {
+    private fun setViewOnClickListeners() {
         binding.itemCurrency.itemCurrency.setOnClickListener {
             showCurrencyUnits()
         }
@@ -157,7 +156,7 @@ class UnitsPrefFragment : Fragment(R.layout.fragment_units_preferences) {
     }
 
     private fun showDateFormatPatternsUnits() {
-        val datePatterns = viewModel.getDateFormatPatternsUnits()
+        val datePatterns = viewModel.getDateFormatPatterns()
         val names = datePatterns.map {
             it.displayName
         }.toTypedArray()

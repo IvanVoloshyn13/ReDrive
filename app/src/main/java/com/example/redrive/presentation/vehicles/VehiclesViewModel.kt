@@ -1,4 +1,4 @@
-package com.example.redrive.presentation.vehicle.vehicles
+package com.example.redrive.presentation.vehicles
 
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.Vehicle

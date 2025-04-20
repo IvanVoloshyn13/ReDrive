@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.domain.model.account.SignInStatus
 import com.example.redrive.R
+import com.example.redrive.core.RedriveDirection
 import com.example.redrive.core.Router
 import com.example.redrive.core.navigate
 import com.example.redrive.databinding.FragmentProfileBinding
@@ -23,41 +24,47 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.addAuthStateListener()
-        collectState()
-        setupListeners()
+
+        observeViewModel()
+        setViewsOnClickListeners()
     }
 
-    private fun collectState() {
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 viewModel.state.collectLatest {
-                    updateUi(it)
+                    renderUi(it)
                 }
             }
 
             launch {
                 viewModel.navigation.collectLatest {
-                    when (it) {
-                        Router.ProfileDirections.ToSettings -> {
-                            navigate(ProfileFragmentDirections.actionProfileFragmentToSettingsFragment())
-                        }
-
-                        Router.ProfileDirections.ToSignIn -> {
-                            navigate(ProfileFragmentDirections.actionProfileFragmentToSignInFragment())
-                        }
-
-                        Router.ProfileDirections.ToEditVehicles -> {
-                            navigate(ProfileFragmentDirections.actionProfileFragmentToVehicleFlow())
-                        }
-
-                        else -> return@collectLatest
+                    if (it != null) {
+                        navigateByDirection(it)
                     }
                 }
             }
         }
     }
 
-    private fun updateUi(state: FragmentProfileState) {
+    private fun navigateByDirection(direction: RedriveDirection) {
+        when (direction) {
+            Router.ProfileDirections.ToSettings -> {
+                navigate(ProfileFragmentDirections.actionProfileFragmentToSettingsFragment())
+            }
+
+            Router.ProfileDirections.ToSignIn -> {
+                navigate(ProfileFragmentDirections.actionProfileFragmentToSignInFragment())
+            }
+
+            Router.ProfileDirections.ToEditVehicles -> {
+                navigate(ProfileFragmentDirections.actionProfileFragmentToVehicleFlow())
+            }
+
+        }
+    }
+
+    private fun renderUi(state: FragmentProfileState) {
         binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
         binding.tvSignIn.visibility =
             if (state.signedInStatus == SignInStatus.SignOut) View.VISIBLE else View.GONE
@@ -66,7 +73,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.tvUserInitial.text = state.userInitials
     }
 
-    private fun setupListeners() {
+    private fun setViewsOnClickListeners() {
         binding.tvSignIn.setOnClickListener {
             viewModel.navigate(Router.ProfileDirections.ToSignIn)
         }
@@ -77,7 +84,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             viewModel.navigate(Router.ProfileDirections.ToSettings)
         }
         binding.tvSignOut.setOnClickListener {
-            viewModel.onSignOutClick()
+            viewModel.onSignOutBtnClick()
         }
     }
 

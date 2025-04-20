@@ -63,7 +63,7 @@ class ProfileViewModel @Inject constructor(
         authStateJob?.cancel()
     }
 
-    fun onSignOutClick() {
+    fun onSignOutBtnClick() {
         viewModelScope.launch {
             _state.update {
                 it.copy(

@@ -7,7 +7,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.domain.model.log.VehicleWithLogs
 import com.example.redrive.R
+import com.example.redrive.core.RedriveDirection
 import com.example.redrive.core.Router
 import com.example.redrive.core.navigate
 import com.example.redrive.databinding.FragmentLogsBinding
@@ -24,53 +26,9 @@ class LogsFragment : Fragment(R.layout.fragment_logs), RefuelLogsAdapter.LogItem
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupListeners()
         initLogsAdapter()
-        collectState()
-    }
-
-    private fun collectState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            launch {
-                viewModel.navigation.collectLatest { direction ->
-                    when (direction) {
-                        Router.LogsDirections.ToRefuel -> {
-                            navigate(LogsFragmentDirections.actionLogsFragmentToRefuelFragment())
-                        }
-
-                        Router.LogsDirections.ToVehicles -> {}
-                        is Router.LogsDirections.ToEditRefuel -> {
-                            navigate(
-                                LogsFragmentDirections.actionLogsFragmentToEditRefuelFragment(
-                                    direction.refuelId
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-
-            launch {
-                viewModel.state.collectLatest {
-                    adapter.submitList(it.logs){
-                        binding.rvLogs.scrollToPosition(0)
-                    }
-
-                    binding.tvCurrentVehicleName.text =
-                        it.vehicle?.name ?: getString(R.string.app_name)
-                }
-            }
-        }
-    }
-
-    private fun setupListeners() {
-        binding.ivDropDownMenu.setOnClickListener {
-            findNavController().navigate(R.id.action_logsFragment_to_vehicle_flow)
-        }
-
-        binding.bttAddRefuel.setOnClickListener {
-            viewModel.navigate(Router.LogsDirections.ToRefuel)
-        }
+        setViewsOnClickListeners()
+        observeViewModel()
     }
 
     private fun initLogsAdapter() {
@@ -81,7 +39,62 @@ class LogsFragment : Fragment(R.layout.fragment_logs), RefuelLogsAdapter.LogItem
         rv.adapter = adapter
     }
 
-    override fun onItemClick(itemId: Long) {
+    private fun setViewsOnClickListeners() {
+        binding.ivDropDownMenu.setOnClickListener {
+            findNavController().navigate(R.id.action_logsFragment_to_vehicle_flow)
+        }
+
+        binding.bttAddRefuel.setOnClickListener {
+            viewModel.navigate(Router.LogsDirections.ToRefuel)
+        }
+    }
+
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            launch {
+                viewModel.navigation.collectLatest { direction ->
+                    if (direction != null) {
+                        navigateByDirection(direction)
+                    }
+                }
+            }
+
+            launch {
+                viewModel.vehicleWithLogs.collectLatest {
+                    renderUi(it)
+                }
+            }
+        }
+    }
+
+    private fun renderUi(state: VehicleWithLogs) {
+        adapter.submitList(state.logs) {
+            binding.rvLogs.scrollToPosition(0)
+        }
+
+        binding.tvCurrentVehicleName.text =
+            state.vehicle?.name ?: getString(R.string.app_name)
+    }
+
+    private fun navigateByDirection(direction: RedriveDirection) {
+        when (direction) {
+            Router.LogsDirections.ToRefuel -> {
+                navigate(LogsFragmentDirections.actionLogsFragmentToRefuelFragment())
+            }
+
+            Router.LogsDirections.ToVehicles -> {}
+            is Router.LogsDirections.ToEditRefuel -> {
+                navigate(
+                    LogsFragmentDirections.actionLogsFragmentToEditRefuelFragment(
+                        direction.refuelId
+                    )
+                )
+            }
+        }
+    }
+
+    override fun onLogItemClick(itemId: Long) {
         viewModel.onLogItemClick(itemId)
     }
+
 }
