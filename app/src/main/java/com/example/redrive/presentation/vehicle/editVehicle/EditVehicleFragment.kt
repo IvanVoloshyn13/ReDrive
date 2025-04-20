@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.redrive.R
+import com.example.redrive.core.Router
 import com.example.redrive.presentation.vehicle.BaseVehicleFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -32,9 +34,22 @@ class EditVehicleFragment :
     override fun observeViewModel() {
         super.observeViewModel()
         viewLifecycleOwner.lifecycleScope.launch {
-            baseVm.isSaveBtnEnabled.collectLatest {
-                binding.btnSave.isEnabled = it
+            launch {
+                baseVm.isSaveBtnEnabled.collectLatest {
+                    binding.btnSave.isEnabled = it
+                }
             }
+
+            launch {
+                baseVm.navigation.collectLatest {
+                    when (it) {
+                        Router.EditVehicleDirections.ToVehicles -> {
+                            findNavController().popBackStack()
+                        }
+                    }
+                }
+            }
+
         }
     }
 

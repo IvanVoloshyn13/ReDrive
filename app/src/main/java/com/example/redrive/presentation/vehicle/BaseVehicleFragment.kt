@@ -117,15 +117,7 @@ abstract class BaseVehicleFragment<VM : BaseVehicleViewModel>(@LayoutRes layout:
                 }
             }
 
-            launch {
-                baseVm.navigation.collectLatest {
-                    when (it) {
-                        Router.NewVehicleDirections.ToVehicles -> {
-                            findNavController().popBackStack()
-                        }
-                    }
-                }
-            }
+
         }
     }
 

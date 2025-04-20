@@ -1,7 +1,6 @@
 package com.example.redrive.presentation.vehicles
 
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.Vehicle
 import com.example.domain.useCase.vehicle.ConfirmDeleteVehicleUseCase
 import com.example.domain.useCase.vehicle.DeleteVehicleUseCase
 import com.example.domain.useCase.vehicle.ObserveVehiclesUseCase
@@ -10,38 +9,24 @@ import com.example.redrive.core.AppStringResProvider
 import com.example.redrive.core.BaseViewModel
 import com.example.redrive.core.wrapLocaleDataSourceRequests
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class VehiclesViewModel @Inject constructor(
-    private val observeVehiclesUseCase: ObserveVehiclesUseCase,
+    observeVehiclesUseCase: ObserveVehiclesUseCase,
     private val setVehicleAsCurrentUseCase: SetVehicleAsCurrentUseCase,
     private val deleteVehicleUseCase: DeleteVehicleUseCase,
     private val confirmDeleteVehicleUseCase: ConfirmDeleteVehicleUseCase,
     private val stringResProvider: AppStringResProvider
 ) : BaseViewModel() {
 
-    private val _state: MutableStateFlow<List<Vehicle>> =
-        MutableStateFlow(ArrayList())
-    val state = _state.asStateFlow()
+    val state = observeVehiclesUseCase.invoke().stateIn(
+        viewModelScope, SharingStarted.Lazily, ArrayList()
+    )
 
-    init {
-        viewModelScope.launch {
-            vehicles()
-        }
-    }
-
-    suspend fun vehicles() {
-        val vehiclesFlow = observeVehiclesUseCase.invoke()
-        vehiclesFlow.collectLatest { vehicles ->
-          _state.value=vehicles
-        }
-    }
 
     fun onVehicleItemClick(vehicleId: Long) {
         viewModelScope.launch {
@@ -60,7 +45,7 @@ class VehiclesViewModel @Inject constructor(
         }
     }
 
-    fun confirmDeleteCurrentVehicle(vehicleId: Long) {
+    fun onConfirmDeleteCurrentVehicle(vehicleId: Long) {
         viewModelScope.launch {
             confirmDeleteVehicleUseCase.invoke(vehicleId)
         }

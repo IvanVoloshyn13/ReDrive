@@ -26,12 +26,12 @@ class LogsFragment : Fragment(R.layout.fragment_logs), RefuelLogsAdapter.LogItem
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initLogsAdapter()
+        initLogsRecyclerView()
         setViewsOnClickListeners()
         observeViewModel()
     }
 
-    private fun initLogsAdapter() {
+    private fun initLogsRecyclerView() {
         adapter = RefuelLogsAdapter(this)
         val rv = binding.rvLogs
         rv.layoutManager =

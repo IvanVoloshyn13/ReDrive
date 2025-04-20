@@ -22,7 +22,6 @@ class VehiclesAdapter(private val listener: VehicleActionsListener) :
 
     override fun onClick(v: View) {
         val vehicle = v.tag as Vehicle
-
         when (v.id) {
             R.id.iv_more -> showPopUpMenu(view = v, vehicle)
             else -> listener.onVehicleItemClick(vehicle)
@@ -112,10 +111,12 @@ class VehicleDiffCallback : DiffUtil.ItemCallback<Vehicle>() {
     }
 
     override fun areContentsTheSame(oldItem: Vehicle, newItem: Vehicle): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id &&
+                oldItem.name == newItem.name &&
+                oldItem.initialOdometerValue == newItem.initialOdometerValue &&
+                oldItem.type == newItem.type &&
+                oldItem.isCurrentVehicle == newItem.isCurrentVehicle
     }
-
-
 }
 
 

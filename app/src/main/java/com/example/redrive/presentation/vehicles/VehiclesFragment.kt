@@ -30,15 +30,15 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         hideSoftInputAndClearViewsFocus(binding.root)
-        vehiclesAdapter = VehiclesAdapter(this)
         initVehicleRecyclerView()
-        collectState()
+        observeViewModel()
         binding.bttAddNewVehicle.setOnClickListener {
             viewModel.navigate(Router.VehiclesDirections.ToNewVehicle)
         }
     }
 
-    private fun collectState() {
+
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
 
             launch {
@@ -50,7 +50,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
             }
             launch {
                 viewModel.navigation.collectLatest { direction ->
-                    navigateTo(direction)
+                    navigateWithDirection(direction)
                 }
             }
 
@@ -67,6 +67,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
     }
 
     private fun initVehicleRecyclerView() {
+        vehiclesAdapter = VehiclesAdapter(this)
         val rv = binding.rvVehicles
         rv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -79,7 +80,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
                 getString(R.string.delete_anyway),
             ) { _, _ ->
                 val currentVehicleId = vehicles.find { it.isCurrentVehicle }?.id
-                viewModel.confirmDeleteCurrentVehicle(
+                viewModel.onConfirmDeleteCurrentVehicle(
                     currentVehicleId!! //If there is at least one vehicle it by default will be as current
                 )
             }
@@ -106,7 +107,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
         viewModel.onDeleteBtnClick(vehicleId)
     }
 
-    private fun navigateTo(direction: RedriveDirection?) {
+    private fun navigateWithDirection(direction: RedriveDirection?) {
         when (direction) {
             Router.VehiclesDirections.ToNewVehicle -> {
                 navigate(VehiclesFragmentDirections.actionVehiclesFragmentToNewVehicleFragment())
