@@ -39,7 +39,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                             navigate(getNavigationAction(TabsFragment.Companion.Destinations.PROFILE))
                         }
 
-                        Router.SplashDirections.ToRedrive -> {
+                        Router.SplashDirections.ToApp -> {
                             navigate(getNavigationAction(TabsFragment.Companion.Destinations.REDRIVE))
                         }
                     }

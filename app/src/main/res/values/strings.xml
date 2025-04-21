@@ -89,5 +89,7 @@
     <string name="distance">Distance</string>
     <string name="capacity">Capacity</string>
     <string name="date_format">Date format</string>
+    <string name="place_holder_double">-,—</string>
+    <string name="place_holder_int">-—</string>
 
 </resources>

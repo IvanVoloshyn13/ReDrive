@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.log.VehicleWithLogs
 import com.example.redrive.R
-import com.example.redrive.core.RedriveDirection
+import com.example.redrive.core.AppDirection
 import com.example.redrive.core.Router
 import com.example.redrive.core.navigate
 import com.example.redrive.databinding.FragmentLogsBinding
@@ -76,7 +76,7 @@ class LogsFragment : Fragment(R.layout.fragment_logs), RefuelLogsAdapter.LogItem
             state.vehicle?.name ?: getString(R.string.app_name)
     }
 
-    private fun navigateByDirection(direction: RedriveDirection) {
+    private fun navigateByDirection(direction: AppDirection) {
         when (direction) {
             Router.LogsDirections.ToRefuel -> {
                 navigate(LogsFragmentDirections.actionLogsFragmentToRefuelFragment())

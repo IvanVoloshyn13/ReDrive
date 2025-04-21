@@ -18,6 +18,9 @@ interface SettingsDao {
     @Query("SELECT avg_consumption_key FROM app_settings where vehicle_id =:vehicleId")
    suspend fun getAvgConsumptionKey(vehicleId: Long): String
 
+    @Query("SELECT distanceKey FROM app_settings where vehicle_id =:vehicleId")
+    suspend fun getDistanceKey(vehicleId: Long): String
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updatePreferences(settings: UnitPreferencesEntity)
 }

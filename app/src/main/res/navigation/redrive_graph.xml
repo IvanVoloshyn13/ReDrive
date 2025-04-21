@@ -7,16 +7,24 @@
 
     <fragment
         android:id="@+id/redriveFragment"
-        android:name="com.example.redrive.presentation.RedriveFragment"
+        android:name="com.example.redrive.presentation.redrive.RedriveFragment"
         android:label="@string/redrive"
         tools:layout="@layout/fragment_redrive">
         <action
             android:id="@+id/action_redriveFragment_to_refuelFragment"
             app:destination="@id/refuelFragment" />
+        <action
+            android:id="@+id/action_redriveFragment_to_vehiclesFragment"
+            app:destination="@id/vehiclesFragment" />
     </fragment>
     <fragment
         android:id="@+id/refuelFragment"
         android:name="com.example.redrive.presentation.refuelFeature.refuel.RefuelFragment"
         android:label="@string/refuel"
         tools:layout="@layout/fragment_refuel" />
+    <fragment
+        android:id="@+id/vehiclesFragment"
+        android:name="com.example.redrive.presentation.vehicles.VehiclesFragment"
+        android:label="@string/vehicles"
+        tools:layout="@layout/fragment_vehicles" />
 </navigation>

@@ -4,7 +4,7 @@ data class RefuelLog(
     val id: Long = 0L,
     val date: String = "",
     val odometerRead: Int,
-    val avgConsumption: Pair<String, String>,
+    val avgConsumption: ValueWithUnit,
     val travelledDistance: String,
     val odometerReading: String,
     val fuelAmount: String,
@@ -12,7 +12,7 @@ data class RefuelLog(
     val payment: String
 )
 
-data class LogItem(
-    val unit: String = "",
-    val value: Double = 0.0
+data class ValueWithUnit(
+    val value: String,
+    val unit: String
 )

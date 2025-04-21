@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.domain.model.account.SignInStatus
 import com.example.redrive.R
-import com.example.redrive.core.RedriveDirection
+import com.example.redrive.core.AppDirection
 import com.example.redrive.core.Router
 import com.example.redrive.core.navigate
 import com.example.redrive.databinding.FragmentProfileBinding
@@ -47,7 +47,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
-    private fun navigateByDirection(direction: RedriveDirection) {
+    private fun navigateByDirection(direction: AppDirection) {
         when (direction) {
             Router.ProfileDirections.ToSettings -> {
                 navigate(ProfileFragmentDirections.actionProfileFragmentToSettingsFragment())

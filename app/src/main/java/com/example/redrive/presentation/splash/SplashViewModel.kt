@@ -24,7 +24,7 @@ class SplashViewModel @Inject constructor(
                 when (it) {
                     SignInStatus.Failure -> return@collectLatest
                     SignInStatus.SignOut -> navigate(Router.SplashDirections.ToProfile)
-                    SignInStatus.SignedIn -> navigate(Router.SplashDirections.ToRedrive)
+                    SignInStatus.SignedIn -> navigate(Router.SplashDirections.ToApp)
                 }
             }
         }

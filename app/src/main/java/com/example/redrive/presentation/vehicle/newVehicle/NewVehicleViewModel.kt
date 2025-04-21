@@ -3,23 +3,15 @@ package com.example.redrive.presentation.vehicle.newVehicle
 import androidx.lifecycle.viewModelScope
 import com.example.domain.UserException
 import com.example.domain.model.Vehicle
-import com.example.domain.model.VehicleType
 import com.example.domain.useCase.vehicle.AddNewVehicleUseCase
 import com.example.redrive.core.AppStringResProvider
-import com.example.redrive.core.BaseViewModel
-import com.example.redrive.core.RedriveDirection
 import com.example.redrive.core.Router
 import com.example.redrive.presentation.vehicle.BaseVehicleViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

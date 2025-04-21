@@ -35,8 +35,12 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAvgConsumptionType(vehicleId: Long): String {
+    override suspend fun getAvgConsumptionTypeKey(vehicleId: Long): String {
       return settingsDao.getAvgConsumptionKey(vehicleId)
+    }
+
+    override suspend fun getDistanceTypeKey(vehicleId: Long): String {
+      return settingsDao.getDistanceKey(vehicleId)
     }
 
     override fun getCurrencies(): List<Currency> {

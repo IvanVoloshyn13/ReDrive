@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.Vehicle
 import com.example.redrive.R
-import com.example.redrive.core.RedriveDirection
+import com.example.redrive.core.AppDirection
 import com.example.redrive.core.Router
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
 import com.example.redrive.core.navigate
@@ -107,7 +107,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
         viewModel.onDeleteBtnClick(vehicleId)
     }
 
-    private fun navigateWithDirection(direction: RedriveDirection?) {
+    private fun navigateWithDirection(direction: AppDirection?) {
         when (direction) {
             Router.VehiclesDirections.ToNewVehicle -> {
                 navigate(VehiclesFragmentDirections.actionVehiclesFragmentToNewVehicleFragment())

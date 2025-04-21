@@ -22,4 +22,6 @@ interface RepositoryModule {
 
     @Binds
     fun bindInMemoryAppSettings(impl: InMemoryAppUnitPreferencesRepositoryImpl): InMemoryAppUnitPreferencesRepository
+
+
 }

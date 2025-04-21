@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 open class BaseViewModel : ViewModel() {
 
-    private val _navigation: MutableSharedFlow<RedriveDirection?> = MutableSharedFlow(
+    private val _navigation: MutableSharedFlow<AppDirection?> = MutableSharedFlow(
         replay = 0,
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_LATEST
@@ -22,7 +22,7 @@ open class BaseViewModel : ViewModel() {
     private val _error: MutableStateFlow<Pair<Boolean, String>> = MutableStateFlow(Pair(false, ""))
     val error = _error.asStateFlow()
 
-    fun navigate(route: RedriveDirection) {
+    fun navigate(route: AppDirection) {
         viewModelScope.launch {
             _navigation.emit(route)
         }

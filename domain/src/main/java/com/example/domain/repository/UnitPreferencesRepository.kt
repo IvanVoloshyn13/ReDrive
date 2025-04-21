@@ -23,7 +23,12 @@ interface UnitPreferencesRepository {
     /**
      * Observes and returns AvgConsumptionType 'KEY' for the currently selected vehicle.
      */
-   suspend fun getAvgConsumptionType(vehicleId: Long):String
+   suspend fun getAvgConsumptionTypeKey(vehicleId: Long):String
+
+    /**
+     * Observes and returns DistanceType 'KEY' for the currently selected vehicle.
+     */
+    suspend fun getDistanceTypeKey(vehicleId: Long):String
     /**
      * Returns a list of available currency units for the app.
      */

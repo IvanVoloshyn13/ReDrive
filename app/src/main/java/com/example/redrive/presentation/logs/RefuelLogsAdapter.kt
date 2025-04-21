@@ -32,8 +32,8 @@ class RefuelLogsAdapter(private val listener: LogItemClickListener) :
         val log = getItem(position)
         holder.binding.root.tag = log.id
         holder.binding.apply {
-            tvAvgConsumption.text = log.avgConsumption.first
-            tvAvgConsumptionUnit.text = log.avgConsumption.second
+            tvAvgConsumption.text = log.avgConsumption.value
+            tvAvgConsumptionUnit.text = log.avgConsumption.unit
             tvItemRefuelMainInfo.text =
                 spannableText(log.odometerReading, log.date, this.tvItemRefuelMainInfo.context)
             tvDistance.text = log.travelledDistance
