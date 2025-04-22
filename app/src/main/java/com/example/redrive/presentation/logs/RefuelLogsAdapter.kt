@@ -1,24 +1,19 @@
 package com.example.redrive.presentation.logs
 
-import android.content.Context
-import android.graphics.Typeface
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.TextPaint
-import android.text.style.TypefaceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.log.RefuelLog
-import com.example.redrive.R
+import com.example.redrive.core.logTextFormatter.LogSpannableTextCreator
 import com.example.redrive.databinding.RefuelLogItemBinding
 
-class RefuelLogsAdapter(private val listener: LogItemClickListener) :
+class RefuelLogsAdapter(
+    private val listener: LogItemClickListener,
+    private val spannableTextCreator: LogSpannableTextCreator
+) :
     ListAdapter<RefuelLog, RefuelLogsViewHolder>(RefuelLogsDiffCallback()), View.OnClickListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RefuelLogsViewHolder {
@@ -35,7 +30,7 @@ class RefuelLogsAdapter(private val listener: LogItemClickListener) :
             tvAvgConsumption.text = log.avgConsumption.value
             tvAvgConsumptionUnit.text = log.avgConsumption.unit
             tvItemRefuelMainInfo.text =
-                spannableText(log.odometerReading, log.date, this.tvItemRefuelMainInfo.context)
+              spannableTextCreator.spannableText(log.odometerReading, log.date)
             tvDistance.text = log.travelledDistance
             tvFuelAmount.text = log.fuelAmount
             tvPayment.text = log.payment
@@ -47,29 +42,6 @@ class RefuelLogsAdapter(private val listener: LogItemClickListener) :
         listener.onLogItemClick(v.tag as Long)
     }
 
-    private fun spannableText(odometerReading: String, date: String, context: Context): Spannable {
-        val message = context.getString(R.string.refuel_message, odometerReading, date)
-        val spannable = SpannableString(message)
-        val typefaceSemibold = ResourcesCompat.getFont(context, R.font.poppins_semibold)
-        val odometerPartStart = message.indexOf(odometerReading)
-        val odometerPartEnd = odometerPartStart + odometerReading.length
-        spannable.setSpan(
-            CustomTypefaceSpan("", typefaceSemibold),
-            odometerPartStart,
-            odometerPartEnd,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        val datePartStart = message.indexOf(date)
-        val datePartEnd = datePartStart + date.length
-        spannable.setSpan(
-            CustomTypefaceSpan("", typefaceSemibold),
-            datePartStart,
-            datePartEnd,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        return spannable
-    }
 
     interface LogItemClickListener {
         fun onLogItemClick(itemId: Long)
@@ -88,16 +60,4 @@ class RefuelLogsDiffCallback : DiffUtil.ItemCallback<RefuelLog>() {
         return oldItem == newItem
     }
 
-}
-
-class CustomTypefaceSpan(family: String, private val typeface: Typeface?) : TypefaceSpan(family) {
-    override fun updateDrawState(ds: TextPaint) {
-        super.updateDrawState(ds)
-        typeface?.let { ds.typeface = it }
-    }
-
-    override fun updateMeasureState(paint: TextPaint) {
-        super.updateMeasureState(paint)
-        typeface?.let { paint.typeface = it }
-    }
 }

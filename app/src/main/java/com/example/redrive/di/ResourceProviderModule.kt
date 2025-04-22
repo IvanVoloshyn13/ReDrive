@@ -2,6 +2,8 @@ package com.example.redrive.di
 
 import com.example.redrive.core.AppStringResProvider
 import com.example.redrive.core.AppStringResProviderImpl
+import com.example.redrive.core.logTextFormatter.RefuelMessageFromResProvider
+import com.example.redrive.core.logTextFormatter.RefuelMessageFromResProviderImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -10,11 +12,19 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppModule {
+interface ResourceProviderModule {
 
     @Binds
     @Singleton
-    abstract fun bindAppStringResProvider(
+     fun bindAppStringResProvider(
         impl: AppStringResProviderImpl
     ): AppStringResProvider
+
+
+    @Binds
+    @Singleton
+     fun bindLogMessageProvider(
+        impl: RefuelMessageFromResProviderImpl
+    ): RefuelMessageFromResProvider
+
 }

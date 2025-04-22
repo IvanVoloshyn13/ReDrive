@@ -40,7 +40,7 @@ class NewVehicleViewModel @Inject constructor(
                 addNewVehicleUseCase.invoke(vehicle)
                 navigate(Router.NewVehicleDirections.ToVehicles)
             } catch (e: UserException.NoUserDetectedException) {
-                emitError(appStringResProvider.provideStringRes(e))
+                emitError(appStringResProvider.provideStringResByException(e))
 
             }
         }

@@ -20,7 +20,6 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 fun Fragment.findTopNavController(): NavController {
@@ -93,7 +92,7 @@ fun ViewModel.wrapLocaleDataSourceRequests(
         try {
             action()
         } catch (e: AppException) {
-            val message = appStringResProvider.provideStringRes(e)
+            val message = appStringResProvider.provideStringResByException(e)
             onError(message)
         }
     }

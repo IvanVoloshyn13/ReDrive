@@ -48,7 +48,7 @@ class SignInViewModel @Inject constructor(
                         loading = false,
                     )
                 }
-                emitError(appStringResProvider.provideStringRes(e))
+                emitError(appStringResProvider.provideStringResByException(e))
             }
 
         }

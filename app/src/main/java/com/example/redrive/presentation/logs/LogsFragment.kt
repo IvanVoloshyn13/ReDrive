@@ -1,6 +1,7 @@
 package com.example.redrive.presentation.logs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.log.VehicleWithLogs
 import com.example.redrive.R
 import com.example.redrive.core.AppDirection
+import com.example.redrive.core.logTextFormatter.LogSpannableTextCreator
 import com.example.redrive.core.Router
 import com.example.redrive.core.navigate
 import com.example.redrive.databinding.FragmentLogsBinding
@@ -17,6 +19,7 @@ import com.example.redrive.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LogsFragment : Fragment(R.layout.fragment_logs), RefuelLogsAdapter.LogItemClickListener {
@@ -24,15 +27,20 @@ class LogsFragment : Fragment(R.layout.fragment_logs), RefuelLogsAdapter.LogItem
     private val viewModel by viewModels<LogsViewModel>()
     private lateinit var adapter: RefuelLogsAdapter
 
+    @Inject
+    lateinit var spannableTextCreator: LogSpannableTextCreator
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initLogsRecyclerView()
         setViewsOnClickListeners()
         observeViewModel()
+
+        Log.d("LOG+FR", spannableTextCreator.toString())
     }
 
     private fun initLogsRecyclerView() {
-        adapter = RefuelLogsAdapter(this)
+        adapter = RefuelLogsAdapter(this, spannableTextCreator)
         val rv = binding.rvLogs
         rv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

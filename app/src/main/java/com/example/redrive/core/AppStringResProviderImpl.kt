@@ -13,7 +13,7 @@ import javax.inject.Inject
 class AppStringResProviderImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : AppStringResProvider {
-    override fun provideStringRes(e: AppException): String {
+    override fun provideStringResByException(e: AppException): String {
         return when (e) {
             is VehicleException -> fromVehicleException(e)
             is UserException -> fromUserException(e)
