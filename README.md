@@ -26,24 +26,33 @@ ReDrive is built using modern Android development tools and architecture:
 ## 📸 Screenshots
 
 ###  Authentication
-<img src=https://github.com/user-attachments/assets/2a1a5015-3b8b-40fc-a04e-04f17070333b width="250"/>
-<img src=https://github.com/user-attachments/assets/7f050b56-fcf6-460b-992c-6b7b4c439b6a width="250"/>
+<img src=https://github.com/user-attachments/assets/5f5ce370-f7c3-470f-91a5-246172d9014c width="250"/>
+<img src=https://github.com/user-attachments/assets/17e014b9-a0b8-4a51-88e2-2d6fba0c03ea width="250"/>
 
 ###  Profile/Preferences
-<img src=https://github.com/user-attachments/assets/85d60fb9-5f2a-4366-86db-539e485340da width="250"/>
-<img src=https://github.com/user-attachments/assets/0cc21366-5d15-4186-a2da-1230bdccfb0a width="250"/>
+<img src=https://github.com/user-attachments/assets/12b60f93-01c6-4b19-9477-657f0b5078dd width="250"/>
+<img src=https://github.com/user-attachments/assets/1a392500-a630-496f-ab25-ec91b071473f width="250"/>
 
 ### Vehicles
-<img src=https://github.com/user-attachments/assets/74f17fa8-891d-4b3d-b2dd-950187cb7273 width="250"/>
-<img src=https://github.com/user-attachments/assets/32ac0e80-dcea-4b59-8ff1-4998c715a10a width="250"/>
+<img src=https://github.com/user-attachments/assets/1dbba1af-c7b4-4aa0-bafd-d46d674320aa width="250"/>
+<img src=https://github.com/user-attachments/assets/22b6852d-a86a-402e-9ff2-6eff405b3c5f width="250"/>
 
 ### Refuel
-<img src=https://github.com/user-attachments/assets/c5573bdf-602d-4917-8083-b37ae34c4bb0 width="250"/>
-
+<img src=https://github.com/user-attachments/assets/bd03eccf-8c50-43e7-975a-94cbae68dfbc width="250"/>
 
 ### Stats
-<img src=https://github.com/user-attachments/assets/a85a1511-1462-48c7-803f-666128534fac width="250"/>
-<img src=https://github.com/user-attachments/assets/145c7b84-4898-4466-8921-6b79383d82ec width="250"/>
+<img src=https://github.com/user-attachments/assets/b0448bec-568c-49be-9de5-b7ffc614f09e width="250"/>
+<img src=https://github.com/user-attachments/assets/3d7eb1c8-52e6-489d-8e85-03e0dfa5164b width="250"/>
+
+
+
+
+
+
+
+
+
+
 
 
 
