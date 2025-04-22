@@ -25,11 +25,11 @@
     { "id": 3, "key": "GALLON_IMP", "displayName": "Galony (UK)", "abbreviation": "gal (imp)" }
   ],
   "avg_consumption": [
-    { "id": 1, "key": "L_PER_100KM", "displayName": "l/100km" },
-    { "id": 2, "key": "KM_PER_L", "displayName": "km/l" },
-    { "id": 3, "key": "L_PER_MI", "displayName": "l/mi" },
-    { "id": 4, "key": "MPG_US", "displayName": "mpg (US)" },
-    { "id": 5, "key": "MPG_IMP", "displayName": "mpg (imp)" }
+    { "id": 1, "key": "L_PER_100KM", "abbreviation": "l/100km" },
+    { "id": 2, "key": "KM_PER_L", "abbreviation": "km/l" },
+    { "id": 3, "key": "L_PER_MI", "abbreviation": "l/mi" },
+    { "id": 4, "key": "MPG_US", "abbreviation": "mpg (US)" },
+    { "id": 5, "key": "MPG_IMP", "abbreviation": "mpg (imp)" }
 
   ],
   "date_formats": [

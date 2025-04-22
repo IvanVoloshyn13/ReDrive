@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ReDrive</string>
+
+    <string name="edit_vehicle">Edytuj pojazd</string>
+
+    <!--Profile -->
+    <string name="profile">Profil</string>
+    <string name="unit_preferences">Preferencje</string>
+    <string name="edit_vehicles">Edytuj pojazdy</string>
+    <string name="privacy_policy">Polityka prywatności</string>
+    <string name="sign_out">Wyloguj się</string>
+
+    <!--SignIn -->
+    <string name="sign_in_to_redrive">Zaloguj się do ReDrive</string>
+    <string name="email">E-mail</string>
+    <string name="password">Hasło</string>
+    <string name="forgot_password">Zapomniałeś hasła</string>
+    <string name="sign_in">Zaloguj się</string>
+    <string name="dont_have_an_account">Nie masz konta</string>
+
+    <!--SignUp -->
+    <string name="sign_up">Zarejestruj się</string>
+    <string name="sign_up_to_redrive">Zarejestruj się w ReDrive</string>
+    <string name="full_name">Imię i nazwisko</string>
+    <string name="confirm_password">Potwierdź hasło</string>
+    <string name="already_have_an_account">Masz już konto?</string>
+    <!--SignUp password -->
+    <string name="one_symbol">✓ Znak specjalny</string>
+    <string name="uppercase_and_lowercase_letter">✓ Wielka i mała litera</string>
+    <string name="at_least_one_number">✓ Co najmniej jedna cyfra</string>
+    <string name="password_length">✓ 8 lub więcej znaków</string>
+
+    <!--Vehicles -->
+    <string name="vehicles">Pojazdy</string>
+    <string name="new_vehicle_fragment">Dodaj pojazd</string>
+
+    <!--RedriveFragment -->
+    <string name="redrive">ReDrive</string>
+    <string name="overview">Przegląd</string>
+    <string name="last_refuel">Ostatnie tankowanie</string>
+    <string name="summary">Podsumowanie</string>
+    <string name="avg_consumption">Średnie zużycie</string>
+    <string name="driving_cost">Koszt jazdy</string>
+
+    <!--LogsFragment -->
+    <string name="logs">Logi</string>
+    <string name="refuel_message">na %1$s w dniu %2$s </string>
+
+    <!--Buttons -->
+    <string name="save">Zapisz</string>
+    <string name="clear">Wyczyść</string>
+    <string name="delete_anyway">Usuń mimo to</string>
+    <string name="cancel">Anuluj</string>
+
+    <string name="refuel">Tankowanie</string>
+    <string name="refuel_date">Data tankowania</string>
+    <string name="odometer">Licznik</string>
+    <string name="notes">Notatki</string>
+    <string name="full_tank">Pełny bak</string>
+    <string name="missing_previous">Brakuje poprzedniego</string>
+    <string name="fuel_amount">Ilość paliwa</string>
+    <string name="fuel_price">Cena paliwa</string>
+
+    <string name="empty_string"> </string>
+    <string name="is_current_vehicle_exception">Zamierzasz usunąć aktualny pojazd, co spowoduje usunięcie wszystkich powiązanych danych. Czy na pewno chcesz kontynuować?</string>
+    <string name="no_user_detected_exception_message">Zaloguj się lub utwórz konto, aby dodać nowy pojazd</string>
+    <string name="no_current_vehicle_exception_message">Dodaj pierwszy pojazd, aby zaktualizować ustawienia</string>
+    <string name="invalid_odometer_value_exception_message"> Wprowadź wartość większą niż początkowy stan licznika: %d </string>
+
+    <!-- FIREBASE_ERRORS-->
+    <string name="firebase_auth_error">Wystąpił błąd uwierzytelniania Firebase. Spróbuj ponownie później.</string>
+    <string name="invalid_password">Podane dane są nieprawidłowe. Sprawdź hasło i spróbuj ponownie.</string>
+    <string name="user_collision">Konto z tym adresem e-mail już istnieje. Użyj innego e-maila lub zaloguj się na istniejące konto.</string>
+    <string name="no_user_detected">Konto użytkownika z tym e-mailem nie istnieje lub zostało wyłączone. Zarejestruj się lub sprawdź dane logowania.</string>
+    <string name="unknown_error_firebase">Wystąpił nieznany błąd. Spróbuj ponownie później lub skontaktuj się z pomocą techniczną.</string>
+
+    <!-- SIGN_UP_ERRORS-->
+    <string name="required">Wymagane</string>
+    <string name="please_enter_real_names">Wprowadź prawdziwe imię i nazwisko</string>
+    <string name="invalid_email">Nieprawidłowy adres e-mail</string>
+    <string name="password_error">Hasło nie spełnia wymaganych kryteriów</string>
+    <string name="confirm_password_error">Hasła nie są takie same</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
+    <string name="set_as_current">Ustaw jako obecny</string>
+    <string name="currency">Waluta</string>
+    <string name="distance">Dystans</string>
+    <string name="capacity">Pojemność</string>
+    <string name="date_format">Format daty</string>
+    <string name="place_holder_double">-,—</string>
+    <string name="place_holder_int">-—</string>
+
+</resources>

@@ -12,19 +12,17 @@
         tools:layout="@layout/fragment_redrive">
         <action
             android:id="@+id/action_redriveFragment_to_refuelFragment"
-            app:destination="@id/refuelFragment" />
+            app:destination="@id/refuelFragment"
+            app:enterAnim="@anim/from_top_left_to_bottom_right" />
         <action
-            android:id="@+id/action_redriveFragment_to_vehiclesFragment"
-            app:destination="@id/vehiclesFragment" />
+            android:id="@+id/action_redriveFragment_to_vehicle_flow"
+            app:destination="@id/vehicle_flow"
+            app:enterAnim="@anim/from_top_left_to_bottom_right"/>
     </fragment>
     <fragment
         android:id="@+id/refuelFragment"
         android:name="com.example.redrive.presentation.refuelFeature.refuel.RefuelFragment"
         android:label="@string/refuel"
         tools:layout="@layout/fragment_refuel" />
-    <fragment
-        android:id="@+id/vehiclesFragment"
-        android:name="com.example.redrive.presentation.vehicles.VehiclesFragment"
-        android:label="@string/vehicles"
-        tools:layout="@layout/fragment_vehicles" />
+    <include app:graph="@navigation/vehicle_flow" />
 </navigation>

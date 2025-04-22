@@ -75,7 +75,7 @@ class RedriveFragment : Fragment(layout.fragment_redrive) {
                     renderAvgConsumptionWidget(it?.avgConsumption)
 
                     binding.tvCurrentVehicleName.text =
-                        it?.vehicle?.name ?: getString(R.string.redrive)
+                        it?.vehicle?.name ?: getString(R.string.app_name)
 
                 }
             }
@@ -83,7 +83,7 @@ class RedriveFragment : Fragment(layout.fragment_redrive) {
                 viewModel.navigation.collectLatest {
                     when (it) {
                         Router.ReDriveDirection.ToRefuel -> navigate(RedriveFragmentDirections.actionRedriveFragmentToRefuelFragment())
-                        Router.ReDriveDirection.ToVehicles -> navigate(RedriveFragmentDirections.actionRedriveFragmentToVehiclesFragment())
+                        Router.ReDriveDirection.ToVehicles -> navigate(RedriveFragmentDirections.actionRedriveFragmentToVehicleFlow())
                     }
                 }
             }
@@ -132,7 +132,6 @@ class RedriveFragment : Fragment(layout.fragment_redrive) {
             log?.let {
                 spannableText(it.odometerReading, it.date, requireContext())
             } ?: getString(R.string.place_holder_double)
-
 
     }
 
