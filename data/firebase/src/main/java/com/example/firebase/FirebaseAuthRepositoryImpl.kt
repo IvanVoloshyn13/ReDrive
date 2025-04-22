@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -49,7 +50,9 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
     override fun getAuthState(): Flow<FirebaseUser?> {
         return callbackFlow {
             val listener = AuthStateListener { firebaseAuth ->
-                trySend(firebaseAuth.currentUser)
+                trySend(firebaseAuth.currentUser).onFailure {
+                    close(it)
+                }
             }
             auth.addAuthStateListener(listener)
             awaitClose { auth.removeAuthStateListener(listener) }

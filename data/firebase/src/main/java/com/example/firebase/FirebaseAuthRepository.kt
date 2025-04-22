@@ -5,19 +5,51 @@ import kotlinx.coroutines.flow.Flow
 
 interface FirebaseAuthRepository {
 
-    // Signs in with email and password
-
-
+    /**
+     * Authenticates the user with the provided email and password credentials.
+     *
+     * @param email The user's email address.
+     * @param password The user's password.
+     * @return The authenticated [FirebaseUser] instance.
+     * @throws FirebaseAuthInvalidCredentialsException If the email or password is invalid.
+     * @throws FirebaseAuthInvalidUserException If there is no user corresponding to the given email.
+     * @throws FirebaseAuthException For other Firebase authentication errors.
+     */
     suspend fun signInWithEmail(email: String, password: String): FirebaseUser
 
-    // Registers a new user with email, password, and additional credentials like displayName
+    /**
+     * Creates a new user account using email, password, and additional credentials like display name.
+     *
+     * @param credentials A [FbUserAuthCredentials] object containing the necessary registration information.
+     * @return The newly created [FirebaseUser] instance.
+     * @throws FirebaseAuthUserCollisionException If there already exists an account with the given email.
+     * @throws FirebaseAuthWeakPasswordException If the provided password is not strong enough.
+     * @throws FirebaseAuthInvalidCredentialsException If the email address is malformed.
+     * @throws FirebaseAuthException For other Firebase authentication errors.
+     */
     suspend fun signUpWithEmail(credentials: FbUserAuthCredentials): FirebaseUser
 
+    /**
+     * Signs out the currently logged-in user.
+     */
     suspend fun signOut()
 
-    // Sends a password reset email to the provided address
+    /**
+     * Sends a password reset email to the specified address.
+     *
+     * @param email The email address to which the reset link should be sent.
+     * @throws FirebaseAuthInvalidUserException If there is no user corresponding to the given email.
+     * @throws FirebaseAuthInvalidCredentialsException If the email is improperly formatted.
+     * @throws FirebaseAuthException For other Firebase authentication errors.
+     */
     suspend fun sendPasswordReset(email: String)
 
+    /**
+     * Observes changes in the authentication state.
+     *
+     * @return A [Flow] that emits the current [FirebaseUser], or null if no user is signed in.
+     */
     fun getAuthState(): Flow<FirebaseUser?>
+
 
 }
