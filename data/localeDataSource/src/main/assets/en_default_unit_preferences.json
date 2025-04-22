@@ -2,7 +2,7 @@
   "currency": {
     "id": 1,
     "key": "USD",
-    "displayName": "USD - Dolar amerykański",
+    "displayName": "USD - United States Dollar",
     "abbreviation": "USD"
   },
   "distance": {

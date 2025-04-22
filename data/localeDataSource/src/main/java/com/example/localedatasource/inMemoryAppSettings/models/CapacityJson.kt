@@ -1,8 +1,8 @@
 package com.example.localedatasource.inMemoryAppSettings.models
 
 data class CapacityJson(
-    val abbreviation: String,
-    val key:String,
     val id: Int,
+    val key: String,
+    val abbreviation: String,
     val displayName: String
 )
