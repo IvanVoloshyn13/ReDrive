@@ -34,7 +34,7 @@ interface RefuelDao {
                 "WHERE vehicle_id=:currentVehicleId) " +
                 "ORDER by odometer DESC LIMIT 0,1  "
     )
-    fun observeSecondLastOdometerReading(currentVehicleId: Long): Flow<Int?>
+  suspend fun getSecondLastOdometerReading(currentVehicleId: Long):Int?
 
     @Query(
         """

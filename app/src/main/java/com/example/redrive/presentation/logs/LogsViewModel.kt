@@ -1,7 +1,8 @@
 package com.example.redrive.presentation.logs
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.domain.useCase.ObserveRefuelLogsUseCase
+import com.example.domain.useCase.logs.ObserveRefuelLogsUseCase
 import com.example.domain.model.log.VehicleWithLogs
 import com.example.redrive.core.BaseViewModel
 import com.example.redrive.core.Router

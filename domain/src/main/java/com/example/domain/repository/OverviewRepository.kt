@@ -7,5 +7,6 @@ interface OverviewRepository {
     fun observeTravelledDistance(vehicleId: Long): Flow<Int?>
     fun observeFullAmountSum(vehicleId: Long): Flow<Double?>
     fun observePaymentsSum(vehicleId: Long): Flow<Double?>
-    fun observeLastRefuelWithPreviousOdometerReading(vehicleId: Long): Flow<Pair<Refuel?, Int?>>
+    fun observeLastRefuel(vehicleId: Long): Flow<Refuel?>
+    suspend fun fetchSecondLastOdometerReading(vehicleId: Long): Int?
 }

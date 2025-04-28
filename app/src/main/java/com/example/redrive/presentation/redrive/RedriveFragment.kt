@@ -32,7 +32,6 @@ class RedriveFragment : Fragment(layout.fragment_redrive) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setViewListeners()
-        Log.d("LOG+FR_Redr", spannableTextCreator.toString())
     }
 
     private fun setViewListeners() {

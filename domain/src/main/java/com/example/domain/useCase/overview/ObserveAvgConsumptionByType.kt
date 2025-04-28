@@ -4,9 +4,9 @@ import com.example.domain.model.UnitsPreferencesAbbreviation
 import com.example.domain.model.log.ValueWithUnit
 import com.example.domain.repository.OverviewRepository
 import com.example.domain.repository.UnitPreferencesRepository
-import com.example.domain.useCase.AvgConsumptionType
-import com.example.domain.useCase.RefuelLogBuilder
-import com.example.domain.useCase.RefuelLogBuilder.formatToScale
+import com.example.domain.useCase.logs.AvgConsumptionType
+import com.example.domain.useCase.logs.RefuelLogBuilder
+import com.example.domain.useCase.logs.RefuelLogBuilder.formatToScale
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject

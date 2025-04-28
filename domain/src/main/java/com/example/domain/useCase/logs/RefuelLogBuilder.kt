@@ -1,4 +1,4 @@
-package com.example.domain.useCase
+package com.example.domain.useCase.logs
 
 import com.example.domain.model.Refuel
 import com.example.domain.model.UnitsPreferencesAbbreviation

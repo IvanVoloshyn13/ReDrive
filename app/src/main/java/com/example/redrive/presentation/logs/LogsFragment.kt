@@ -35,8 +35,6 @@ class LogsFragment : Fragment(R.layout.fragment_logs), RefuelLogsAdapter.LogItem
         initLogsRecyclerView()
         setViewsOnClickListeners()
         observeViewModel()
-
-        Log.d("LOG+FR", spannableTextCreator.toString())
     }
 
     private fun initLogsRecyclerView() {

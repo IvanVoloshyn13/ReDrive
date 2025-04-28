@@ -22,27 +22,29 @@ class ObserveVehicleWithOverviewUseCase @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun invoke(): Flow<VehicleWithOverview?> {
-        return currentVehicleUseCase.invoke().flatMapLatest {
-            it?.let { vehicle ->
-                return@flatMapLatest preferences.invoke(vehicleId = vehicle.id)
-                    .flatMapLatest { preferences ->
-                        combine(
-                            observeSummaryUseCase.invoke(vehicleId = vehicle.id, preferences),
-                            observeLastRefuelLogUseCase.invoke(vehicle, preferences),
-                            observeAvgConsumptionByType.invoke(vehicle.id, preferences),
-                            observeDrivingCostUseCase.invoke(vehicle.id, preferences)
-                        ) { summary, lastRefLog, avgCons, cost ->
-                            VehicleWithOverview(
-                                vehicle = vehicle,
-                                avgConsumption = avgCons,
-                                drivingCost = cost,
-                                summary = summary,
-                                lastRefuelLog = lastRefLog
-                            )
+        return currentVehicleUseCase.invoke()
+            .distinctUntilChanged()
+            .flatMapLatest {
+                it?.let { vehicle ->
+                    return@flatMapLatest preferences.invoke(vehicleId = vehicle.id)
+                        .flatMapLatest { preferences ->
+                            combine(
+                                observeSummaryUseCase.invoke(vehicleId = vehicle.id, preferences),
+                                observeLastRefuelLogUseCase.invoke(vehicle, preferences),
+                                observeAvgConsumptionByType.invoke(vehicle.id, preferences),
+                                observeDrivingCostUseCase.invoke(vehicle.id, preferences)
+                            ) { summary, lastRefLog, avgCons, cost ->
+                                VehicleWithOverview(
+                                    vehicle = vehicle,
+                                    avgConsumption = avgCons,
+                                    drivingCost = cost,
+                                    summary = summary,
+                                    lastRefuelLog = lastRefLog
+                                )
+                            }
                         }
-                    }
 
-            } ?: flowOf(null)
-        }.distinctUntilChanged()
+                } ?: flowOf(null)
+            }
     }
 }

@@ -5,7 +5,7 @@ import com.example.domain.model.Refuel
 import com.example.domain.repository.OverviewRepository
 import com.example.localedatasource.room.daos.RefuelDao
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class OverviewRepositoryImpl @Inject constructor(
@@ -24,14 +24,15 @@ class OverviewRepositoryImpl @Inject constructor(
         return refuelDao.observePaymentSum(vehicleId)
     }
 
-    override fun observeLastRefuelWithPreviousOdometerReading(vehicleId: Long): Flow<Pair<Refuel?, Int?>> {
-        return combine(
-            refuelDao.observeLastRefuel(vehicleId),
-            refuelDao.observeSecondLastOdometerReading(vehicleId)
-        ) { ref, odo ->
-            if (odo == ref?.odometer) return@combine Pair(null, null)
-            Pair(first = ref?.toRefuel(), second = odo)
+
+    override fun observeLastRefuel(vehicleId: Long): Flow<Refuel?> {
+        return refuelDao.observeLastRefuel(vehicleId).map {
+            it?.toRefuel()
         }
+    }
+
+    override suspend fun fetchSecondLastOdometerReading(vehicleId: Long): Int? {
+        return refuelDao.getSecondLastOdometerReading(vehicleId)
     }
 
 }
