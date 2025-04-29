@@ -1,5 +1,6 @@
 package com.example.firebase
 
+import com.example.firebase.models.FirebaseUserProfile
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
@@ -28,12 +29,12 @@ class FirebaseAuthServiceImpl @Inject constructor(
         return firebaseUser ?: throw NullPointerException()
     }
 
-    override suspend fun signUpWithEmail(credentials: FbUserAuthCredentials): FirebaseUser {
+    override suspend fun signUpWithEmail(profile: FirebaseUserProfile): FirebaseUser {
         val result =
-            auth.createUserWithEmailAndPassword(credentials.email, credentials.password)
+            auth.createUserWithEmailAndPassword(profile.credentials.email, profile.credentials.password)
                 .await()
         result.user?.updateProfile(
-            UserProfileChangeRequest.Builder().setDisplayName(credentials.fullName).build()
+            UserProfileChangeRequest.Builder().setDisplayName(profile.fullName).build()
         )?.await()
         val firebaseUser = result.user
         return firebaseUser ?: throw NullPointerException()

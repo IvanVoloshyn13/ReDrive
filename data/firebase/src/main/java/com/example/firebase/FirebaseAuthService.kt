@@ -1,5 +1,6 @@
 package com.example.firebase
 
+import com.example.firebase.models.FirebaseUserProfile
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 import com.google.firebase.auth.FirebaseAuthException
@@ -25,14 +26,14 @@ interface FirebaseAuthService {
     /**
      * Creates a new user account using email, password, and additional credentials like display name.
      *
-     * @param credentials A [FbUserAuthCredentials] object containing the necessary registration information.
+     * @param profile A [FirebaseUserProfile] object containing the necessary registration information.
      * @return The newly created [FirebaseUser] instance.
      * @throws FirebaseAuthUserCollisionException If there already exists an account with the given email.
      * @throws FirebaseAuthWeakPasswordException If the provided password is not strong enough.
      * @throws FirebaseAuthInvalidCredentialsException If the email address is malformed.
      * @throws FirebaseAuthException For other Firebase authentication errors.
      */
-    suspend fun signUpWithEmail(credentials: FbUserAuthCredentials): FirebaseUser
+    suspend fun signUpWithEmail(profile: FirebaseUserProfile): FirebaseUser
 
     /**
      * Signs out the currently logged-in user.

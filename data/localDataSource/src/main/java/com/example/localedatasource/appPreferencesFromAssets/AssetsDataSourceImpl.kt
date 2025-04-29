@@ -7,10 +7,10 @@ import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class FromAssetsUnitPreferencesDataSourceImpl @Inject constructor(
+class AssetsDataSourceImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val gson: Gson
-) : FromAssetsUnitPreferencesDataSource {
+) : AssetsDataSource {
 
     override fun getPreferences(language: String): PreferencesResponse {
         val assetFileName = when (language) {

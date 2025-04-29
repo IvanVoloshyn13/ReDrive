@@ -2,7 +2,7 @@ package com.example.data.repository
 
 import com.example.data.di.DispatcherIo
 import com.example.data.mappers.toAppAuthException
-import com.example.data.mappers.toFbUserAuthCredentials
+import com.example.data.mappers.toFbUserProfile
 import com.example.firebase.FirebaseAuthService
 import com.example.data.mappers.toUserEntity
 import com.example.domain.AuthException
@@ -45,7 +45,7 @@ class EmailAuthRepositoryImpl @Inject constructor(
         return withContext(dispatcherIo) {
             try {
                 val fbUser =
-                    firebaseAuthService.signUpWithEmail(credentials.toFbUserAuthCredentials())
+                    firebaseAuthService.signUpWithEmail(credentials.toFbUserProfile())
                 saveNewUserToLocalDb(fbUser)
             } catch (e: FirebaseException) {
                 throw e.toAppAuthException()

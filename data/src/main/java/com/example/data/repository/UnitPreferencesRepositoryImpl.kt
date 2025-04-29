@@ -8,21 +8,21 @@ import com.example.domain.model.DateFormatPattern
 import com.example.domain.model.Distance
 import com.example.domain.model.UnitsPreferencesAbbreviation
 import com.example.domain.repository.UnitPreferencesRepository
-import com.example.localedatasource.appPreferencesFromAssets.FromAssetsUnitPreferencesDataSource
+import com.example.localedatasource.appPreferencesFromAssets.AssetsDataSource
 import com.example.localedatasource.room.daos.SettingsDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UnitPreferencesRepositoryImpl @Inject constructor(
-    private val preferencesDataSource: FromAssetsUnitPreferencesDataSource,
+    private val assetsDataSource: AssetsDataSource,
     private val settingsDao: SettingsDao,
     private val unitPreferencesMapper: UnitPreferencesMapper,
     private val language: String
 ) : UnitPreferencesRepository {
     override suspend fun getDefaultUnitPreferences(): UnitsPreferencesAbbreviation {
         return with(unitPreferencesMapper) {
-            val response = preferencesDataSource.getDefaultPreferences(language)
+            val response = assetsDataSource.getDefaultPreferences(language)
             response.toPreferences()
         }
     }
@@ -44,7 +44,7 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
     }
 
     override fun getCurrencies(): List<Currency> {
-        return preferencesDataSource.getPreferences(language).currencies.map {
+        return assetsDataSource.getPreferences(language).currencies.map {
             Currency(
                 id = it.id,
                 displayName = it.displayName,
@@ -54,7 +54,7 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
     }
 
     override fun getAvgConsumptions(): List<AvgConsumption> {
-        return preferencesDataSource.getPreferences(language).avgConsumptions.map {
+        return assetsDataSource.getPreferences(language).avgConsumptions.map {
             AvgConsumption(
                 id = it.id,
                 abbreviation = it.abbreviation,
@@ -64,7 +64,7 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
     }
 
     override fun getCapacities(): List<Capacity> {
-        return preferencesDataSource.getPreferences(language).capacities.map {
+        return assetsDataSource.getPreferences(language).capacities.map {
             Capacity(
                 id = it.id,
                 displayName = it.displayName,
@@ -74,7 +74,7 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
     }
 
     override fun getDistances(): List<Distance> {
-        return preferencesDataSource.getPreferences(language).distances.map {
+        return assetsDataSource.getPreferences(language).distances.map {
             Distance(
                 id = it.id,
                 displayName = it.displayName,
@@ -84,7 +84,7 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
     }
 
     override fun getDateFormatPatterns(): List<DateFormatPattern> {
-        return preferencesDataSource.getPreferences(language).dateFormats.map {
+        return assetsDataSource.getPreferences(language).dateFormats.map {
             DateFormatPattern(
                 id = it.id,
                 pattern = it.pattern,
@@ -102,11 +102,11 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun getCurrentDateFormatPattern(vehicleId: Long?): String {
         return vehicleId?.let {
-            preferencesDataSource.getPreferences(language).dateFormats.first { json ->
+            assetsDataSource.getPreferences(language).dateFormats.first { json ->
                 val key = settingsDao.getDateFormatPatternKey(it)
                 json.key == key
             }.pattern
-        } ?: preferencesDataSource.getPreferences(language).dateFormats[0].pattern
+        } ?: assetsDataSource.getPreferences(language).dateFormats[0].pattern
     }
     
 }

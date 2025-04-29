@@ -1,7 +1,7 @@
 package com.example.localedatasource.di
 
-import com.example.localedatasource.appPreferencesFromAssets.FromAssetsUnitPreferencesDataSource
-import com.example.localedatasource.appPreferencesFromAssets.FromAssetsUnitPreferencesDataSourceImpl
+import com.example.localedatasource.appPreferencesFromAssets.AssetsDataSource
+import com.example.localedatasource.appPreferencesFromAssets.AssetsDataSourceImpl
 import com.example.localedatasource.dataStore.AppUserPreferences
 import com.example.localedatasource.dataStore.AppUserPreferencesImpl
 import com.example.localedatasource.dataStore.AppVehiclePreferences
@@ -21,6 +21,6 @@ interface LocalDataSourceModule {
     fun bindAppVehiclesPreferences(impl: AppVehiclePreferencesImpl): AppVehiclePreferences
 
     @Binds
-    fun bindAppSettingsFromAssets(impl: FromAssetsUnitPreferencesDataSourceImpl): FromAssetsUnitPreferencesDataSource
+    fun bindAppSettingsFromAssets(impl: AssetsDataSourceImpl): AssetsDataSource
 
 }

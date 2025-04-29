@@ -2,7 +2,8 @@ package com.example.data.mappers
 
 import com.example.domain.model.account.User
 import com.example.domain.model.account.UserAuthCredentials
-import com.example.firebase.FbUserAuthCredentials
+import com.example.firebase.models.FbAuthCredentials
+import com.example.firebase.models.FirebaseUserProfile
 import com.example.localedatasource.room.entity.UserEntity
 import com.google.firebase.auth.FirebaseUser
 
@@ -28,10 +29,12 @@ fun UserEntity.toUser(): User {
     )
 }
 
-fun UserAuthCredentials.toFbUserAuthCredentials(): FbUserAuthCredentials {
-    return FbUserAuthCredentials(
-        password = password,
-        email = email,
+fun UserAuthCredentials.toFbUserProfile(): FirebaseUserProfile {
+    return FirebaseUserProfile(
+        credentials = FbAuthCredentials(
+            password = password,
+            email = email,
+        ),
         fullName = fullName
     )
 }

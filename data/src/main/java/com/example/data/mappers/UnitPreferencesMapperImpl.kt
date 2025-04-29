@@ -1,17 +1,17 @@
 package com.example.data.mappers
 
 import com.example.domain.model.UnitsPreferencesAbbreviation
-import com.example.localedatasource.appPreferencesFromAssets.FromAssetsUnitPreferencesDataSource
+import com.example.localedatasource.appPreferencesFromAssets.AssetsDataSource
 import com.example.localedatasource.appPreferencesFromAssets.models.DefaultPreferencesResponse
 import com.example.localedatasource.appPreferencesFromAssets.models.PreferencesResponse
 import com.example.localedatasource.room.entity.UnitPreferencesEntity
 import javax.inject.Inject
 
 class UnitPreferencesMapperImpl @Inject constructor(
-    preferencesDataSource: FromAssetsUnitPreferencesDataSource,
+    assetsDataSource: AssetsDataSource,
     language: String
 ) : UnitPreferencesMapper {
-    private var preferencesResponse: PreferencesResponse = preferencesDataSource.getPreferences(language)
+    private var preferencesResponse: PreferencesResponse = assetsDataSource.getPreferences(language)
 
     override fun UnitPreferencesEntity.toPreferences(): UnitsPreferencesAbbreviation {
         return UnitsPreferencesAbbreviation(
