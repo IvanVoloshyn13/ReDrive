@@ -2,8 +2,13 @@ package com.example.firebase
 
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
-interface FirebaseAuthRepository {
+interface FirebaseAuthService {
 
     /**
      * Authenticates the user with the provided email and password credentials.

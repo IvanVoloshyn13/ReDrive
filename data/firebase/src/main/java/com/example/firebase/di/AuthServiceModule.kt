@@ -1,7 +1,7 @@
 package com.example.firebase.di
 
-import com.example.firebase.FirebaseAuthRepository
-import com.example.firebase.FirebaseAuthRepositoryImpl
+import com.example.firebase.FirebaseAuthService
+import com.example.firebase.FirebaseAuthServiceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -10,8 +10,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface RepositoryModule {
+interface AuthServiceModule {
     @Binds
     @Singleton
-    fun bindFirebaseAuthRepository(impl: FirebaseAuthRepositoryImpl): FirebaseAuthRepository
+    fun bindFirebaseAuthService(impl: FirebaseAuthServiceImpl): FirebaseAuthService
 }

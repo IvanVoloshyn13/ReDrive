@@ -13,17 +13,13 @@ android {
 
 dependencies {
     implementation project(path: ':domain')
-    implementation project(path:':data:localeDataSource')
+    implementation project(path: ':data:localDataSource')
     implementation project(path:':data:firebase')
-    implementation libs.androidx.core.ktx
-    implementation libs.androidx.appcompat
-
     implementation libs.kotlinx.coroutines
 
     //Dagger_Hilt
     implementation libs.hilt.android
     ksp libs.ksp.hilt.compiler
-
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit

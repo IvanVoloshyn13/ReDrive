@@ -26,5 +26,5 @@ rootProject.name = "ReDrive"
 include ':app'
 include ':domain'
 include ':data'
-include ':data:localeDataSource'
+include ':data:localDataSource'
 include ':data:firebase'

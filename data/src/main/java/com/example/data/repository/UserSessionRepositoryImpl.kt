@@ -4,7 +4,7 @@ import com.example.data.mappers.toUser
 import com.example.domain.UserException
 import com.example.domain.model.account.User
 import com.example.domain.repository.UserSessionRepository
-import com.example.firebase.FirebaseAuthRepository
+import com.example.firebase.FirebaseAuthService
 import com.example.localedatasource.dataStore.AppUserPreferences
 import com.example.localedatasource.dataStore.AppVehiclePreferences
 import com.example.localedatasource.room.daos.UsersDao
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserSessionRepositoryImpl @Inject constructor(
-    private val firebaseAuthRepository: FirebaseAuthRepository,
+    private val firebaseAuthService: FirebaseAuthService,
     private val usersDao: UsersDao,
     private val appUserPreferences: AppUserPreferences,
 
@@ -25,7 +25,7 @@ class UserSessionRepositoryImpl @Inject constructor(
 ) : UserSessionRepository {
 
     override fun observeAuthState(): Flow<User?> {
-        return firebaseAuthRepository.getAuthState().map {
+        return firebaseAuthService.getAuthState().map {
             if (it?.uid == appUserPreferences.observeUserId().first()) {
                 return@map it?.toUser()
             }
@@ -54,7 +54,7 @@ class UserSessionRepositoryImpl @Inject constructor(
     }
 
     override suspend fun signOut() {
-        firebaseAuthRepository.signOut()
+        firebaseAuthService.signOut()
     }
 
     private suspend fun toggleUserIdPreferences(uUid: String) {

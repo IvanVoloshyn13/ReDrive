@@ -19,8 +19,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getUsersDao(): UsersDao
     abstract fun getVehiclesDao(): VehiclesDao
-
     abstract fun getSettingsDao(): SettingsDao
-
     abstract fun getRefuelDao(): RefuelDao
 }

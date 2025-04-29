@@ -1,6 +1,6 @@
-package com.example.localedatasource.inMemoryAppSettings.models
+package com.example.localedatasource.appPreferencesFromAssets.models
 
-data class CapacityJson(
+data class DistanceJson(
     val id: Int,
     val key: String,
     val abbreviation: String,

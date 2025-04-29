@@ -1,4 +1,4 @@
-package com.example.localedatasource.inMemoryAppSettings.models
+package com.example.localedatasource.appPreferencesFromAssets.models
 
 data class AvgConsumptionJson(
     val id: Int,

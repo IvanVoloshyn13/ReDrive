@@ -15,9 +15,9 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import kotlin.coroutines.resumeWithException
 
-class FirebaseAuthRepositoryImpl @Inject constructor(
+class FirebaseAuthServiceImpl @Inject constructor(
     private val auth: FirebaseAuth
-) : FirebaseAuthRepository {
+) : FirebaseAuthService {
 
     override suspend fun signInWithEmail(
         email: String,

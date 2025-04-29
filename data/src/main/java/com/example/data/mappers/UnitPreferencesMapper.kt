@@ -1,7 +1,7 @@
 package com.example.data.mappers
 
 import com.example.domain.model.UnitsPreferencesAbbreviation
-import com.example.localedatasource.inMemoryAppSettings.models.DefaultPreferencesResponse
+import com.example.localedatasource.appPreferencesFromAssets.models.DefaultPreferencesResponse
 import com.example.localedatasource.room.entity.UnitPreferencesEntity
 
 interface UnitPreferencesMapper {

@@ -1,16 +1,16 @@
-package com.example.localedatasource.inMemoryAppSettings
+package com.example.localedatasource.appPreferencesFromAssets
 
 import android.content.Context
-import com.example.localedatasource.inMemoryAppSettings.models.PreferencesResponse
-import com.example.localedatasource.inMemoryAppSettings.models.DefaultPreferencesResponse
+import com.example.localedatasource.appPreferencesFromAssets.models.PreferencesResponse
+import com.example.localedatasource.appPreferencesFromAssets.models.DefaultPreferencesResponse
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class InMemoryAppUnitPreferencesRepositoryImpl @Inject constructor(
+class FromAssetsUnitPreferencesDataSourceImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val gson: Gson
-) : InMemoryAppUnitPreferencesRepository {
+) : FromAssetsUnitPreferencesDataSource {
 
     override fun getPreferences(language: String): PreferencesResponse {
         val assetFileName = when (language) {

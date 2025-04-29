@@ -3,7 +3,7 @@ package com.example.data.repository
 import com.example.data.di.DispatcherIo
 import com.example.data.mappers.toAppAuthException
 import com.example.data.mappers.toFbUserAuthCredentials
-import com.example.firebase.FirebaseAuthRepository
+import com.example.firebase.FirebaseAuthService
 import com.example.data.mappers.toUserEntity
 import com.example.domain.AuthException
 import com.example.domain.model.account.UserAuthCredentials
@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class EmailAuthRepositoryImpl @Inject constructor(
-    private val firebaseAuthRepository: FirebaseAuthRepository,
+    private val firebaseAuthService: FirebaseAuthService,
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher,
     private val usersDao: UsersDao
 ) : EmailAuthRepository {
@@ -27,7 +27,7 @@ class EmailAuthRepositoryImpl @Inject constructor(
     ) {
         return withContext(dispatcherIo) {
             try {
-                val fbUser = firebaseAuthRepository.signInWithEmail(email, password)
+                val fbUser = firebaseAuthService.signInWithEmail(email, password)
                 saveNewUserToLocalDb(fbUser)
             } catch (e: FirebaseException) {
                 val appException = e.toAppAuthException()
@@ -45,7 +45,7 @@ class EmailAuthRepositoryImpl @Inject constructor(
         return withContext(dispatcherIo) {
             try {
                 val fbUser =
-                    firebaseAuthRepository.signUpWithEmail(credentials.toFbUserAuthCredentials())
+                    firebaseAuthService.signUpWithEmail(credentials.toFbUserAuthCredentials())
                 saveNewUserToLocalDb(fbUser)
             } catch (e: FirebaseException) {
                 throw e.toAppAuthException()

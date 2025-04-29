@@ -15,10 +15,6 @@ android {
 }
 
 dependencies {
-
-    implementation libs.androidx.core.ktx
-    implementation libs.androidx.appcompat
-
     //Dagger_Hilt
     implementation libs.hilt.android
     ksp libs.ksp.hilt.compiler
