@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.3"
+javaxInject = "1"
 kotlin = "2.0.21"
 coreKtx = "1.13.1"
 
@@ -46,6 +47,7 @@ androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", ver
 androidx-navigation-safeArgs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navVersion" }
 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-android" }
 ksp-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 

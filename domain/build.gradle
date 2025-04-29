@@ -1,29 +1,11 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
-plugins {
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.google.devtools.ksp)
-    alias(libs.plugins.google.dagger.hilt)
+plugins{
+    alias libs.plugins.jetbrains.kotlin.jvm
 }
-
-apply from: "$rootDir/core.gradle"
-android {
-    namespace 'com.example.domain'
-}
-
-
 dependencies {
-
+    implementation(libs.javax.inject)
     implementation libs.kotlinx.coroutines
     testImplementation libs.junit
-
-    //Dagger_Hilt
-    implementation libs.hilt.android
-    ksp libs.ksp.hilt.compiler
-
     testImplementation libs.mockk
     testImplementation libs.slf4j.simple
-
     testImplementation libs.kotlinx.coroutines.test
 }
