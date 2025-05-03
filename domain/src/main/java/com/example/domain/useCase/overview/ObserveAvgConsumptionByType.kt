@@ -18,7 +18,7 @@ class ObserveAvgConsumptionByType @Inject constructor(
     fun invoke(vehicleId: Long, preferences: UnitsPreferencesAbbreviation): Flow<ValueWithUnit?> {
         return combine(
             repository.observeTravelledDistance(vehicleId),
-            repository.observeFullAmountSum(vehicleId)
+            repository.observeFuelAmountSum(vehicleId)
         ) { travDist, fuelAmount ->
             if (travDist == null || fuelAmount == null) return@combine null
             val unit = preferences.avgConsumption

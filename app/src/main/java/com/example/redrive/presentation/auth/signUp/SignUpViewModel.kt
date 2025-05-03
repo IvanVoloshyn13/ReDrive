@@ -114,25 +114,31 @@ class SignUpViewModel @Inject constructor(
             password = _state.value.password
         )
         viewModelScope.launch {
-            _state.update {
-                it.copy(loading = true)
-            }
+            showProgressBar()
             try {
                 signUpUseCase.invoke(userCredentials)
-                _state.update {
-                    it.copy(
-                        loading = false
-                    )
-                }
                 navigate(Router.SignUpDirections.ToProfile)
             } catch (e: AppException) {
-                _state.update {
-                    it.copy(
-                        loading = false
-                    )
-                }
                 emitError(appStringResProvider.provideStringResByException(e))
+            } finally {
+                hideProgressBar()
             }
+        }
+    }
+
+    private fun showProgressBar() {
+        _state.update {
+            it.copy(
+                loading = true
+            )
+        }
+    }
+
+    private fun hideProgressBar() {
+        _state.update {
+            it.copy(
+                loading = false
+            )
         }
     }
 

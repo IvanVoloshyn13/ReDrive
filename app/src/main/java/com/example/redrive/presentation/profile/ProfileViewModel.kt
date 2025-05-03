@@ -31,15 +31,11 @@ class ProfileViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    isLoading = true
-                )
-            }
+            showProgressBar()
             getUserInitialsUseCase().collectLatest { result ->
+                hideProgressBar()
                 _state.update {
                     it.copy(
-                        isLoading = false,
                         userInitials = result
                     )
                 }
@@ -65,18 +61,26 @@ class ProfileViewModel @Inject constructor(
 
     fun onSignOutBtnClick() {
         viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    isLoading = true
-                )
-            }
+            showProgressBar()
             delay(1000)
             signOutUseCase()
-            _state.update {
-                it.copy(
-                    isLoading = false
-                )
-            }
+            hideProgressBar()
+        }
+    }
+
+    private fun showProgressBar() {
+        _state.update {
+            it.copy(
+                isLoading = true
+            )
+        }
+    }
+
+    private fun hideProgressBar() {
+        _state.update {
+            it.copy(
+                isLoading = false
+            )
         }
     }
 

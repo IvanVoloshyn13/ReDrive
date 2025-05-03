@@ -3,10 +3,8 @@ package com.example.domain.useCase.overview
 import com.example.domain.model.Summary
 import com.example.domain.model.UnitsPreferencesAbbreviation
 import com.example.domain.repository.OverviewRepository
-import com.example.domain.repository.UnitPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import java.math.RoundingMode
 import javax.inject.Inject
 
@@ -17,7 +15,7 @@ class ObserveSummaryUseCase @Inject constructor(
         return combine(
             repository.observePaymentsSum(vehicleId),
             repository.observeTravelledDistance(vehicleId),
-            repository.observeFullAmountSum(vehicleId)
+            repository.observeFuelAmountSum(vehicleId)
         ) {  payments, travDistance, fuelAmount ->
             Summary(
                 travelledDistance = travDistance?.concatenateValueWithUnit(preferences.distance),

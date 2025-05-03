@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import com.example.data.di.LOCALE_LANGUAGE
 import com.example.data.mappers.UnitPreferencesMapper
 import com.example.domain.model.AvgConsumption
 import com.example.domain.model.Capacity
@@ -13,12 +14,13 @@ import com.example.localedatasource.room.daos.SettingsDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import javax.inject.Named
 
 class UnitPreferencesRepositoryImpl @Inject constructor(
     private val assetsDataSource: AssetsDataSource,
     private val settingsDao: SettingsDao,
     private val unitPreferencesMapper: UnitPreferencesMapper,
-    private val language: String
+    @Named(LOCALE_LANGUAGE) private val language: String
 ) : UnitPreferencesRepository {
     override suspend fun getDefaultUnitPreferences(): UnitsPreferencesAbbreviation {
         return with(unitPreferencesMapper) {
@@ -36,11 +38,11 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAvgConsumptionTypeKey(vehicleId: Long): String {
-      return settingsDao.getAvgConsumptionKey(vehicleId)
+        return settingsDao.getAvgConsumptionKey(vehicleId)
     }
 
     override suspend fun getDistanceTypeKey(vehicleId: Long): String {
-      return settingsDao.getDistanceKey(vehicleId)
+        return settingsDao.getDistanceKey(vehicleId)
     }
 
     override fun getCurrencies(): List<Currency> {
@@ -93,7 +95,10 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updatePreferences(unitPreferences: UnitsPreferencesAbbreviation, vehicleId: Long) {
+    override suspend fun updatePreferences(
+        unitPreferences: UnitsPreferencesAbbreviation,
+        vehicleId: Long
+    ) {
         val entity = with(unitPreferencesMapper) {
             unitPreferences.toEntity(vehicleId = vehicleId)
         }
@@ -108,5 +113,5 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
             }.pattern
         } ?: assetsDataSource.getPreferences(language).dateFormats[0].pattern
     }
-    
+
 }

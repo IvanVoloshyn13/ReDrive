@@ -16,7 +16,7 @@ class OverviewRepositoryImpl @Inject constructor(
         return refuelDao.observeTravelledDistance(vehicleId)
     }
 
-    override fun observeFullAmountSum(vehicleId: Long): Flow<Double?> {
+    override fun observeFuelAmountSum(vehicleId: Long): Flow<Double?> {
         return refuelDao.observeFullAmountSum(vehicleId)
     }
 

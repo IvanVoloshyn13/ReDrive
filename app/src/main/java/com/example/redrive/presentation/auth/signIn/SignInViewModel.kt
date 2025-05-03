@@ -24,33 +24,33 @@ class SignInViewModel @Inject constructor(
 
     fun onSignInBtnClick() {
         viewModelScope.launch {
-
-            _state.update {
-                it.copy(
-                    loading = true
-                )
-            }
-
+            showProgressBar()
             val email = _state.value.email
             val password = _state.value.password
-
             try {
                 signInUseCase.invoke(email = email, password = password)
-                _state.update {
-                    it.copy(
-                        loading = false
-                    )
-                }
                 navigate(Router.SignInDirections.ToProfile)
             } catch (e: AppException) {
-                _state.update {
-                    it.copy(
-                        loading = false,
-                    )
-                }
                 emitError(appStringResProvider.provideStringResByException(e))
+            } finally {
+                hideProgressBar()
             }
+        }
+    }
 
+    private fun showProgressBar() {
+        _state.update {
+            it.copy(
+                loading = true
+            )
+        }
+    }
+
+    private fun hideProgressBar() {
+        _state.update {
+            it.copy(
+                loading = false
+            )
         }
     }
 
@@ -59,8 +59,7 @@ class SignInViewModel @Inject constructor(
             it.copy(email = email)
         }
     }
-
-
+    
     fun onPasswordTextChange(password: String) {
         _state.update {
             it.copy(password = password)
