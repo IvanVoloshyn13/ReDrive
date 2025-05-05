@@ -1,6 +1,5 @@
 package com.example.data.repository
 
-import com.example.data.di.LOCALE_LANGUAGE
 import com.example.data.mappers.UnitPreferencesMapper
 import com.example.domain.model.AvgConsumption
 import com.example.domain.model.Capacity
@@ -13,15 +12,15 @@ import com.example.localedatasource.appPreferencesFromAssets.AssetsDataSource
 import com.example.localedatasource.room.daos.SettingsDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.Locale
 import javax.inject.Inject
-import javax.inject.Named
 
 class UnitPreferencesRepositoryImpl @Inject constructor(
     private val assetsDataSource: AssetsDataSource,
     private val settingsDao: SettingsDao,
     private val unitPreferencesMapper: UnitPreferencesMapper,
-    @Named(LOCALE_LANGUAGE) private val language: String
 ) : UnitPreferencesRepository {
+    private val language = Locale.getDefault().language
     override suspend fun getDefaultUnitPreferences(): UnitsPreferencesAbbreviation {
         return with(unitPreferencesMapper) {
             val response = assetsDataSource.getDefaultPreferences(language)

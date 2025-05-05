@@ -5,12 +5,14 @@ import com.example.localedatasource.appPreferencesFromAssets.AssetsDataSource
 import com.example.localedatasource.appPreferencesFromAssets.models.DefaultPreferencesResponse
 import com.example.localedatasource.appPreferencesFromAssets.models.PreferencesResponse
 import com.example.localedatasource.room.entity.UnitPreferencesEntity
+import java.util.Locale
 import javax.inject.Inject
 
 class UnitPreferencesMapperImpl @Inject constructor(
     assetsDataSource: AssetsDataSource,
-    language: String
 ) : UnitPreferencesMapper {
+
+    private val language = Locale.getDefault().language
     private var preferencesResponse: PreferencesResponse = assetsDataSource.getPreferences(language)
 
     override fun UnitPreferencesEntity.toPreferences(): UnitsPreferencesAbbreviation {
