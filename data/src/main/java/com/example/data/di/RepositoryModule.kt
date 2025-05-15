@@ -8,12 +8,14 @@ import com.example.data.repository.RefuelRepositoryImpl
 import com.example.data.repository.UnitPreferencesRepositoryImpl
 import com.example.data.repository.UserSessionRepositoryImpl
 import com.example.data.repository.VehiclesRepositoryImpl
+import com.example.data.repository.sync.DataSyncRepositoryImpl
 import com.example.domain.repository.EmailAuthRepository
 import com.example.domain.repository.OverviewRepository
 import com.example.domain.repository.RefuelRepository
 import com.example.domain.repository.UnitPreferencesRepository
 import com.example.domain.repository.UserSessionRepository
 import com.example.domain.repository.VehiclesRepository
+import com.example.domain.repository.sync.DataSyncRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -51,5 +53,9 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindOverviewRepository(impl: OverviewRepositoryImpl): OverviewRepository
+
+    @Binds
+    @Singleton
+    fun bindDataSyncRepository(impl: DataSyncRepositoryImpl): DataSyncRepository
 }
 

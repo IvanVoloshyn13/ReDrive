@@ -1,21 +1,21 @@
 plugins {
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.google.dagger.hilt)
-
 }
-
 apply from: "$rootDir/core.gradle"
 android {
-    namespace 'com.example.data'
+    namespace 'com.example.firebase'
 }
 
 dependencies {
-    implementation project(path: ':domain')
-    implementation project(path: ':localDataSource')
-    implementation project(path: ':firebase')
-    implementation libs.kotlinx.coroutines
+    //Firebase
+    implementation platform(libs.firebase.bom)
+    api libs.play.services.basement
+    api libs.firebase.auth.ktx
+
+    implementation libs.firebase.database
 
     //Dagger_Hilt
     implementation libs.hilt.android

@@ -4,7 +4,7 @@ import com.example.data.mappers.toUser
 import com.example.domain.UserException
 import com.example.domain.model.account.User
 import com.example.domain.repository.UserSessionRepository
-import com.example.firebase.FirebaseAuthService
+import com.example.firebase.auth.FirebaseAuthService
 import com.example.localedatasource.dataStore.AppUserPreferences
 import com.example.localedatasource.dataStore.AppVehiclePreferences
 import com.example.localedatasource.room.daos.UsersDao
@@ -20,7 +20,6 @@ class UserSessionRepositoryImpl @Inject constructor(
     private val firebaseAuthService: FirebaseAuthService,
     private val usersDao: UsersDao,
     private val appUserPreferences: AppUserPreferences,
-
     private val appVehiclePreferences: AppVehiclePreferences,
 ) : UserSessionRepository {
 

@@ -3,11 +3,13 @@ package com.example.data.repository
 import com.example.data.di.DispatcherIo
 import com.example.data.mappers.toAppAuthException
 import com.example.data.mappers.toFbUserProfile
-import com.example.firebase.FirebaseAuthService
+import com.example.firebase.auth.FirebaseAuthService
 import com.example.data.mappers.toUserEntity
 import com.example.domain.AuthException
 import com.example.domain.model.account.UserAuthCredentials
 import com.example.domain.repository.EmailAuthRepository
+import com.example.firebase.remoteDataSource.realtimeDatabase.FbUser
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteDataStorage
 import com.example.localedatasource.room.daos.UsersDao
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseUser
@@ -19,7 +21,9 @@ import javax.inject.Inject
 class EmailAuthRepositoryImpl @Inject constructor(
     private val firebaseAuthService: FirebaseAuthService,
     @DispatcherIo private val dispatcherIo: CoroutineDispatcher,
-    private val usersDao: UsersDao
+    private val usersDao: UsersDao,
+
+    private val remoteDataStorage: RemoteDataStorage
 ) : EmailAuthRepository {
     override suspend fun signInWithEmailAndPassword(
         email: String,

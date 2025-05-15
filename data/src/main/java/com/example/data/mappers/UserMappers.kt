@@ -2,8 +2,8 @@ package com.example.data.mappers
 
 import com.example.domain.model.account.User
 import com.example.domain.model.account.UserAuthCredentials
-import com.example.firebase.models.FbAuthCredentials
-import com.example.firebase.models.FirebaseUserProfile
+import com.example.firebase.auth.models.FbAuthCredentials
+import com.example.firebase.auth.models.FirebaseUserProfile
 import com.example.localedatasource.room.entity.UserEntity
 import com.google.firebase.auth.FirebaseUser
 
