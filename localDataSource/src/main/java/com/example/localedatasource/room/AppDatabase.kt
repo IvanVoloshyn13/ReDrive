@@ -1,5 +1,6 @@
 package com.example.localedatasource.room
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.localedatasource.room.daos.RefuelDao
@@ -12,8 +13,12 @@ import com.example.localedatasource.room.entity.UserEntity
 import com.example.localedatasource.room.entity.VehicleEntity
 
 @Database(
-    entities = [UserEntity::class, VehicleEntity::class, UnitPreferencesEntity::class,RefuelEntity::class],
-    version = 1, exportSchema = true
+    entities = [UserEntity::class, VehicleEntity::class, UnitPreferencesEntity::class, RefuelEntity::class],
+    version = 2, exportSchema = true,
+    autoMigrations = [AutoMigration(
+        from = 1,
+        to = 2
+    )]
 )
 abstract class AppDatabase : RoomDatabase() {
 

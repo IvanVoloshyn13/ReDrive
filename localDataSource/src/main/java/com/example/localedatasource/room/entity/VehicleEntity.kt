@@ -22,5 +22,8 @@ data class VehicleEntity(
     @ColumnInfo(name = "user_id") val userId: String,
     val name: String,
     @ColumnInfo(name = "initial_odometer_value") val initialOdometerValue: Int,
-    @ColumnInfo(name = "vehicle_type") val vehicleType: String
+    @ColumnInfo(name = "vehicle_type") val vehicleType: String,
+    @ColumnInfo(name = "created_at", defaultValue = "0") val createdAt: Long = 0L,
+    @ColumnInfo(name = "sync_status", defaultValue = "0") val syncStatus: Int
 )
+

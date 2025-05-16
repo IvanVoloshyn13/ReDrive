@@ -10,7 +10,8 @@ fun Vehicle.toEntity(uUid: String): VehicleEntity {
         userId = uUid,
         name = this.name,
         vehicleType = type.name,
-        initialOdometerValue = this.initialOdometerValue
+        initialOdometerValue = this.initialOdometerValue,
+        syncStatus = this.syncStatus.code
     )
 }
 

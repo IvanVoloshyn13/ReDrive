@@ -7,12 +7,10 @@ import com.example.domain.model.UnitsPreferencesAbbreviation
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.domain.repository.VehiclesRepository
-import com.example.localedatasource.dataStore.AppUserPreferences
 import com.example.localedatasource.dataStore.AppVehiclePreferences
 import com.example.localedatasource.room.daos.VehiclesDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map

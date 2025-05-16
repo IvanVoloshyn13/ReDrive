@@ -8,6 +8,7 @@ data class Vehicle(
     val initialOdometerValue: Int,
     val type: VehicleType,
     val isCurrentVehicle: Boolean = false,
+    val syncStatus: SyncStatus = SyncStatus.PENDING
 ) : Serializable {
     companion object {
         val NO_VEHICLE: Vehicle = Vehicle(
