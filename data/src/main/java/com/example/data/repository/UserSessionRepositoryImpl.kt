@@ -10,6 +10,7 @@ import com.example.localedatasource.dataStore.AppVehiclePreferences
 import com.example.localedatasource.room.daos.UsersDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -35,7 +36,7 @@ class UserSessionRepositoryImpl @Inject constructor(
 
     override fun observeCurrentUserId(): Flow<String?> {
         return try {
-            appUserPreferences.observeUserId()
+            appUserPreferences.observeUserId().distinctUntilChanged()
         } catch (e: NullPointerException) {
             throw UserException.NoUserDetectedException()
         }

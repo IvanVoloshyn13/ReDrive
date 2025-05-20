@@ -2,6 +2,7 @@ package com.example.redrive.di
 
 import android.content.Context
 import android.net.ConnectivityManager
+import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,4 +18,5 @@ class AppModule {
     fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager {
         return context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
+
 }

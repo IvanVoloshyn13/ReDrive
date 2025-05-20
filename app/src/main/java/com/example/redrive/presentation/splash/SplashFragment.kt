@@ -1,6 +1,7 @@
 package com.example.redrive.presentation.splash
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +18,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+private const val ANIMATION_START_DELAY = 200L
+private const val ANIMATION_DURATION = 1500L
+
 @AndroidEntryPoint
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
@@ -32,7 +36,13 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-                delay(1500)
+            delay(ANIMATION_DURATION)
+            launch {
+                viewModel.isLoading.collectLatest {
+                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+            launch {
                 viewModel.navigation.collectLatest {
                     when (it) {
                         Router.SplashDirections.ToProfile -> {
@@ -44,6 +54,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                         }
                     }
                 }
+            }
+
         }
     }
 
@@ -58,8 +70,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             .alpha(1f)
             .scaleX(1f)
             .scaleY(1f)
-            .setStartDelay(200)
-            .setDuration(1500)
+            .setStartDelay(ANIMATION_START_DELAY)
+            .setDuration(ANIMATION_DURATION)
             .setInterpolator(android.view.animation.OvershootInterpolator())
             .start()
     }
@@ -75,8 +87,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             .alpha(1f)
             .scaleX(1f)
             .scaleY(1f)
-            .setStartDelay(200)
-            .setDuration(1500)
+            .setStartDelay(ANIMATION_START_DELAY)
+            .setDuration(ANIMATION_DURATION)
             .setInterpolator(android.view.animation.OvershootInterpolator())
             .start()
     }

@@ -17,12 +17,11 @@ class FirebaseModule {
 
     @Provides
     @Singleton
-    fun providesFirebaseApp(@ApplicationContext context: Context) =
-        FirebaseApp.initializeApp(context)!!
+    fun provideFirebaseAuth() = Firebase.auth
 
     @Provides
     @Singleton
-    fun provideFirebaseAuth() = Firebase.auth
+    fun provideFirebase(@ApplicationContext context: Context) = FirebaseApp.initializeApp(context)!!
 
 
 }

@@ -13,14 +13,17 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface VehiclesDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addVehicle(vehicle: VehicleEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addSettings(settings: UnitPreferencesEntity)
 
     @Transaction
-    suspend fun addVehicleWithSettings(vehicle: VehicleEntity, settings: UnitPreferencesEntity): Long {
+    suspend fun addVehicleWithSettings(
+        vehicle: VehicleEntity,
+        settings: UnitPreferencesEntity
+    ): Long {
         val vehicleId = addVehicle(vehicle)
         val settingsWithVehicleId = settings.copy(
             vehicleId = vehicleId
@@ -40,6 +43,12 @@ interface VehiclesDao {
 
     @Query("SELECT * FROM vehicles WHERE id=:vehicleId ")
     fun observeCurrentVehicle(vehicleId: Long): Flow<VehicleEntity>
+
+    @Query("SELECT EXISTS( SELECT 1 FROM vehicles WHERE ( user_id =:userId AND sync_status = 0 ))")
+    fun hasPendingVehicles(userId: String): Flow<Boolean>
+
+    @Query("SELECT *  FROM vehicles WHERE ( user_id =:userId AND sync_status = 0 )")
+    suspend fun getPendingVehicles(userId: String): List<VehicleEntity>
 
 
 }

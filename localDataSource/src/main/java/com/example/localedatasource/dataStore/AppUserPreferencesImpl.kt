@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -25,6 +26,6 @@ class AppUserPreferencesImpl @Inject constructor(
     override fun observeUserId(): Flow<String?> {
         return dataStore.data.map { preferences ->
             preferences[PreferencesKeys.CURRENT_USER]
-        }
+        }.distinctUntilChanged()
     }
 }

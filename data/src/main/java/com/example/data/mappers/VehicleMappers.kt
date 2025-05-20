@@ -1,5 +1,6 @@
 package com.example.data.mappers
 
+import com.example.domain.model.SyncStatus
 import com.example.domain.model.Vehicle
 import com.example.domain.model.VehicleType
 import com.example.localedatasource.room.entity.VehicleEntity
@@ -11,7 +12,7 @@ fun Vehicle.toEntity(uUid: String): VehicleEntity {
         name = this.name,
         vehicleType = type.name,
         initialOdometerValue = this.initialOdometerValue,
-        syncStatus = this.syncStatus.code
+        syncStatus = SyncStatus.PENDING.code
     )
 }
 

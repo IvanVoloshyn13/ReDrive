@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import android.util.Log
 import com.example.data.mappers.UnitPreferencesMapper
 import com.example.data.mappers.toEntity
 import com.example.data.mappers.toVehicle
@@ -11,6 +12,7 @@ import com.example.localedatasource.dataStore.AppVehiclePreferences
 import com.example.localedatasource.room.daos.VehiclesDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map

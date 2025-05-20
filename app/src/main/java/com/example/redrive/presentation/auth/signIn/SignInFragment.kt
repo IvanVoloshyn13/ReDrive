@@ -8,9 +8,11 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.redrive.R
 import com.example.redrive.core.Router
+import com.example.redrive.core.findTopNavController
 import com.example.redrive.databinding.FragmentSignInBinding
 import com.example.redrive.core.hideSoftInputAndClearViewsFocus
 import com.example.redrive.core.navigate
@@ -62,7 +64,12 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                         }
 
                         Router.SignInDirections.ToProfile -> {
-                            findNavController().popBackStack()
+                            findTopNavController().navigate(
+                                R.id.splashFragment, null,
+                                NavOptions.Builder()
+                                    .setPopUpTo(R.id.splashFragment, true, saveState = false)
+                                    .build()
+                            )
                         }
                     }
                 }
