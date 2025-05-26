@@ -3,7 +3,7 @@ package com.example.data.di
 import android.content.Context
 import androidx.work.WorkManager
 import com.example.data.worker.WorkSchedulerImpl
-import com.example.domain.WorkScheduler
+import com.example.domain.sync.WorkScheduler
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

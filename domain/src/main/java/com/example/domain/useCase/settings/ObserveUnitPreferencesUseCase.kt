@@ -15,7 +15,7 @@ class ObserveUnitPreferencesUseCase @Inject constructor(
     private val observeCurrentVehicleUseCase: ObserveCurrentVehicleUseCase,
 ) {
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(vehicleId: Long? = null): Flow<UnitsPreferencesAbbreviation> {
+    operator fun invoke(vehicleId: String? = null): Flow<UnitsPreferencesAbbreviation> {
         return if (vehicleId != null) {
             repository.observeUnitPreferences(vehicleId).distinctUntilChanged()
         } else observeCurrentVehicleUseCase.invoke().flatMapLatest {

@@ -13,22 +13,22 @@ interface UnitPreferencesRepository {
      * Retrieves default settings when no user or vehicle is available.
      * Also used as the default settings for new vehicles, which the user can modify later.
      */
-    suspend fun getDefaultUnitPreferences(): UnitsPreferencesAbbreviation
+     fun getDefaultUnitPreferences(): UnitsPreferencesAbbreviation
 
     /**
      * Observes and returns the settings for the currently selected vehicle.
      */
-    fun observeUnitPreferences(vehicleId: Long): Flow<UnitsPreferencesAbbreviation>
+    fun observeUnitPreferences(vehicleId: String): Flow<UnitsPreferencesAbbreviation>
 
     /**
      * Observes and returns AvgConsumptionType 'KEY' for the currently selected vehicle.
      */
-   suspend fun getAvgConsumptionTypeKey(vehicleId: Long):String
+   suspend fun getAvgConsumptionTypeKey(vehicleId: String):String
 
     /**
      * Observes and returns DistanceType 'KEY' for the currently selected vehicle.
      */
-    suspend fun getDistanceTypeKey(vehicleId: Long):String
+    suspend fun getDistanceTypeKey(vehicleId: String):String
     /**
      * Returns a list of available currency units for the app.
      */
@@ -57,12 +57,12 @@ interface UnitPreferencesRepository {
     /**
      * Retrieves the currently set date format pattern for the app.
      */
-    suspend fun getCurrentDateFormatPattern(vehicleId: Long?): String
+    suspend fun getCurrentDateFormatPattern(vehicleId: String?): String
 
     /**
      * Updates the app settings for the current vehicle.
      * This allows the settings to be customized for each vehicle.
      */
-    suspend fun updatePreferences(unitPreferences: UnitsPreferencesAbbreviation, vehicleId: Long)
+    suspend fun updatePreferences(unitPreferences: UnitsPreferencesAbbreviation, vehicleId: String)
 
 }

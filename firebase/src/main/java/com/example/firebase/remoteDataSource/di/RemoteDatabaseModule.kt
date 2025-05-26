@@ -14,6 +14,7 @@ private const val DATABASE_URL =
     "https://redrive-bceda-default-rtdb.europe-west1.firebasedatabase.app/"
 
 private const val VEHICLES = "vehicles"
+private const val UNITS_PREF = "units_preferences"
 private const val REFUELS = "refuels"
 
 @Module
@@ -38,11 +39,18 @@ class FbDatabaseModule {
         return database.getReference(REFUELS)
     }
 
+    @Provides
+    @Singleton
+    @AppSettingsReference
+    fun provideSettingsReference(database: FirebaseDatabase): DatabaseReference {
+        return database.getReference(UNITS_PREF)
+    }
+
 }
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
-annotation class UserReference
+annotation class AppSettingsReference
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier

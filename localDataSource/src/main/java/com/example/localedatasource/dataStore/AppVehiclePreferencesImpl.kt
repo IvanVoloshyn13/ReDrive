@@ -11,7 +11,7 @@ import javax.inject.Inject
 class AppVehiclePreferencesImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : AppVehiclePreferences {
-    override suspend fun setCurrentVehicleId(id: Long) {
+    override suspend fun setCurrentVehicleId(id: String) {
         dataStore.edit { pref ->
             pref[PreferencesKeys.CURRENT_VEHICLE] = id
         }
@@ -23,7 +23,7 @@ class AppVehiclePreferencesImpl @Inject constructor(
         }
     }
 
-    override fun observeCurrentVehicleId(): Flow<Long?> {
+    override fun observeCurrentVehicleId(): Flow<String?> {
         return dataStore.data.map { pref ->
             pref[PreferencesKeys.CURRENT_VEHICLE]
         }.distinctUntilChanged()

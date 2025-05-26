@@ -12,7 +12,7 @@ class EditVehicleUseCase  @Inject constructor(
 ) {
     suspend operator fun invoke(newVehicle: Vehicle) {
         repository.updateVehicle(
-            uUid = userSessionRepository.observeCurrentUserId().first()!!,
+            userId = userSessionRepository.observeCurrentUserId().first()!!,
             vehicle = newVehicle
         )
     }

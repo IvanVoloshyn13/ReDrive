@@ -2,6 +2,8 @@ package com.example.redrive.di
 
 import com.example.redrive.core.AppStringResProvider
 import com.example.redrive.core.AppStringResProviderImpl
+import com.example.redrive.core.NetworkStatusProvider
+import com.example.redrive.core.NetworkStatusProviderImpl
 import com.example.redrive.core.logTextFormatter.RefuelMessageFromResProvider
 import com.example.redrive.core.logTextFormatter.RefuelMessageFromResProviderImpl
 import dagger.Binds
@@ -16,15 +18,21 @@ interface ResourceProviderModule {
 
     @Binds
     @Singleton
-     fun bindAppStringResProvider(
+    fun bindAppStringResProvider(
         impl: AppStringResProviderImpl
     ): AppStringResProvider
 
 
     @Binds
     @Singleton
-     fun bindLogMessageProvider(
+    fun bindLogMessageProvider(
         impl: RefuelMessageFromResProviderImpl
     ): RefuelMessageFromResProvider
+
+    @Binds
+    @Singleton
+    fun bindNetworkStatusProvider(
+        impl: NetworkStatusProviderImpl
+    ): NetworkStatusProvider
 
 }

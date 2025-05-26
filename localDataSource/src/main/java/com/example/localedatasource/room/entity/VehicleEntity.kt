@@ -17,8 +17,8 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["user_id"])]
 )
 data class VehicleEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    @PrimaryKey
+    val id: String,
     @ColumnInfo(name = "user_id") val userId: String,
     val name: String,
     @ColumnInfo(name = "initial_odometer_value") val initialOdometerValue: Int,

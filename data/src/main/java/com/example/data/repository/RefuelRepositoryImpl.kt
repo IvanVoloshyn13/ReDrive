@@ -12,11 +12,11 @@ import javax.inject.Inject
 class RefuelRepositoryImpl @Inject constructor(
     private val refuelDao: RefuelDao
 ) : RefuelRepository {
-    override suspend fun saveRefuel(refuel: Refuel, vehicleId: Long) {
+    override suspend fun saveRefuel(refuel: Refuel, vehicleId: String) {
         refuelDao.saveRefuel(refuel.toEntity(vehicleId))
     }
 
-    override suspend fun updateRefuel(refuel: Refuel, vehicleId: Long) {
+    override suspend fun updateRefuel(refuel: Refuel, vehicleId: String) {
         refuelDao.updateRefuel(refuel.toEntity(vehicleId))
     }
 
@@ -28,7 +28,7 @@ class RefuelRepositoryImpl @Inject constructor(
       return refuelDao.getRefuelById(refuelId).toRefuel()
     }
 
-    override fun observeRefuels(vehicleId: Long): Flow<List<Refuel>> {
+    override fun observeRefuels(vehicleId: String): Flow<List<Refuel>> {
         return refuelDao.observeRefuels(vehicleId).map {
             it.map {entity->
                 entity.toRefuel()

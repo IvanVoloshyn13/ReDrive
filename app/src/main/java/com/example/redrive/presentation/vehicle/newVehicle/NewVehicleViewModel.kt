@@ -30,7 +30,6 @@ class NewVehicleViewModel @Inject constructor(
 
     override fun doOnBtnSaveClick() {
         val vehicle = Vehicle(
-            id = 0,
             name = mVehicleNameInput.value,
             initialOdometerValue = mOdometerReadingInput.value.toInt(),
             type = mVehicleTypeSwitcher.value

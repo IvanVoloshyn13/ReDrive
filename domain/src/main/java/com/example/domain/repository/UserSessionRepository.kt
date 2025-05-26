@@ -2,6 +2,7 @@ package com.example.domain.repository
 
 import com.example.domain.model.account.User
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 
 interface UserSessionRepository {
 

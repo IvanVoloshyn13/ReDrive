@@ -44,7 +44,7 @@ class ObserveLastRefuelLogUseCase @Inject constructor(
             }
     }
 
-    private suspend fun getLogPreferences(vehicleId: Long): LogPreferences {
+    private suspend fun getLogPreferences(vehicleId: String): LogPreferences {
         val pattern =
             unitPreferencesRepository.getCurrentDateFormatPattern(vehicleId)
         val avgConsumptionTypeKey =

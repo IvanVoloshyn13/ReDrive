@@ -7,7 +7,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "app_settings",
+    tableName = "app_preferences",
     foreignKeys = [ForeignKey(
         entity = VehicleEntity::class,
         parentColumns = ["id"],
@@ -19,11 +19,13 @@ import androidx.room.PrimaryKey
 )
 data class UnitPreferencesEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    @ColumnInfo(name = "vehicle_id") val vehicleId: Long = 0,
+    @ColumnInfo(name = "vehicle_id") val vehicleId: String,
     val currencyKey: String,
     val distanceKey: String,
     val capacityKey: String,
     @ColumnInfo(name = "avg_consumption_key") val avgConsumptionKey: String,
-    @ColumnInfo(name = "date_format_pattern_key") val dateFormatPatternKey: String
+    @ColumnInfo(name = "date_format_pattern_key") val dateFormatPatternKey: String,
+    @ColumnInfo(name = "sync_status", defaultValue = "0") val syncStatus: Int,
+    @ColumnInfo(name = "created_at", defaultValue = "0") val createdAt: Long
 )
 

@@ -8,7 +8,7 @@ interface UnitPreferencesMapper {
 
     fun UnitPreferencesEntity.toPreferences(): UnitsPreferencesAbbreviation
 
-    fun UnitsPreferencesAbbreviation.toEntity(vehicleId:Long?=null): UnitPreferencesEntity
+    fun UnitsPreferencesAbbreviation.toEntity(vehicleId:String?=null): UnitPreferencesEntity
 
     fun DefaultPreferencesResponse.toPreferences(): UnitsPreferencesAbbreviation
 }

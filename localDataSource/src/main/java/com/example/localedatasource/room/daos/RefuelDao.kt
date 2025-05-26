@@ -14,7 +14,7 @@ interface RefuelDao {
     suspend fun saveRefuel(refuel: RefuelEntity)
 
     @Query("SELECT * FROM refuels WHERE vehicle_id=:currentVehicleId order by odometer ASC  ")
-    fun observeRefuels(currentVehicleId: Long): Flow<List<RefuelEntity>>
+    fun observeRefuels(currentVehicleId: String): Flow<List<RefuelEntity>>
 
     @Query("SELECT * FROM refuels WHERE id=:refuelId")
     suspend fun getRefuelById(refuelId: Long): RefuelEntity
@@ -26,7 +26,7 @@ interface RefuelDao {
     suspend fun updateRefuel(refuel: RefuelEntity)
 
     @Query("SELECT * FROM refuels WHERE vehicle_id=:currentVehicleId order by odometer DESC LIMIT 0,1")
-    fun observeLastRefuel(currentVehicleId: Long): Flow<RefuelEntity?>
+    fun observeLastRefuel(currentVehicleId: String): Flow<RefuelEntity?>
 
     @Query(
         "SELECT odometer FROM refuels" +
@@ -34,7 +34,7 @@ interface RefuelDao {
                 "WHERE vehicle_id=:currentVehicleId) " +
                 "ORDER by odometer DESC LIMIT 0,1  "
     )
-  suspend fun getSecondLastOdometerReading(currentVehicleId: Long):Int?
+  suspend fun getSecondLastOdometerReading(currentVehicleId: String):Int?
 
     @Query(
         """
@@ -44,13 +44,13 @@ interface RefuelDao {
     WHERE v.id =:currentVehicleId
 """
     )
-    fun observeTravelledDistance(currentVehicleId: Long): Flow<Int?>
+    fun observeTravelledDistance(currentVehicleId: String): Flow<Int?>
 
     @Query("SELECT SUM(fuel_volume) FROM refuels WHERE vehicle_id=:currentVehicleId")
-    fun observeFullAmountSum(currentVehicleId: Long): Flow<Double?>
+    fun observeFullAmountSum(currentVehicleId: String): Flow<Double?>
 
     @Query("SELECT SUM(fuel_volume*unit_price) FROM refuels WHERE vehicle_id=:currentVehicleId")
-    fun observePaymentSum(currentVehicleId: Long): Flow<Double?>
+    fun observePaymentSum(currentVehicleId: String): Flow<Double?>
 
 
 }

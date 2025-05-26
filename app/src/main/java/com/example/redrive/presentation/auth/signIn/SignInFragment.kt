@@ -67,7 +67,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                             findTopNavController().navigate(
                                 R.id.splashFragment, null,
                                 NavOptions.Builder()
-                                    .setPopUpTo(R.id.splashFragment, true, saveState = false)
+                                    .setPopUpTo(R.id.main_graph, true, saveState = false)
                                     .build()
                             )
                         }

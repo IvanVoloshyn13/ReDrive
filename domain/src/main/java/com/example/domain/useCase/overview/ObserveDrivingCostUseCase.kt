@@ -12,7 +12,7 @@ class ObserveDrivingCostUseCase @Inject constructor(
     private val repository: OverviewRepository
 ) {
 
-    fun invoke(vehicleId: Long, preferences: UnitsPreferencesAbbreviation): Flow<ValueWithUnit?> {
+    fun invoke(vehicleId: String, preferences: UnitsPreferencesAbbreviation): Flow<ValueWithUnit?> {
         return combine(
             repository.observePaymentsSum(vehicleId),
             repository.observeTravelledDistance(vehicleId)

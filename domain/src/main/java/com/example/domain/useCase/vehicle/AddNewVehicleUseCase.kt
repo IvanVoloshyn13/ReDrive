@@ -6,6 +6,7 @@ import com.example.domain.repository.UnitPreferencesRepository
 import com.example.domain.repository.UserSessionRepository
 import com.example.domain.repository.VehiclesRepository
 import kotlinx.coroutines.flow.first
+import java.util.UUID
 import javax.inject.Inject
 
 /**
@@ -25,9 +26,10 @@ class AddNewVehicleUseCase @Inject constructor(
         val uUid = userSessionRepository.observeCurrentUserId().first()
         if (uUid.isNullOrEmpty()) throw UserException.NoUserDetectedException()
         val defaultSettings = unitPreferencesRepository.getDefaultUnitPreferences()
-        val vehicleId = vehiclesRepository.saveVehicleWithSettings(
-            uUid = uUid,
-            vehicle = vehicle,
+        val vehicleId = UUID.randomUUID().toString()
+        vehiclesRepository.saveVehicleWithSettings(
+            userId = uUid,
+            vehicle = vehicle.copy(id = vehicleId),
             unitPreferences = defaultSettings
         )
         vehiclesRepository.setVehicleAsCurrent(vehicleId)

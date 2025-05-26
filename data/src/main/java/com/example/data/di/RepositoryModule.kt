@@ -8,6 +8,7 @@ import com.example.data.repository.RefuelRepositoryImpl
 import com.example.data.repository.UnitPreferencesRepositoryImpl
 import com.example.data.repository.UserSessionRepositoryImpl
 import com.example.data.repository.VehiclesRepositoryImpl
+import com.example.data.repository.sync.UnitsPrefSyncStatusCheckerImpl
 import com.example.data.repository.sync.VehiclesSyncStatusCheckerImpl
 import com.example.domain.repository.EmailAuthRepository
 import com.example.domain.repository.OverviewRepository
@@ -15,7 +16,9 @@ import com.example.domain.repository.RefuelRepository
 import com.example.domain.repository.UnitPreferencesRepository
 import com.example.domain.repository.UserSessionRepository
 import com.example.domain.repository.VehiclesRepository
-import com.example.domain.sync.VehiclesSyncStatusChecker
+import com.example.domain.sync.UnitPreferencesSyncChecker
+import com.example.domain.sync.SyncStatusChecker
+import com.example.domain.sync.VehiclesSyncChecker
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -56,6 +59,12 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindVehiclesSyncStatusChecker(impl: VehiclesSyncStatusCheckerImpl): VehiclesSyncStatusChecker
+    @VehiclesSyncChecker
+    fun bindVehiclesSyncStatusChecker(impl: VehiclesSyncStatusCheckerImpl): SyncStatusChecker
+
+    @Binds
+    @Singleton
+    @UnitPreferencesSyncChecker
+    fun bindSettingsSyncStatusChecker(impl: UnitsPrefSyncStatusCheckerImpl): SyncStatusChecker
 }
 

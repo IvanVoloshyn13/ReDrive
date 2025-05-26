@@ -11,7 +11,7 @@ import javax.inject.Inject
 class ObserveSummaryUseCase @Inject constructor(
     private val repository: OverviewRepository,
 ) {
-    fun invoke(vehicleId: Long,preferences:UnitsPreferencesAbbreviation): Flow<Summary?> {
+    fun invoke(vehicleId: String,preferences:UnitsPreferencesAbbreviation): Flow<Summary?> {
         return combine(
             repository.observePaymentsSum(vehicleId),
             repository.observeTravelledDistance(vehicleId),

@@ -30,7 +30,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         renderLogoAnimation()
-        renderProgressBarAnimation()
         observeViewModel()
     }
 
@@ -39,7 +38,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             delay(ANIMATION_DURATION)
             launch {
                 viewModel.isLoading.collectLatest {
-                    binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+                    if (it) renderProgressBarAnimation() else binding.progressBar.visibility =
+                        View.GONE
                 }
             }
             launch {
@@ -60,6 +60,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     }
 
     private fun renderProgressBarAnimation() {
+        binding.progressBar.visibility = View.VISIBLE
         binding.progressBar.apply {
             alpha = 0.2f
             scaleX = 0.7f

@@ -1,14 +1,15 @@
-package com.example.data.worker
+package com.example.data.worker.vehicles
 
 import android.content.Context
 import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.data.worker.WorkSchedulerKeys.CURRENT_USER_ID_KEY
+import com.example.data.worker.WorkSchedulerImpl.Companion.CURRENT_USER_ID_KEY
 import com.example.domain.model.SyncStatus
-import com.example.firebase.remoteDataSource.models.VehicleDto
-import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteVehicleSource
+import com.example.domain.sync.SyncStatusChecker
+import com.example.domain.sync.VehiclesSyncChecker
+import com.example.firebase.remoteDataSource.realtimeDatabase.vehicles.RemoteVehicleSource
 import com.example.localedatasource.room.daos.VehiclesDao
 import com.example.localedatasource.room.entity.VehicleEntity
 import com.google.firebase.FirebaseException
@@ -17,17 +18,19 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
 @HiltWorker
-class DownloadVehiclesWorkManager @AssistedInject constructor(
+class FetchVehiclesWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val vehiclesDao: VehiclesDao,
-    private val remoteVehicleSource: RemoteVehicleSource
+    private val remoteVehicleSource: RemoteVehicleSource,
+    @VehiclesSyncChecker private val syncStatusChecker: SyncStatusChecker,
 ) : CoroutineWorker(appContext, workerParams) {
     override suspend fun doWork(): Result {
         return try {
             val uUid = inputData.getString(CURRENT_USER_ID_KEY)!!
-            val vehicles = remoteVehicleSource.downloadVehicles(uUid, 0L)
-            val vehiclesEntity = vehicles.map {
+            if (!syncStatusChecker.shouldFetch(uUid)) return Result.success()
+            val dtos = remoteVehicleSource.fetchVehicles(uUid, 0L)
+            val entities = dtos.map {
                 VehicleEntity(
                     id = it.id,
                     userId = uUid,
@@ -38,14 +41,16 @@ class DownloadVehiclesWorkManager @AssistedInject constructor(
                     createdAt = it.uploadAt
                 )
             }
-            vehiclesEntity.forEach {
-                vehiclesDao.addVehicle(it)
+            entities.forEach {
+                vehiclesDao.upsertVehicle(it)
             }
             Result.success()
         } catch (e: FirebaseNetworkException) {
             Result.retry() // network problem
         } catch (e: FirebaseException) {
             Result.failure() // permission denied, invalid data, etc.
+        } catch (e: Exception) {
+            Result.retry()
         }
     }
 

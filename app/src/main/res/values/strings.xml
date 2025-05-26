@@ -50,6 +50,8 @@
     <string name="clear">Clear</string>
     <string name="delete_anyway">Delete Anyway</string>
     <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="settings">Settings</string>
 
 
     <string name="refuel">Refuel</string>
@@ -91,5 +93,7 @@
     <string name="date_format">Date format</string>
     <string name="place_holder_double">-,—</string>
     <string name="place_holder_int">-—</string>
+    <string name="offline_title">Mobile data is Turned Off</string>
+    <string name="offline_message">Turn on mobile data or use Wi-Fi to sync data</string>
 
 </resources>

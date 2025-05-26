@@ -11,6 +11,8 @@ import com.example.domain.repository.UnitPreferencesRepository
 import com.example.localedatasource.appPreferencesFromAssets.AssetsDataSource
 import com.example.localedatasource.room.daos.SettingsDao
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import java.util.Locale
 import javax.inject.Inject
@@ -21,14 +23,14 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
     private val unitPreferencesMapper: UnitPreferencesMapper,
 ) : UnitPreferencesRepository {
     private val language = Locale.getDefault().language
-    override suspend fun getDefaultUnitPreferences(): UnitsPreferencesAbbreviation {
+    override fun getDefaultUnitPreferences(): UnitsPreferencesAbbreviation {
         return with(unitPreferencesMapper) {
             val response = assetsDataSource.getDefaultPreferences(language)
             response.toPreferences()
         }
     }
 
-    override fun observeUnitPreferences(vehicleId: Long): Flow<UnitsPreferencesAbbreviation> {
+    override fun observeUnitPreferences(vehicleId: String): Flow<UnitsPreferencesAbbreviation> {
         return settingsDao.getUnitPreferencesByCurrentVehicleId(vehicleId).map {
             with(unitPreferencesMapper) {
                 it.toPreferences()
@@ -36,11 +38,11 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAvgConsumptionTypeKey(vehicleId: Long): String {
+    override suspend fun getAvgConsumptionTypeKey(vehicleId: String): String {
         return settingsDao.getAvgConsumptionKey(vehicleId)
     }
 
-    override suspend fun getDistanceTypeKey(vehicleId: Long): String {
+    override suspend fun getDistanceTypeKey(vehicleId: String): String {
         return settingsDao.getDistanceKey(vehicleId)
     }
 
@@ -96,7 +98,7 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun updatePreferences(
         unitPreferences: UnitsPreferencesAbbreviation,
-        vehicleId: Long
+        vehicleId: String
     ) {
         val entity = with(unitPreferencesMapper) {
             unitPreferences.toEntity(vehicleId = vehicleId)
@@ -104,7 +106,7 @@ class UnitPreferencesRepositoryImpl @Inject constructor(
         settingsDao.updatePreferences(entity)
     }
 
-    override suspend fun getCurrentDateFormatPattern(vehicleId: Long?): String {
+    override suspend fun getCurrentDateFormatPattern(vehicleId: String?): String {
         return vehicleId?.let {
             assetsDataSource.getPreferences(language).dateFormats.first { json ->
                 val key = settingsDao.getDateFormatPatternKey(it)

@@ -4,7 +4,7 @@ import com.example.domain.model.Refuel
 import com.example.localedatasource.room.entity.RefuelEntity
 
 
-fun Refuel.toEntity(vehicleId: Long): RefuelEntity {
+fun Refuel.toEntity(vehicleId: String): RefuelEntity {
     return RefuelEntity(
         id = this.id ?: 0,
         vehicleId = vehicleId,

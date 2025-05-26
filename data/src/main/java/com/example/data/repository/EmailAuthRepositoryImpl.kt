@@ -8,7 +8,7 @@ import com.example.data.mappers.toUserEntity
 import com.example.domain.AuthException
 import com.example.domain.model.account.UserAuthCredentials
 import com.example.domain.repository.EmailAuthRepository
-import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteVehicleSource
+import com.example.firebase.remoteDataSource.realtimeDatabase.vehicles.RemoteVehicleSource
 import com.example.localedatasource.room.daos.UsersDao
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseUser

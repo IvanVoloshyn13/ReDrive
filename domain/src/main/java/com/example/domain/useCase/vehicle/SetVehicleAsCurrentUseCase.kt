@@ -6,7 +6,7 @@ import javax.inject.Inject
 class SetVehicleAsCurrentUseCase @Inject constructor(
     private val repository: VehiclesRepository
 ) {
-    suspend operator fun invoke(vehicleId: Long) {
+    suspend operator fun invoke(vehicleId: String) {
         repository.setVehicleAsCurrent(vehicleId)
     }
 }

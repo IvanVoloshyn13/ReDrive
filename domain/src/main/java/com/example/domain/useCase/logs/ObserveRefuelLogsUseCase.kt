@@ -113,7 +113,7 @@ class ObserveRefuelLogsUseCase @Inject constructor(
      * @param vehicleId ID of the vehicle whose preferences to load.
      * @return A [LogPreferences] containing date formatting and consumption display settings.
      */
-     private suspend fun fetchLogPreferences(vehicleId: Long): LogPreferences {
+     private suspend fun fetchLogPreferences(vehicleId: String): LogPreferences {
         val pattern =
             unitPreferencesRepository.getCurrentDateFormatPattern(vehicleId)
         val avgConsumptionTypeKey =

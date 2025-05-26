@@ -28,13 +28,13 @@ class VehiclesViewModel @Inject constructor(
     )
 
 
-    fun onVehicleItemClick(vehicleId: Long) {
+    fun onVehicleItemClick(vehicleId: String) {
         viewModelScope.launch {
             setVehicleAsCurrentUseCase(vehicleId)
         }
     }
 
-    fun onDeleteBtnClick(vehicleId: Long) {
+    fun onDeleteBtnClick(vehicleId: String) {
         wrapLocaleDataSourceRequests(
             appStringResProvider = stringResProvider,
             action = {
@@ -45,7 +45,7 @@ class VehiclesViewModel @Inject constructor(
         }
     }
 
-    fun onConfirmDeleteCurrentVehicle(vehicleId: Long) {
+    fun onConfirmDeleteCurrentVehicle(vehicleId: String) {
         viewModelScope.launch {
             confirmDeleteVehicleUseCase.invoke(vehicleId)
         }

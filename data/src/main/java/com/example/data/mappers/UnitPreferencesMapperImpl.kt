@@ -9,7 +9,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 class UnitPreferencesMapperImpl @Inject constructor(
-    assetsDataSource: AssetsDataSource,
+     assetsDataSource: AssetsDataSource,
 ) : UnitPreferencesMapper {
 
     private val language = Locale.getDefault().language
@@ -36,15 +36,17 @@ class UnitPreferencesMapperImpl @Inject constructor(
         )
     }
 
-    override fun UnitsPreferencesAbbreviation.toEntity(vehicleId: Long?): UnitPreferencesEntity {
+    override fun UnitsPreferencesAbbreviation.toEntity(vehicleId: String?): UnitPreferencesEntity {
         return UnitPreferencesEntity(
             id = this.id,
-            vehicleId = vehicleId ?: 0L,
+            vehicleId = vehicleId ?: "",
             currencyKey = preferencesResponse.currencies.first { it.abbreviation == this.currency }.key,
             capacityKey = preferencesResponse.capacities.first { it.abbreviation == this.capacity }.key,
             distanceKey = preferencesResponse.distances.first { it.abbreviation == this.distance }.key,
             avgConsumptionKey = preferencesResponse.avgConsumptions.first { it.abbreviation == this.avgConsumption }.key,
-            dateFormatPatternKey = preferencesResponse.dateFormats.first { it.displayName == this.dateFormatPattern }.key
+            dateFormatPatternKey = preferencesResponse.dateFormats.first { it.displayName == this.dateFormatPattern }.key,
+            createdAt = 0L,
+            syncStatus = 0
         )
     }
 }

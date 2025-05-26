@@ -10,21 +10,21 @@ import javax.inject.Inject
 class SyncMetadataRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : SyncMetadataRepository {
-    override suspend fun getLastVehiclePullTimestamp(): Long? {
+    override suspend fun getVehiclesSyncTimestamp(): Long? {
         return dataStore.data.map {
-            it[PreferencesKeys.LAST_PULL_VEHICLES]
+            it[PreferencesKeys.VEHICLES_UPLOAD_AT]
         }.firstOrNull()
     }
 
-    override suspend fun updateLastVehiclePullTimestamp(timestamp: Long) {
+    override suspend fun setVehicleSyncTimestamp(timestamp: Long) {
         dataStore.edit {
-            it[PreferencesKeys.LAST_PULL_VEHICLES] = timestamp
+            it[PreferencesKeys.VEHICLES_UPLOAD_AT] = timestamp
         }
     }
 
     override suspend fun getLastRefuelPullTimestamp(): Long? {
         return dataStore.data.map {
-            it[PreferencesKeys.LAST_PULL_REFUELS]
+          it[PreferencesKeys.LAST_PULL_REFUELS]
         }.firstOrNull()
     }
 

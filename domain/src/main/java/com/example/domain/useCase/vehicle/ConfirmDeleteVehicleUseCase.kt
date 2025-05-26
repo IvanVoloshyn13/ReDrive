@@ -8,7 +8,7 @@ class ConfirmDeleteVehicleUseCase @Inject constructor(
     private val repository: VehiclesRepository,
     private val vehiclesUseCase: ObserveVehiclesUseCase
 ) {
-    suspend operator fun invoke(vehicleId: Long) {
+    suspend operator fun invoke(vehicleId: String) {
         repository.confirmCurrentVehicleDelete(vehicleId)
         setNewCurrentVehicle()
     }

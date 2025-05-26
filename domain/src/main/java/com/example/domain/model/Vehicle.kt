@@ -3,7 +3,7 @@ package com.example.domain.model
 import java.io.Serializable
 
 data class Vehicle(
-    val id: Long = 0,
+    val id: String="" ,
     val name: String,
     val initialOdometerValue: Int,
     val type: VehicleType,
@@ -12,7 +12,7 @@ data class Vehicle(
 ) : Serializable {
     companion object {
         val NO_VEHICLE: Vehicle = Vehicle(
-            id = 0,
+            id = "",
             name = "",
             initialOdometerValue = 0,
             type = VehicleType.Car, isCurrentVehicle = false

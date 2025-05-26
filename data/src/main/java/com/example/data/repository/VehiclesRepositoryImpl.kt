@@ -1,6 +1,5 @@
 package com.example.data.repository
 
-import android.util.Log
 import com.example.data.mappers.UnitPreferencesMapper
 import com.example.data.mappers.toEntity
 import com.example.data.mappers.toVehicle
@@ -12,7 +11,6 @@ import com.example.localedatasource.dataStore.AppVehiclePreferences
 import com.example.localedatasource.room.daos.VehiclesDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -24,33 +22,33 @@ class VehiclesRepositoryImpl @Inject constructor(
     private val unitPreferencesMapper: UnitPreferencesMapper,
 ) : VehiclesRepository {
     override suspend fun saveVehicleWithSettings(
-        uUid: String,
+        userId: String,
         vehicle: Vehicle,
         unitPreferences: UnitsPreferencesAbbreviation
-    ): Long {
-        val vehicleId = vehiclesDao.addVehicleWithSettings(
-            vehicle = vehicle.toEntity(uUid),
+    ) {
+        vehiclesDao.addVehicleWithSettings(
+            vehicle = vehicle.toEntity(userId),
             settings = unitPreferencesMapper.run {
                 unitPreferences.toEntity()
             }
         )
-        return vehicleId
+
     }
 
-    override suspend fun updateVehicle(uUid: String, vehicle: Vehicle) {
-        vehiclesDao.updateVehicle(vehicle.toEntity(uUid))
+    override suspend fun updateVehicle(userId: String, vehicle: Vehicle) {
+        vehiclesDao.updateVehicle(vehicle.toEntity(userId))
     }
 
-    override suspend fun deleteVehicle(vehicleId: Long) {
+    override suspend fun deleteVehicle(vehicleId: String) {
         vehiclesDao.deleteVehicle(vehicleId)
     }
 
-    override suspend fun confirmCurrentVehicleDelete(vehicleId: Long) {
+    override suspend fun confirmCurrentVehicleDelete(vehicleId: String) {
         appVehiclePreferences.clearCurrentVehicleId()
         vehiclesDao.deleteVehicle(vehicleId)
     }
 
-    override suspend fun setVehicleAsCurrent(vehicleId: Long) {
+    override suspend fun setVehicleAsCurrent(vehicleId: String) {
         appVehiclePreferences.setCurrentVehicleId(vehicleId)
     }
 

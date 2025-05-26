@@ -72,7 +72,7 @@ class VehiclesAdapter(private val listener: VehicleActionsListener) :
     interface VehicleActionsListener {
         fun onVehicleItemClick(vehicle: Vehicle)
         fun onEditItemClick(vehicle: Vehicle)
-        fun onDeleteItemClick(vehicleId: Long)
+        fun onDeleteItemClick(vehicleId: String)
     }
 
 

@@ -4,9 +4,9 @@ import com.example.domain.model.Refuel
 import kotlinx.coroutines.flow.Flow
 
 interface OverviewRepository {
-    fun observeTravelledDistance(vehicleId: Long): Flow<Int?>
-    fun observeFuelAmountSum(vehicleId: Long): Flow<Double?>
-    fun observePaymentsSum(vehicleId: Long): Flow<Double?>
-    fun observeLastRefuel(vehicleId: Long): Flow<Refuel?>
-    suspend fun fetchSecondLastOdometerReading(vehicleId: Long): Int?
+    fun observeTravelledDistance(vehicleId: String): Flow<Int?>
+    fun observeFuelAmountSum(vehicleId: String): Flow<Double?>
+    fun observePaymentsSum(vehicleId: String): Flow<Double?>
+    fun observeLastRefuel(vehicleId: String): Flow<Refuel?>
+    suspend fun fetchSecondLastOdometerReading(vehicleId: String): Int?
 }

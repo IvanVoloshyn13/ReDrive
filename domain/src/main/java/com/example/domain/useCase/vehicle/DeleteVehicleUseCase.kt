@@ -18,7 +18,7 @@ class DeleteVehicleUseCase @Inject constructor(
 ) {
     @Throws(VehicleException.IsCurrentVehicleException::class)
     suspend operator fun invoke(
-        vehicleId: Long,
+        vehicleId: String,
     ) {
         if (vehicleId == repository.observeCurrentVehicle()
                 .first()?.id

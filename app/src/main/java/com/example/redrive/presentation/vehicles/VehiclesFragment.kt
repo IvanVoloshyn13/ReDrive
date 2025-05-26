@@ -103,7 +103,7 @@ class VehiclesFragment : Fragment(R.layout.fragment_vehicles),
         viewModel.navigate(Router.VehiclesDirections.ToEditVehicle(vehicle))
     }
 
-    override fun onDeleteItemClick(vehicleId: Long) {
+    override fun onDeleteItemClick(vehicleId: String) {
         viewModel.onDeleteBtnClick(vehicleId)
     }
 

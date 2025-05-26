@@ -1,6 +1,6 @@
 package com.example.firebase.remoteDataSource.models
 
-data class FbRefuel(
+data class RefuelDto(
     val id: Long,
     val vehicleId: Long,
     val refuelTimeStamp: Long,

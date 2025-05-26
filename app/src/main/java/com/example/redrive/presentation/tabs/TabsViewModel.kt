@@ -2,8 +2,10 @@ package com.example.redrive.presentation.tabs
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.useCase.sync_old.ShouldUploadVehiclesUseCase
-import com.example.domain.useCase.sync_old.UploadVehiclesUseCase
+import com.example.domain.useCase.sync.vehicle.ContinuousVehiclesSendUseCase
+import com.example.domain.useCase.sync.prefs.ContinuousPrefsSendUseCase
+import com.example.redrive.core.NetworkStatus
+import com.example.redrive.core.NetworkStatusProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,13 +16,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TabsViewModel @Inject constructor(
-    private val shouldUploadVehiclesUseCase: ShouldUploadVehiclesUseCase,
-    private val uploadVehiclesUseCase: UploadVehiclesUseCase
+    private val networkStatusProvider: NetworkStatusProvider,
+    private val continuousVehiclesSendUseCase: ContinuousVehiclesSendUseCase,
+    private val continuousPrefsSendUseCase: ContinuousPrefsSendUseCase
 ) : ViewModel() {
 
     init {
-        observeVehiclesToPush()
+        viewModelScope.launch {
+            observeLocalDataToSync()
+        }
     }
+
+    private val _isOnline: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val isOnline = _isOnline.asSharedFlow()
 
     private var startDestination: String = ""
 
@@ -31,6 +39,24 @@ class TabsViewModel @Inject constructor(
     )
     val destination = _startDestination.asSharedFlow()
 
+    private suspend fun observeLocalDataToSync() {
+        networkStatusProvider.networkStatusFlow().collectLatest {
+            when (it) {
+                NetworkStatus.CONNECTED -> {
+                    _isOnline.emit(true)
+                    viewModelScope.launch {
+                        launch { continuousVehiclesSendUseCase() }
+                        launch { continuousPrefsSendUseCase() }
+                    }
+                }
+
+                NetworkStatus.LOST -> {
+                    _isOnline.emit(false)
+                }
+            }
+        }
+    }
+
     fun onArgs(destination: String) {
         viewModelScope.launch {
             if (destination != startDestination) {
@@ -39,18 +65,5 @@ class TabsViewModel @Inject constructor(
             }
         }
     }
-
-    private fun observeVehiclesToPush() {
-        viewModelScope.launch {
-            shouldUploadVehiclesUseCase().collectLatest { has ->
-                if (has) {
-                    uploadVehiclesUseCase()
-                } else {
-                    Unit
-                }
-            }
-        }
-    }
-
 
 }

@@ -12,26 +12,26 @@ class OverviewRepositoryImpl @Inject constructor(
     private val refuelDao: RefuelDao
 ) : OverviewRepository {
 
-    override fun observeTravelledDistance(vehicleId: Long): Flow<Int?> {
+    override fun observeTravelledDistance(vehicleId: String): Flow<Int?> {
         return refuelDao.observeTravelledDistance(vehicleId)
     }
 
-    override fun observeFuelAmountSum(vehicleId: Long): Flow<Double?> {
+    override fun observeFuelAmountSum(vehicleId: String): Flow<Double?> {
         return refuelDao.observeFullAmountSum(vehicleId)
     }
 
-    override fun observePaymentsSum(vehicleId: Long): Flow<Double?> {
+    override fun observePaymentsSum(vehicleId: String): Flow<Double?> {
         return refuelDao.observePaymentSum(vehicleId)
     }
 
 
-    override fun observeLastRefuel(vehicleId: Long): Flow<Refuel?> {
+    override fun observeLastRefuel(vehicleId: String): Flow<Refuel?> {
         return refuelDao.observeLastRefuel(vehicleId).map {
             it?.toRefuel()
         }
     }
 
-    override suspend fun fetchSecondLastOdometerReading(vehicleId: Long): Int? {
+    override suspend fun fetchSecondLastOdometerReading(vehicleId: String): Int? {
         return refuelDao.getSecondLastOdometerReading(vehicleId)
     }
 
