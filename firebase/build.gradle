@@ -7,6 +7,12 @@ plugins {
 apply from: "$rootDir/core.gradle"
 android {
     namespace 'com.example.firebase'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
 }
 
 dependencies {
@@ -16,6 +22,8 @@ dependencies {
     api libs.firebase.auth.ktx
 
     implementation libs.firebase.database
+
+    coreLibraryDesugaring libs.android.desugar
 
     //Dagger_Hilt
     implementation libs.hilt.android

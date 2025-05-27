@@ -31,7 +31,7 @@ class FetchPrefsWorker @AssistedInject constructor(
             val userId = inputData.getString(CURRENT_USER_ID_KEY)!!
             if (!syncStatusChecker.shouldFetch(userId)) return Result.success()
             val since = settingsDao.since(userId).first()
-            val dtos = remoteUnitsPrefSource.fetch(userId, since ?: 0)
+            val dtos = remoteUnitsPrefSource.fetch(userId, since)
             val entities = dtos.map { prefs ->
                 UnitPreferencesEntity(
                     id = prefs.id,

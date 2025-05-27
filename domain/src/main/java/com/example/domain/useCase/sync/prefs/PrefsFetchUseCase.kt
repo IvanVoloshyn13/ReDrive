@@ -12,6 +12,4 @@ class PrefsFetchUseCase @Inject constructor(
         val userId = currentUserId.invoke() ?: return
         workScheduler.enqueueFetchUnitPreferences(userId)
     }
-
-
 }

@@ -29,7 +29,8 @@ class FetchVehiclesWorker @AssistedInject constructor(
         return try {
             val uUid = inputData.getString(CURRENT_USER_ID_KEY)!!
             if (!syncStatusChecker.shouldFetch(uUid)) return Result.success()
-            val dtos = remoteVehicleSource.fetchVehicles(uUid, 0L)
+            val since = vehiclesDao.since(uUid)
+            val dtos = remoteVehicleSource.fetchVehicles(uUid, since)
             val entities = dtos.map {
                 VehicleEntity(
                     id = it.id,

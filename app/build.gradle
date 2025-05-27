@@ -8,23 +8,33 @@ plugins {
 }
 apply from: "$rootDir/core.gradle"
 android {
-    defaultConfig{
+    defaultConfig {
         applicationId "com.example.redrive"
     }
     buildFeatures {
         viewBinding true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
 }
 
 dependencies {
-    implementation project(path:':domain')
-    implementation project(path:':data')
+    implementation project(path: ':domain')
+    implementation project(path: ':data')
 
+
+    coreLibraryDesugaring libs.android.desugar
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
     implementation libs.material
     implementation libs.androidx.navigation.fragment
     implementation libs.androidx.navigation.ui
+
+
 
     //Hilt
     implementation libs.hilt.android

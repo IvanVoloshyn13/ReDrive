@@ -3,12 +3,17 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.google.dagger.hilt)
-    alias(libs.plugins.jetbrains.kotlin.kapt)
 }
 
 apply from: "$rootDir/core.gradle"
 android {
     namespace 'com.example.data'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
 }
 
 dependencies {
@@ -17,6 +22,8 @@ dependencies {
     implementation project(path: ':firebase')
     implementation libs.kotlinx.coroutines
 
+    coreLibraryDesugaring libs.android.desugar
+
     //Dagger_Hilt
     implementation libs.hilt.android
     ksp libs.ksp.hilt.compiler
@@ -24,7 +31,7 @@ dependencies {
     //Worker
     api libs.androidx.work.ktx
     api libs.androidx.hilt.work
-    ksp libs.androidx.kapt.hilt
+    ksp libs.androidx.hilt.compiler
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
