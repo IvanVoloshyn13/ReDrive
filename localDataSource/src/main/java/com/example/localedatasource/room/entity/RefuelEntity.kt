@@ -18,8 +18,7 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["vehicle_id"])]
 )
 data class RefuelEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long ,
+    @PrimaryKey val id: Long,
     @ColumnInfo(name = "vehicle_id") val vehicleId: String,
     val date: Long,
     val odometer: Int,

@@ -36,7 +36,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-          //  delay(OBSERVE_DELAY)
+            delay(OBSERVE_DELAY)
             launch {
                 viewModel.isLoading.collectLatest {
                     if (it) renderProgressBarAnimation() else binding.progressBar.visibility =

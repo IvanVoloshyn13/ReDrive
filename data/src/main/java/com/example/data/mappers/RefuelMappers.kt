@@ -7,7 +7,7 @@ import com.example.localedatasource.room.entity.RefuelEntity
 
 fun Refuel.toEntity(vehicleId: String): RefuelEntity {
     return RefuelEntity(
-        id = this.id ?: 0,
+        id = this.id ,
         vehicleId = vehicleId,
         date = this.refuelTimeStamp,
         odometer = this.odometerValue,

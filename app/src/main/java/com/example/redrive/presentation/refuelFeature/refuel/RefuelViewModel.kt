@@ -41,6 +41,7 @@ class RefuelViewModel @Inject constructor(
 
     override fun onBtnSaveClick() {
         val refuel = Refuel(
+            id=mTimeStamp.value,
             refuelTimeStamp = mTimeStamp.value,
             odometerValue = mOdometerInput.value.toInt(),
             fuelAmount = mFuelVolumeInput.value.toDouble(),

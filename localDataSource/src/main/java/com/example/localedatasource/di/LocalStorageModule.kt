@@ -27,7 +27,9 @@ class LocaleDataSourceModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, APP_DATABASE).build()
+        return Room.databaseBuilder(context, AppDatabase::class.java, APP_DATABASE)
+            .addMigrations(AppDatabase.migration2To3)
+            .build()
     }
 
     @Provides
