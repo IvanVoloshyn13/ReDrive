@@ -3,7 +3,7 @@ package com.example.redrive.presentation.refuelFeature.refuel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.Refuel
 import com.example.domain.useCase.refuel.SaveRefuelUseCase
-import com.example.domain.useCase.settings.GetDateFormatPatternUseCase
+import com.example.domain.useCase.units.GetDateFormatPatternUseCase
 import com.example.redrive.core.AppStringResProvider
 import com.example.redrive.core.Router
 import com.example.redrive.core.wrapLocaleDataSourceRequests

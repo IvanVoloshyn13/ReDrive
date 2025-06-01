@@ -1,11 +1,11 @@
-package com.example.domain.useCase.overview
+package com.example.domain.useCase.stats
 
 import com.example.domain.model.UnitsPreferencesAbbreviation
 import com.example.domain.model.Vehicle
 import com.example.domain.model.log.LogPreferences
 import com.example.domain.model.log.RefuelLog
-import com.example.domain.repository.OverviewRepository
-import com.example.domain.repository.UnitPreferencesRepository
+import com.example.domain.repository.VehicleStatsRepository
+import com.example.domain.repository.VehicleUnitPreferencesRepository
 import com.example.domain.useCase.logs.AvgConsumptionType
 import com.example.domain.useCase.logs.RefuelLogBuilder.toRefuelLog
 import kotlinx.coroutines.flow.Flow
@@ -23,16 +23,16 @@ import javax.inject.Inject
  * to properly format the refuel log for UI presentation or further processing.
  *
  * @param repository Repository providing access to overview and refuel data.
- * @param unitPreferencesRepository Repository providing access to user's unit and formatting preferences.
+ * @param vehicleUnitPreferencesRepository Repository providing access to user's unit and formatting preferences.
  */
-class ObserveLastRefuelLogUseCase @Inject constructor(
-    private val repository: OverviewRepository,
-    private val unitPreferencesRepository: UnitPreferencesRepository
+class ObserveLastRefuelLog @Inject constructor(
+    private val repository: VehicleStatsRepository,
+    private val vehicleUnitPreferencesRepository: VehicleUnitPreferencesRepository
 ) {
     fun invoke(vehicle: Vehicle, preferences: UnitsPreferencesAbbreviation): Flow<RefuelLog?> {
         return repository.observeLastRefuel(vehicleId = vehicle.id).distinctUntilChanged()
             .map { refuel ->
-                val odometerReading = repository.fetchSecondLastOdometerReading(vehicle.id)
+                val odometerReading = repository.getSecondLastOdometerReading(vehicle.id)
                 val pref = getLogPreferences(vehicle.id)
                 refuel?.toRefuelLog(
                     previousOdometerReading = odometerReading
@@ -46,9 +46,9 @@ class ObserveLastRefuelLogUseCase @Inject constructor(
 
     private suspend fun getLogPreferences(vehicleId: String): LogPreferences {
         val pattern =
-            unitPreferencesRepository.getCurrentDateFormatPattern(vehicleId)
+            vehicleUnitPreferencesRepository.getCurrentDateFormatPattern(vehicleId)
         val avgConsumptionTypeKey =
-            unitPreferencesRepository.getAvgConsumptionTypeKey(vehicleId = vehicleId)
+            vehicleUnitPreferencesRepository.getAvgConsumptionTypeKey(vehicleId = vehicleId)
         val avgConsumptionType = AvgConsumptionType.fromKey(avgConsumptionTypeKey)
         return LogPreferences(datePattern = pattern, avgConsumptionType = avgConsumptionType)
     }

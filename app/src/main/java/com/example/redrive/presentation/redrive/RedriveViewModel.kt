@@ -1,9 +1,8 @@
 package com.example.redrive.presentation.redrive
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.VehicleWithOverview
-import com.example.domain.useCase.overview.ObserveVehicleWithOverviewUseCase
+import com.example.domain.model.VehicleWithStats
+import com.example.domain.useCase.stats.ObserveVehicleWithStatsUseCase
 import com.example.redrive.core.BaseViewModel
 import com.example.redrive.core.Router
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,15 +17,15 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 @HiltViewModel
 class RedriveViewModel @Inject constructor(
-    private val observeVehicleWithOverviewUseCase: ObserveVehicleWithOverviewUseCase
+    private val observeVehicleWithStatsUseCase: ObserveVehicleWithStatsUseCase
 ) : BaseViewModel() {
 
-    private val _state = MutableStateFlow<VehicleWithOverview?>(null)
+    private val _state = MutableStateFlow<VehicleWithStats?>(null)
     val state = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            observeVehicleWithOverviewUseCase.invoke().debounce(150).collectLatest {
+            observeVehicleWithStatsUseCase.invoke().debounce(150).collectLatest {
                 _state.emit(it)
             }
         }
@@ -36,7 +35,7 @@ class RedriveViewModel @Inject constructor(
         navigate(Router.ReDriveDirection.ToRefuel)
     }
 
-    fun onVehiclesDropDownClick(){
+    fun onVehiclesDropDownClick() {
         navigate(Router.ReDriveDirection.ToVehicles)
     }
 }

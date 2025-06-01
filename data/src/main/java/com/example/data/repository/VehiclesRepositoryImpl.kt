@@ -19,20 +19,14 @@ import javax.inject.Inject
 class VehiclesRepositoryImpl @Inject constructor(
     private val appVehiclePreferences: AppVehiclePreferences,
     private val vehiclesDao: VehiclesDao,
-    private val unitPreferencesMapper: UnitPreferencesMapper,
 ) : VehiclesRepository {
-    override suspend fun saveVehicleWithSettings(
+    override suspend fun saveVehicle(
         userId: String,
         vehicle: Vehicle,
-        unitPreferences: UnitsPreferencesAbbreviation
     ) {
-        vehiclesDao.addVehicleWithSettings(
-            vehicle = vehicle.toEntity(userId),
-            settings = unitPreferencesMapper.run {
-                unitPreferences.toEntity()
-            }
+        vehiclesDao.addVehicle(
+            vehicle = vehicle.toEntity(userId)
         )
-
     }
 
     override suspend fun updateVehicle(userId: String, vehicle: Vehicle) {

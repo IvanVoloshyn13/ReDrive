@@ -1,14 +1,11 @@
 package com.example.data.worker.prefs
 
 import android.content.Context
-import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.data.worker.WorkSchedulerImpl.Companion.CURRENT_USER_ID_KEY
 import com.example.domain.model.SyncStatus
-import com.example.domain.sync.SyncStatusChecker
-import com.example.domain.sync.UnitPreferencesSyncChecker
 import com.example.firebase.remoteDataSource.realtimeDatabase.unitPreferences.RemoteUnitsPrefSource
 import com.example.localedatasource.room.daos.SettingsDao
 import com.example.localedatasource.room.entity.UnitPreferencesEntity
@@ -24,13 +21,13 @@ class FetchPrefsWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     private val settingsDao: SettingsDao,
     private val remoteUnitsPrefSource: RemoteUnitsPrefSource,
-    @UnitPreferencesSyncChecker private val syncStatusChecker: SyncStatusChecker,
 ) : CoroutineWorker(appContext, workerParams) {
     override suspend fun doWork(): Result {
         return try {
             val userId = inputData.getString(CURRENT_USER_ID_KEY)!!
-            if (!syncStatusChecker.shouldFetch(userId)) return Result.success()
             val since = settingsDao.since(userId).first()
+            val shouldFetch = remoteUnitsPrefSource.shouldFetch(since, userId)
+            if (!shouldFetch) return Result.success()
             val dtos = remoteUnitsPrefSource.fetch(userId, since)
             val entities = dtos.map { prefs ->
                 UnitPreferencesEntity(
@@ -48,7 +45,6 @@ class FetchPrefsWorker @AssistedInject constructor(
             entities.forEach {
                 settingsDao.insertPreferences(it)
             }
-
             Result.success()
         } catch (e: FirebaseNetworkException) {
             Result.retry() // network problem

@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 
 private const val ANIMATION_START_DELAY = 200L
 private const val ANIMATION_DURATION = 1500L
+private const val OBSERVE_DELAY = 1000L
 
 @AndroidEntryPoint
 class SplashFragment : Fragment(R.layout.fragment_splash) {
@@ -35,7 +36,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(ANIMATION_DURATION)
+          //  delay(OBSERVE_DELAY)
             launch {
                 viewModel.isLoading.collectLatest {
                     if (it) renderProgressBarAnimation() else binding.progressBar.visibility =

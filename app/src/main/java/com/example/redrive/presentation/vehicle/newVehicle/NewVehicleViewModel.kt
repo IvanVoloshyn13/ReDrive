@@ -3,7 +3,7 @@ package com.example.redrive.presentation.vehicle.newVehicle
 import androidx.lifecycle.viewModelScope
 import com.example.domain.UserException
 import com.example.domain.model.Vehicle
-import com.example.domain.useCase.vehicle.AddNewVehicleUseCase
+import com.example.domain.useCase.vehicle.AddNewVehicleWithPreferencesUseCase
 import com.example.redrive.core.AppStringResProvider
 import com.example.redrive.core.Router
 import com.example.redrive.presentation.vehicle.BaseVehicleViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewVehicleViewModel @Inject constructor(
-    private val addNewVehicleUseCase: AddNewVehicleUseCase,
+    private val addNewVehicleWithPreferencesUseCase: AddNewVehicleWithPreferencesUseCase,
     private val appStringResProvider: AppStringResProvider,
 ) : BaseVehicleViewModel() {
 
@@ -36,7 +36,7 @@ class NewVehicleViewModel @Inject constructor(
         )
         viewModelScope.launch {
             try {
-                addNewVehicleUseCase.invoke(vehicle)
+                addNewVehicleWithPreferencesUseCase.invoke(vehicle)
                 navigate(Router.NewVehicleDirections.ToVehicles)
             } catch (e: UserException.NoUserDetectedException) {
                 emitError(appStringResProvider.provideStringResByException(e))

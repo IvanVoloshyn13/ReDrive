@@ -3,34 +3,24 @@ package com.example.localedatasource.dataStore
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SyncMetadataRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : SyncMetadataRepository {
-    override suspend fun getVehiclesSyncTimestamp(): Long? {
-        return dataStore.data.map {
-            it[PreferencesKeys.VEHICLES_UPLOAD_AT]
-        }.firstOrNull()
-    }
 
-    override suspend fun setVehicleSyncTimestamp(timestamp: Long) {
-        dataStore.edit {
-            it[PreferencesKeys.VEHICLES_UPLOAD_AT] = timestamp
+    override suspend fun updateVehicleFetchStatus(status: Int) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.VEHICLE_FETCH_STATUS] = status
         }
     }
 
-    override suspend fun getLastRefuelPullTimestamp(): Long? {
-        return dataStore.data.map {
-          it[PreferencesKeys.LAST_PULL_REFUELS]
-        }.firstOrNull()
-    }
-
-    override suspend fun updateLastRefuelPullTimestamp(timestamp: Long) {
-        dataStore.edit {
-            it[PreferencesKeys.LAST_PULL_REFUELS] = timestamp
+    override suspend fun getVehicleFetchStatus(status: Int): Flow<Int?> {
+        return dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.VEHICLE_FETCH_STATUS] ?: TODO("some exception")
         }
     }
+
 }

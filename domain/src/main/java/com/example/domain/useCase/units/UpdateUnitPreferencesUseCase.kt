@@ -1,14 +1,14 @@
-package com.example.domain.useCase.settings
+package com.example.domain.useCase.units
 
 import com.example.domain.VehicleException
 import com.example.domain.model.UnitsPreferencesAbbreviation
-import com.example.domain.repository.UnitPreferencesRepository
+import com.example.domain.repository.VehicleUnitPreferencesRepository
 import com.example.domain.useCase.vehicle.ObserveCurrentVehicleUseCase
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class UpdateUnitPreferencesUseCase @Inject constructor(
-    private val repository: UnitPreferencesRepository,
+    private val repository: VehicleUnitPreferencesRepository,
     private val observeCurrentVehicleUseCase: ObserveCurrentVehicleUseCase
 ) {
     suspend operator fun invoke(unitPreferences: UnitsPreferencesAbbreviation) {

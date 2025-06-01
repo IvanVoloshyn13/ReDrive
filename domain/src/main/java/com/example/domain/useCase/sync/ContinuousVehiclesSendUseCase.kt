@@ -1,8 +1,8 @@
-package com.example.domain.useCase.sync.vehicle
+package com.example.domain.useCase.sync
 
 import com.example.domain.ObserveCurrentUserId
 import com.example.domain.sync.WorkScheduler
-import com.example.domain.sync.SyncStatusChecker
+import com.example.domain.sync.SendDataStatusChecker
 import com.example.domain.sync.VehiclesSyncChecker
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ContinuousVehiclesSendUseCase @Inject constructor(
-    @VehiclesSyncChecker private val statusChecker: SyncStatusChecker,
+    @VehiclesSyncChecker private val statusChecker: SendDataStatusChecker,
     private val workScheduler: WorkScheduler,
     private val observeCurrentUserId: ObserveCurrentUserId
 ) {
@@ -21,5 +21,6 @@ class ContinuousVehiclesSendUseCase @Inject constructor(
                 .onEach { workScheduler.enqueueSendVehicles(userId) }
         }.collect()
     }
+
 }
 

@@ -19,7 +19,6 @@ interface EmailAuthRepository {
     @Throws(AuthException.UserAlreadyExistsException::class)
     suspend fun signUpWithEmail(credentials: UserAuthCredentials)
 
-
     /** Sends a password reset email to the provided address
      * @throws AuthException.UserNotFoundException if there is no user corresponding to the given email address
      */

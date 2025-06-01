@@ -1,15 +1,15 @@
-package com.example.domain.useCase.overview
+package com.example.domain.useCase.stats
 
 import com.example.domain.model.Summary
 import com.example.domain.model.UnitsPreferencesAbbreviation
-import com.example.domain.repository.OverviewRepository
+import com.example.domain.repository.VehicleStatsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import java.math.RoundingMode
 import javax.inject.Inject
 
-class ObserveSummaryUseCase @Inject constructor(
-    private val repository: OverviewRepository,
+class ObserveSummary @Inject constructor(
+    private val repository: VehicleStatsRepository,
 ) {
     fun invoke(vehicleId: String,preferences:UnitsPreferencesAbbreviation): Flow<Summary?> {
         return combine(
@@ -25,7 +25,6 @@ class ObserveSummaryUseCase @Inject constructor(
                     .concatenateValueWithUnit(preferences.currency)
             )
         }
-
     }
 
     private fun <T> T?.concatenateValueWithUnit(unit: String): String? {

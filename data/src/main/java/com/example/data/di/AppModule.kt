@@ -1,8 +1,7 @@
-package com.example.redrive.di
+package com.example.data.di
 
 import android.content.Context
 import android.net.ConnectivityManager
-import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

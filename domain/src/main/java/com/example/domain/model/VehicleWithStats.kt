@@ -5,7 +5,7 @@ import com.example.domain.model.log.ValueWithUnit
 
 typealias ValueWithUnitToString = String
 
-data class VehicleWithOverview(
+data class VehicleWithStats(
     val vehicle: Vehicle?,
     val avgConsumption: ValueWithUnit?,
     val drivingCost: ValueWithUnit?,

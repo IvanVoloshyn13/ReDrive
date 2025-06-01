@@ -3,7 +3,6 @@ package com.example.domain.useCase.signUpFieldValidation
 internal const val PASSWORD_MIN_LENGTH = 8
 
 object IsValidPasswordUseCase {
-
     operator fun invoke(password: String): PasswordValidationResult {
         val hasUpperCase = password.any { it.isUpperCase() }
         val hasLowerCase = password.any { it.isLowerCase() }
@@ -22,7 +21,6 @@ object IsValidPasswordUseCase {
         )
         return validationResult
     }
-
 }
 
 data class PasswordValidationResult(

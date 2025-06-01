@@ -2,15 +2,17 @@ package com.example.redrive.presentation.splash
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import androidx.lifecycle.viewModelScope
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
+import com.example.data.worker.WorkSchedulerImpl
 import com.example.domain.model.account.SignInStatus
-import com.example.domain.useCase.sync.vehicle.VehiclesFetchUseCase
-import com.example.domain.useCase.sync.prefs.PrefsFetchUseCase
+import com.example.domain.useCase.sync.StartSyncDataWorkUseCase
 import com.example.domain.useCase.userSession.IsUserSignedInUseCase
 import com.example.redrive.core.BaseViewModel
 import com.example.redrive.core.Router
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -20,16 +22,15 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val isUserSignedInUseCase: IsUserSignedInUseCase,
-    private val connectivityManager: ConnectivityManager,
-    private val prefsFetchUseCase: PrefsFetchUseCase,
-    private val vehicleFetchUseCase: VehiclesFetchUseCase
+    private val startSyncDataWorkUseCase: StartSyncDataWorkUseCase,
+    private val workManager: WorkManager,
+    private val connectivityManager: ConnectivityManager
 ) : BaseViewModel() {
 
     init {
         viewModelScope.launch {
             showProgressBar()
             initial()
-            hideProgressBar()
         }
     }
 
@@ -42,23 +43,36 @@ class SplashViewModel @Inject constructor(
                 SignInStatus.Failure -> return@collectLatest
                 SignInStatus.SignOut -> navigate(Router.SplashDirections.ToProfile)
                 SignInStatus.SignedIn -> {
-                        vehicleFetchUseCase()
-                        delay(350)
-                        prefsFetchUseCase()
-                    //navigate function do not wait for the sync completion
-                    navigate(Router.SplashDirections.ToApp)
+                    startSyncDataWorkUseCase()
+                    if (isNetworkAvailable()) {
+                        observeSyncWorkStatus()
+                    } else {
+                        navigate(Router.SplashDirections.ToApp)
+                    }
                 }
             }
         }
     }
 
+    private suspend fun observeSyncWorkStatus() {
+        workManager.getWorkInfosForUniqueWorkFlow(WorkSchedulerImpl.Companion.UniqueWorkName.DATA_SYNC_WORK)
+            .collectLatest { works ->
+                val finished = works.all { it.state == WorkInfo.State.SUCCEEDED }
+                if (finished) {
+                    navigate(Router.SplashDirections.ToApp)
+                } else {
+                    val failure = works.any { it.state == WorkInfo.State.FAILED }
+                    if (failure) {
+                        //TODO some better logs
+                        Log.e("SPLASH_SYNC_WORK", "Failure")
+                        navigate(Router.SplashDirections.ToApp)
+                    }
+                }
+            }
+    }
 
     private suspend fun showProgressBar() {
         _isLoading.emit(true)
-    }
-
-    private suspend fun hideProgressBar() {
-        _isLoading.emit(false)
     }
 
     private fun isNetworkAvailable(): Boolean {
@@ -66,5 +80,4 @@ class SplashViewModel @Inject constructor(
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         return capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
-
 }

@@ -2,8 +2,8 @@ package com.example.redrive.presentation.tabs
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.useCase.sync.vehicle.ContinuousVehiclesSendUseCase
-import com.example.domain.useCase.sync.prefs.ContinuousPrefsSendUseCase
+import com.example.domain.useCase.sync.ContinuousVehiclesSendUseCase
+import com.example.domain.useCase.sync.ContinuousPrefsSendUseCase
 import com.example.redrive.core.NetworkStatus
 import com.example.redrive.core.NetworkStatusProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ class TabsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            observeLocalDataToSync()
+            observeLocalDataToSend()
         }
     }
 
@@ -39,7 +39,7 @@ class TabsViewModel @Inject constructor(
     )
     val destination = _startDestination.asSharedFlow()
 
-    private suspend fun observeLocalDataToSync() {
+    private suspend fun observeLocalDataToSend() {
         networkStatusProvider.networkStatusFlow().collectLatest {
             when (it) {
                 NetworkStatus.CONNECTED -> {

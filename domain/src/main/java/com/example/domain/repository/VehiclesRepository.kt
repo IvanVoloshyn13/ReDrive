@@ -1,13 +1,12 @@
 package com.example.domain.repository
 
-import com.example.domain.model.UnitsPreferencesAbbreviation
 import com.example.domain.model.Vehicle
 import kotlinx.coroutines.flow.Flow
 
 interface VehiclesRepository {
 
     /** Add new vehicle with default settings to local database*/
-    suspend fun saveVehicleWithSettings(userId: String, vehicle: Vehicle, unitPreferences: UnitsPreferencesAbbreviation)
+    suspend fun saveVehicle(userId: String, vehicle: Vehicle)
 
     /** Edit vehicle  */
     suspend fun updateVehicle(userId: String, vehicle: Vehicle)

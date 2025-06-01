@@ -22,22 +22,26 @@ class WorkSchedulerImpl @Inject constructor(
     private val workManager: WorkManager
 ) : WorkScheduler {
 
-    private fun sendWorkRequest(
-        userId: String,
-        builder: OneTimeWorkRequest.Builder
-    ): OneTimeWorkRequest {
-        return builder
-            .setInputData(
-                workDataOf(
-                    CURRENT_USER_ID_KEY to userId
-                )
-            )
-            .setBackoffCriteria(
-                BackoffPolicy.LINEAR,
-                15,
-                TimeUnit.SECONDS
-            )
-            .build()
+    override fun enqueueFetchDataChain(userId: String) {
+        val fVehiclesRequest = getFetchVehiclesRequest(userId)
+        val fPreferencesRequest = getFetchPrefsRequest(userId)
+        workManager.beginUniqueWork(
+            UniqueWorkName.DATA_SYNC_WORK,
+            ExistingWorkPolicy.KEEP,
+            fVehiclesRequest
+        )
+            .then(fPreferencesRequest)
+            .enqueue()
+    }
+
+    private fun getFetchVehiclesRequest(userId: String): OneTimeWorkRequest {
+        val builder = OneTimeWorkRequestBuilder<FetchVehiclesWorker>()
+        return fetchWorkRequest(userId, builder)
+    }
+
+    private fun getFetchPrefsRequest(userId: String): OneTimeWorkRequest {
+        val builder = OneTimeWorkRequestBuilder<FetchPrefsWorker>()
+        return fetchWorkRequest(userId, builder)
     }
 
     private fun fetchWorkRequest(
@@ -62,6 +66,25 @@ class WorkSchedulerImpl @Inject constructor(
             .build()
     }
 
+    private fun sendWorkRequest(
+        userId: String,
+        builder: OneTimeWorkRequest.Builder
+    ): OneTimeWorkRequest {
+        return builder
+            .setInputData(
+                workDataOf(
+                    CURRENT_USER_ID_KEY to userId
+                )
+            )
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                15,
+                TimeUnit.SECONDS
+            )
+            .build()
+    }
+
+
     override fun enqueueSendVehicles(userId: String) {
         val builder = OneTimeWorkRequestBuilder<SendVehiclesWorker>()
         val request = sendWorkRequest(userId, builder)
@@ -69,16 +92,6 @@ class WorkSchedulerImpl @Inject constructor(
         workManager.enqueueUniqueWork(
             "${UniqueWorkName.SEND_VEHICLE}-$userId",
             ExistingWorkPolicy.KEEP,
-            request
-        )
-    }
-
-    override fun enqueueFetchVehicles(userId: String) {
-        val builder = OneTimeWorkRequestBuilder<FetchVehiclesWorker>()
-        val request = fetchWorkRequest(userId, builder)
-        workManager.enqueueUniqueWork(
-            UniqueWorkName.FETCH_VEHICLE,
-            ExistingWorkPolicy.REPLACE,
             request
         )
     }
@@ -93,24 +106,18 @@ class WorkSchedulerImpl @Inject constructor(
         )
     }
 
-    override fun enqueueFetchUnitPreferences(userId: String) {
-        val builder = OneTimeWorkRequestBuilder<FetchPrefsWorker>()
-        val request = fetchWorkRequest(userId, builder)
-        workManager.enqueueUniqueWork(
-            UniqueWorkName.FETCH_PREFERENCES,
-            ExistingWorkPolicy.REPLACE,
-            request
-        )
+    override fun enqueueSendRefuels(userId: String) {
+        TODO("Not yet implemented")
     }
 
     companion object {
         const val CURRENT_USER_ID_KEY = "current_user_id_key"
 
         object UniqueWorkName {
-            const val SEND_VEHICLE = "send-vehicle"
-            const val FETCH_VEHICLE = "fetch-vehicle"
-            const val SEND_PREFERENCES = "send-vehicle-prefs"
-            const val FETCH_PREFERENCES = "fetch-vehicle-prefs"
+            const val SEND_VEHICLE = "send_vehicle"
+            const val SEND_PREFERENCES = "send_vehicle_prefs"
+            const val SEND_REFUELS = "send_vehicle_refuels"
+            const val DATA_SYNC_WORK = "data_sync_work"
         }
     }
 

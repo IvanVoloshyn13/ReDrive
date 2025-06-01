@@ -6,10 +6,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class IsUserSignedInUseCase  @Inject constructor (private val repository: UserSessionRepository) {
-     operator fun invoke(): Flow<SignInStatus> {
+class IsUserSignedInUseCase @Inject constructor(
+    private val repository: UserSessionRepository
+) {
+    operator fun invoke(): Flow<SignInStatus> {
         return repository.observeAuthState().map { user ->
             if (user != null) SignInStatus.SignedIn else SignInStatus.SignOut
         }
     }
+
 }

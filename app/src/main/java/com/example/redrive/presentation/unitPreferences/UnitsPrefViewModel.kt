@@ -7,9 +7,9 @@ import com.example.domain.model.Currency
 import com.example.domain.model.DateFormatPattern
 import com.example.domain.model.Distance
 import com.example.domain.model.UnitsPreferencesAbbreviation
-import com.example.domain.useCase.settings.ObserveUnitPreferencesUseCase
-import com.example.domain.useCase.settings.UnitsPreferencesFacade
-import com.example.domain.useCase.settings.UpdateUnitPreferencesUseCase
+import com.example.domain.useCase.units.ObserveUnitPreferencesUseCase
+import com.example.domain.useCase.units.UnitsPreferencesFacade
+import com.example.domain.useCase.units.UpdateUnitPreferencesUseCase
 import com.example.redrive.core.AppStringResProvider
 import com.example.redrive.core.BaseViewModel
 import com.example.redrive.core.Router

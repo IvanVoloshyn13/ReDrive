@@ -7,7 +7,6 @@ import javax.inject.Inject
 class GetRefuelByIdUseCase @Inject constructor(
     private val repository: RefuelRepository
 ) {
-
     suspend operator fun invoke(refuelId: Long): Refuel {
         return repository.getRefuelById(refuelId)
     }

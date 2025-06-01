@@ -1,5 +1,6 @@
 package com.example.domain.useCase.vehicle
 
+import com.example.domain.ObserveCurrentUserId
 import com.example.domain.model.Vehicle
 import com.example.domain.repository.UserSessionRepository
 import com.example.domain.repository.VehiclesRepository
@@ -12,20 +13,13 @@ import javax.inject.Inject
 
 class ObserveCurrentVehicleUseCase @Inject constructor(
     private val vehiclesRepository: VehiclesRepository,
-    private val userSessionRepository: UserSessionRepository
+    private val observeCurrentUserId: ObserveCurrentUserId
 ) {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<Vehicle?> {
-        return userSessionRepository.observeCurrentUserId()
-            .distinctUntilChanged()
-            .flatMapLatest {
-                if (!it.isNullOrEmpty()) {
-                    vehiclesRepository.observeCurrentVehicle()
-                } else {
-                    flowOf(null)
-                }
-            }
+        return observeCurrentUserId {
+            vehiclesRepository.observeCurrentVehicle()
+        }
     }
 
 }

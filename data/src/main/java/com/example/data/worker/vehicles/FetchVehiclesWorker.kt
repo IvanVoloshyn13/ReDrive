@@ -7,8 +7,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.data.worker.WorkSchedulerImpl.Companion.CURRENT_USER_ID_KEY
 import com.example.domain.model.SyncStatus
-import com.example.domain.sync.SyncStatusChecker
-import com.example.domain.sync.VehiclesSyncChecker
 import com.example.firebase.remoteDataSource.realtimeDatabase.vehicles.RemoteVehicleSource
 import com.example.localedatasource.room.daos.VehiclesDao
 import com.example.localedatasource.room.entity.VehicleEntity
@@ -23,13 +21,13 @@ class FetchVehiclesWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     private val vehiclesDao: VehiclesDao,
     private val remoteVehicleSource: RemoteVehicleSource,
-    @VehiclesSyncChecker private val syncStatusChecker: SyncStatusChecker,
 ) : CoroutineWorker(appContext, workerParams) {
     override suspend fun doWork(): Result {
         return try {
             val uUid = inputData.getString(CURRENT_USER_ID_KEY)!!
-            if (!syncStatusChecker.shouldFetch(uUid)) return Result.success()
             val since = vehiclesDao.since(uUid)
+            val shouldFetch = remoteVehicleSource.shouldFetch(since, uUid)
+            if (!shouldFetch) return Result.success()
             val dtos = remoteVehicleSource.fetchVehicles(uUid, since)
             val entities = dtos.map {
                 VehicleEntity(

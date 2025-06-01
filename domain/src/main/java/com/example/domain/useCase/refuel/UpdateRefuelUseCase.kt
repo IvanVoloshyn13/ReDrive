@@ -16,7 +16,6 @@ class UpdateRefuelUseCase @Inject constructor(
         if (refuel.odometerValue < currentVehicle.initialOdometerValue) {
             throw RefuelException.InvalidOdometerValueException(currentVehicle.initialOdometerValue)
         }
-
         refuelRepository.updateRefuel(refuel, currentVehicle.id)
     }
 }

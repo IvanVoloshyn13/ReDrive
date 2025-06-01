@@ -1,7 +1,7 @@
-package com.example.domain.useCase.overview
+package com.example.domain.useCase.stats
 
-import com.example.domain.model.VehicleWithOverview
-import com.example.domain.useCase.settings.ObserveUnitPreferencesUseCase
+import com.example.domain.model.VehicleWithStats
+import com.example.domain.useCase.units.ObserveUnitPreferencesUseCase
 import com.example.domain.useCase.vehicle.ObserveCurrentVehicleUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -11,17 +11,17 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
-class ObserveVehicleWithOverviewUseCase @Inject constructor(
+class ObserveVehicleWithStatsUseCase @Inject constructor(
     private val currentVehicleUseCase: ObserveCurrentVehicleUseCase,
-    private val observeSummaryUseCase: ObserveSummaryUseCase,
-    private val observeLastRefuelLogUseCase: ObserveLastRefuelLogUseCase,
+    private val observeSummary: ObserveSummary,
+    private val observeLastRefuelLog: ObserveLastRefuelLog,
     private val preferences: ObserveUnitPreferencesUseCase,
     private val observeAvgConsumptionByType: ObserveAvgConsumptionByType,
-    private val observeDrivingCostUseCase: ObserveDrivingCostUseCase
+    private val observeDrivingCost: ObserveDrivingCost
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun invoke(): Flow<VehicleWithOverview?> {
+    fun invoke(): Flow<VehicleWithStats?> {
         return currentVehicleUseCase.invoke()
             .distinctUntilChanged()
             .flatMapLatest {
@@ -29,12 +29,12 @@ class ObserveVehicleWithOverviewUseCase @Inject constructor(
                     return@flatMapLatest preferences.invoke(vehicleId = vehicle.id)
                         .flatMapLatest { preferences ->
                             combine(
-                                observeSummaryUseCase.invoke(vehicleId = vehicle.id, preferences),
-                                observeLastRefuelLogUseCase.invoke(vehicle, preferences),
+                                observeSummary.invoke(vehicleId = vehicle.id, preferences),
+                                observeLastRefuelLog.invoke(vehicle, preferences),
                                 observeAvgConsumptionByType.invoke(vehicle.id, preferences),
-                                observeDrivingCostUseCase.invoke(vehicle.id, preferences)
+                                observeDrivingCost.invoke(vehicle.id, preferences)
                             ) { summary, lastRefLog, avgCons, cost ->
-                                VehicleWithOverview(
+                                VehicleWithStats(
                                     vehicle = vehicle,
                                     avgConsumption = avgCons,
                                     drivingCost = cost,

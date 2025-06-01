@@ -1,10 +1,8 @@
 package com.example.localedatasource.dataStore
 
+import kotlinx.coroutines.flow.Flow
+
 interface SyncMetadataRepository {
-    suspend fun getVehiclesSyncTimestamp(): Long?
-    suspend fun setVehicleSyncTimestamp(timestamp: Long)
-
-
-    suspend fun getLastRefuelPullTimestamp(): Long?
-    suspend fun updateLastRefuelPullTimestamp(timestamp: Long)
+    suspend fun updateVehicleFetchStatus(status: Int)
+    suspend fun getVehicleFetchStatus(status: Int): Flow<Int?>
 }

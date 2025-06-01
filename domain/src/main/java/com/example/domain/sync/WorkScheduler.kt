@@ -11,19 +11,19 @@ package com.example.domain.sync
 interface WorkScheduler {
 
     /**
+     * Enqueues a one-time work chain request to pull vehicles,preferences and refuels from remote server for the given user.
+     * Invoke it on SplashScreen
+     *
+     * @param userId Unique identifier of the user whose vehicles should be send to backend.
+     */
+    fun enqueueFetchDataChain(userId: String)
+
+    /**
      * Enqueues a one-time work request to push vehicles to remote server for the given user.
      *
      * @param userId Unique identifier of the user whose vehicles should be uploaded.
      */
     fun enqueueSendVehicles(userId: String)
-
-    /**
-     * Enqueues a one-time work request to pull vehicles from remote server for the given user.
-     * Invoke it on SplashScreen
-     *
-     * @param userId Unique identifier of the user whose vehicles should be send to backend.
-     */
-    fun enqueueFetchVehicles(userId: String)
 
     /**
      * Enqueues a one-time work request to push vehicle prefs to remote server for the given user.
@@ -33,11 +33,11 @@ interface WorkScheduler {
     fun enqueueSendUnitPreferences(userId: String)
 
     /**
-     * Enqueues a one-time work request to pull vehicle prefs from remote server for the given user.
-     * Invoke it on SplashScreen
+     * Enqueues a one-time work request to push refuels to remote server for the given user.
      *
-     * @param userId Unique identifier of the user for which vehicle preferences should be send to backend.
+     * @param userId Unique identifier of the user whose vehicle preferences should be uploaded.
      */
-    fun enqueueFetchUnitPreferences(userId: String)
+    fun enqueueSendRefuels(userId: String)
+
 
 }

@@ -4,12 +4,7 @@ import com.example.domain.model.SyncStatus
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Qualifier
 
-interface SyncStatusChecker {
-    /**
-     * Checks if newer records exist remotely compared to the last local pull timestamp.
-     * @param key - Foreign key that can be either UserId or VehicleId depends on realisation
-     */
-    suspend fun shouldFetch(key: String): Boolean
+interface SendDataStatusChecker {
 
     /**
      * Use this to observe the Room database for any records that still need

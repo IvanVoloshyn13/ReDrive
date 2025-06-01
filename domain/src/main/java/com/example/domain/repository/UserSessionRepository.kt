@@ -30,5 +30,4 @@ interface UserSessionRepository {
      */
     suspend fun signOut()
 
-
 }

@@ -8,7 +8,6 @@ plugins {
 apply from: "$rootDir/core.gradle"
 android {
     namespace 'com.example.data'
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -21,18 +20,14 @@ dependencies {
     implementation project(path: ':localDataSource')
     implementation project(path: ':firebase')
     implementation libs.kotlinx.coroutines
-
     coreLibraryDesugaring libs.android.desugar
-
-    //Dagger_Hilt
+    //Dagger Hilt
     implementation libs.hilt.android
-    ksp libs.ksp.hilt.compiler
-
+    ksp libs.hilt.compiler
     //Worker
     api libs.androidx.work.ktx
-    api libs.androidx.hilt.work
-    ksp libs.androidx.hilt.compiler
-
+    api libs.hilt.ext.work
+    ksp libs.hilt.ext.compiler
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

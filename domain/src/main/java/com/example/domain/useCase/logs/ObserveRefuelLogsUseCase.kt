@@ -6,7 +6,7 @@ import com.example.domain.model.Vehicle
 import com.example.domain.model.log.LogPreferences
 import com.example.domain.model.log.VehicleWithLogs
 import com.example.domain.repository.RefuelRepository
-import com.example.domain.repository.UnitPreferencesRepository
+import com.example.domain.repository.VehicleUnitPreferencesRepository
 import com.example.domain.useCase.vehicle.ObserveCurrentVehicleUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -28,12 +28,12 @@ import javax.inject.Inject
  *
  * @property refuelRepository Provides access to stored refuels.
  * @property currentVehicleUseCase Emits the currently selected [Vehicle].
- * @property unitPreferencesRepository Provides unit and date formatting preferences.
+ * @property vehicleUnitPreferencesRepository Provides unit and date formatting preferences.
  */
 class ObserveRefuelLogsUseCase @Inject constructor(
     private val refuelRepository: RefuelRepository,
     private val currentVehicleUseCase: ObserveCurrentVehicleUseCase,
-    private val unitPreferencesRepository: UnitPreferencesRepository
+    private val vehicleUnitPreferencesRepository: VehicleUnitPreferencesRepository
 ) {
 
     /**
@@ -41,7 +41,7 @@ class ObserveRefuelLogsUseCase @Inject constructor(
      *
      * Whenever the current vehicle changes:
      *  - If it’s non-null, streams a [VehicleWithLogs] built via [makeVehicleWithLogs].
-     *  - If it’s null, emits a default, empty [VehicleWithLogs].
+     *  - If it’s null, emits an empty [VehicleWithLogs].
      *
      * @return A [Flow] of [VehicleWithLogs], updating on vehicle switch or refuel/unit-preference changes.
      */
@@ -67,7 +67,7 @@ class ObserveRefuelLogsUseCase @Inject constructor(
     private fun makeVehicleWithLogs(vehicle: Vehicle): Flow<VehicleWithLogs> =
         combine(
             refuelRepository.observeRefuels(vehicleId = vehicle.id),
-            unitPreferencesRepository.observeUnitPreferences(vehicleId = vehicle.id),
+            vehicleUnitPreferencesRepository.observeUnitPreferences(vehicleId = vehicle.id),
         ) { refuels, pref ->
             RefuelsAndPrefs(refuels, pref)
         }.map { refuelsWithSettings ->
@@ -115,9 +115,9 @@ class ObserveRefuelLogsUseCase @Inject constructor(
      */
      private suspend fun fetchLogPreferences(vehicleId: String): LogPreferences {
         val pattern =
-            unitPreferencesRepository.getCurrentDateFormatPattern(vehicleId)
+            vehicleUnitPreferencesRepository.getCurrentDateFormatPattern(vehicleId)
         val avgConsumptionTypeKey =
-            unitPreferencesRepository.getAvgConsumptionTypeKey(vehicleId = vehicleId)
+            vehicleUnitPreferencesRepository.getAvgConsumptionTypeKey(vehicleId = vehicleId)
         val avgConsumptionType = AvgConsumptionType.fromKey(avgConsumptionTypeKey)
         return LogPreferences(datePattern = pattern, avgConsumptionType = avgConsumptionType)
     }

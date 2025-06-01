@@ -8,7 +8,10 @@ import com.example.domain.model.Distance
 import com.example.domain.model.UnitsPreferencesAbbreviation
 import kotlinx.coroutines.flow.Flow
 
-interface UnitPreferencesRepository {
+interface VehicleUnitPreferencesRepository {
+
+    suspend fun saveUnitPreferences(vehicleId: String, preferences:UnitsPreferencesAbbreviation)
+
     /**
      * Retrieves default settings when no user or vehicle is available.
      * Also used as the default settings for new vehicles, which the user can modify later.
@@ -32,22 +35,22 @@ interface UnitPreferencesRepository {
     /**
      * Returns a list of available currency units for the app.
      */
-    fun getCurrencies(): List<Currency>
+    fun getCurrencyUnits(): List<Currency>
 
     /**
      * Returns a list of available units for average consumption (e.g., liters per kilometer).
      */
-    fun getAvgConsumptions(): List<AvgConsumption>
+    fun getAvgConsumptionUnits(): List<AvgConsumption>
 
     /**
      * Returns a list of available units for vehicle capacity (e.g., liters, gallons).
      */
-    fun getCapacities(): List<Capacity>
+    fun getCapacityUnits(): List<Capacity>
 
     /**
      * Returns a list of available units for distance (e.g., kilometers, miles).
      */
-    fun getDistances(): List<Distance>
+    fun getDistanceUnits(): List<Distance>
 
     /**
      * Returns a list of available date format patterns for displaying dates in the app.
