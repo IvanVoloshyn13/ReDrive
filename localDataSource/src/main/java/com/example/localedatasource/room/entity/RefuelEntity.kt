@@ -27,5 +27,7 @@ data class RefuelEntity(
     @ColumnInfo(name = "unit_price") val unitPrice: Double,
     @ColumnInfo(defaultValue = "") val notes: String,
     @ColumnInfo(name = "full_tank") val fullTank: Boolean,
-    @ColumnInfo(name = "missed_previous") val missedPrevious: Boolean
+    @ColumnInfo(name = "missed_previous") val missedPrevious: Boolean,
+    @ColumnInfo(name = "sync_status", defaultValue = "0") val syncStatus: Int,
+    @ColumnInfo(name = "created_at", defaultValue = "0") val createdAt: Long
 )

@@ -1,6 +1,7 @@
 package com.example.data.mappers
 
 import com.example.domain.model.Refuel
+import com.example.domain.model.SyncStatus
 import com.example.localedatasource.room.entity.RefuelEntity
 
 
@@ -14,7 +15,9 @@ fun Refuel.toEntity(vehicleId: String): RefuelEntity {
         unitPrice = this.pricePerUnit,
         notes = this.notes,
         fullTank = this.fullTank,
-        missedPrevious = this.missedPrevious
+        missedPrevious = this.missedPrevious,
+        syncStatus = SyncStatus.PENDING.code,
+        createdAt = 0L
     )
 }
 
