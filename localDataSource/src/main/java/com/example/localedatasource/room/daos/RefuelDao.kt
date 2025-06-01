@@ -52,7 +52,4 @@ interface RefuelDao {
     @Query("SELECT SUM(fuel_volume*unit_price) FROM refuels WHERE vehicle_id=:currentVehicleId")
     fun observePaymentSum(currentVehicleId: String): Flow<Double?>
 
-    fun hasPending(currentUserId:String):Flow<Boolean>
-
-
 }
