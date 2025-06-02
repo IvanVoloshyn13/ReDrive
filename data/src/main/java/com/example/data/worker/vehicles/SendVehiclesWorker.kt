@@ -8,7 +8,7 @@ import com.example.data.worker.WorkSchedulerImpl.Companion.CURRENT_USER_ID_KEY
 import com.example.domain.model.SyncStatus
 import com.example.firebase.remoteDataSource.models.VehicleDto
 import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteDatabaseException
-import com.example.firebase.remoteDataSource.realtimeDatabase.vehicles.RemoteVehicleSource
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteVehicleSource
 import com.example.localedatasource.room.daos.VehiclesDao
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException

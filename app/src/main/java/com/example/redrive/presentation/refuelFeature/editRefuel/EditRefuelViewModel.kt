@@ -62,7 +62,7 @@ class EditRefuelViewModel @Inject constructor(
         ) { old, ts, pattern, textInputs, bools ->
             old.copy(
                 id = old.id,
-                refuelTimeStamp = ts,
+                refuelDate = ts,
                 odometerValue = textInputs.odometer.toIntOrNull() ?: 0,
                 fuelAmount = textInputs.fuelVolume.toDoubleOrNull() ?: 0.0,
                 pricePerUnit = textInputs.pricePerUnit.toDoubleOrNull()
@@ -118,7 +118,7 @@ class EditRefuelViewModel @Inject constructor(
 
     private fun setInputsFrom(refuel: Refuel) {
         oldRefuel.value = refuel
-        mTimeStamp.value = refuel.refuelTimeStamp
+        mTimeStamp.value = refuel.refuelDate
         mOdometerInput.value = refuel.odometerValue.toString()
         mFuelVolumeInput.value = refuel.fuelAmount.toString()
         mPricePerUnitInput.value = refuel.pricePerUnit.toString()

@@ -9,7 +9,7 @@ fun Refuel.toEntity(vehicleId: String): RefuelEntity {
     return RefuelEntity(
         id = this.id ,
         vehicleId = vehicleId,
-        date = this.refuelTimeStamp,
+        date = this.refuelDate,
         odometer = this.odometerValue,
         fuelVolume = this.fuelAmount,
         unitPrice = this.pricePerUnit,
@@ -24,7 +24,7 @@ fun Refuel.toEntity(vehicleId: String): RefuelEntity {
 fun RefuelEntity.toRefuel(): Refuel {
     return Refuel(
         id = this.id,
-        refuelTimeStamp = this.date,
+        refuelDate = this.date,
         odometerValue = this.odometer,
         fuelAmount = this.fuelVolume,
         pricePerUnit = this.unitPrice,

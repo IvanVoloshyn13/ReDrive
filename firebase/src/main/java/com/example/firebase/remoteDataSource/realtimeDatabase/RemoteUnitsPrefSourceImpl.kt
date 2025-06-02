@@ -1,20 +1,28 @@
-package com.example.firebase.remoteDataSource.realtimeDatabase.unitPreferences
+package com.example.firebase.remoteDataSource.realtimeDatabase
 
 import com.example.firebase.remoteDataSource.di.AppSettingsReference
 import com.example.firebase.remoteDataSource.models.UnitsPrefDto
-import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteDatabaseException
-import com.example.firebase.remoteDataSource.realtimeDatabase.WithRemoteSyncStatusChecker.Companion.UPLOAD_AT
+import com.example.firebase.remoteDataSource.realtimeDatabase.Constants.UPLOAD_AT
 import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+
+interface RemoteUnitsPrefSource : WithRemoteSyncStatusChecker {
+    override suspend fun shouldFetch(since: Long, key: String): Boolean
+    suspend fun fetch(userId: String, since: Long): List<UnitsPrefDto>
+    suspend fun send(
+        userId: String, unitsPrefDto: List<UnitsPrefDto>, since: Long
+    ): List<UnitsPrefDto>
+
+}
 
 class RemoteUnitsPrefSourceImpl @Inject constructor(
     @AppSettingsReference private val reference: DatabaseReference
 ) : RemoteUnitsPrefSource {
     override suspend fun shouldFetch(since: Long, key: String): Boolean {
         return try {
-            val snapshot = reference.child(getChildRef(key))
+            val snapshot = reference.child(getCurrentUserPath(key))
                 .orderByChild(UPLOAD_AT)
                 .limitToLast(1)
                 .get()
@@ -31,7 +39,7 @@ class RemoteUnitsPrefSourceImpl @Inject constructor(
 
     override suspend fun fetch(userId: String, since: Long): List<UnitsPrefDto> {
         val dtos = mutableListOf<UnitsPrefDto>()
-        val snapshot = reference.child(getChildRef(userId))
+        val snapshot = reference.child(getCurrentUserPath(userId))
             .orderByChild(UPLOAD_AT)
             .startAfter(since.toDouble())
             .get()
@@ -51,7 +59,7 @@ class RemoteUnitsPrefSourceImpl @Inject constructor(
     ): List<UnitsPrefDto> {
         val updates = mutableMapOf<String, Any?>()
         unitsPrefDto.forEach {
-            val userPath = getChildRef(userId)
+            val userPath = getCurrentUserPath(userId)
             val path = "$userPath/${it.vehicleId}"
             updates[path] = it.toMap()
         }
@@ -59,11 +67,11 @@ class RemoteUnitsPrefSourceImpl @Inject constructor(
         try {
             reference.updateChildren(updates).await()
         } catch (e: DatabaseException) {
-            throw RemoteDatabaseException()
+            throw RemoteDatabaseException(e.message)
         }
 
         val dtosWithTs = mutableListOf<UnitsPrefDto>()
-        val snap = reference.child(getChildRef(userId))
+        val snap = reference.child(getCurrentUserPath(userId))
             .orderByChild(UPLOAD_AT)
             .startAfter(since.toDouble())
             .get()
@@ -76,5 +84,4 @@ class RemoteUnitsPrefSourceImpl @Inject constructor(
         return dtosWithTs
     }
 
-    private fun getChildRef(userId: String) = "user-$userId"
 }

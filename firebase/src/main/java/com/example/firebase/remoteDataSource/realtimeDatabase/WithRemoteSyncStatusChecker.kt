@@ -12,7 +12,4 @@ interface WithRemoteSyncStatusChecker {
      */
     suspend fun shouldFetch(since: Long, key: String): Boolean
 
-    companion object {
-        const val UPLOAD_AT = "uploadAt"
-    }
 }

@@ -6,7 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.data.worker.WorkSchedulerImpl.Companion.CURRENT_USER_ID_KEY
 import com.example.domain.model.SyncStatus
-import com.example.firebase.remoteDataSource.realtimeDatabase.unitPreferences.RemoteUnitsPrefSource
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteUnitsPrefSource
 import com.example.localedatasource.room.daos.SettingsDao
 import com.example.localedatasource.room.entity.UnitPreferencesEntity
 import com.google.firebase.FirebaseException

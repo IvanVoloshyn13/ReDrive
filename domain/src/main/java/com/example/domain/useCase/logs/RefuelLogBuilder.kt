@@ -27,7 +27,7 @@ object RefuelLogBuilder {
         ).formatToScale()
         return RefuelLog(
             id = this.id,
-            date = this.refuelTimeStamp.toFormatedDate(pattern),
+            date = this.refuelDate.toFormatedDate(pattern),
             avgConsumption = ValueWithUnit(
                 avgConsumption.toString(),
                 unitPreferences.avgConsumption

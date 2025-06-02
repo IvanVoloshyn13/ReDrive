@@ -1,5 +1,5 @@
 package com.example.firebase.remoteDataSource.realtimeDatabase
 
-class RemoteDatabaseException() : RuntimeException()
+class RemoteDatabaseException(override val message: String?) : RuntimeException()
 
 

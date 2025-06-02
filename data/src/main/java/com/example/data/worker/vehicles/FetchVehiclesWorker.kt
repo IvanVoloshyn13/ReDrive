@@ -1,13 +1,12 @@
 package com.example.data.worker.vehicles
 
 import android.content.Context
-import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.data.worker.WorkSchedulerImpl.Companion.CURRENT_USER_ID_KEY
 import com.example.domain.model.SyncStatus
-import com.example.firebase.remoteDataSource.realtimeDatabase.vehicles.RemoteVehicleSource
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteVehicleSource
 import com.example.localedatasource.room.daos.VehiclesDao
 import com.example.localedatasource.room.entity.VehicleEntity
 import com.google.firebase.FirebaseException

@@ -1,9 +1,11 @@
 package com.example.firebase.remoteDataSource.di
 
-import com.example.firebase.remoteDataSource.realtimeDatabase.unitPreferences.RemoteUnitsPrefSource
-import com.example.firebase.remoteDataSource.realtimeDatabase.unitPreferences.RemoteUnitsPrefSourceImpl
-import com.example.firebase.remoteDataSource.realtimeDatabase.vehicles.RemoteVehicleSource
-import com.example.firebase.remoteDataSource.realtimeDatabase.vehicles.RemoteVehicleSourceImpl
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteRefuelSource
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteRefuelSourceImpl
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteUnitsPrefSource
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteUnitsPrefSourceImpl
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteVehicleSource
+import com.example.firebase.remoteDataSource.realtimeDatabase.RemoteVehicleSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,5 +22,9 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindSettingsSource(impl: RemoteUnitsPrefSourceImpl): RemoteUnitsPrefSource
+
+    @Binds
+    @Singleton
+    fun bindRefuelSource(impl: RemoteRefuelSourceImpl): RemoteRefuelSource
 
 }
