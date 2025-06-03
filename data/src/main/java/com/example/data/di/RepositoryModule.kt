@@ -3,21 +3,23 @@ package com.example.data.di
 import com.example.data.mappers.UnitPreferencesMapper
 import com.example.data.mappers.UnitPreferencesMapperImpl
 import com.example.data.repository.EmailAuthRepositoryImpl
-import com.example.data.repository.VehicleStatsRepositoryImpl
 import com.example.data.repository.RefuelRepositoryImpl
-import com.example.data.repository.VehicleUnitPreferencesRepositoryImpl
 import com.example.data.repository.UserSessionRepositoryImpl
+import com.example.data.repository.VehicleStatsRepositoryImpl
+import com.example.data.repository.VehicleUnitPreferencesRepositoryImpl
 import com.example.data.repository.VehiclesRepositoryImpl
+import com.example.data.repository.sync.RefuelSendDataStatusCheckerImpl
 import com.example.data.repository.sync.UnitsPrefSendDataStatusCheckerImpl
 import com.example.data.repository.sync.VehiclesSendDataStatusCheckerImpl
 import com.example.domain.repository.EmailAuthRepository
-import com.example.domain.repository.VehicleStatsRepository
 import com.example.domain.repository.RefuelRepository
-import com.example.domain.repository.VehicleUnitPreferencesRepository
 import com.example.domain.repository.UserSessionRepository
+import com.example.domain.repository.VehicleStatsRepository
+import com.example.domain.repository.VehicleUnitPreferencesRepository
 import com.example.domain.repository.VehiclesRepository
-import com.example.domain.sync.UnitPreferencesSyncChecker
+import com.example.domain.sync.RefuelSendChecker
 import com.example.domain.sync.SendDataStatusChecker
+import com.example.domain.sync.UnitPreferencesSyncChecker
 import com.example.domain.sync.VehiclesSyncChecker
 import dagger.Binds
 import dagger.Module
@@ -66,5 +68,10 @@ interface RepositoryModule {
     @Singleton
     @UnitPreferencesSyncChecker
     fun bindSettingsSyncStatusChecker(impl: UnitsPrefSendDataStatusCheckerImpl): SendDataStatusChecker
+
+    @Binds
+    @Singleton
+    @RefuelSendChecker
+    fun bindRefuelSendStatusChecker(impl: RefuelSendDataStatusCheckerImpl): SendDataStatusChecker
 }
 

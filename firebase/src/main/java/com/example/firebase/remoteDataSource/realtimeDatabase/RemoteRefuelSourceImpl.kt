@@ -64,13 +64,13 @@ class RemoteRefuelSourceImpl @Inject constructor(
 
         refuels.forEach { refuelDto ->
             val refMap = refuelDto.toMapWithServerTimeStamp()
-            val path = "$userPath/${refuelDto.vehicleId}"
+            val path = "$userPath/${refuelDto.id}"
             updates[path] = refMap
         }
         return try {
             databaseReference.updateChildren(updates).await()
 
-            val snapshot = databaseReference.child(userId)
+            val snapshot = databaseReference.child(userPath)
                 .orderByChild(Constants.UPLOAD_AT)
                 .startAfter(since.toDouble())
                 .get()

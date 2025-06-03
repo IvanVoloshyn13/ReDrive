@@ -29,12 +29,14 @@ interface RefuelDao {
     fun observeLastRefuel(currentVehicleId: String): Flow<RefuelEntity?>
 
     @Query(
-        "SELECT odometer FROM refuels" +
-                " WHERE odometer<(SELECT MAX(odometer) FROM refuels " +
-                "WHERE vehicle_id=:currentVehicleId) " +
-                "ORDER by odometer DESC LIMIT 0,1  "
+        """
+    SELECT odometer FROM refuels
+    WHERE vehicle_id = :currentVehicleId
+    ORDER BY odometer DESC
+    LIMIT 1 OFFSET 1
+"""
     )
-  suspend fun getSecondLastOdometerReading(currentVehicleId: String):Int?
+    suspend fun getSecondLastOdometerReading(currentVehicleId: String): Int?
 
     @Query(
         """
@@ -51,5 +53,30 @@ interface RefuelDao {
 
     @Query("SELECT SUM(fuel_volume*unit_price) FROM refuels WHERE vehicle_id=:currentVehicleId")
     fun observePaymentSum(currentVehicleId: String): Flow<Double?>
+
+    @Query(
+        """
+        SELECT EXISTS (SELECT 1 FROM refuels AS  r 
+        INNER JOIN vehicles AS v ON  v.id=r.vehicle_id 
+        WHERE v.user_id=:currentUserId AND r.sync_status=0 )
+    """
+    )
+    fun hasPending(currentUserId: String): Flow<Boolean>
+
+    @Query(
+        """
+        SELECT r.* FROM refuels AS  r 
+        INNER JOIN vehicles AS v ON  v.id=r.vehicle_id 
+        WHERE v.user_id=:currentUserId AND r.sync_status=0 
+    """
+    )
+    suspend fun getPendingRefuels(currentUserId: String): List<RefuelEntity>
+
+    @Query("""
+        SELECT MAX(r.created_at) FROM refuels AS r
+        INNER JOIN vehicles as v on v.id=r.vehicle_id
+        WHERE v.user_id=:currentUserId
+    """)
+    suspend fun since(currentUserId: String):Long
 
 }

@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 private const val ANIMATION_START_DELAY = 200L
 private const val ANIMATION_DURATION = 1500L
-private const val OBSERVE_DELAY = 1000L
+private const val OBSERVE_DELAY = 1500L
 
 @AndroidEntryPoint
 class SplashFragment : Fragment(R.layout.fragment_splash) {

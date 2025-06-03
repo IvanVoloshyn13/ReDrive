@@ -1,15 +1,14 @@
 package com.example.data.repository.sync
 
 import com.example.domain.sync.SendDataStatusChecker
-import com.example.localedatasource.room.daos.VehiclesDao
+import com.example.localedatasource.room.daos.RefuelDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class VehiclesSendDataStatusCheckerImpl @Inject constructor(
-    private val vehiclesDao: VehiclesDao
+class RefuelSendDataStatusCheckerImpl @Inject constructor(
+    private val refuelDao: RefuelDao
 ) : SendDataStatusChecker {
     override fun shouldSend(key: String): Flow<Boolean> {
-        return vehiclesDao.hasPendingVehicles(key)
+        return refuelDao.hasPending(key)
     }
-
 }

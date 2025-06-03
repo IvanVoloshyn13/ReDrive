@@ -24,3 +24,7 @@ annotation class VehiclesSyncChecker
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class UnitPreferencesSyncChecker
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class RefuelSendChecker

@@ -10,6 +10,8 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.data.worker.prefs.FetchPrefsWorker
 import com.example.data.worker.prefs.SendPrefsWorker
+import com.example.data.worker.refuels.FetchRefuelsWorker
+import com.example.data.worker.refuels.SendRefuelWorker
 import com.example.data.worker.vehicles.FetchVehiclesWorker
 import com.example.data.worker.vehicles.SendVehiclesWorker
 import com.example.domain.sync.WorkScheduler
@@ -25,12 +27,13 @@ class WorkSchedulerImpl @Inject constructor(
     override fun enqueueFetchDataChain(userId: String) {
         val fVehiclesRequest = getFetchVehiclesRequest(userId)
         val fPreferencesRequest = getFetchPrefsRequest(userId)
+        val fRefuelRequest = getFetchRefuelsRequest(userId)
         workManager.beginUniqueWork(
             UniqueWorkName.DATA_SYNC_WORK,
             ExistingWorkPolicy.KEEP,
             fVehiclesRequest
         )
-            .then(fPreferencesRequest)
+            .then(listOf(fPreferencesRequest, fRefuelRequest))
             .enqueue()
     }
 
@@ -41,6 +44,11 @@ class WorkSchedulerImpl @Inject constructor(
 
     private fun getFetchPrefsRequest(userId: String): OneTimeWorkRequest {
         val builder = OneTimeWorkRequestBuilder<FetchPrefsWorker>()
+        return fetchWorkRequest(userId, builder)
+    }
+
+    private fun getFetchRefuelsRequest(userId: String): OneTimeWorkRequest {
+        val builder = OneTimeWorkRequestBuilder<FetchRefuelsWorker>()
         return fetchWorkRequest(userId, builder)
     }
 
@@ -107,7 +115,13 @@ class WorkSchedulerImpl @Inject constructor(
     }
 
     override fun enqueueSendRefuels(userId: String) {
-        TODO("Not yet implemented")
+        val builder = OneTimeWorkRequestBuilder<SendRefuelWorker>()
+        val request = sendWorkRequest(userId, builder)
+        workManager.enqueueUniqueWork(
+            "${UniqueWorkName.SEND_REFUELS}-$userId",
+            ExistingWorkPolicy.REPLACE,
+            request
+        )
     }
 
     companion object {
