@@ -21,6 +21,7 @@ ReDrive is built using modern Android development tools and architecture:
 - **Navigation**: Jetpack Navigation Component
 - **View Layer**: XML with Material Design Components
 - **Authentication**: Firebase Authentication
+- **Sync**: Sync data with Firebase Realtime Database
 - **Localization**: Android resource system (supports Polish and English)
 
 ## 📸 Screenshots
