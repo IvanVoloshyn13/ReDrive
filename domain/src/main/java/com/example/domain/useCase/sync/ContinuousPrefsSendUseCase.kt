@@ -7,6 +7,7 @@ import com.example.domain.sync.WorkScheduler
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 

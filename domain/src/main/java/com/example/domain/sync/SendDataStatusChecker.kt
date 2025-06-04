@@ -4,7 +4,7 @@ import com.example.domain.model.SyncStatus
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Qualifier
 
-interface SendDataStatusChecker {
+ interface SendDataStatusChecker {
 
     /**
      * Use this to observe the Room database for any records that still need

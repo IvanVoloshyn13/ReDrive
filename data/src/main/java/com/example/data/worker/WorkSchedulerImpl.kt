@@ -32,8 +32,7 @@ class WorkSchedulerImpl @Inject constructor(
             UniqueWorkName.DATA_SYNC_WORK,
             ExistingWorkPolicy.KEEP,
             fVehiclesRequest
-        )
-            .then(listOf(fPreferencesRequest, fRefuelRequest))
+        ).then(listOf(fPreferencesRequest, fRefuelRequest))
             .enqueue()
     }
 

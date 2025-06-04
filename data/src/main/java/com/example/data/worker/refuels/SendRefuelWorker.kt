@@ -37,10 +37,10 @@ class SendRefuelWorker @AssistedInject constructor(
             )
         }
         val since = refuelDao.since(userId)
-        val refuelsWithTimeStamp = remoteRefuelSource.sendRefuels(dtos, userId, since)
+        val dtosWithTimeStamp = remoteRefuelSource.sendRefuels(dtos, userId, since)
 
         updates.forEach { ent ->
-            val ts = refuelsWithTimeStamp.find { it.id == ent.id }?.uploadAt ?: 0L
+            val ts = dtosWithTimeStamp.find { it.id == ent.id }?.uploadAt ?: 0L
             refuelDao.updateRefuel(
                 ent.copy(
                     syncStatus = SyncStatus.SYNCED.code,

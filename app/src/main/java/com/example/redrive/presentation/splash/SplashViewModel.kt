@@ -45,8 +45,8 @@ class SplashViewModel @Inject constructor(
                 SignInStatus.SignedIn -> {
                     startSyncDataWorkUseCase()
                     if (isNetworkAvailable()) {
-                        navigate(Router.SplashDirections.ToApp)
                         observeSyncWorkStatus()
+                        navigate(Router.SplashDirections.ToApp)
                     } else {
                         navigate(Router.SplashDirections.ToApp)
                     }

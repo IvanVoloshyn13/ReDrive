@@ -48,9 +48,9 @@ class FetchRefuelsWorker @AssistedInject constructor(
             }
             Result.success()
         } catch (e: FirebaseNetworkException) {
-            Result.retry() // network problem
+            Result.retry()
         } catch (e: FirebaseException) {
-            Result.failure() // permission denied, invalid data, etc.
+            Result.failure()
         } catch (e: Exception) {
             Result.retry()
         }

@@ -36,10 +36,10 @@ class SendVehiclesWorker @AssistedInject constructor(
                     type = it.vehicleType
                 )
             }
-            val vehiclesWithTimeStamp =
+            val dtosWithTimeStamp =
                 remoteVehicleSource.sendVehicles(vehiclesDto, userId, since = since)
             entities.forEach { ent ->
-                val ts = vehiclesWithTimeStamp.find { it.id == ent.id }?.uploadAt ?: 0L
+                val ts = dtosWithTimeStamp.find { it.id == ent.id }?.uploadAt ?: 0L
                 vehiclesDao.updateVehicle(
                     ent.copy(
                         syncStatus = SyncStatus.SYNCED.code,
